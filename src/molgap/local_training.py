@@ -8,18 +8,29 @@ import os
 from pathlib import Path
 import socket
 
-from .experiment_family_workflow import _json
+from .experiment_family_workflow import TargetIdentityBinding, _json
 from .experiment_launch import canonical_json, publish_immutable_bytes, _safe_local
 from .research_memory.trace import json_bytes
 
 
+def _target_binding(spec, repo_root, package, acceptance_plan, target_manifest):
+    """Resolve frozen acceptance-plan or pinned target-manifest encoding."""
+    if acceptance_plan is not None:
+        if target_manifest is not None:
+            raise ValueError("Specify acceptance_plan or target_manifest, not both")
+        return TargetIdentityBinding.from_frozen_package(spec, repo_root, package, acceptance_plan)
+    if target_manifest is not None:
+        path, sep, sha = target_manifest.partition("=")
+        return TargetIdentityBinding.from_target_manifest(repo_root, path if sep else "", sha, package_dir=package)
+
+
 def run_local_training(prepared, repo_root, data_root, output, *, pause_after_step=None,
-                       acceptance_plan=None):
+                       acceptance_plan=None, target_manifest=None):
     """Run one observed local process; repeated calls resume the same frozen arm."""
     if pause_after_step is not None and (type(pause_after_step) is not int or pause_after_step < 1):
         raise ValueError("pause_after_step must be a positive absolute optimizer step")
     from .experiment_execution import execute_training_phase, validate_execution_plan
-    from .experiment_family_workflow import RunContext, TargetIdentityBinding
+    from .experiment_family_workflow import RunContext
     from .experiment_launch import build_launch_receipt, read_launch_receipt
     from .experiment_package import verify_experiment_source_package
     from .experiment_spec import ExperimentSpec
@@ -46,9 +57,7 @@ def run_local_training(prepared, repo_root, data_root, output, *, pause_after_st
     job, = validate_execution_plan(spec, report["jobs"])
     if job["module"] != "molgap.family_training_runner":
         raise ValueError("Local execution requires the registered shared family trainer")
-    target = None
-    if acceptance_plan is not None:
-        target = TargetIdentityBinding.from_frozen_package(spec, repo_root, package, acceptance_plan)
+    target = _target_binding(spec, repo_root, package, acceptance_plan, target_manifest)
     output.mkdir(parents=True, exist_ok=True)
     lock = output / "active_process.json"
     started = datetime.now(timezone.utc).isoformat()
@@ -134,6 +143,7 @@ def main(argv=None):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--pause-after-step", type=int)
     parser.add_argument("--acceptance-plan")
+    parser.add_argument("--target-manifest", metavar="PATH=SHA256")
     parser.add_argument("--accept-only", action="store_true")
     parser.add_argument("--outcome", choices=("INFRASTRUCTURE_ONLY",))
     parser.add_argument("--decision-ref")
@@ -175,18 +185,17 @@ def main(argv=None):
             protected[role] = state
         if protected and not args.draft_role_audit:
             parser.error("--protected-role-use needs --draft-role-audit")
-        result = accept_local_training(args.prepared, args.repo_root, args.output,
-            acceptance_plan=args.acceptance_plan, outcome=args.outcome,
-            decision_ref=args.decision_ref, role_audit=args.role_audit, execute=args.execute,
-            draft_role_audit_dir=args.draft_role_audit, protected_role_use=protected,
-            closure_arm=closure_arm, facts_ref=facts_ref)
+        result = accept_local_training(args.prepared, args.repo_root, args.output, acceptance_plan=args.acceptance_plan,
+            target_manifest=args.target_manifest, outcome=args.outcome, decision_ref=args.decision_ref,
+            role_audit=args.role_audit, execute=args.execute, draft_role_audit_dir=args.draft_role_audit,
+            protected_role_use=protected, closure_arm=closure_arm, facts_ref=facts_ref)
         path = args.output / "local_acceptance_report.json"
     else:
         if any((args.outcome, args.decision_ref, args.role_audit, args.execute, args.closure_input,
                 args.draft_role_audit, args.protected_role_use)):
             parser.error("Terminal inputs require --accept-only")
         result = run_local_training(args.prepared, args.repo_root, args.data_root, args.output,
-            pause_after_step=args.pause_after_step, acceptance_plan=args.acceptance_plan)
+            pause_after_step=args.pause_after_step, acceptance_plan=args.acceptance_plan, target_manifest=args.target_manifest)
         path = args.output / "local_training_report.json"
     visible = result if args.verbose else {"status": result["status"], "platform": "local",
         "run_id": result.get("logical_run_id"),
@@ -195,11 +204,11 @@ def main(argv=None):
     return 0 if result["status"] in {"MECHANICALLY_VERIFIED", "PAUSED", "STAGED_CLOSURE_READY", "COMPLETE"} else 1
 
 
-def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
+def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None, target_manifest=None,
                           outcome=None, decision_ref=None, role_audit=None, execute=False,
                           draft_role_audit_dir=None, protected_role_use=None, closure_arm=None, facts_ref=None):
     """Use the existing mechanical inspector, terminal staging and RML closure."""
-    from .experiment_family_workflow import prepare_terminal_outputs, TargetIdentityBinding
+    from .experiment_family_workflow import prepare_terminal_outputs
     from .experiment_package import read_packaged_text
     from .experiment_spec import ExperimentSpec
     from .experiment_terminal_staging import stage_verified_terminal_packages
@@ -227,8 +236,8 @@ def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
         supplied[job["arm_id"]] = {"output_dir": str(output / job["arm_id"]),
                                    "expected": record["acceptance_requirements"]}
     outputs = prepare_terminal_outputs(spec, root, supplied, **options)
-    targets = ({arm_id: TargetIdentityBinding.from_frozen_package(spec, root, package, acceptance_plan)
-                for arm_id in outputs} if acceptance_plan is not None else {})
+    targets = ({arm_id: binding for arm_id in outputs}
+               if (binding := _target_binding(spec, root, package, acceptance_plan, target_manifest)) is not None else {})
     mechanical = accept_workflow(spec, root, supplied, target_identities=targets, **options)
     result = mechanical
     if mechanical["status"] != "BLOCKED" and outcome is not None:

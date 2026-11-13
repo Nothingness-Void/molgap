@@ -1020,6 +1020,7 @@ class TargetIdentityBinding:
     plan_sha256: str
     package_dir: Path | None = None
     _verification: object = field(default=None, repr=False, compare=False)
+    manifest_only: bool = field(default=False, kw_only=True)
 
     @classmethod
     def from_acceptance_plan(cls, spec: ExperimentSpec, repo_root: Path,
@@ -1052,6 +1053,14 @@ class TargetIdentityBinding:
         return cls(Path(repo_root).absolute(), plan_path,
                    hashlib.sha256(raw.encode()).hexdigest(), Path(package_dir).absolute(), _verification)
 
+    @classmethod
+    def from_target_manifest(cls, repo_root: Path, path: str, sha256: str, *, package_dir: Path | None = None):
+        """Bind a pinned target manifest before execution when no acceptance plan exists."""
+        pkg = None if package_dir is None else Path(package_dir).absolute()
+        binding = cls(Path(repo_root).absolute(), path, sha256, pkg, manifest_only=True)
+        binding._pinned_json(path, sha256, label="manifest")
+        return binding
+
     def _pinned_json(self, name, digest, *, label="metadata"):
         _digest(digest, "target identity metadata digest")
         if self.package_dir is not None:
@@ -1073,20 +1082,22 @@ class TargetIdentityBinding:
     def digest(self, target, *, context: RunContext, expected: dict) -> tuple[str, dict]:
         import torch
 
-        _digest(self.plan_sha256, "acceptance plan digest")
-        plan = self._pinned_json(self.plan_path, self.plan_sha256, label="acceptance plan")
-        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
-            raise ValueError("Target identity plan/Spec mismatch")
-        entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
-        if len(entries) != 1:
-            raise ValueError("Target identity plan requires one matching arm")
-        entry = entries[0]
-        if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
-            raise ValueError("Target identity plan/frozen expectations mismatch")
-        pointer = (entry["target_manifest"] if plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
-                   else entry["reference_artifacts"]["target_manifest"])
-        if set(pointer) != {"path", "sha256"}:
-            raise ValueError("Target identity requires a pinned manifest")
+        pointer = {"path": self.plan_path, "sha256": self.plan_sha256}
+        if not self.manifest_only:
+            _digest(self.plan_sha256, "acceptance plan digest")
+            plan = self._pinned_json(self.plan_path, self.plan_sha256, label="acceptance plan")
+            if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
+                raise ValueError("Target identity plan/Spec mismatch")
+            entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
+            if len(entries) != 1:
+                raise ValueError("Target identity plan requires one matching arm")
+            entry = entries[0]
+            if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
+                raise ValueError("Target identity plan/frozen expectations mismatch")
+            pointer = (entry["target_manifest"] if plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
+                       else entry["reference_artifacts"]["target_manifest"])
+            if set(pointer) != {"path", "sha256"}:
+                raise ValueError("Target identity requires a pinned manifest")
         _digest(pointer["sha256"], "target manifest digest")
         manifest = self._pinned_json(pointer["path"], pointer["sha256"], label="manifest")
         if manifest.get("development_target_sha256") != expected["target_sha256"]:
@@ -1103,7 +1114,7 @@ class TargetIdentityBinding:
         else:
             raise ValueError("Unsupported pinned target encoding")
         return digest, {"encoding": encoding, "manifest": pointer,
-                        "acceptance_plan_sha256": self.plan_sha256}
+                        **({} if self.manifest_only else {"acceptance_plan_sha256": self.plan_sha256})}
 
 
 def _inspect_predictions(path, *, context, expected, target_identity):

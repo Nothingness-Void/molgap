@@ -1685,7 +1685,7 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     )
 
 
-@pytest.mark.parametrize("binding_mode", ["pinned", "omitted", "changed_plan", "lossy_output", "invalid_binding"])
+@pytest.mark.parametrize("binding_mode", ["pinned", "manifest_only", "omitted", "changed_plan", "lossy_output", "invalid_binding"])
 def test_k1_session_completion_uses_frozen_float32_target_binding(
     tmp_path, repo, launch_contexts, binding_mode
 ):
@@ -1730,6 +1730,14 @@ def test_k1_session_completion_uses_frozen_float32_target_binding(
     if binding_mode == "changed_plan":
         plan_path.write_bytes(plan_path.read_bytes() + b"\n")
     kwargs = {} if binding_mode == "omitted" else {"target_identity": binding}
+    if binding_mode == "manifest_only":
+        from molgap.local_training import _target_binding
+        manifest = json.loads(plan_path.read_bytes())["arms"][0]["reference_artifacts"]["target_manifest"]
+        kwargs["target_identity"] = _target_binding(None, repo, None, None, f"{manifest['path']}={manifest['sha256']}")
+        with pytest.raises(ValueError, match="not both|Invalid"):
+            _target_binding(None, repo, None, "plan.json", f"{manifest['path']}={manifest['sha256']}")
+        with pytest.raises(ValueError):
+            _target_binding(None, repo, None, None, manifest["path"])
     if binding_mode == "invalid_binding":
         kwargs["target_identity"] = {"encoding": "little-endian-float32-contiguous-raw-bytes"}
 
@@ -1739,13 +1747,14 @@ def test_k1_session_completion_uses_frozen_float32_target_binding(
     assert (root / "training_contract.json").read_bytes() == frozen_contract_bytes
     assert file_digest(contract) == context.training_recipe_sha256
     assert session.expected == expected
-    if binding_mode == "pinned":
+    if binding_mode in {"pinned", "manifest_only"}:
         assert result["status"] == "MECHANICALLY_VERIFIED", result
         assert result["blockers"] == []
         assert result["observed"]["target_identity"]["encoding"] == (
             "little-endian-float32-contiguous-raw-bytes"
         )
-        assert result["observed"]["target_identity"]["acceptance_plan_sha256"] == binding.plan_sha256
+        if binding_mode == "pinned":
+            assert result["observed"]["target_identity"]["acceptance_plan_sha256"] == binding.plan_sha256
     else:
         assert result["status"] == "BLOCKED", result
         reason = {
