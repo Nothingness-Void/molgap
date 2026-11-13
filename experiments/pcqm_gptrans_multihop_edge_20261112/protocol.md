@@ -166,3 +166,8 @@ Frozen reading:
 - otherwise: undetermined, report both.
 - S_ref <= 1.3 meV: N1's D is read as a tail draw. S_ref >= 2.0 meV: two-pair GPT-T 100K screens with a gate below 2 * S_ref are underpowered.
 - m7 is descriptive. No P1 outcome changes the E1 verdict or reopens multi-hop at 100K; only E2/W2 decide that line. A kernel that fails for infrastructure reasons is dropped, not replaced, and the statistics use the pairs that finished.
+
+
+## Amendment 3 erratum (2026-11-13, before any E2 metric was read)
+
+Kernel B continuation v2 was not submitted. The continuation path requires every Spec arm to hold an incomplete pause state (five all-arm gates, two of them inside the frozen remote package), and ref_s48 had already completed 60/60. Amendment 3 assumed that kernel B could resume mh_s48 alone within 1.5 h under the existing path; that was wrong. mh_s48 stays PENDING at 57/60 (not INCONCLUSIVE: no continuation ran). Any later continuation needs its own approved infrastructure commit and new user authorization. Recipe, 60-pass endpoint, E2 gate, reference band and W2 rules are unchanged.
