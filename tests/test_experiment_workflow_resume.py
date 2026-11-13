@@ -438,10 +438,10 @@ def test_build_resume_rejects_active_trajectory_replaced_before_bundle_export(
     ).read_bytes()
 
 
-def test_prepare_resume_requires_all_spec_arms(resume_case, tmp_path):
+def test_prepare_resume_rejects_omitted_arm_without_verified_terminal_output(resume_case, tmp_path):
     case = resume_case
     arm_id = next(iter(case["bundles"]))
-    with pytest.raises(ValueError, match="bind every Spec arm exactly once"):
+    with pytest.raises(ValueError, match="retained origin retrieval"):
         prepare_resumed_workflow(
             case["spec"], case["repo"], case["prepared"], case["package"],
             case["package_identity"], case["receipt"], tmp_path / "missing-arm",
@@ -674,6 +674,19 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
             launch_path=resumed_root / "source_dataset" / "experiment_launch.json",
             output=runtime_root, manifest=manifest,
         )
+
+    # Subset continuation: the unbound arm gets no restore or worker but keeps its ledger.
+    kept, idle = list(config["resume"])
+    subset = launch_path.with_name("experiment_launch_subset.json")
+    subset.write_text(json.dumps({**config, "resume": {kept: config["resume"][kept]}}))
+    commands.clear()
+    report = kaggle_pair_runtime.run_two_phase_pair(
+        source_root=case["repo"], package_dir=case["package"], input_root=launch_path.parent,
+        launch_path=subset, output=tmp_path / "subset-runtime", manifest=manifest)
+    assert len(commands) == 2 and all(_command_value(c, "--arm") == kept for c in commands)
+    assert report["arms"][idle]["terminal_status"] == "retained_prior_terminal"
+    assert not report["arms"][idle]["started"]
+    assert (tmp_path / "subset-runtime" / idle / "allocation_ledger.json").is_file()
 
 
 def test_failed_resumed_preflight_retains_training_started_and_unknown_progress(

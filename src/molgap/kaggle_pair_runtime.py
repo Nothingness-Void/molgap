@@ -47,16 +47,22 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     if accelerator not in {"Tesla T4", "T4", "NvidiaTeslaT4"} or len(names) != declaration["platform"]["device_count"] or any("T4" not in n for n in names):
         raise RuntimeError("Observed hardware differs from the declared T4 allocation")
     output.mkdir(parents=True, exist_ok=True)
-    prior_segments = []
+    prior_segments, resumed = [], set()
     if "resume" in config:
         from .experiment_family_workflow import RunContext
         from .experiment_launch_config import _validate_resume
         from .experiment_resume import validate_resume_bundle, _restore_verified_bundle
         from .screen_policy import canonical_fingerprint
-        resume = _validate_resume(config, {job["arm_id"] for job in jobs}, Path(launch_path).parent)
+        bound = set(config["resume"]) if type(config["resume"]) is dict else set()
+        if not bound or not bound <= {job["arm_id"] for job in jobs}:
+            raise ValueError("Launch resume must bind a non-empty subset of the job arms")
+        resume = _validate_resume(config, bound, Path(launch_path).parent)
+        resumed = bound
         checked, seen_segments = {}, set()
         for job in jobs:
             arm_id = job["arm_id"]
+            if arm_id not in resumed:
+                continue  # retained: its v1 terminal output is reused unchanged
             context = RunContext.for_training(spec, package_dir,
                 expected_package_identity=config["expected_package_identity"], arm_id=arm_id,
                 account=config["account"], run_reference=config["run_reference"])
@@ -77,11 +83,13 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                                      expected_manifest_sha256=resume[arm_id]["sha256"])
     report = {"format": "molgap-kaggle-two-phase-pair-v2", "spec_identity": spec.identity,
               "hardware": names, "phases": [], "status": "running",
-              "arms": {j["arm_id"]: {"device": j["device"], "training_started": "resume" in config,
-                        "resumed_from_checkpoint": "resume" in config,
-                        "started": False, "terminal_status": "not_started",
-                        "exit_reason": "not_started", "worker_wall_seconds": 0.0}
+              "arms": {j["arm_id"]: {"device": j["device"], "training_started": j["arm_id"] in resumed,
+                        "resumed_from_checkpoint": j["arm_id"] in resumed,
+                        "started": False, "terminal_status": "not_started" if j["arm_id"] in resumed or not resumed else "retained_prior_terminal",
+                        "exit_reason": "not_started" if j["arm_id"] in resumed or not resumed else "retained_prior_terminal",
+                        "worker_wall_seconds": 0.0}
                        for j in jobs}}
+    active = [j for j in jobs if not resumed or j["arm_id"] in resumed]
     started = time.perf_counter()
     deadline = None if maximum_wall_seconds is None else started + maximum_wall_seconds
     if deadline is not None:
@@ -103,7 +111,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         workers = []
         worker_rows = {job["arm_id"]: {"arm_id": job["arm_id"], "device": job["device"],
             "started": False, "terminal_status": "not_started", "exit_reason": "not_started",
-            "returncode": None, "worker_wall_seconds": 0.0} for job in jobs}
+            "returncode": None, "worker_wall_seconds": 0.0} for job in active}
         phase_record = {"phase": phase, "workers": list(worker_rows.values()), "status": "running"}
         report["phases"].append(phase_record)
         atomic_json(output / "pair_state.json", report)
@@ -132,7 +140,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             atomic_json(output / "pair_state.json", report)
 
         try:
-            for job in jobs:
+            for job in active:
                 state = report["arms"][job["arm_id"]]
                 state["terminal_status"] = "starting"
                 state["exit_reason"] = "worker_starting"
@@ -273,7 +281,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         record_exit(worker, code)
             # Arms without a spawned child have a known zero formal-training
             # start and an explicit terminal reason.
-            for job in jobs:
+            for job in active:
                 state = report["arms"][job["arm_id"]]
                 row = worker_rows[job["arm_id"]]
                 if not row["started"] and row["terminal_status"] == "not_started":

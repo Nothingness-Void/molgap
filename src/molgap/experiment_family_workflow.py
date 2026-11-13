@@ -1616,13 +1616,13 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
         raise ValueError("Expected every independent Spec arm")
     outputs = {}
     for arm_id, item in supplied.items():
-        if type(item) is not dict or set(item) != {"output_dir", "expected"}:
+        if type(item) is not dict or set(item) - {"context"} != {"output_dir", "expected"}:
             raise ValueError("Expected per-arm output_dir/expected inputs")
         output_dir = Path(item["output_dir"])
         output_dir = output_dir if output_dir.is_absolute() else Path(repo_root) / output_dir
         _safe_local(output_dir.absolute())
         outputs[arm_id] = {
-            "context": RunContext.from_launch(spec, receipt_path, package_dir,
+            "context": item.get("context") or RunContext.from_launch(spec, receipt_path, package_dir,
                 expected_package_identity=expected_package_identity, arm_id=arm_id,
                 **({"_verification": _verification} if _verification is not None else {})),
             "expected": item["expected"], "output_dir": output_dir.absolute()}

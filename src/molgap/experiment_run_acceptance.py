@@ -260,11 +260,19 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
         else:
             mapping_path = _mapping_path(run, arm_id,
                 context.platform_version if continuation_receipt is not None else None)
+            expected_context = context
+            if continuation_receipt is not None and not mapping_path.is_file():
+                # A retained arm: its origin-version output; resolve_terminal_resume pins its manifest.
+                mapping_path = _mapping_path(run, arm_id)
+                expected_context = RunContext.from_launch(spec, original_receipt, package,
+                    expected_package_identity=options["expected_package_identity"], arm_id=arm_id,
+                    _verification=verification)
+                contexts[arm_id] = expected_context  # the retained arm stays an origin-attempt arm
             _safe_local(mapping_path)
             mapping = _json(mapping_path)
             if set(mapping) != {"format", "context", "output_dir", "manifest_sha256"} or mapping["format"] != "molgap-run-retrieved-output-v1":
                 raise ValueError("Invalid retained retrieval mapping")
-            if mapping["context"] != context.to_dict():
+            if mapping["context"] != expected_context.to_dict():
                 raise ValueError("Retained retrieval mapping differs from the original context")
             destination = _output_path(mapping["output_dir"], paths=paths, repo_root=repo_root,
                                        run=run, external_only=True)
@@ -274,6 +282,8 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
             if file_digest(manifest_path) != mapping["manifest_sha256"]:
                 raise ValueError("Retained retrieval manifest changed")
         outputs[arm_id] = {"output_dir": str(destination), "expected": deepcopy(expected)}
+        if contexts[arm_id] is not context:
+            outputs[arm_id]["context"] = contexts[arm_id]  # retained origin-attempt arm
         manifest_path = destination / "output_manifest.json"
         _safe_local(manifest_path)
         if manifest_path.is_file():

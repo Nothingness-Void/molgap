@@ -76,6 +76,34 @@ def _repair_payloads(spec, root, package, manifest, declaration):
             **declaration}, payloads
 
 
+def _retained_terminal(spec, root, prepared, package, receipt, arm_id, identity):
+    """Pin an omitted arm's verified complete origin output; return its manifest sha256."""
+    from .experiment_family_workflow import TargetIdentityBinding, inspect_output
+    from .experiment_run_acceptance import _mapping_path, _output_path, _packaged_json
+    from .common.paths import MachinePaths
+    from .research_memory.trace import file_digest
+    run = Path(prepared).parent
+    if not _mapping_path(run, arm_id).is_file():
+        raise ValueError("Omitted arm lacks a retained origin retrieval: " + arm_id)
+    mapping = _json(_mapping_path(run, arm_id))
+    context = RunContext.from_launch(spec, receipt, package, expected_package_identity=identity, arm_id=arm_id)
+    if (set(mapping) != {"format", "context", "output_dir", "manifest_sha256"}
+            or mapping["format"] != "molgap-run-retrieved-output-v1" or mapping["context"] != context.to_dict()):
+        raise ValueError("Omitted arm lacks a retained origin retrieval: " + arm_id)
+    output = Path(mapping["output_dir"])
+    _safe_local(output)
+    if file_digest(output / "output_manifest.json") != mapping["manifest_sha256"]:
+        raise ValueError("Retained origin manifest changed: " + arm_id)
+    plan = _json(run / "inputs/workflow_plan.json")
+    acceptance = _packaged_json(package, plan["acceptance_plan"])
+    entry = next(e for e in acceptance["arms"] if e["arm_id"] == arm_id)
+    target = TargetIdentityBinding.from_frozen_package(spec, Path(root), package, plan["acceptance_plan"])
+    checked = inspect_output(output, context=context, expected=entry["expected"], target_identity=target)
+    if checked.get("status") != "MECHANICALLY_VERIFIED":
+        raise ValueError("Omitted arm has no verified complete terminal output: " + arm_id)
+    return mapping["manifest_sha256"]
+
+
 def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs=None):
     """Reuse prepared resume pins at acceptance; do not rerun release checks."""
     from .research_memory.paths import repo_local_path
@@ -108,9 +136,14 @@ def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs
             or file_digest(launch_path) != release["checks"]["workflow:launch"]["launch_sha256"]):
         raise ValueError("Prepared resume launch changed after release")
     launch = _json(launch_path)
-    if (launch.get("spec_identity") != spec.identity
-            or set(launch.get("resume", {})) != set(resolved["outputs"])):
-        raise ValueError("Prepared resume launch must bind every frozen arm")
+    retained = report.get("retained_arms", {})
+    if (launch.get("spec_identity") != spec.identity or not launch.get("resume")
+            or set(launch["resume"]) & set(retained)
+            or set(launch["resume"]) | set(retained) != set(resolved["outputs"])):
+        raise ValueError("Prepared resume launch and retained arms must cover every frozen arm once")
+    for arm_id, pin in retained.items():
+        if file_digest(Path(resolved["outputs"][arm_id]["output_dir"]) / "output_manifest.json") != pin["output_manifest_sha256"]:
+            raise ValueError("Retained arm output differs from its origin pin: " + arm_id)
     repair = report.get("recovery_repair")
     if repair is not None:
         repair_path = repo_local_path(launch_path.parent, "recovery_repair.json")
@@ -118,6 +151,8 @@ def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs
             raise ValueError("Prepared recovery repair differs from its retained pin")
     result = {}
     for arm_id, item in resolved["outputs"].items():
+        if arm_id in retained:
+            continue
         binding = launch["resume"][arm_id]
         bundle = repo_local_path(launch_path.parent, binding["manifest"])
         if file_digest(bundle) != binding["sha256"]:
@@ -347,8 +382,11 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         manifest, release, launch, contexts, trajectories = original
         if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
-                or type(plan["arms"]) is not dict or set(plan["arms"]) != set(contexts)):
-            raise ValueError("Resume plan must bind every Spec arm exactly once")
+                or type(plan["arms"]) is not dict or not plan["arms"] or not set(plan["arms"]) <= set(contexts)):
+            raise ValueError("Resume plan must bind a non-empty subset of the Spec arms")
+        retained = {arm_id: {"output_manifest_sha256": _retained_terminal(spec, repo_root, prepared,
+                package_dir, receipt_path, arm_id, expected_package_identity)}
+            for arm_id in contexts if arm_id not in plan["arms"]}
         checked = {}
         for arm_id, path in plan["arms"].items():
             checked[arm_id] = validate_resume_bundle(_path(Path(repo_root), path), spec,
@@ -388,6 +426,8 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                   "original_prepared": str(Path(prepared).absolute()),
                   "original_receipt": str(Path(receipt_path).absolute()),
                   "prospective_published": False, "submitted": False}
+        if retained:
+            report["retained_arms"] = retained
         try:
             stage = backend.stage_inputs(repo_root=Path(repo_root), output=output, package=Path(package_dir),
                 manifest=manifest, spec=spec, platform_plan=platform_plan, metadata=metadata,
@@ -450,7 +490,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 kernel_dir=str(stage["kernel_dir"]), source_dataset_dir=str(stage["input_root"]),
                 accelerator=stage["accelerator"], errors=result["errors"],
                 next_action="The owning continuation adapter must bind a physical successor identity; retain the original source, configuration and prospective records.",
-                limitations=["All arms must have incomplete owner-validated checkpoints.",
+                limitations=["Every resumed arm needs an incomplete owner-validated checkpoint; omitted arms are retained terminal outputs.",
                              "Workload skill must reconcile the prior launch before submitting a successor."])
             return report
         except Exception as exc:

@@ -242,7 +242,7 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
                     or not _COMMIT.fullmatch(repair.get("commit", ""))):
                 raise ValueError("strict continuation repair identity mismatch")
             reviewed = {"src/molgap/common/io.py", "src/molgap/experiment_resume.py",
-                        "src/molgap/family_training_runner.py"}
+                        "src/molgap/family_training_runner.py", "src/molgap/kaggle_pair_runtime.py"}
             if not repair.get("files") or repair["files"].keys() - reviewed:
                 raise ValueError("strict continuation repair exceeds the reviewed infrastructure scope")
             for name, pins in repair["files"].items():
