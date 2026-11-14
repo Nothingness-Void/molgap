@@ -103,6 +103,7 @@ compute gates remain mandatory; this is not a model promotion or new job release
 | Standalone K1 EMA 100K | Version2 ERROR, empty outputs/log; cause, native cost and scientific endpoint unresolved; no further retry. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral 100K | COMPLETE 40/40, native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 | Local single-forward/EMA 100K | See the Active item above: clean-EMA misses the frozen primary tolerance; cost crosses RTX 5060/T4; terminal evidence and strict reference qualification absent. | [Protocol](experiments/pcqm_k1_single_true_ema_100k/protocol.md), [Review](docs/operations/DESKTOP_RML_CURVE_REVIEW_20261013.md) |
+| K1 + GPT-T minus-tail fusion (full scale) | K1 Muon B1024 minus-tail (rows [0, 3,250,000), 60 passes, seed 42) accepted; tail_holdout_v1 MAE 97.026 meV, scored once; selected final-live, sha256 344f32a8...eff2. GPT-T member not yet run; fusion criterion frozen before results, single seed, no homogeneous baseline. | [Protocol](experiments/pcqm_full_minus_tail_fusion_20261113/protocol.md) |
 
 No observation releases adoption, scale-up, heartbeat or server takeover.
 TPU request metadata did not establish actual TPU execution; allocation/runtime
@@ -143,6 +144,7 @@ before another same-family module; missing discriminators stay insufficient evid
 | K1 V4 / SSMA | Negative, no successor | [Owner entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) |
 | Centered logits | Scientifically closed; reference gap is not a retry trigger | [Status](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md) |
 | RML source custody | Historical qualification limits unchanged | [Exact-hash recovery](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md) |
+| GPTrans multi-hop path edge encoding (100K E1, 500K E2) | E1 NEGATIVE_UNDER_CONTRACT; E2 FAIL (mean candidate tail 107.801 meV vs gate 104.94; references 107.849/107.642 inside [105.3, 110.6]; candidate minus reference +0.056 meV). Route closed under Amendment 2; W2 not triggered; P1 noise calibration undetermined. | Branch `codex/exp/gptrans-multihop-edge-20261112`, `experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md` |
 
 All closed transfer, geometry, initialization, Oracle and submission decisions
 are indexed by [experiments](experiments/README.md) and [RML](research_memory/README.md).
