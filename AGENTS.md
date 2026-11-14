@@ -170,6 +170,14 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   path/safety boundary, below `/lustre/home/users/sm2/chou/`; never bypass it.
 - **Protected roles:** no consumption merely for implementation, RML indexing,
   debugging or infrastructure tests. Explicit applicable role authority is required.
+- **Tail holdout (`tail_holdout_v1`):** the last 128,606 training rows (rows
+  3,250,000..3,378,605, shards 0065-0067) are permanently reserved. No run may train,
+  tune or select on them; a run with train rows above 3,250,000 is rejected by
+  `platforms/local/pcqm_tail_holdout_eval.py`. They are not uploaded to Kaggle and are
+  scored offline from retrieved weights, each final checkpoint once. Tail MAE and the
+  50K internal dev MAE are different scales (tail is about 7-8 meV higher for the same
+  model); never compare across them. Official valid is report-only, never a selection
+  signal. Scores are collected in `D:/molgap-artifacts/tail_holdout_master_leaderboard.json`.
 - **No fabrication:** missing reference, cost, role, artifact or comparison stays
   missing/pending. No silent reference retraining or synthetic bookkeeping evidence.
 - **Infrastructure budget:** `.venv\Scripts\python.exe platforms/local/infra_budget.py` compares

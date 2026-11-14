@@ -285,6 +285,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
     from molgap.experiment_run import _original_run, RunReconciliationRequired
     from molgap.experiment_run_acceptance import _continuation_options
     from molgap.kaggle_submission import connect_kaggle
+    from molgap.common.paths import CredentialBindingError
 
     parser = _FiniteParser(description=__doc__, allow_abbrev=False)
     parser.add_argument("--all-arms", action="store_true", help="Fetch manifests, all arms and execution costs")
@@ -306,7 +307,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
     stage = "arguments"
     try:
         args = parser.parse_args(argv)
-        if bool(args.credentials) != (args.execute or status_only):
+        if args.credentials and not (args.execute or status_only):
             raise ValueError("Use credentials with --execute or --status")
         if args.paused and (args.strict or args.resume_prepared is not None):
             raise ValueError("A paused run has no strict evidence; retrieve it unstrict")
@@ -328,6 +329,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
             if (context.platform != "kaggle" or not isinstance(version, str)
                     or not version.isascii() or not version.isdecimal() or int(version) < 1):
                 raise ValueError("A reconciled numeric Kaggle version is required")
+            stage = "credentials"
+            credentials = (args.credentials or paths.kaggle_credential(context.account)) if (args.execute or status_only) else None
             pinned = prepared.parent / "operations/remote_manifest" / ("version" + version)
             destination = paths.artifact_root / "retrieved" / args.run_id / args.attempt_id / ("version" + version)
             if args.paused:
@@ -345,9 +348,9 @@ def _retrieve_all_arms(argv, *, status_only=False):
                               "files": list(PAUSED_ARM_FILES), "arms": sorted(contexts),
                               **({"auxiliary_files": {k: list(v) for k, v in arm_extras.items() if v}} if any(arm_extras.values()) else {})}
                 else:
-                    api = connect_kaggle(args.credentials)
+                    api = connect_kaggle(credentials)
                     if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
-                        raise ValueError("Credential owner differs from original receipt")
+                        raise CredentialBindingError("Credential owner differs from receipt account " + context.account)
                     paused = {arm: retrieve_paused_arm(api, context=contexts[arm], remote_root=args.remote_root,
                         extra_files=arm_extras.get(arm, ()), destination=destination / arm) for arm in contexts}
                     result = {"status": "PAUSED_RETRIEVED", "version": version, "scientific_acceptance": False,
@@ -359,9 +362,9 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 missing = [name for name in names.values() if not (pinned / name).is_file()]
                 stage = "scheduler"
                 if status_only or (args.execute and missing):
-                    api = connect_kaggle(args.credentials)
+                    api = connect_kaggle(credentials)
                     if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
-                        raise ValueError("Credential owner differs from original receipt")
+                        raise CredentialBindingError("Credential owner differs from receipt account " + context.account)
                     source = kernel_source(api, context.run_reference)
                     latest_version = source.metadata.current_version_number if source is not None else None
                     # Kaggle status has no version parameter. Only output downloads
@@ -389,7 +392,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
             # kernel and version. The human runs this command, which pins and then retrieves.
             command = ["--all-arms", "--profile", str(args.profile),
                 "--repo-root", str(args.repo_root), "--run-id", args.run_id, "--attempt-id", args.attempt_id,
-                "--remote-root", args.remote_root, "--credentials", "<CREDENTIALS_FILE>", "--execute"]
+                "--remote-root", args.remote_root, "--execute"]
             if args.strict:
                 command.insert(1, "--strict")
             print(canonical_json({"status": "READY_FOR_RETRIEVAL", "version": version,
@@ -397,13 +400,13 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 "pin_directory": str(pinned), "execution_root": str(destination / "_execution"),
                 "pin_command": "python platforms/local/run.py --profile " + str(args.profile)
                     + " --script platforms/kaggle/retrieve_family_outputs.py -- " + " ".join(command),
-                "next_action": "Human runs pin_command with a credentials file: it fetches these exact-version "
+                "next_action": "Human runs pin_command (credentials resolve from the profile's kaggle_credentials for the receipt account, or add --credentials FILE): it fetches these exact-version "
                     "manifests (including execution_retention.json) into pin_directory, then retrieves every arm"}))
             return 0
         common = ["--run-id", args.run_id, "--attempt-id", args.attempt_id, "--profile", str(args.profile),
                   "--repo-root", str(args.repo_root)]
-        if args.credentials:
-            common += ["--credentials", str(args.credentials)]
+        if credentials:
+            common += ["--credentials", str(credentials)]
         if args.execute:
             common += ["--execute"]
         if args.continuation_receipt:
@@ -435,7 +438,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
     except Exception as error:
         print(canonical_json({"status": "RECONCILIATION_REQUIRED" if isinstance(error, RunReconciliationRequired) else "BLOCKED",
                               "stage": stage, "error": type(error).__name__,
-                              **({"detail": str(error)} if isinstance(error, ExactMetadataRetrievalError) else {})}))
+                              **({"detail": str(error)} if isinstance(error, (ExactMetadataRetrievalError, CredentialBindingError)) else {})}))
         return 2
     print(canonical_json({"status": "BLOCKED" if code else (
         "RETRIEVED" if args.execute else "READY_FOR_RETRIEVAL"),

@@ -30,7 +30,12 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step", "device_resident_train"}
+# The one list of per-run allocation options. Every layer that carries them
+# (authority -> platform plan -> launch file) derives from it, so a new option
+# is one edit here plus its check in validate_allocation_budget.
+ALLOCATION_OPTION_FIELDS = ("allocation_wall_limit_seconds", "cleanup_reserve_seconds",
+                            "pause_after_step", "device_resident_train")
+_OPTIONAL_FIELDS = {"resume", "target_identity", *ALLOCATION_OPTION_FIELDS}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")

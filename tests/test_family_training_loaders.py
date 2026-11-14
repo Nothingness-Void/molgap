@@ -124,7 +124,8 @@ def test_device_resident_stream_is_bit_equal_to_dataloader(algorithm, drop_last,
         graphs.append(Data(x=torch.randint(0, 100, (n, 3), generator=g).to(torch.uint8),
             edge_index=edges, edge_attr=torch.randint(0, 99, (n - 1, 2), generator=g).to(torch.int16),
             random_walk_pe=torch.randn(n, 4, generator=g), y=torch.randn(1, generator=g),
-            source_idx=torch.tensor([i]), role_name="train_100k"))
+            source_idx=torch.tensor([i]), role_name="train_100k", split_code=torch.tensor([1], dtype=torch.int8),
+            smiles_sanitized=torch.tensor([1], dtype=torch.int8), mmff_converged=torch.tensor([True])))
     assert DeviceResidentTrain.admit(1, "cuda") == torch.cuda.is_available()
     store = DeviceResidentTrain(graphs, 40).upload(device)
     def sampler():

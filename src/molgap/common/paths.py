@@ -4,11 +4,16 @@ from typing import Any
 from .spec import _text
 
 
+class CredentialBindingError(ValueError):
+    """The machine profile cannot supply the Kaggle credential file of a receipt account."""
+
+
 class MachinePaths:
     """Machine-local locations, never scientific identities or role authority."""
-    def __init__(self, *, python, data_root, artifact_root, scratch_root):
+    def __init__(self, *, python, data_root, artifact_root, scratch_root, kaggle_credentials=None):
         from pathlib import Path
         from .io import _safe_local
+        from .spec import _identifier
         self.python = Path(python)
         self.data_root, self.artifact_root, self.scratch_root = (
             Path(p) for p in (data_root, artifact_root, scratch_root))
@@ -22,6 +27,23 @@ class MachinePaths:
             raise ValueError("Data, artifact and scratch roots must be separate")
         if not self.python.is_file():
             raise ValueError("Configured dependency interpreter is missing")
+        # Account slug -> kaggle.json path; paths only, never read here.
+        self.kaggle_credentials = {k: Path(v) for k, v in (kaggle_credentials or {}).items()}
+        for account, path in self.kaggle_credentials.items():
+            _identifier(account, "kaggle account")
+            _safe_local(path)
+            if not path.is_absolute():
+                raise ValueError("kaggle_credentials paths must be absolute")
+
+    def kaggle_credential(self, account):
+        path = self.kaggle_credentials.get(account)
+        if path is None:
+            raise CredentialBindingError("Machine profile has no kaggle_credentials entry for receipt account "
+                                         + account + "; add it or pass --credentials")
+        if not path.is_file():
+            raise CredentialBindingError("kaggle_credentials file mapped for account " + account
+                                         + " does not exist; fix the profile entry")
+        return path
 
     @classmethod
     def from_file(cls, path):
@@ -32,10 +54,13 @@ class MachinePaths:
         path = Path(path).absolute()
         _safe_local(path)
         value = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_object)
+        extra = value.pop("kaggle_credentials", None)
+        if extra is not None and not (type(extra) is dict and all(type(v) is str for v in extra.values())):
+            raise ValueError("kaggle_credentials must map account slugs to path strings")
         _object(value, "format python data_root artifact_root scratch_root", "machine profile")
         if value.pop("format") != "molgap-machine-paths-v1":
             raise ValueError("Unknown machine profile")
-        return cls(**value)
+        return cls(**value, kaggle_credentials=extra)
 
     def outside_checkout(self, repo_root):
         from pathlib import Path

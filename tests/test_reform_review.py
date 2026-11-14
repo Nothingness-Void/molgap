@@ -26,6 +26,7 @@ def test_prepublication_io_failure_recovers_same_identity_without_losing_failed_
         write(output/"workflow_report.json",{"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64})
         return {"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64}
     monkeypatch.setattr("molgap.experiment_workflow.prepare_workflow",owner)
+    monkeypatch.setattr("molgap.experiment_workflow.check_workflow_readiness",lambda *a:{"status":"WORKFLOW_INPUTS_READY"})
     with pytest.raises(OSError):prepare_experiment_input(editable.path,editable.repo)
     result=prepare_experiment_input(editable.path,editable.repo)
     assert result["status"]=="PREPARED_FOR_PLATFORM" and len(set(calls))==1 and len(calls)==2
