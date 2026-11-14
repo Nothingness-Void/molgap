@@ -2,7 +2,7 @@
 
 Usage: analyze_local.py --runs-dir DIR (with runs/<arm>/ or <arm>/) --features features_v1.npz
                         [--historical-preds DIR_or_json] --out OUT
-Delta = arm - baseline (negative = better). Baseline = framework mean of k1_base_s42 / k1_base_s43
+Delta = arm - baseline (negative = better). Baseline = framework mean of k1_l1_s42 / k1_l1_s43
 (number = mean of the two per-seed MAEs; per-row paired baseline error = mean of the two |errors|).
 """
 import argparse
@@ -155,9 +155,9 @@ def main():
         e = np.abs(p - y)
         return float(e.mean() if m is None else e[m].mean())
 
-    if not {"k1_base_s42", "k1_base_s43"} <= set(arms):
+    if not {"k1_l1_s42", "k1_l1_s43"} <= set(arms):
         raise SystemExit(f"baseline arms missing/failed: {failed}")
-    p42, p43 = arms["k1_base_s42"]["pred"], arms["k1_base_s43"]["pred"]
+    p42, p43 = arms["k1_l1_s42"]["pred"], arms["k1_l1_s43"]["pred"]
     e42, e43 = np.abs(p42 - y), np.abs(p43 - y)
     ebase = (e42 + e43) / 2
     base_mae = float(ebase.mean())
@@ -200,13 +200,13 @@ def main():
                 pts[int(mm.group(1))] = k
         if fam == "k1":
             pts[100000] = "BASE"
-        elif f"{fam}_base" in arms and 100000 not in pts:
-            pts[100000] = f"{fam}_base"
+        elif fam == "gine" and "gine_h192" in arms and 100000 not in pts:
+            pts[100000] = "gine_h192"
         return dict(sorted(pts.items()))
 
     subs = {"all": None, "radical=1": B["radical=1"], "arom_rings=0": B["arom_rings=0"]}
     scaling = {}
-    for fam in ("k1", "gin", "fpmlp"):
+    for fam in ("k1", "gine", "fpmlp"):
         pts = fam_points(fam)
         if len(pts) < 2:
             continue
@@ -223,9 +223,9 @@ def main():
             fs[sn] = {"N": Ns, "mae_meV": ms, "doubling_ratio": ratios, "powerlaw": fit_pow(Ns, ms)}
         scaling[fam] = fs
     data_lim = None
-    if "k1_N50000" in arms:
-        r = base_mae / mae(arms["k1_N50000"]["pred"])
-        probes = [arms[k]["probe"] for k in ("k1_base_s42", "k1_base_s43") if arms[k]["probe"] is not None]
+    if "k1_n50000" in arms:
+        r = base_mae / mae(arms["k1_n50000"]["pred"])
+        probes = [arms[k]["probe"] for k in ("k1_l1_s42", "k1_l1_s43") if arms[k]["probe"] is not None]
         gap = None if not probes else (base_mae - float(np.mean(probes))) / base_mae
         data_lim = {"ratio_100K_50K": r, "train_dev_gap_frac_of_dev": gap,
                     "signal": bool(r <= 0.93 and gap is not None and gap > 0.30),
@@ -233,7 +233,7 @@ def main():
 
     # ---------------- ensembles ----------------
     ens = {}
-    seeds = [k for k in ("k1_base_s42", "k1_base_s43", "k1_base_s44", "k1_base_s45") if k in arms]
+    seeds = [k for k in ("k1_l1_s42", "k1_l1_s43", "k1_l1_s44") if k in arms]
     ens["homogeneous_k1"] = {str(i): mae(np.mean([arms[k]["pred"] for k in seeds[:i]], 0)) * MEV
                              for i in range(1, len(seeds) + 1)}
     hist = {}
@@ -259,8 +259,8 @@ def main():
             "curve": {str(i): mae(np.mean(allp[:i], 0)) * MEV for i in range(1, len(allp) + 1)},
             "hist_only_each": {n: mae(p) * MEV for n, p in hist.items()}}
     fams = {"k1": np.mean([arms[k]["pred"] for k in seeds], 0)}
-    for fam in ("gin", "fpmlp"):
-        k = next((x for x in (f"{fam}_N100000", f"{fam}_base") if x in arms), None)
+    for fam in ("gine", "fpmlp"):
+        k = next((x for x in (f"{fam}_n100000", "gine_h192" if fam == "gine" else f"{fam}_base") if x in arms), None)
         if k:
             fams[fam] = arms[k]["pred"]
     if len(fams) >= 2:
@@ -297,11 +297,11 @@ def main():
                 t.append(f"尾部信号({n})")
         if re.search(r"w384|d18|ep80", k) and o["delta_pct"] <= -5:
             t.append("容量/优化受限")
-        if k in ("k1_base_s42", "k1_base_s43"):
+        if k in ("k1_l1_s42", "k1_l1_s43"):
             t = []
         sig[k] = t or ["描述"]
     if data_lim and data_lim["signal"]:
-        sig["k1_N50000"] = [x for x in sig["k1_N50000"] if x != "描述"] + ["数据受限"]
+        sig["k1_n50000"] = [x for x in sig["k1_n50000"] if x != "描述"] + ["数据受限"]
 
     summary = {"n_dev": len(y), "baseline_mae_meV": base_mae * MEV,
                "seed_mae_meV": {"s42": float(e42.mean() * MEV), "s43": float(e43.mean() * MEV)},
@@ -310,7 +310,7 @@ def main():
     (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
 
     L = ["# 方向筛查分析摘要", "",
-         f"开发集 n={len(y)};基线(k1_base s42/s43 两 seed MAE 均值)= {base_mae*MEV:.2f} meV;"
+         f"开发集 n={len(y)};基线(k1_l1 s42/s43 两 seed MAE 均值)= {base_mae*MEV:.2f} meV;"
          f"噪声底 = {noise:.2f} meV;Δ = 臂 - 基线(负=更好);CI 为行配对 bootstrap 95%(2000 次,seed 42)。", "",
          "## 各臂总体", "",
          "| 臂 | MAE meV | Δ meV | Δ% | CI95 meV | 自由基=1 MAE | 无芳环 MAE | 信号 |", "|---|---|---|---|---|---|---|---|"]
