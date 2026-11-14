@@ -38,6 +38,10 @@ def test_default_recipes_equal_pre_change():
         assert dataclasses.asdict(a) == dataclasses.asdict(b), arm
         c, _ = new.make_recipe(arm, total_rows=500_000, seed=43, **kwargs)  # --seed changes the seed and nothing else
         assert dataclasses.asdict(c) == dict(dataclasses.asdict(a), seed=43), arm
+    k = dataclasses.asdict(new.make_recipe("k1_muon", total_rows=500_000, k1_init_sha="0" * 64)[0])  # a K1 init sha changes only the init identity
+    base = dataclasses.asdict(old.make_recipe("k1_muon", total_rows=500_000)[0])
+    changed = [f for f in k if k[f] != base[f]]
+    assert len(changed) == 1 and k[changed[0]] == "0" * 64
 
 
 @pytest.mark.skipif(not (os.environ.get("MOLGAP_B1024_SMOKE_DATA") and os.environ.get("MOLGAP_B1024_SMOKE_CODE")),

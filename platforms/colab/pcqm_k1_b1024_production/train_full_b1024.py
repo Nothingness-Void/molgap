@@ -40,6 +40,7 @@ BATCH_SIZE = 1024
 LR_MULT = 6.0
 BASE_LR = 4e-4  # the original recipe lr; the effective lr is BASE_LR * LR_MULT = 2.4e-3 for both optimizer groups
 GPTRANS_BATCH_SIZE = 128  # default for the gptrans_pairnorm arm (CLI --gptrans-batch-size); only the 500K precision-control runs change it
+K1_INIT_SHA = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"  # tensor-state sha of k1_init.pt (seed 42)
 GPTRANS_INIT_SHA = "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"  # tensor-state sha of gptrans_init.pt (seed 42)
 # train-row mean/std of rows 0:500000 (frozen contract of the 500K GPT-T pairnorm init-noise study); used when the store holds exactly 500K rows
 GPTRANS_500K_STATS = (5.413434769952119, 1.176728647311213)
@@ -144,7 +145,7 @@ def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, re
 def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT, *,
                 gptrans_batch_size: int = GPTRANS_BATCH_SIZE, gptrans_lr_mult: float = 1.0, gptrans_ema_decay: float = 0.999,
                 gptrans_init_sha: str = GPTRANS_INIT_SHA, gptrans_stats: tuple[float, float] | None = None,
-                seed: int = 42) -> tuple[FamilyRecipe, str]:
+                seed: int = 42, k1_init_sha: str = K1_INIT_SHA) -> tuple[FamilyRecipe, str]:
     # CHANGED: the k1_muon recipe is first built exactly as in the original (valid batch 128), then re-parameterised.
     steps_per_epoch = total_rows // 128
     total_steps = steps_per_epoch * TOTAL_EPOCHS
@@ -154,7 +155,7 @@ def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_
             family="neural_atom_k1",
             mode="reference",
             seed=seed,
-            initialization_sha256="8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+            initialization_sha256=k1_init_sha,
             dataset=dataset,
             train_rows=total_rows,
             development_rows=0,
@@ -523,8 +524,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
                                     gptrans_ema_decay=gptrans_ema_decay, gptrans_init_sha=init_sha,
                                     gptrans_stats=(GPTRANS_500K_STATS if store.num_graphs == 500_000
                                                    else MINUS_TAIL_STATS if store.num_graphs == 3_250_000 else None),
-                                    seed=seed)
-    if arm == "gptrans_pairnorm" and init_file:
+                                    seed=seed, k1_init_sha=init_sha if arm == "k1_muon" and init_file else K1_INIT_SHA)
+    if init_file:
         init_name = init_file
     steps_per_epoch = steps_per_epoch_for(store.num_graphs, recipe.batch_size)
     total_steps = steps_per_epoch * TOTAL_EPOCHS
@@ -562,6 +563,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     if arm == "k1_muon":  # same guard for K1: a resume without --max-shards would silently train on the tail
         gptrans_extra = {"train_rows": store.num_graphs, "max_shards": max_shards,
                          "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV}
+        if init_file:  # default K1 sidecar stays byte for byte; a non-default init is recorded and resume-checked
+            gptrans_extra.update(init_file=init_name, init_sha=init_sha)
         this_config.update(gptrans_extra)
     if arm == "gptrans_pairnorm":  # settings the recipe validator cannot express (bypassed or derived) are recorded and resume-checked
         gptrans_extra = {"ema_decay": recipe.ema_decay, "init_file": init_name, "init_sha": init_sha, "max_shards": max_shards,
@@ -841,8 +844,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--gptrans-batch-size", type=int, default=GPTRANS_BATCH_SIZE, help="physical batch for the gptrans_pairnorm arm (default 128)")
     parser.add_argument("--gptrans-lr-mult", type=float, default=1.0, help="multiplier on the gptrans base lr 1e-3 (default 1)")
     parser.add_argument("--gptrans-ema-decay", type=float, default=0.999, help="gptrans EMA decay per optimizer step (default 0.999)")
-    parser.add_argument("--init-file", default=None, help="gptrans initial state file name inside --code-dir (default gptrans_init.pt)")
-    parser.add_argument("--init-sha", default=GPTRANS_INIT_SHA, help="tensor-state sha256 of --init-file (default: the seed-42 gptrans_init.pt)")
+    parser.add_argument("--init-file", default=None, help="initial state file name inside --code-dir (default k1_init.pt / gptrans_init.pt); with k1_muon --init-sha is required")
+    parser.add_argument("--init-sha", default=GPTRANS_INIT_SHA, help="tensor-state sha256 of --init-file (default: the seed-42 gptrans_init.pt; K1 has no default here)")
     parser.add_argument("--seed", type=int, default=42, help="sampler/dropout/RNG seed (default 42). The init file is chosen separately.")
     parser.add_argument("--max-shards", type=int, default=None, help="use only the first N train shards (50,000 rows each; 10 -> 500K rows)")
     parser.add_argument("--compile", action="store_true", help="torch.compile(dynamic=True) on the K1 model - accuracy NOT validated")
