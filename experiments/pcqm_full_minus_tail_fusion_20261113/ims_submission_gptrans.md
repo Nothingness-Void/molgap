@@ -3,6 +3,27 @@
 Submitted 2026-11-14 ~23:45 JST by the desktop agent on the user's explicit authority. Recipe: [recipe_frozen_gptrans.md](recipe_frozen_gptrans.md).
 Scheduler truth wins over this file; read `jobinfo -c` and the run directory before any action.
 
+## Correction 2026-11-15: first submission crashed, resubmitted as 1998627
+
+- `1997940.ccpbs1` started about 2 minutes after submit and died with `ModuleNotFoundError: No module named 'ogb'`
+  (`src/molgap/gptrans.py:150`, `from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder`, via
+  `gptrans_bond_local.py:62` and `family_training_kernel.py:134`). It never reached the training loop; `runs/` held only empty directories.
+- Root cause: the launcher's `PYTHONPATH` omitted the pure-python `ogb-1.3.6.zip` that every earlier IMS GPT-T/K1 job and the direction-screen
+  job put on the path (`/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip`, sha256
+  `a18d4cacc6a35ad24938f52cfe197a255a5f64bb197f8d0f056c204467ec1e33`). The venv has no ogb. The local tests used a faked torch and
+  stubs, so the real import chain was never exercised; the "No smoke or preflight job" rule was kept but no read-only import check was run either.
+- Fix (`platforms/ims/gptrans_minus_tail/job.pbs`, LF, sha256 `adef1aa0e10bc7226920be867df622d61183c9581fb323f7b59871e5edd9afcb`):
+  `PYTHONPATH=<route-b shims>:<route-b vendor-cu126-torch271>:$OGB_ZIP:$ROOT/code/src:$ROOT/code` (shim still first, order otherwise unchanged)
+  plus `test -f "$OGB_ZIP"`. The same official ogb 1.3.6 package built `gptrans_init.pt`, so state_dict keys and shapes are identical; no re-implementation.
+- Import check on the login node (no job, no compute): same venv python and the new `PYTHONPATH`; `ogb.graphproppred.mol_encoder`
+  `AtomEncoder, BondEncoder` import; all 23 `molgap.*` modules on the runner chain import; the runner module
+  `train_full_b1024.py` loads at module level; torch 2.7.1+cu126.
+- Resubmitted from the remote root with the same command (no `-v`): `jsub -q H code/platforms/ims/gptrans_minus_tail/job.pbs` ->
+  `1998627.ccpbs1`, 2026-11-15 01:35 JST. It started within minutes on node ccg005. First log lines (`logs/train.log`):
+  `batch=1024 lr=2.828e-03 steps/epoch=3,173 total_steps=190,380`, `Starting fresh A100 VRAM-resident training: 60 epochs`,
+  then 6.2 step/s (about 512 s/epoch, ETA about 8.5 h; measured on IMS A100, replaces the 475 s/pass estimate).
+- `1997940` is dead and superseded; use `1998627` wherever this file says `1997940`. Job 1996402 (not ours) was untouched.
+
 ## Job
 
 - Scheduler id `1997940.ccpbs1`, name `GPTMT1024`, `jsub -q H` (1 node, ncpus 8, ngpus 1, walltime 12:00:00), state at submit: Queue.

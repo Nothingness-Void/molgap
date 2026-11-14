@@ -10,6 +10,7 @@ set -euo pipefail
 
 ROOT=/lustre/home/users/sm2/chou/molgap-gptrans-minus-tail-b1024-20261114
 RB=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+OGB_ZIP=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip  # pure-python ogb 1.3.6 (AtomEncoder/BondEncoder); same archive the K1/GPT-T full jobs use
 PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
 WALL_S=${WALL_S:-43200}
 
@@ -17,9 +18,10 @@ cd "$ROOT"
 test "$(realpath "$ROOT")" = "$ROOT"
 test "$(realpath "$RB/vendor-cu126-torch271")" = "$RB/vendor-cu126-torch271"
 test -x "$PYTHON"
+test -f "$OGB_ZIP"
 mkdir -p "$ROOT/logs" "$ROOT/runs"
 
-export PYTHONPATH="$RB/code/platforms/ims/pcqm_route_b/shims:$RB/vendor-cu126-torch271:$ROOT/code/src:$ROOT/code"
+export PYTHONPATH="$RB/code/platforms/ims/pcqm_route_b/shims:$RB/vendor-cu126-torch271:$OGB_ZIP:$ROOT/code/src:$ROOT/code"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1 PYTHONHASHSEED=42
 
 echo "[job] ${PBS_JOBID:-nojob} start $(date -u +%FT%TZ) WALL_S=$WALL_S"
