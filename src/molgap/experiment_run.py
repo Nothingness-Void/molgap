@@ -126,7 +126,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         raise ValueError("Resume closure requires a continued receipt and terminal staging")
     resolution = dict(retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     if continuation_receipt is not None:
-        resolution["continuation_receipt"] = continuation_receipt
+        resolution.update(continuation_receipt=continuation_receipt, resume_prepared=resume_prepared)
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
     for name, value in (("outcome", outcome), ("decision_ref", decision_ref)):
         if isinstance(value, dict) and set(value) != set(resolved["outputs"]):

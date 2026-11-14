@@ -174,7 +174,7 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
 
 def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
                                   retrieved_root=None, supplied=None, locations=None,
-                                  continuation_receipt=None):
+                                  continuation_receipt=None, resume_prepared=None):
     """Resolve all arms from frozen plans, explicit paths or verified retrieval maps."""
     from .experiment_run import _original_run
     verification = _PackageVerification()
@@ -187,6 +187,8 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
         continuation_receipt, canonical_finalizations = _accepted_continuation_receipt(spec, options, repo_root)
     options = _continuation_options(spec, options, continuation_receipt, repo_root, verification)
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
+    retained = (_json(Path(resume_prepared) / "workflow_report.json").get("retained_arms", {})
+                if continuation_receipt is not None and resume_prepared is not None else {})
     workflow = _json(run / "inputs/workflow_plan.json")
     acceptance = _packaged_json(package, workflow["acceptance_plan"], _verification=verification)
     if (acceptance.get("format") not in {"molgap-family-acceptance-plan-v1",
@@ -261,8 +263,10 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
             mapping_path = _mapping_path(run, arm_id,
                 context.platform_version if continuation_receipt is not None else None)
             expected_context = context
-            if continuation_receipt is not None and not mapping_path.is_file():
-                # A retained arm: its origin-version output; resolve_terminal_resume pins its manifest.
+            if arm_id in retained or (continuation_receipt is not None and resume_prepared is None
+                                      and not mapping_path.is_file()):
+                # A retained arm: its origin-version output, pinned by the resume preparation
+                # (or, without one, by resolve_terminal_resume).
                 mapping_path = _mapping_path(run, arm_id)
                 expected_context = RunContext.from_launch(spec, original_receipt, package,
                     expected_package_identity=options["expected_package_identity"], arm_id=arm_id,
@@ -274,6 +278,8 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
                 raise ValueError("Invalid retained retrieval mapping")
             if mapping["context"] != expected_context.to_dict():
                 raise ValueError("Retained retrieval mapping differs from the original context")
+            if arm_id in retained and mapping["manifest_sha256"] != retained[arm_id]["output_manifest_sha256"]:
+                raise ValueError("Retained arm output differs from its origin pin: " + arm_id)
             destination = _output_path(mapping["output_dir"], paths=paths, repo_root=repo_root,
                                        run=run, external_only=True)
             _digest(mapping["manifest_sha256"], "retrieved manifest digest")

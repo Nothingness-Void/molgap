@@ -1044,6 +1044,12 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
         decision_ref=decisions, role_audit=audits, execution_root=remote,
         continuation_receipt=continued_receipt, resume_prepared=resumed_prepared, resume_authority=authority)
+    report = resumed_prepared / "workflow_report.json"
+    raw = report.read_bytes()
+    report.write_bytes(raw.replace(retained[done]["output_manifest_sha256"].encode(), b"0" * 64))
+    with pytest.raises(ValueError, match="origin pin"):
+        accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt, **options)
+    report.write_bytes(raw)
     result = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt, **options)
     assert result["status"] == "COMPLETE", result
     assert result["diagnosis"]["status"] == "DIAGNOSED", result["diagnosis"]
