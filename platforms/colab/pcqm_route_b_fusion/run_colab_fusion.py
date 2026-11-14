@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import time
 from pathlib import Path
 
 from molgap.pcqm_route_b_fusion import (
@@ -16,6 +17,23 @@ from molgap.pcqm_route_b_fusion import (
 from molgap.pcqm_route_b_training import atomic_json, sha256_file
 
 
+def runtime_record(started: float, batch_size: int) -> dict:
+    """Measured values only; compute units are not exposed to the runtime, so null.
+
+    Wall time and peak VRAM cover this process only; a resumed run excludes earlier sessions.
+    """
+    import torch
+
+    cuda = torch.cuda.is_available()
+    return {
+        "wall_seconds_this_session": round(time.time() - started, 1),
+        "gpu_name": torch.cuda.get_device_name(0) if cuda else None,
+        "compute_units": None,
+        "batch_size": batch_size,
+        "peak_vram_bytes_this_session": torch.cuda.max_memory_allocated(0) if cuda else None,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-dir", type=Path, required=True)
@@ -25,6 +43,8 @@ def main() -> None:
     args.checkpoint_dir.mkdir(parents=True, exist_ok=True)
     args.result_dir.mkdir(parents=True, exist_ok=True)
 
+    started = time.time()
+    config = FusionConfig()
     payloads, load_report, checkpoint_paths = load_consolidated_fusion_payload(
         args.input_dir
     )
@@ -32,14 +52,14 @@ def main() -> None:
         payloads=payloads,
         checkpoint_paths=checkpoint_paths,
         output_path=args.result_dir / "preflight.json",
-        config=FusionConfig(),
+        config=config,
     )
     summary = train_fusion_screen_from_payloads(
         payloads=payloads,
         load_report=load_report,
         checkpoint_paths=checkpoint_paths,
         output_dir=args.checkpoint_dir,
-        config=FusionConfig(),
+        config=config,
     )
     for name in ("development_selection.json", "completion_manifest.json"):
         source = args.checkpoint_dir / name
@@ -58,6 +78,7 @@ def main() -> None:
             args.result_dir / "development_selection.json"
         ),
         "preflight": preflight,
+        "runtime": runtime_record(started, config.batch_size),
         "official_valid_metric_read": False,
         "official_test_used": False,
         "sealed_20k_used": False,
