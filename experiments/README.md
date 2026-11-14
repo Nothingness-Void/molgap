@@ -211,3 +211,7 @@ The desktop [expert Oracle feasibility study](pcqm_expert_oracle_feasibility/REA
 contains the paper review, executed saved-prediction bounds and conditional
 specialist plan. It closed NO_TRAIN for a new prediction-only router; the
 diagnostic implementation/evidence are reusable, with no model promotion.
+
+[Full-scale minus-tail K1 + GPT-T fusion](pcqm_full_minus_tail_fusion_20261113/protocol.md)
+freezes the single-seed protocol before any result: both members train on rows
+[0, 3,250,000) and are scored once on the permanent tail holdout.
