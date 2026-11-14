@@ -534,6 +534,12 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles(compiled_payl
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2": "NO_TRAIN",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2": "NO_TRAIN",
     }
+    # Triplet-norm attempts v1 (preflight failure), v2 (never POSTed) and r2
+    # (failed before upload) produced no results; only r3 carries V5 evidence.
+    triplet_norm_attempts = {
+        f"T-pcqm-gptrans-triplet-norm-100k-20261104-s42{attempt}-{arm}"
+        for attempt in ("", "-v2", "-r2") for arm in ("joint_norm", "separate_norm")
+    }
     assert set(no_evidence_trajectories) == {
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -541,7 +547,7 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles(compiled_payl
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
         "TB-pcqm-k1-single-true-ema-100k",
-    } | set(input_init_gaps)
+    } | set(input_init_gaps) | triplet_norm_attempts
     # This prospective run is ACTIVE, not a finalized V5 result or promotion.
     pending = trajectories["TB-pcqm-k1-single-true-ema-100k"]
     pending_canonical = json.loads((REPO_ROOT / pending["record_path"]).read_text(encoding="utf-8"))
