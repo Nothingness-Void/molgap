@@ -36,6 +36,8 @@ def test_default_recipes_equal_pre_change():
         b, init_b = new.make_recipe(arm, total_rows=500_000, **kwargs)
         assert init_a == init_b and a.identity == b.identity
         assert dataclasses.asdict(a) == dataclasses.asdict(b), arm
+        c, _ = new.make_recipe(arm, total_rows=500_000, seed=43, **kwargs)  # --seed changes the seed and nothing else
+        assert dataclasses.asdict(c) == dict(dataclasses.asdict(a), seed=43), arm
 
 
 @pytest.mark.skipif(not (os.environ.get("MOLGAP_B1024_SMOKE_DATA") and os.environ.get("MOLGAP_B1024_SMOKE_CODE")),

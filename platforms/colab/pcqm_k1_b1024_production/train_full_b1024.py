@@ -143,7 +143,8 @@ def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, re
 
 def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT, *,
                 gptrans_batch_size: int = GPTRANS_BATCH_SIZE, gptrans_lr_mult: float = 1.0, gptrans_ema_decay: float = 0.999,
-                gptrans_init_sha: str = GPTRANS_INIT_SHA, gptrans_stats: tuple[float, float] | None = None) -> tuple[FamilyRecipe, str]:
+                gptrans_init_sha: str = GPTRANS_INIT_SHA, gptrans_stats: tuple[float, float] | None = None,
+                seed: int = 42) -> tuple[FamilyRecipe, str]:
     # CHANGED: the k1_muon recipe is first built exactly as in the original (valid batch 128), then re-parameterised.
     steps_per_epoch = total_rows // 128
     total_steps = steps_per_epoch * TOTAL_EPOCHS
@@ -152,7 +153,7 @@ def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_
         base = FamilyRecipe(
             family="neural_atom_k1",
             mode="reference",
-            seed=42,
+            seed=seed,
             initialization_sha256="8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
             dataset=dataset,
             train_rows=total_rows,
@@ -193,7 +194,7 @@ def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_
         recipe = FamilyRecipe(
             family="gptrans_t",
             mode="degree_bond_local_pair_update_norm_ema999",
-            seed=42,
+            seed=seed,
             initialization_sha256=gptrans_init_sha,
             dataset=dataset,
             train_rows=total_rows,
@@ -502,7 +503,7 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
             batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT, use_compile: bool = False,
             compare_log: Path | None = None, gptrans_batch_size: int = GPTRANS_BATCH_SIZE, gptrans_lr_mult: float = 1.0,
             gptrans_ema_decay: float = 0.999, init_file: str | None = None, init_sha: str = GPTRANS_INIT_SHA,
-            max_shards: int | None = None) -> str:
+            max_shards: int | None = None, seed: int = 42) -> str:
     out_dir = run_root / arm
     out_dir.mkdir(parents=True, exist_ok=True)
     done_file = out_dir / "training_complete.json"
@@ -510,7 +511,7 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         print(f"[{arm}] Already completed ({done_file}). Skipping.", flush=True)
         return "COMPLETE"
 
-    configure_a100_fast_mode(42)
+    configure_a100_fast_mode(seed)
     store = VRAMGraphStore(data_root, need_rwse=(arm == "k1_muon"), device=device, max_shards=max_shards)
     if max_shards is not None:
         assert store.num_graphs == SHARD_ROWS * max_shards, (store.num_graphs, max_shards)
@@ -521,7 +522,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
                                     gptrans_batch_size=gptrans_batch_size, gptrans_lr_mult=gptrans_lr_mult,
                                     gptrans_ema_decay=gptrans_ema_decay, gptrans_init_sha=init_sha,
                                     gptrans_stats=(GPTRANS_500K_STATS if store.num_graphs == 500_000
-                                                   else MINUS_TAIL_STATS if store.num_graphs == 3_250_000 else None))
+                                                   else MINUS_TAIL_STATS if store.num_graphs == 3_250_000 else None),
+                                    seed=seed)
     if arm == "gptrans_pairnorm" and init_file:
         init_name = init_file
     steps_per_epoch = steps_per_epoch_for(store.num_graphs, recipe.batch_size)
@@ -565,6 +567,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         gptrans_extra = {"ema_decay": recipe.ema_decay, "init_file": init_name, "init_sha": init_sha, "max_shards": max_shards,
                          "train_rows": store.num_graphs, "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV}
         this_config.update(gptrans_extra)
+    if seed != 42:  # default runs keep their pre-existing sidecar byte for byte
+        gptrans_extra["seed"] = this_config["seed"] = seed
     old_log = load_compare_log(compare_log) if arm == "k1_muon" else {}
     if old_log:
         print(f"[{arm}] comparing per-epoch train MAE with the OLD run ({len(old_log)} epochs read from {compare_log})", flush=True)
@@ -839,6 +843,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--gptrans-ema-decay", type=float, default=0.999, help="gptrans EMA decay per optimizer step (default 0.999)")
     parser.add_argument("--init-file", default=None, help="gptrans initial state file name inside --code-dir (default gptrans_init.pt)")
     parser.add_argument("--init-sha", default=GPTRANS_INIT_SHA, help="tensor-state sha256 of --init-file (default: the seed-42 gptrans_init.pt)")
+    parser.add_argument("--seed", type=int, default=42, help="sampler/dropout/RNG seed (default 42). The init file is chosen separately.")
     parser.add_argument("--max-shards", type=int, default=None, help="use only the first N train shards (50,000 rows each; 10 -> 500K rows)")
     parser.add_argument("--compile", action="store_true", help="torch.compile(dynamic=True) on the K1 model - accuracy NOT validated")
     parser.add_argument("--compare-log", type=Path, default=None, help="OLD run train_log.jsonl (read-only) for the per-epoch comparison")
@@ -876,6 +881,7 @@ def main(argv=None):
             init_file=args.init_file,
             init_sha=args.init_sha,
             max_shards=args.max_shards,
+            seed=args.seed,
         )
         if status == "PAUSED":
             break
