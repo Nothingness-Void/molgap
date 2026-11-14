@@ -14,7 +14,7 @@ from tempfile import TemporaryDirectory
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json
 from .experiment_launch import _safe_local
-from .experiment_launch_config import validate_launch_config, RECOVERY_REPAIR_PATHS, validate_recovery_repair
+from .experiment_launch_config import ALLOCATION_OPTION_FIELDS, validate_launch_config, RECOVERY_REPAIR_PATHS, validate_recovery_repair
 from .experiment_package import _PackageVerification, verify_experiment_source_package, read_packaged_text
 from .experiment_preflight import check_release_inputs, _atomic
 from .experiment_resume import RESUME_BUNDLE_FILE, create_resume_bundle, validate_resume_bundle
@@ -337,6 +337,9 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
                 "cursor": bundle["cursor"], "prospective_published": False, "submitted": False}
 
 
+_PLAN_OVERRIDES = ("allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step")
+
+
 def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_package_identity,
                              receipt_path, output, *, plan, _verification=None):
     """Stage all incomplete arms using the original source and prospective bytes."""
@@ -345,7 +348,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                    expected_package_identity, receipt_path, _verification=verification,
                    recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original:
         manifest, release, launch, contexts, trajectories = original
-        if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"} != {"format", "spec_identity", "arms"}
+        if (type(plan) is not dict or set(plan) - {"recovery_repair", *_PLAN_OVERRIDES} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
                 or type(plan["arms"]) is not dict or set(plan["arms"]) != set(contexts)):
             raise ValueError("Resume plan must bind every Spec arm exactly once")
@@ -365,9 +368,10 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         platform_plan = {"account": launch["account"], "kernel": launch["run_reference"],
             "title": metadata["title"], "datasets": launch["dataset_sources"],
             "source_dataset": dataset["id"], "accelerator": launch["accelerator"]}
-        for key in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
-            if key in launch:
+        for key in ALLOCATION_OPTION_FIELDS:
+            if key in launch and key != "pause_after_step":
                 platform_plan[key] = launch[key]
+        for key in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
             if key in plan:
                 value = plan[key]
                 if type(value) is not int or value < (120 if key == "allocation_wall_limit_seconds" else 0):

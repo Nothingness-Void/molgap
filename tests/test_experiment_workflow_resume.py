@@ -165,6 +165,7 @@ def resume_case(tmp_path, workflow_case, monkeypatch):
 
     from molgap.experiment_workflow import prepare_workflow
 
+    plan["kaggle"]["device_resident_train"] = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
     original = prepare_workflow(spec, repo, plan, tmp_path / "prepared")
     if original["status"] != "PREPARED_FOR_PLATFORM":
         pytest.fail(json.dumps({"status": original["status"], "stage": original.get("stage"),
@@ -318,6 +319,7 @@ def test_build_then_prepare_resume_reuses_original_release_without_planning(
     input_root = tmp_path / "resumed" / "source_dataset"
     launch_config = json.loads((input_root / "experiment_launch.json").read_bytes())
     assert set(launch_config["resume"]) == set(original_trajectories)
+    assert set(launch_config["device_resident_train"]) == set(original_trajectories)
     repair_path = input_root / "recovery_repair.json"
     repair_raw = repair_path.read_bytes()
     repair_digest = _sha(repair_raw)
