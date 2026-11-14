@@ -1,0 +1,71 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_resume_preflight/mh_s47/actual_resume_certificate.json",
+    "sha256": "fd73312672220fafb706bb8d0806bf6051440285531e319038b20cf151ef7fcc"
+  },
+  "authority": {
+    "path": "experiments/pcqm_gptrans_multihop_edge_20261112/e2/kA_s47_v2/continuation_authorization.md",
+    "sha256": "e3628190c188853cc51fc3a433b9a70f3d60dc3e4506da466f29988e30ad0a8e"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/last_checkpoint.pt",
+    "sha256": "632c0a23ab86f6277d11ac03da7e62e7e6f4ee4a465b318be1ec54d202025a85"
+  },
+  "continued": {
+    "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v2",
+    "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-gptrans-multihop-edge-e2-a-s47",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "b28b515fc00df2017555447c5917ed2ebf7b4d4e",
+    "source_package_sha256": "0b1221652a25511f415c961719767dabeabf1d7c396f22679655687826ec44ca",
+    "spec_identity": "156444e7508639c424e577a68e853a97ff5927897d164acf87c9935402f8f96b"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/output_manifest.json",
+    "sha256": "0c97d94369a1b0c9bec5178acd67b6ee45b89dbde852ddd598227fbd51b9a5ce"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/operations/launch_receipt.json",
+    "sha256": "fba0a001879cc7a159eb64583a4aea03f4073d48931bb9d942e5dedf7c7fb644"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json",
+    "sha256": "1684789bb711b03d4e2218c581bfcf11d1283d6d0c2554e6e57e337f366f6729"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_resume_preflight/mh_s47/runtime_certificate.json",
+    "sha256": "93a6c9841d7e34cdd84aafaeb5875d15f844b524f51ce296594e8cab578a68fc"
+  },
+  "origin": {
+    "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v1",
+    "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-gptrans-multihop-edge-e2-a-s47",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "b28b515fc00df2017555447c5917ed2ebf7b4d4e",
+    "source_package_sha256": "0b1221652a25511f415c961719767dabeabf1d7c396f22679655687826ec44ca",
+    "spec_identity": "156444e7508639c424e577a68e853a97ff5927897d164acf87c9935402f8f96b"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/operations/launch_receipt.json",
+    "sha256": "d2fd0228a2cb6050a8e033f26c27d6a367f24760956f24b3a7f640347fda920a"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/resume_bundle.json",
+    "sha256": "0664cdc9f3e634fd0ccbd2b60bf66a52d482ed43a26b462ed37031a83403bfb1"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/canonical_trace.json.context.json",
+    "sha256": "8cd6334efa54352324ea9f03debfaa0a970cf706dd076379736db403f1010e49"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/prepared/package/package_manifest.json",
+    "sha256": "cb1b2984d9b07346fdd8db2df79669438a404e38fe724a6e8baa7b289735ff52"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/canonical_trace.json",
+    "sha256": "3cd1b595de9635f36ecd2f2109fbc3cc5ef93c77716fc7175d1fbc320d6e3903"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one arm per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 22.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 11.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+}

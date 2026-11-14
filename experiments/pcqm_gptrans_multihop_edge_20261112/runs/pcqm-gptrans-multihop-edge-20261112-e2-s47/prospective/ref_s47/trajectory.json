@@ -1,0 +1,111 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-e2-s47-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/ref_s47/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-e2-s47:ref_s47:downstream"
+      ],
+      "source_commit": "b28b515fc00df2017555447c5917ed2ebf7b4d4e",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-gptrans-multihop-edge-20261112-e2",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/rml_decision_snapshots/919bacbc40ff1e0e7a81a153e0d4c9be1f2dd0df9cc6cd15b21471eb72476689.json",
+    "snapshot_sha256": "919bacbc40ff1e0e7a81a153e0d4c9be1f2dd0df9cc6cd15b21471eb72476689",
+    "state_timestamp": "2026-11-12T17:30:00Z"
+  },
+  "family_id": "pcqm-gptrans-multihop-edge-20261112-e2",
+  "hypothesis": {
+    "alternative_explanations": [
+      "BondLocal and 12 pair-propagation layers already recover path content",
+      "Distance embedding is sufficient for PCQM4Mv2",
+      "Any gain is below initialization noise"
+    ],
+    "changed_mechanism": "shortest-path-ordered-bond-encoding-with-position-specific-mixing",
+    "cheapest_falsifier": "Three 500K 60-pass arms (ref_s47, mh_s47, mh_s48) scored once each on tail_holdout_v1; candidate mean must reach <= 104.94 meV.",
+    "decision_changed_if_negative": "Close NEGATIVE_UNDER_CONTRACT: no retry, grid, full training or adoption.",
+    "decision_changed_if_positive": "Mean tail_holdout_v1 MAE of candidates mh_s47 and mh_s48 <= 104.94 meV with ref_s47 in [105.3, 110.6]; otherwise NEGATIVE_UNDER_CONTRACT (reference outside range: INCONCLUSIVE infrastructure). Official validation not used; no adoption.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+    "observed_deficiency": "Our GPT-T adds bond embeddings only to directly bonded pairs; pairs at hop distance >= 2 see only a distance embedding, while official GPTrans also injects the ordered path bonds (multi_hop_max_dist=20).",
+    "related_closed_family_ids": [
+      "pcqm-k1-hop-shell-100k",
+      "gptrans-t-local-bias-rwse16-local-edge"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the zero-start multi-hop path edge encoding lower the 500K tail-holdout MAE of the retained BondLocal + pair-update-norm GPT-T below the 107.94 meV baseline pool by 3.0 meV?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/ref_s47/recipe.json",
+      "experiments/pcqm_gptrans_multihop_edge_20261112/e2/ref_s47/data_declaration.json",
+      "experiments/pcqm_gptrans_multihop_edge_20261112/e2/kA_s47/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "ref_s47",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47",
+      "reference_arm_id": "ref_s47",
+      "reference_trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/ref_s47/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "156444e7508639c424e577a68e853a97ff5927897d164acf87c9935402f8f96b"
+    },
+    "source_commit": "b28b515fc00df2017555447c5917ed2ebf7b4d4e",
+    "source_config_identity": "b3050bb6d940c9b2dce70c6da5ce8fda117284f785bd2fb197089c216383defe"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
+}
