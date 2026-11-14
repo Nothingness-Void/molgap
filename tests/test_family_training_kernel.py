@@ -13,12 +13,14 @@ from molgap.training_reproducibility import atomic_torch_save
 from molgap.v4_runtime import state_dict_sha256
 
 
-def test_k1_muon_matches_fp32_matrix_update_and_native_adamw():
-    from molgap.k1_muon import MuonAdamW, parameter_groups
+@pytest.mark.parametrize("optimizer_name", ["MuonAdamW", "BatchedMuonAdamW"])
+def test_k1_muon_matches_fp32_matrix_update_and_native_adamw(optimizer_name):
+    from molgap import k1_muon
     model = torch.nn.Module()
     model.hidden = torch.nn.Linear(2, 3)
     model.head = torch.nn.Linear(3, 1)
-    optimizer = MuonAdamW(parameter_groups(model, .03), lr=.01, weight_decay=.03)
+    optimizer = getattr(k1_muon, optimizer_name)(k1_muon.parameter_groups(model, .03),
+                                               lr=.01, weight_decay=.03)
     assert optimizer.param_groups[0]["param_names"] == ["hidden.weight"]
     native_head = torch.nn.Parameter(model.head.weight.detach().clone())
     native = torch.optim.AdamW([native_head], lr=.01, weight_decay=.03)
@@ -36,12 +38,105 @@ def test_k1_muon_matches_fp32_matrix_update_and_native_adamw():
             gram = update @ update.T
             update = 3.4445 * update - 4.775 * (gram @ update) + 2.0315 * (gram @ gram @ update)
         expected = expected * (1 - .01 * .03) - .01 * .2 * (3 ** .5) * update.T
-        optimizer.step()
+        def closure():
+            assert torch.is_grad_enabled()
+            return model.hidden.weight.sum()
+        loss = optimizer.step(closure)
+        assert loss.grad_fn is not None
         native.step()
         torch.testing.assert_close(model.hidden.weight, expected.float(), atol=1e-6, rtol=1e-6)
         torch.testing.assert_close(model.head.weight, native_head, atol=0, rtol=0)
     assert set(optimizer.state[model.hidden.weight]) == {"step", "momentum_buffer"}
     assert optimizer.state[model.hidden.weight]["step"].item() == 2
+
+
+def test_k1_muon_batched_multistep_and_bidirectional_resume():
+    from molgap.k1_muon import BatchedMuonAdamW, MuonAdamW
+
+    shapes = [(7, 3), (7, 3), (7, 3), (3, 7), (3, 7), (4, 4), (4, 4), (7, 3), (2,)]
+    initial = [torch.sin(torch.arange(torch.tensor(shape).prod().item(), dtype=torch.float32)
+                         + index).reshape(shape) for index, shape in enumerate(shapes)]
+
+    def make_run(optimizer_type, values):
+        params = [torch.nn.Parameter(value.detach().clone()) for value in values]
+        optimizer = optimizer_type([
+            {"params": params[:7], "algorithm": "muon", "lr": .01},
+            {"params": params[7:8], "algorithm": "muon", "lr": .02},
+            {"params": params[8:], "algorithm": "adamw", "lr": .003},
+        ], weight_decay=.03)
+        return params, optimizer
+
+    reference = make_run(MuonAdamW, initial)
+    batched = make_run(BatchedMuonAdamW, initial)
+    runs = [reference, batched]
+    active_steps = [0] * len(shapes)
+    max_parameter_error = max_momentum_error = 0.
+    for step in range(6):
+        if step == 2:
+            for source, target_type in ((reference, BatchedMuonAdamW), (batched, MuonAdamW)):
+                resumed = make_run(target_type, source[0])
+                saved = deepcopy(source[1].state_dict())
+                resumed[1].load_state_dict(saved)
+                assert resumed[1].param_groups == [
+                    dict(group, params=resumed[0][start:end])
+                    for group, start, end in zip(source[1].param_groups, (0, 7, 8), (7, 8, 9))]
+                for old_param, new_param in zip(source[0], resumed[0]):
+                    if old_param not in source[1].state:
+                        assert new_param not in resumed[1].state
+                        continue
+                    for key, value in source[1].state[old_param].items():
+                        torch.testing.assert_close(resumed[1].state[new_param][key], value, atol=0, rtol=0)
+                runs.append(resumed)
+        gradients = [torch.cos(value * (step + 1) + index) * (.1 + index)
+                     for index, value in enumerate(initial)]
+        gradients[1] = None if step < 3 else gradients[1]
+        gradients[2] = None
+        gradients[4] = None if step == 4 else gradients[4]
+        gradients[5] = torch.zeros_like(initial[5])
+        if step == 3:
+            gradients[0] = torch.zeros_like(initial[0])
+        if step == 5:
+            gradients = [None] * len(shapes)
+        for index, grad in enumerate(gradients):
+            active_steps[index] += grad is not None
+        for params, optimizer in runs:
+            before = [param.detach().clone() for param in params]
+            old_buffers = {index: optimizer.state[param]["momentum_buffer"].clone()
+                           for index, param in enumerate(params[:-1]) if param in optimizer.state}
+            for param, grad in zip(params, gradients):
+                param.grad = None if grad is None else grad.clone()
+            optimizer.step()
+            for index, (param, grad) in enumerate(zip(params, gradients)):
+                if grad is not None:
+                    torch.testing.assert_close(param.grad, grad, atol=0, rtol=0)
+                else:
+                    assert param.grad is None
+                    torch.testing.assert_close(param, before[index], atol=0, rtol=0)
+                    if index in old_buffers:
+                        torch.testing.assert_close(optimizer.state[param]["momentum_buffer"],
+                                                   old_buffers[index], atol=0, rtol=0)
+                if active_steps[index] == 0:
+                    assert param not in optimizer.state
+                else:
+                    state = optimizer.state[param]
+                    assert state["step"].item() == active_steps[index]
+                    if index < len(shapes) - 1:
+                        assert set(state) == {"step", "momentum_buffer"}
+                        assert state["step"].shape == torch.Size([])
+                        assert state["step"].dtype == torch.float32
+                        assert state["momentum_buffer"].shape == param.shape
+        for params, optimizer in runs[1:]:
+            for expected, actual in zip(reference[0], params):
+                max_parameter_error = max(max_parameter_error, (expected - actual).abs().max().item())
+                torch.testing.assert_close(actual, expected, atol=1e-6, rtol=1e-6)
+                if expected in reference[1].state and "momentum_buffer" in reference[1].state[expected]:
+                    expected_buffer = reference[1].state[expected]["momentum_buffer"]
+                    actual_buffer = optimizer.state[actual]["momentum_buffer"]
+                    max_momentum_error = max(max_momentum_error,
+                                             (expected_buffer - actual_buffer).abs().max().item())
+                    torch.testing.assert_close(actual_buffer, expected_buffer, atol=1e-7, rtol=1e-6)
+    print(f"Muon CPU multistep/resume max_abs: parameter={max_parameter_error:.9g}, "
+          f"momentum={max_momentum_error:.9g}")
 
 
 def test_initialization_dtype_must_not_be_silently_cast(initial_states, tmp_path):
