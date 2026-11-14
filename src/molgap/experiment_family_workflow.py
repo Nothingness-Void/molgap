@@ -1618,6 +1618,8 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
     for arm_id, item in supplied.items():
         if type(item) is not dict or set(item) - {"context"} != {"output_dir", "expected"}:
             raise ValueError("Expected per-arm output_dir/expected inputs")
+        if "context" in item and type(item["context"]) is not RunContext:
+            raise ValueError("Output context must be a RunContext from acceptance resolution")
         output_dir = Path(item["output_dir"])
         output_dir = output_dir if output_dir.is_absolute() else Path(repo_root) / output_dir
         _safe_local(output_dir.absolute())
