@@ -215,3 +215,7 @@ diagnostic implementation/evidence are reusable, with no model promotion.
 [Full-scale minus-tail K1 + GPT-T fusion](pcqm_full_minus_tail_fusion_20261113/protocol.md)
 freezes the single-seed protocol before any result: both members train on rows
 [0, 3,250,000) and are scored once on the permanent tail holdout.
+
+[GPT-T multi-hop edge](pcqm_gptrans_multihop_edge_20261112/README.md)
+closed FAIL at the 500K tail gate (E2, candidate mean 107.801 meV vs 104.94);
+only the closure record is on this branch, the evidence is on its experiment branch.
