@@ -144,7 +144,7 @@ def test_missing_strict_evidence_cannot_execute_terminal_closure(tmp_path, monke
     mechanical = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}})
     monkeypatch.setattr(workflow, "accept_workflow", mechanical)
     monkeypatch.setattr(runs, "inspect_run_strict_evidence", Mock(return_value={
-        "status": "BLOCKED", "blockers": ["native_proof_dependencies_missing"]}))
+        "status": "BLOCKED", "closure_ready": False, "blockers": ["native_proof_dependencies_missing"]}))
     qualify = Mock(return_value={"locations": {}})
     monkeypatch.setattr(family, "qualify_same_run_terminal_packages", qualify)
     stage = Mock(return_value={"locations": {}, "blockers": []})

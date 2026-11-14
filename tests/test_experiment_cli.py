@@ -193,7 +193,11 @@ def test_prepare_commands_default_to_compact_report_and_support_verbose(
         capsys, monkeypatch, spec_file, tmp_path, command, input_option, input_name):
     full = {"status": "PREPARED_FOR_PLATFORM", "package_identity": SHA,
             "full_owner_detail": {"release": "retained"}}
-    dispatch = Mock(return_value=(full, 0))
+    def prepared_dispatch(*_args, **_kwargs):
+        (tmp_path / "prepared").mkdir(exist_ok=True)
+        (tmp_path / "prepared" / "workflow_report.json").write_text("{}")
+        return full, 0
+    dispatch = Mock(side_effect=prepared_dispatch)
     monkeypatch.setattr(cli, "_dispatch", dispatch)
     common = [command, "--spec", spec_file, "--repo-root", tmp_path,
               "--output", tmp_path / "prepared", input_option, tmp_path / input_name]
