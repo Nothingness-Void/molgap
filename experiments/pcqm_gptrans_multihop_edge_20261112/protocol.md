@@ -171,3 +171,7 @@ Frozen reading:
 ## Amendment 3 erratum (2026-11-13, before any E2 metric was read)
 
 Kernel B continuation v2 was not submitted. The continuation path requires every Spec arm to hold an incomplete pause state (five all-arm gates, two of them inside the frozen remote package), and ref_s48 had already completed 60/60. Amendment 3 assumed that kernel B could resume mh_s48 alone within 1.5 h under the existing path; that was wrong. mh_s48 stays PENDING at 57/60 (not INCONCLUSIVE: no continuation ran). Any later continuation needs its own approved infrastructure commit and new user authorization. Recipe, 60-pass endpoint, E2 gate, reference band and W2 rules are unchanged.
+
+## Amendment 3 erratum 2 (2026-11-14, after E2 results)
+
+The Amendment 3 erratum above is out of date. Kernel B continuation v2 was submitted (2026-11-13 17:50 UTC) on top of the d73a0c20 partial-arm overlay (source_commit 873ee479 is the base archive) and mh_s48 reached 60/60. Submission was earlier than the authorized 2026-11-14 00:00 UTC; see the deviation note in decision_e2.md. Nothing else in the protocol changes.

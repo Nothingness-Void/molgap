@@ -367,7 +367,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 names = {arm: args.remote_root + "/" + arm + "/output_manifest.json" for arm in contexts}
                 if args.resume_prepared is not None:  # retained arms keep their origin-version output
                     for arm in _json(args.resume_prepared / "workflow_report.json").get("retained_arms", {}):
-                        names.pop(arm)
+                        names.pop(arm, None)
                 if args.arms is None:
                     names["_execution"] = args.remote_root + "/execution_retention.json"
                 missing = [name for name in names.values() if not (pinned / name).is_file()]
