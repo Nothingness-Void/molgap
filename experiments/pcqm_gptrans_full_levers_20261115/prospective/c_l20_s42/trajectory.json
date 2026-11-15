@@ -21,7 +21,7 @@
   "decision": {
     "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision.md",
     "next_allowed_actions": [
-      "none until its protocol condition holds and it is separately submitted"
+      "Submit to IMS per protocol.md"
     ],
     "outcome": "ACTIVE",
     "reopen_conditions": []
@@ -33,7 +33,7 @@
       "NO_TRAIN"
     ],
     "budget_snapshot_ref": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
-    "chosen_action": "NO_TRAIN",
+    "chosen_action": "RUN_FULL_IMS",
     "policy_id": "pcqm-gptrans-full-levers-20261115",
     "policy_version": "1",
     "role_snapshot_refs": [

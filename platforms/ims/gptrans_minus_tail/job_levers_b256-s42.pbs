@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -N GPTLB42
+#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=1:ngpus=1
+#PBS -l walltime=18:00:00
+#PBS -j oe
+# GPT-T minus-tail B1024 (lever arm b256-s42; see experiments/pcqm_gptrans_full_levers_20261115/protocol.md): jsub -q H job.pbs
+# Cut by walltime? Resubmit the SAME command: the runner resumes from runs/.../last_checkpoint.pt.
+# Override walltime with  jsub -q H -l walltime=HH:MM:SS -v WALL_S=<seconds> job.pbs  (keep WALL_S equal to it).
+set -euo pipefail
+
+ROOT=/lustre/home/users/sm2/chou/molgap-gptrans-levers-b256-s42-20261115
+RB=/lustre/home/users/sm2/chou/molgap-pcqm-route-b
+OGB_ZIP=/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip  # pure-python ogb 1.3.6 (AtomEncoder/BondEncoder); same archive the K1/GPT-T full jobs use
+PYTHON=/lustre/home/users/sm2/chou/molgap/.venv/bin/python
+WALL_S=${WALL_S:-64800}
+
+cd "$ROOT"
+test "$(realpath "$ROOT")" = "$ROOT"
+test "$(realpath "$RB/vendor-cu126-torch271")" = "$RB/vendor-cu126-torch271"
+test -x "$PYTHON"
+test -f "$OGB_ZIP"
+mkdir -p "$ROOT/logs" "$ROOT/runs"
+
+export PYTHONPATH="$RB/code/platforms/ims/pcqm_route_b/shims:$RB/vendor-cu126-torch271:$OGB_ZIP:$ROOT/code/src:$ROOT/code"
+export MOLGAP_GPTRANS_LAYERS=12
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1 PYTHONHASHSEED=42
+
+echo "[job] ${PBS_JOBID:-nojob} start $(date -u +%FT%TZ) WALL_S=$WALL_S"
+"$PYTHON" -u "$ROOT/code/platforms/ims/gptrans_minus_tail/run_gptrans_levers.py" --arm b256-s42 --root "$ROOT" --wall-s "$WALL_S" 2>&1 | tee -a "$ROOT/logs/train.log"
