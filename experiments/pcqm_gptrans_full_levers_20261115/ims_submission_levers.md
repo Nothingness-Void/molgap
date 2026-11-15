@@ -67,12 +67,13 @@ b256-s43: batch=256 lr=1.414e-03 ... steps/epoch=12,695 total_steps=761,700
           Ep 01/60 | Batch 600/12695 | LR 3.54e-04 | 12.2 step/s | ETA 17.35h
 c-l20-s42: [arm] layers=20 ... total_steps 190,380 | batch=1024 lr=2.828e-03 steps/epoch=3,173 total_steps=190,380
           Ep 01/60 | Batch 200/3173 | LR 7.07e-04 | 3.8 step/s | ETA 13.98h
-d-p90-s42: queued at time of writing (no free A100); log lines are added when it starts
+d-p90-s42: [arm] layers=12 passes=90 ... total_steps 285,570 | batch=1024 lr=2.828e-03 steps/epoch=3,173 total_steps=285,570 (the runner's fixed banner text still says '60 epochs'; the progress lines read Ep 01/90)
+          Ep 01/90 | Batch 400/3173 | LR 7.07e-04 | 6.1 step/s | ETA 12.89h (started after waiting for a free A100)
 ```
 Fallback rule (B512 if B256 would exceed 20 h): not triggered (B256 about 17 h). Expect one resubmission of each B256 job for the last pass(es): in-job budget WALL_S minus 1,800 s = 17.5 h.
 
 ### Credits (`showlim -c`, group ew6, limit 1,500,000)
-Before: total use 1,458,626, remaining 41,374, RUNNING-JOB 1,155. After submission: total use 1,458,672, RUNNING-JOB 1,201. GPU limit 6; our jobs plus A take 5 running, D waiting for a free A100.
+Before: total use 1,458,626, remaining 41,374, RUNNING-JOB 1,155. After submission: total use 1,458,672, RUNNING-JOB 1,201. GPU limit 6; A (2) + B256 (2) + C + D = 6 running.
 
 ### Recovery
-Same as arm A: if the scheduler shows no copy and a run stopped at walltime, resubmit the same command from its root (resumes from `last_checkpoint.pt`; finished runs skip). A queued D is not resubmitted. Never rename a run directory; `jdel` only after diagnosis.
+Same as arm A: if the scheduler shows no copy and a run stopped at walltime, resubmit the same command from its root (resumes from `last_checkpoint.pt`; finished runs skip). Never rename a run directory; `jdel` only after diagnosis.
