@@ -1,0 +1,10 @@
+{
+  "development": "absent",
+  "held_out": "tail_holdout_v1 rows [3250000, 3378606) offline only, each endpoint scored once",
+  "official_validation": "forbidden",
+  "roles": [
+    {"role": "train", "rows": "0..3249999", "use": "training and target statistics (MINUS_TAIL_STATS), in-train probe of 20,480 rows"}
+  ],
+  "test_challenge": "forbidden",
+  "test_dev": "forbidden"
+}
