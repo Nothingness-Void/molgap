@@ -3,9 +3,18 @@
 BondLocalBlock/BondLocalGPTrans are retained from gptrans_capacity.py.
 The shared family session owns all training and output logic.
 """
+import os
+
 import torch
 from torch import nn
 from .gptrans import OGBGPTransTiny
+
+REFERENCE_LAYERS = 12
+
+
+def gptrans_layers():
+    """Backbone depth: 12 unless MOLGAP_GPTRANS_LAYERS names another count (capacity lever runs only)."""
+    return int(os.environ.get("MOLGAP_GPTRANS_LAYERS", REFERENCE_LAYERS))
 
 
 def _flat_bond_targets(graph, target, node_count):
@@ -59,13 +68,13 @@ def make_bond_local_model():
     """Construct the retained seed42 shape; the family loader supplies frozen tensors."""
     with torch.random.fork_rng(devices=[]):
         torch.random.default_generator.manual_seed(42)
-        model = OGBGPTransTiny()
+        model = OGBGPTransTiny(num_layers=gptrans_layers())
         with torch.no_grad():
             model.in_degree_encoder.weight.mul_(.0897)
             model.out_degree_encoder.weight.mul_(.0897)
         model.__class__ = BondLocalGPTrans
         model.blocks = nn.ModuleList(BondLocalBlock(block) for block in model.blocks)
-    if sum(p.numel() for p in model.parameters()) != 5_871_201:
+    if gptrans_layers() == REFERENCE_LAYERS and sum(p.numel() for p in model.parameters()) != 5_871_201:
         raise ValueError("Retained local-bond parameter count differs")
     return model
 

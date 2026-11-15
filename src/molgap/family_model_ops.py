@@ -5,9 +5,10 @@ from __future__ import annotations
 def make_gptrans_backbone(variant="reference"):
     from .gptrans import OGBGPTransTiny
     from .gptrans_variants import apply_variant
+    from .gptrans_bond_local import gptrans_layers
     from .gptrans_memory import apply_memory_variant
     apply = apply_memory_variant if variant in {"memory_value", "memory_message"} else apply_variant
-    model = OGBGPTransTiny(node_channels=256, pair_channels=32, num_layers=12,
+    model = OGBGPTransTiny(node_channels=256, pair_channels=32, num_layers=gptrans_layers(),
         num_heads=8, shortest_path_cap=20, dropout=.1, drop_path=.1, layer_scale=1., n_targets=1)
     return apply(model, variant)
 
