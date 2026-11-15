@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 207,
+    "trajectories_total": 217,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 196,
-    "with_incomplete_native_measurement": 164,
+    "with_cost_event": 206,
+    "with_incomplete_native_measurement": 174,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 105,
+      "count": 115,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -106,6 +106,16 @@
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+        "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
@@ -154,7 +164,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 164,
+      "count": 174,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -298,6 +308,16 @@
         "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+        "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
@@ -343,7 +363,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 63,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -384,6 +404,16 @@
         "TB-local-k1-channel-gain-flow-20261023",
         "TB-local-k1-channel-gain-flow-20261023-r2",
         "TB-local-k1-channel-gain-flow-20261023-r3",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+        "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
@@ -403,7 +433,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 28,
       "items": [
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
@@ -420,6 +450,16 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+        "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+        "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+        "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+        "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
         "TB-pcqm-k1-single-true-ema-100k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"

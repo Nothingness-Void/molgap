@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "e_cross_recipe-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+  "hardware": "local CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local",
+  "run_id": "pcqm-gptrans-full-levers-20261115:e_cross_recipe",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe"
+}

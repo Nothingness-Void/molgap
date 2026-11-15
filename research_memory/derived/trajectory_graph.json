@@ -846,6 +846,66 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-b256_s42:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-b256_s43:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-b512_s42:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-b512_s43:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe:A001",
+      "target": "experiments/pcqm_gptrans_full_levers_20261115/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_gptrans_full_minus_tail_20261110/evidence_review.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_gptrans_full_minus_tail_20261110/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_gptrans_full_minus_tail_20261110/training_recipe_gptrans_pairnorm.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
       "type": "action_produced_evidence"
@@ -1591,6 +1651,51 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-attribution",
       "target": "TB-gptrans-100k-transfer-control-local-20260925",
       "type": "parent_trajectory"
@@ -1858,6 +1963,51 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
       "type": "prior_evidence"
     },
     {
@@ -3188,6 +3338,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-residual-reconciliation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
       "type": "prior_evidence"
     },
     {
@@ -5348,6 +5503,46 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s45",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-b256_s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-b256_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-b512_s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-b512_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-c_l20_s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-d_p90_s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-levers-20261115-e_cross_recipe",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-minus-tail-20261110-gptrans_pairnorm",
       "type": "trajectory"
     },
     {
