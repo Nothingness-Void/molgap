@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "a_b1024_s44-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44-measured",
+  "evidence_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision_A.md",
+  "hardware": "NVIDIA A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 8.4071
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 8.4071
+    }
+  },
+  "platform": "ims",
+  "run_id": "pcqm-gptrans-full-levers-20261115:a_b1024_s44",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-gptrans-full-levers-20261115-a_b1024_s44"
+}
