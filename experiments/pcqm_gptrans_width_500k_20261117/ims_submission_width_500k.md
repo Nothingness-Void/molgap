@@ -13,11 +13,11 @@ Command, from each root, no `-v`: `jsub -q H code/platforms/ims/gptrans_minus_ta
 ## Root layout (create once per root)
 - `code/`: copy (`cp -a`) the `code/` tree of an earlier lever root (for example `molgap-gptrans-levers-c-l20-s42-20261115`; runner sha must read `120d5571...`), then overwrite or add the files in the table below. Check LF line endings (0 CR) after upload.
 - `inputs/`: the init files of that card (table below). Check each file sha before submitting.
-- `data/ogb-train-full/`: read-only symlinks `manifest.json` and `store` to the s42 lever root's `data/ogb-train-full/` (`/lustre/home/users/sm2/chou/molgap-gptrans-minus-tail-b1024-20261114/data/ogb-train-full/`). `realpath` of every link must lie inside `/lustre/home/users/sm2/chou`. The launcher hashes the ten shards it uses (0000-0009, about 1.56 GB) at each start and stops with exit 3 if any of shards 0065+ exists on disk. No marker file is written, so the two roots cannot race.
-- Login-node check only (the job's interpreter and PYTHONPATH from the PBS file): `torch 2.7.1`, `import ogb.graphproppred.mol_encoder`, `molgap.gptrans_bond_local.gptrans_shape`, and `python run_gptrans_width_500k.py --help`. Do not start training on the login node.
+- `data/ogb-train-full/`: read-only symlinks `manifest.json` and `store` to `/lustre/home/users/sm2/chou/molgap-gptrans-minus-tail-b1024-20261114/data/ogb-train-full/` (the root of the earlier GPT-T minus-tail B1024 run, which holds the shared full-train store). `realpath` of every link must lie inside `/lustre/home/users/sm2/chou`. The launcher hashes the ten shards it uses (0000-0009, about 1.56 GB) at each start and stops with exit 3 if any of shards 0065+ exists on disk. No marker file is written, so the two roots cannot race.
+- Login-node CPU check, once per root, with the job's interpreter and PYTHONPATH from the PBS file: `python login_check.py --card s42 --root <root>` (file: [login_check.py](login_check.py); upload it to `<root>/`; s43 likewise). It imports launcher, driver, torch, ogb and molgap; checks runner and manifest sha and the first ten train shards; then, for R, L20, W320 and F3 of the card, builds the recipe as the launcher does and loads the init strictly (CPU, no training). Each arm must print `strict load ok` with params R 5,871,201, L20 9,529,761, W320 8,827,321, F3 9,023,073. Run locally on the committed bytes before upload (`--no-shards`): all four arms passed. Do not start training on the login node.
 
 ## Files to upload
-SHA256 values are of the committed (LF) bytes at the commit named at the end of this table.
+Export every file with `git show <commit>:<path>` (LF bytes) and upload that export, never the working tree (its checkout holds CR bytes). SHA256 values are of those bytes. After upload, every remote `code/src/molgap/*.py` must match its sha at the commit, and every uploaded `.py` and `.pbs` file must hold 0 CR.
 
 | Local path (repo) | Remote path under `<root>/` | sha256 |
 |---|---|---|
@@ -27,9 +27,11 @@ SHA256 values are of the committed (LF) bytes at the commit named at the end of 
 | `platforms/ims/gptrans_minus_tail/job_width500k_s43.pbs` | `code/platforms/ims/gptrans_minus_tail/` | `2882d3149df5f3df2957c45467309ace3824edba19c6d700bcb83e2a7123aee4` |
 | `src/molgap/gptrans_bond_local.py` (overwrite) | `code/src/molgap/` | `e4572bf1016b9eb9775a4ac81620f2b4def3a14ef4a3618e95f984a7551acc0a` |
 | `src/molgap/gptrans_variants.py` (overwrite) | `code/src/molgap/` | `30b02fb410d48301f214cd1b92c3cdf3bbcd2f6b5038ad7fd22ce7b110d7b565` |
+| `src/molgap/family_model_ops.py` (overwrite) | `code/src/molgap/` | `80c758bbe8bbbe1448573694f940014b8cd15e6c0c6fb5390def6da0365f8149` |
+| `experiments/pcqm_gptrans_width_500k_20261117/login_check.py` | `<root>/` | `498a0672b1269b939c29d6c9f7f2bbc466aa6848594ba4eb70b9eacbf58948c8` |
 | `platforms/colab/pcqm_k1_b1024_production/train_full_b1024.py` (unchanged; check only) | `code/platforms/colab/pcqm_k1_b1024_production/` | `120d5571593c56647afe8f7c6f6060afeb7781ff8aea101fb9454fdac0ee5b37` |
 
-Commit of these files: `ffc58b84` (launcher, driver, PBS) on top of `ab7e996b` (the two `src` files).
+Commit of these files: `ffc58b84` (launcher, driver, PBS) on top of `ab7e996b` (the `src` files); these bytes are unchanged through `7fc26a37`.
 
 Init files (local source; each card needs its four):
 
