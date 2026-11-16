@@ -1,14 +1,16 @@
 # IMS submission record: GPT-T 500K capacity question
 
-Rules: [protocol.md](protocol.md). Status: **prepared, not submitted.** Job IDs and times stay empty until the submitting agent fills them. Scheduler truth wins over this file. Before any IMS command, read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`, resolve every path with `realpath`, never touch jobs that are not ours, and submit no smoke or preflight job.
+Rules: [protocol.md](protocol.md). Status: **submitted 2026-11-16 19:12 and 19:15 UTC (2026-11-17 04:12 JST); both running, R task first.** Scheduler truth wins over this file. Before any IMS command, read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`, resolve every path with `realpath`, never touch jobs that are not ours, and submit no smoke or preflight job.
 
 ## Jobs
 | Card | Job ID | Name | Submitted (UTC) | Node | Root |
 |---|---|---|---|---|---|
-| s42 (R, L20, W320, F3 with the s42 inits) | | `GPTW500S42` | | | `/lustre/home/users/sm2/chou/molgap-gptrans-width-500k-s42-20261117` |
-| s43 (the same with the s43 inits) | | `GPTW500S43` | | | `/lustre/home/users/sm2/chou/molgap-gptrans-width-500k-s43-20261117` |
+| s42 (R, L20, W320, F3 with the s42 inits) | 2025095.ccpbs1 | `GPTW500S42` | 2026-11-16T19:12:52Z (started 19:13:07Z) | ccg007 | `/lustre/home/users/sm2/chou/molgap-gptrans-width-500k-s42-20261117` |
+| s43 (the same with the s43 inits) | 2025099.ccpbs1 | `GPTW500S43` | 2026-11-16T19:15:29Z (started 19:15:40Z) | ccg007 | `/lustre/home/users/sm2/chou/molgap-gptrans-width-500k-s43-20261117` |
 
 Command, from each root, no `-v`: `jsub -q H code/platforms/ims/gptrans_minus_tail/job_width500k_s42.pbs` (s43 likewise). 1 node, 8 cpus, 1 A100, walltime 10:00:00, `WALL_S` 36000. Both cards can run at once on two A100s. The ew6 group limit is 6 running GPUs: check `jobinfo -c` and `showlim -c` first.
+
+Start checks (before any later cut): both logs show `preflight ok | torch 2.7.1+cu126 | NVIDIA A100-SXM4-80GB | rows 500000`, the `[arm]` line, `batch=1024 lr=2.828e-03 steps/epoch=488 total_steps=29,280`, about 7 step/s and a first checkpoint at epoch 1 (s42). Login-node check before submit: all four arms of both cards printed `strict load ok` with the expected parameter counts; remote `code/src/molgap/*.py` (231 files) matched the commit sha for both roots; 0 CR in uploaded files; init, runner and ogb zip sha matched. Expected finish about 8.2 h after start (around 03:30 UTC 2026-11-17, 12:30 JST); walltime ends 05:13 UTC. Recovery: the one command below from the root, only after `jobinfo -c` shows no copy; exit 2 means a task is `PAUSED` or `NOT_STARTED`, not an error.
 
 ## Root layout (create once per root)
 - `code/`: copy (`cp -a`) the `code/` tree of an earlier lever root (for example `molgap-gptrans-levers-c-l20-s42-20261115`; runner sha must read `120d5571...`), then overwrite or add the files in the table below. Check LF line endings (0 CR) after upload.
