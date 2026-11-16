@@ -866,6 +866,46 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A001",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A002",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A003",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A004",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A005",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A006",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A007",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-width-500k-20261117:A008",
+      "target": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long:A001",
       "target": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/training_recipe_bn_long.json",
       "type": "action_produced_evidence"
@@ -1858,6 +1898,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-gptrans-width-500k-20261117",
       "type": "prior_evidence"
     },
     {
@@ -5364,6 +5409,10 @@
     },
     {
       "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-width-500k-20261117",
       "type": "trajectory"
     },
     {

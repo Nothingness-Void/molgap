@@ -1,0 +1,214 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "R-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-R-s42-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:R-s42"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A002",
+      "attempt_ids": [
+        "L20-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-L20-s42-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:L20-s42"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A003",
+      "attempt_ids": [
+        "W320-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-W320-s42-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:W320-s42"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A004",
+      "attempt_ids": [
+        "F3-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-F3-s42-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:F3-s42"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A005",
+      "attempt_ids": [
+        "R-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-R-s43-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:R-s43"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A006",
+      "attempt_ids": [
+        "L20-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-L20-s43-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:L20-s43"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A007",
+      "attempt_ids": [
+        "W320-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-W320-s43-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:W320-s43"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    },
+    {
+      "action_id": "A008",
+      "attempt_ids": [
+        "F3-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-gptrans-width-500k-20261117-F3-s43-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-width-500k-20261117:F3-s43"
+      ],
+      "source_commit": "x",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_width_500k_20261117/decision.md",
+    "next_allowed_actions": [
+      "Score each endpoint once on tail_holdout_v1 and apply width_verdict.py; no scale-up before the protocol's nomination rule is met"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_FULL_IMS",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+    "chosen_action": "RUN_FULL_IMS",
+    "policy_id": "pcqm-gptrans-width-500k-20261117",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_width_500k_20261117/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_width_500k_20261117/prospective/rml_decision_snapshots/56c1235a02ef94002e00ad951c4bb2b603bab5ef4a38b90993e0a7075abe38fd.json",
+    "snapshot_sha256": "56c1235a02ef94002e00ad951c4bb2b603bab5ef4a38b90993e0a7075abe38fd",
+    "state_timestamp": "2026-11-17T03:00:00+00:00"
+  },
+  "family_id": "pcqm-gptrans-width-500k-20261117",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Init noise with two seeds per arm (data order and dropout fixed)",
+      "Tail rows are one fixed finite sample",
+      "500K may not carry a capacity signal; L20 calibrates this",
+      "Width and FFN changes also change optimisation, not only capacity (same lr, EMA, wd)"
+    ],
+    "changed_mechanism": "GPT-T BondLocal+PairNorm width 256 -> 320 (heads 10) or FFN ratio 1 -> 3, against the same-seed 12x256 reference, 500K rows, B1024",
+    "cheapest_falsifier": "Mean tail gain over same-seed R below 1.5 meV, or one seed not negative, or the paired one-sided 99% bound not below 0, for each of W320 and F3",
+    "decision_changed_if_negative": "With a valid L20 calibration, width and FFN are negative at 500K; with NO_SIGNAL or UNCERTAIN they stay unclosed",
+    "decision_changed_if_positive": "The arm is nominated for one full-scale test (never adopted from 500K)",
+    "expected_native_cost_ref": "cost-TB-pcqm-gptrans-width-500k-20261117-R-s42-planned",
+    "hypothesis_id": "H-87b110f9810cc7d89e8f",
+    "observed_deficiency": "Depth 20 and 90 passes gave 0.89 and 0.81 meV at full scale (below the 1.5 meV bar); width and FFN were never compared with a same-seed 12x256 at 500K on the tail, and 500K capacity sensitivity is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43"
+    ]
+  },
+  "owner": "desktop",
+  "question": "At 500K rows, does GPT-T width 320 or FFN ratio 3 lower tail MAE by at least 1.5 meV against the same-seed 12x256 (two seeds), and can 500K see capacity (L20 calibration)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_width_500k_20261117/protocol.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_width_500k_20261117/role_plan.json"
+    ],
+    "source_commit": "04e13e01128ce0b059398e50525f99e586c8d783",
+    "source_config_identity": "bfe37a3dd42359b734e6cf3340d0f801c8d0d3158e346ee3170f02d6ec8658b6"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
+}

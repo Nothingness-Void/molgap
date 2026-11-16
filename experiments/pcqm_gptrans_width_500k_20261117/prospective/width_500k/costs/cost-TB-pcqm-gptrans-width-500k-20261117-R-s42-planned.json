@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "R-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-gptrans-width-500k-20261117-R-s42-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_width_500k_20261117/protocol.md",
+  "hardware": "NVIDIA A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "ims",
+  "run_id": "pcqm-gptrans-width-500k-20261117:R-s42",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
+}
