@@ -88,6 +88,7 @@ def main(argv=None):
             ok = c["gain_mev"] >= NOMINATE_MEV and all(v > 0 for v in c["gain_by_seed_mev"].values()) and c["upper_99_one_sided_mev"] < 0
             r = {**c, "outcome": "NOMINATED" if ok else "NOT_NOMINATED"}
             key = ("NOMINATED", None) if ok else ("NOT_NOMINATED", out["calibration"]["outcome"])
+            r["calibration"] = out["calibration"]["outcome"]  # shown even when nominated, so the reader sees the proxy status
         r["reading"] = READING[key]
         out[arm] = r
     Path(args.out).write_text(json.dumps(out, indent=2), encoding="utf-8", newline="\n")
