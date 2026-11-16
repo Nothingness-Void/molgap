@@ -7,7 +7,7 @@ Same two phases as pcqm_official_valid_eval.py, always separate processes:
          Reads exactly the official valid rows once and writes the ensemble aggregate MAE only (no per-member score,
          no per-row predictions). Refuses to run when an evidence file already exists, so the read happens once.
 test-dev and test-challenge have no code path here.
-Members: --member NAME=RUN_DIR:INIT_FILE, RUN_DIR holds ema_model.pt and run_config.json (weights key "model").
+Members: --member NAME=RUN_DIR,INIT_FILE, RUN_DIR holds ema_model.pt and run_config.json (weights key "model").
 """
 import argparse, hashlib, json, sys
 from pathlib import Path
@@ -27,7 +27,7 @@ def load_members(specs, device):
     members, stats, predict = [], set(), None
     for spec in specs:
         name, rest = spec.split("=", 1)
-        run_dir, init = rest.rsplit(":", 1)
+        run_dir, init = rest.split(",", 1)
         run_dir = Path(run_dir)
         cfg = json.loads((run_dir / "run_config.json").read_text(encoding="utf-8"))
         assert cfg["train_rows"] <= tail.TAIL_START, f"{name} overlaps the tail holdout"
@@ -159,7 +159,7 @@ def main(argv=None):
     parser.add_argument("phase", choices=("gate", "valid"))
     parser.add_argument("--raw-dir", required=True, help="folder holding the extracted pcqm4m-v2 directory")
     parser.add_argument("--data-root", help="pcqm_full_train_v1 root (gate only)")
-    parser.add_argument("--member", action="append", required=True, metavar="NAME=RUN_DIR:INIT_FILE")
+    parser.add_argument("--member", action="append", required=True, metavar="NAME=RUN_DIR,INIT_FILE")
     parser.add_argument("--evidence", required=True)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--authority-note")
