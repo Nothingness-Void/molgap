@@ -19,11 +19,11 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision.md",
+    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md",
     "next_allowed_actions": [
-      "none until its protocol condition holds and it is separately submitted"
+      "none; B256 was chosen by the protocol rule and B512 was never submitted"
     ],
-    "outcome": "ACTIVE",
+    "outcome": "NO_TRAIN",
     "reopen_conditions": []
   },
   "decision_state": {

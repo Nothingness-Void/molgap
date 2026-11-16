@@ -5,12 +5,12 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 15
+- ACTIVE: 8
 - CLOSED: 37
 - INCONCLUSIVE: 23
 - INFRASTRUCTURE_ONLY: 10
-- NEGATIVE_UNDER_CONTRACT: 63
-- NO_TRAIN: 57
+- NEGATIVE_UNDER_CONTRACT: 68
+- NO_TRAIN: 59
 - POSITIVE_UNDER_CONTRACT: 12
 
 ## Transfer
@@ -108,10 +108,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
-- NVIDIA A100 device_hours: measured=16.983000 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- NVIDIA A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
-- NVIDIA A100 wall_hours: measured=16.983000 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
+- NVIDIA A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=14, not_applicable=0
+- NVIDIA A100 device_hours: measured=79.186900 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
+- NVIDIA A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=14, not_applicable=0
+- NVIDIA A100 wall_hours: measured=79.186900 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
 - NVIDIA A100-SXM4-40GB cpu_hours: measured=0.064568 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
@@ -304,7 +304,7 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 436
+- Measurement-missing cost events: 440
 - Cost-event coverage: 206/217 trajectories; incomplete native measurement=174
 
 ## Screening Backtest

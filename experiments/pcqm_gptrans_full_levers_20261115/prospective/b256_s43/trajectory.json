@@ -6,7 +6,8 @@
         "b256_s43-v1"
       ],
       "cost_event_ids": [
-        "cost-TB-pcqm-gptrans-full-levers-20261115-b256_s43-planned"
+        "cost-TB-pcqm-gptrans-full-levers-20261115-b256_s43-planned",
+        "cost-TB-pcqm-gptrans-full-levers-20261115-b256_s43-measured"
       ],
       "evidence_refs": [
         "experiments/pcqm_gptrans_full_levers_20261115/protocol.md"
@@ -19,11 +20,11 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision.md",
+    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md",
     "next_allowed_actions": [
-      "Submit to IMS per protocol.md"
+      "No rerun; lever not adopted; final candidate stays the four-init B1024 equal-weight ensemble (decision_A.md)"
     ],
-    "outcome": "ACTIVE",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
     "reopen_conditions": []
   },
   "decision_state": {
@@ -71,7 +72,10 @@
   "record_mode": "prospective",
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md",
+      "experiments/pcqm_gptrans_full_levers_20261115/verdict_levers.py"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {

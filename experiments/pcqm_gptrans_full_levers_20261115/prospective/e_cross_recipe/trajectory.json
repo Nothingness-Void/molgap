@@ -19,11 +19,11 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision.md",
+    "decision_ref": "experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md",
     "next_allowed_actions": [
-      "none until its protocol condition holds and it is separately submitted"
+      "Not adopted; no new training"
     ],
-    "outcome": "ACTIVE",
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
     "reopen_conditions": []
   },
   "decision_state": {
@@ -71,7 +71,10 @@
   "record_mode": "prospective",
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md",
+      "experiments/pcqm_gptrans_full_levers_20261115/verdict_levers.py"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {
