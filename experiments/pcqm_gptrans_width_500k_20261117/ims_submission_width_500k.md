@@ -54,3 +54,11 @@ Cut by walltime or interrupted: confirm the scheduler shows no copy, then resubm
 
 ## Expected time (estimates, not measurements)
 Per card R 1.4 h, L20 2.3 h, W320 2.0 h, F3 2.15 h, plus about 5 minutes start-up each: about 8.2 h of the 10 h walltime. The driver skips a task that cannot finish inside the wall left minus 1800 s. If the A100 runs more than about 16% slower than planned, F3 is skipped first.
+
+## Local rehearsal (RTX 5060, torch 2.7.1, LF copy of the committed files, ten real 500K shards; no tail rows on disk)
+Each task ran 330 s of real training (7 to 64 steps; the shared 8 GB GPU ran at about 0.1 step/s, so this says nothing about speed). Driver, launcher, runner and atomic checkpoint ran as in production.
+- Run 1: R paused with a checkpoint; L20 failed with exit 3 (its init was moved away on purpose); W320 and F3 still ran and paused.
+- Run 2 (`--wall-s 3000`): all four tasks recorded `SKIPPED_FOR_TIME` with the numbers behind the decision; no GPU work.
+- Run 3 (L20 init restored): R, W320, F3 resumed from their checkpoints ("Restored at ... step 32"); L20 ran. Summary JSON lists two attempts per task.
+- Strict load of the `ema` weights in `last_checkpoint.pt` through the tail scorer's own load path, shape taken from `arm_record.json`: R 5,871,201, L20 9,529,761 (20 blocks), W320 8,827,321 (width 320), F3 9,023,073 params, plus a forward pass on 256 train rows. `run_config.json` showed `train_rows` 500000, `max_shards` 10, `target_mean_eV` 5.413434769952119. No tail score was computed.
+- Not tested: SIGTERM forwarding on Linux (Windows cannot send SIGTERM; the runner's handler is existing code), real A100 speed, the IMS paths.
