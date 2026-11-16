@@ -9,7 +9,7 @@ included); --weights-key is model for selected_model.pt and ema for a last_check
 run's development rows (they are TRAIN rows, a selection role of that run) so the normalisation and
 weights can be checked against the MAE recorded in the run's own trace before the tail number is trusted.
 """
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, os, sys
 from pathlib import Path
 
 import torch
@@ -21,15 +21,33 @@ TAIL_START, TAIL_END, SHARD_ROWS = 3_250_000, 3_378_606, 50_000
 ROLE = "tail_holdout_v1"
 
 
-def gptrans_scorer(recipe_path, initial_state, key):
+B1024_RUNNER = Path(__file__).resolve().parents[1] / "colab" / "pcqm_k1_b1024_production" / "train_full_b1024.py"
+
+
+def runner_recipe(run_config):
+    """gptrans_t recipe of a B1024-runner run, rebuilt by that runner's own make_recipe from the run's run_config.json sidecar."""
+    import importlib.util
+    cfg = json.loads(Path(run_config).read_text(encoding="utf-8"))
+    shape_file = Path(run_config).with_name("arm_record.json")  # capacity runs record their model shape here; run_config.json does not
+    if shape_file.is_file():
+        for key, value in json.loads(shape_file.read_text(encoding="utf-8"))["shape"].items():
+            assert os.environ.setdefault(f"MOLGAP_GPTRANS_{key}", str(value)) == str(value), f"MOLGAP_GPTRANS_{key} contradicts {shape_file}"
+    spec =importlib.util.spec_from_file_location("train_full_b1024", B1024_RUNNER)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    recipe, _ = runner.make_recipe(cfg["arm"], total_rows=cfg["train_rows"], gptrans_batch_size=cfg["batch_size"], gptrans_lr_mult=cfg["lr_mult"],
+                                   gptrans_ema_decay=cfg["ema_decay"], gptrans_init_sha=cfg["init_sha"], gptrans_stats=(cfg["target_mean_eV"], cfg["target_std_eV"]))
+    assert recipe.family == "gptrans_t" and recipe.learning_rate == cfg["learning_rate"], "run_config does not rebuild its recorded recipe"
+    return recipe
+
+
+def gptrans_scorer(recipe, initial_state, key):
     """(load, predict) for gptrans_t: the frozen recipe rebuilds the model, a checkpoint supplies its weights."""
     from copy import copy
     from torch_geometric.loader import DataLoader
     from molgap.family_training_kernel import load_family_model, mode_policy
-    from molgap.family_training_runner import read_recipe
     from molgap.gptrans_execution_backend import prepare_layout, prepared_forward
     from molgap.gptrans_execution_hotpath import MODEL_FIELDS
-    _, recipe = read_recipe(recipe_path)
     prepare = mode_policy(recipe.family, recipe.mode).prepare_batch
 
     def load(path, device):
@@ -70,6 +88,7 @@ def main(argv=None):
     parser.add_argument("--dev-range", type=parse_range, help="START:STOP of the runs' development role")
     parser.add_argument("--expect-dev-mae", type=float, help="recorded dev MAE (eV) of the first run, checked to 1e-4")
     parser.add_argument("--recipe", help="frozen training_contract.json of a gptrans_t run")
+    parser.add_argument("--run-config", help="run_config.json of a gptrans_t B1024-runner run (instead of --recipe)")
     parser.add_argument("--initial-state", help="the run's frozen initial state file (gptrans_t)")
     parser.add_argument("--weights-key", default="model", choices=["model", "ema"])
     parser.add_argument("--out", required=True)
@@ -108,9 +127,14 @@ def main(argv=None):
     sets["development"], digests["development"] = rows_of(*args.dev_range) if args.dev_range else ([], None)
     evaluator = PCQM4Mv2Evaluator()
     load_model, predict, recipe = base.load_model, base.predict_ev, None
-    if args.recipe:
-        assert args.initial_state, "--recipe needs --initial-state"
-        load_model, predict, recipe = gptrans_scorer(args.recipe, args.initial_state, args.weights_key)
+    if args.recipe or args.run_config:
+        assert args.initial_state and not (args.recipe and args.run_config), "--recipe or --run-config, with --initial-state"
+        if args.recipe:
+            from molgap.family_training_runner import read_recipe
+            frozen = read_recipe(args.recipe)[1]
+        else:
+            frozen = runner_recipe(args.run_config)
+        load_model, predict, recipe = gptrans_scorer(frozen, args.initial_state, args.weights_key)
     results = {}
     for name, path, rows in runs:
         targets = labels[:rows].double()
@@ -137,6 +161,9 @@ def main(argv=None):
                 "tail_source_idx_sha256": digests[ROLE], "dev_range": args.dev_range, "dev_source_idx_sha256": digests["development"],
                 "protected_roles_read": {"official_validation": False, "test_dev": False, "test_challenge": False},
                 "results": results, "script_sha256": base.sha256(__file__), "environment": base.environment(),
+                "recipe_source": {p: {"path": str(Path(p).resolve()), "sha256": base.sha256(p)} for p in (args.recipe, args.run_config, args.initial_state) if p}
+                | ({"b1024_runner_sha256": base.sha256(B1024_RUNNER)} if args.run_config else {}), "weights_key": args.weights_key,
+                "gptrans_shape_env": {k: v for k, v in os.environ.items() if k.startswith("MOLGAP_GPTRANS_")},
                 "per_row_predictions_saved": bool(args.save_predictions)}
     Path(args.out).write_text(json.dumps(evidence, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps(results, indent=2))

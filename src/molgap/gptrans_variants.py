@@ -91,6 +91,7 @@ def normalized_pair_block(block, variant: str):
             float(block.attention_scale.detach()[0]),
             variant=variant,
         )
+        replacement.ffn = block.ffn  # keeps a non-reference FFN width (capacity runs); same tensors either way
         replacement.load_state_dict(block.state_dict(), strict=True)
     replacement.train(block.training)
     return replacement

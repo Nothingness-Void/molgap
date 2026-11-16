@@ -3,9 +3,24 @@
 BondLocalBlock/BondLocalGPTrans are retained from gptrans_capacity.py.
 The shared family session owns all training and output logic.
 """
+import os
+
 import torch
 from torch import nn
 from .gptrans import OGBGPTransTiny
+
+REFERENCE_LAYERS = 12
+REFERENCE_SHAPE = {"LAYERS": 12, "WIDTH": 256, "HEADS": 8, "FFN_RATIO": 1}
+
+
+def gptrans_shape():
+    """Backbone shape: the reference unless MOLGAP_GPTRANS_{LAYERS,WIDTH,HEADS,FFN_RATIO} name another (capacity runs only)."""
+    return {k: int(os.environ.get(f"MOLGAP_GPTRANS_{k}", v)) for k, v in REFERENCE_SHAPE.items()}
+
+
+def gptrans_layers():
+    """Backbone depth: 12 unless MOLGAP_GPTRANS_LAYERS names another count (capacity lever runs only)."""
+    return gptrans_shape()["LAYERS"]
 
 
 def _flat_bond_targets(graph, target, node_count):
@@ -55,17 +70,23 @@ class BondLocalGPTrans(OGBGPTransTiny):
         return self.readout(torch.cat((node[:, 0], pair[:, :, 0, 0]), -1))
 
 
-def make_bond_local_model():
-    """Construct the retained seed42 shape; the family loader supplies frozen tensors."""
+def make_bond_local_model(seed=42):
+    """Construct the retained seed42 shape; the family loader supplies frozen tensors (other seeds only build new init files)."""
     with torch.random.fork_rng(devices=[]):
-        torch.random.default_generator.manual_seed(42)
-        model = OGBGPTransTiny()
+        torch.random.default_generator.manual_seed(seed)
+        shape = gptrans_shape()
+        width = shape["WIDTH"]
+        model = OGBGPTransTiny(node_channels=width, num_heads=shape["HEADS"], num_layers=shape["LAYERS"])
         with torch.no_grad():
             model.in_degree_encoder.weight.mul_(.0897)
             model.out_degree_encoder.weight.mul_(.0897)
+        if shape["FFN_RATIO"] != 1:
+            hidden = width * shape["FFN_RATIO"]
+            for block in model.blocks:
+                block.ffn[0], block.ffn[3] = nn.Linear(width, hidden), nn.Linear(hidden, width)
         model.__class__ = BondLocalGPTrans
-        model.blocks = nn.ModuleList(BondLocalBlock(block) for block in model.blocks)
-    if sum(p.numel() for p in model.parameters()) != 5_871_201:
+        model.blocks = nn.ModuleList(BondLocalBlock(block, channels=width) for block in model.blocks)
+    if shape == REFERENCE_SHAPE and sum(p.numel() for p in model.parameters()) != 5_871_201:
         raise ValueError("Retained local-bond parameter count differs")
     return model
 
