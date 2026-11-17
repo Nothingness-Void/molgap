@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import copy
 import gc
-import hashlib
 import json
 import random
 import time
@@ -22,6 +21,7 @@ from torch_geometric.data import InMemoryDataset
 from torch_geometric.loader import DataLoader
 
 from .tgt_lite import TGTLiteWrapper
+from .training_reproducibility import sha256_file
 
 
 @dataclass(frozen=True)
@@ -49,14 +49,6 @@ class PackedGraphDataset(InMemoryDataset):
         self.data, self.slices = torch.load(
             path, map_location="cpu", weights_only=False
         )
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, payload: object) -> None:

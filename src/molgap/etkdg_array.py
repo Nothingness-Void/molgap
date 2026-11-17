@@ -4,26 +4,18 @@ from __future__ import annotations
 
 import csv
 import gzip
-import hashlib
 import json
 import multiprocessing as mp
 import os
 from pathlib import Path
 
 import numpy as np
+from .training_reproducibility import sha256_file as sha256
 
 TARGETS = ("homo", "lumo", "gap")
 START_METHOD = "spawn"
 CHUNKSIZE = 16
 HEARTBEAT = 1_000
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 * 1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(value: object, path: Path) -> None:

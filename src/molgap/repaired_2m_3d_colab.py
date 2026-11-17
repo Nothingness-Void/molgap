@@ -5,7 +5,6 @@ from __future__ import annotations
 import copy
 import csv
 import gzip
-import hashlib
 import json
 import multiprocessing as mp
 import os
@@ -22,6 +21,7 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
 from .schnet import SchNetWrapper
+from .training_reproducibility import sha256_file as sha256
 
 TARGETS = ("homo", "lumo", "gap")
 REPAIRED_2M_SHA256 = (
@@ -62,14 +62,6 @@ def atomic_torch_save(value: object, path: Path) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 * 1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _build_etkdg_record(item):

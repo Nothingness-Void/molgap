@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import random
@@ -17,6 +16,7 @@ from sklearn.metrics import mean_absolute_error, r2_score
 from torch_geometric.loader import DataLoader
 
 from .edge_state_gps import DynamicEdgeGPSWrapper
+from .training_reproducibility import sha256_file as _sha256
 
 TARGETS = ("HOMO", "LUMO", "Gap")
 
@@ -33,14 +33,6 @@ def _atomic_torch_save(value: object, path: Path) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _set_seed(seed: int) -> None:

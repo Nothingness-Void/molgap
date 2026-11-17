@@ -23,6 +23,7 @@ from .repaired_2m_3d_colab import (
     export_embeddings,
 )
 from .schnet import SchNetWrapper
+from .training_reproducibility import sha256_file
 
 
 @dataclass(frozen=True)
@@ -89,14 +90,6 @@ def _amp_dtype(config: Repaired2MSchNetConfig) -> torch.dtype:
         if config.amp_dtype == "bfloat16"
         else torch.float16
     )
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def state_dict_sha256(state: dict[str, torch.Tensor]) -> str:

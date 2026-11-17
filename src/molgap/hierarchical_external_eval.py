@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -31,6 +30,7 @@ from .multi2d_router_fusion import (
 )
 from .router import paired_bootstrap_mean
 from .schnet import SchNetWrapper
+from .training_reproducibility import sha256_file as sha256
 
 
 TARGETS = ("homo", "lumo", "gap")
@@ -42,14 +42,6 @@ SCHNET_CONFIG = {
     "cutoff": 10.0,
     "dropout": 0.05,
 }
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _atomic_json(payload: object, path: Path) -> None:

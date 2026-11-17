@@ -3,23 +3,15 @@
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import math
 import os
 from pathlib import Path
 from typing import Iterable
+from .training_reproducibility import sha256_file
 
 
 TARGETS = ("homo", "lumo", "gap")
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, value: object) -> None:

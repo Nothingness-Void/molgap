@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
+from .training_reproducibility import sha256_file as _sha256
 
 
 TARGETS = ("homo", "lumo", "gap", "average")
@@ -225,14 +225,6 @@ def _relative(path: Path, repo: Path) -> str:
     if resolved_repo.startswith("\\\\?\\"):
         resolved_repo = resolved_repo[4:]
     return Path(resolved_path).relative_to(Path(resolved_repo)).as_posix()
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _add_model(

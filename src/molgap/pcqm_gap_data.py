@@ -6,6 +6,7 @@ import json
 import os
 import zipfile
 from pathlib import Path
+from .training_reproducibility import sha256_file
 
 
 OFFICIAL_TRAIN_ROWS = 3_378_606
@@ -14,14 +15,6 @@ SCREEN_VALIDATION_ROWS = 10_000
 SCREEN_RESERVE_ROWS = 1_024
 SCREEN_SPLIT_SEED = 42
 RWSE_DIM = 16
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def index_sha256(indices) -> str:
