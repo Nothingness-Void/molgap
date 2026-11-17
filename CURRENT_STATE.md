@@ -2,8 +2,9 @@
 
 > This file owns the production identity and closed Track B conclusions on
 > master. Full evidence stays on `molgap-desktop` and its experiment branches
-> (see `PROMOTION_20261117.md`). Master keeps stable results only, no job
-> status. `ROADMAP.md` on master is older than this file.
+> (see `PROMOTION_20261117.md`). Master keeps the minimal runnable unit
+> (12 modules in `src/molgap/`) and our results, no job status. Removed code is
+> on the `archive` branch and the tag `master-pre-slim-20261117`. `ROADMAP.md` on master is older than this file.
 
 ## Production Identity
 
@@ -26,8 +27,8 @@ production decision linked above.
 Track B predicts the official PCQM4Mv2 HOMO-LUMO Gap only. It does not change
 Track A. This section lists closed, verified results. Each line names the
 `molgap-desktop` commit or branch that holds the evidence; see
-`PROMOTION_20261117.md` for how to fetch it. Experiment folders are not on
-master.
+`PROMOTION_20261117.md` for how to fetch it. Some experiment folders named here
+are on those branches, not on master.
 
 - **K1 with FP32 Muon, 100K: adopted for the 500K transfer pair.** Selected
   Live MAE 0.132521 eV against 0.141294 eV for AdamW in the same job. It is
@@ -74,8 +75,9 @@ master.
   branch `codex/exp/gptrans-width-500k-20261117`, commits `532be162` and
   `ac983785`.
 
-Other reusable code is in `src/molgap/` (K1 and GPT-T models, tail-holdout
-scoring support, registry). Weights are not in the repository.
+The K1 and GPT-T code that produced these results is not on master. It lives
+on `molgap-desktop` and the branches named above. Weights are not in the
+repository.
 
 ## Boundaries
 

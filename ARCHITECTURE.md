@@ -18,67 +18,22 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 ## Package Map
 
+Master holds only the modules that the public inference API imports. Every
+other module moved to the `archive` branch (see `PROMOTION_20261117.md`).
+
 | Module | Owns | Edit when |
 |---|---|---|
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
+| `compat/legacy_constants.py` | Old phase constants kept for compatibility | Keeping an old import working |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
-| `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
-| `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
 | `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
-| `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
-| `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
-| `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |
-| `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
-| `qm9_payloads.py` | Cached embedding alignment and view combination | Changing architecture-screen payload operations |
-| `qm9_fusion.py` | Frozen embedding gates, residual heads, and routing | Changing QM9 fusion or route screens |
-| `conformer_ab.py` | Resumable paired ETKDG/MMFF timing and frozen bounded-fusion evaluation | Comparing conformer construction cost against final-model accuracy |
-| `pcqm_expert.py` | PCQM GINE graph contracts, packed scale-up, checkpoints, and artifact acceptance | Continuing or validating the benchmark-only PCQM Gap specialist |
-| `pcqm_gap_architecture.py` | Official OGB categorical Structural GPS and persistent EdgeState Gap-only candidates | Screening bounded pure-2D PCQM leaderboard architectures |
-| `pcqm_route_b.py` | Aligned expanded-2D and paired ETKDGv3+MMFF PCQM caches | Preparing the Track B PCQM precision experiment |
-| `ensemble_evaluation.py` | Identity-aligned equal-seed evaluation | Changing multi-seed accuracy-mode evidence |
-| `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing GPS7/GPS9 Router-label preparation |
-| `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
-| `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
-| `conservative_fusion_payload.py` | Compact aligned frozen-2D/dual-SchNet training and external payloads | Changing the Drive handoff or scaffold-split contract for conservative Fusion |
-| `conservative_fusion_runner.py` | Resumable multi-seed conservative Fusion training, predictions, and external gate | Changing the Colab P1 execution or acceptance artifacts |
-| `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
-| `hierarchical_external_eval.py` | Paired same-molecule external evaluation of the hierarchical Fusion | Changing how a hierarchical candidate is compared against its own 2D base |
-| `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set fed to a 3D encoder |
-| `model_reporting.py` | Evidence-backed comparison tables | Changing production-model reporting layout |
-| `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
+| `tensornet.py` | `TensorNetWrapper` 3D encoder | Changing the TensorNet encoder |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
-| `hybrid.py` | `EndToEndHybrid` | Jointly training 2D, 3D, and fusion components |
-| `inference.py` | Model loading, batch prediction, routing, embeddings, UQ API | Changing prediction behavior |
-| `inference_benchmark.py` | Warm new-SMILES latency, throughput, and checkpoint-hash evidence | Changing how inference cost is measured |
-| `__init__.py` | Lazy package-level public exports | Changing the public import surface |
-| `multi2d.py` | Aligned experts, fixed ensembles, bootstrap/oracle metrics | Changing multi-expert evaluation or serving |
-| `multi2d_router_fusion.py` | Frozen-GPS dense gates and pre-dispatch target routers | Changing learned GPS7/GPS9/GPS11 prediction routing |
-| `multi2d_data.py` | Accepted pools, exclusions, scaffold caches, quota selection | Changing pure-2D dataset assembly |
-| `data_repair.py` | Durable row ledgers, quality flags, identity reconciliation, and fixed-size repair manifests | Repairing a scaled B3LYP corpus without overwriting raw data |
-| `distillation.py` | Chunked teacher embeddings, soft targets, and fusion-compatible student exports | Changing multi-expert compression |
-| `hierarchical_oracle.py` | Budgeted expert-switch upper bounds and gain-label evidence | Changing hierarchical routing feasibility analysis |
-| `experiment_db.py` | Normalized model, evaluation-protocol, artifact, failure-cause, and reuse database builds | Changing cross-experiment inventory or comparison rules |
-| `retention.py` | Retention losses and replay weighting for controlled scale-up | Changing retention-aware encoder objectives |
-| `gap_specialization.py` | Gap-only graph caches, embedding parts, and specialist head training | Changing frozen-embedding Gap specialization |
-| `pubchemqc_architecture.py` | PubChemQC scaffold-screen SchNet training over one or two ETKDG views | Changing the 100K architecture-screen 3D protocol |
-| `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
-| `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
-| `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
-| `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
-| `pcqm_route_b_evaluation.py` | Fixed official-valid graph replay, downloaded Fusion acceptance, deterministic inference, and Gap metrics | Evaluating a frozen Track B Fusion without reopening development selection |
-| `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where the `torch_cluster` wheel is ABI-incompatible |
-| `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU-only clusters | Building conformer shards without PyG on the worker |
-| `repaired_2m_3d_colab.py` | Durable Colab repaired-2M graph shards and lightweight SchNet | Changing the remote repaired-2M 3D workflow |
-| `repaired_2m_schnet.py` | Shard-streamed primary and dual-conformer repaired-2M SchNet training | Training accepted repaired-2M 3D views without loading the full cache into RAM |
-| `residual_attribution.py` | Paired residual attribution and molecular descriptors | Changing model-versus-model residual diagnosis |
-| `pubchemqc.py` | PubChemQC streaming, filtering, identity normalization | Changing source acquisition |
-| `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |
-| `router_sampling.py` | Diverse selection and scaffold keys | Changing Router sampling |
+| `multi2d_router_fusion.py` | Frozen-GPS dense gates | Changing GPS7/GPS9/GPS11 prediction routing |
+| `inference.py` | Model loading and batch prediction | Changing prediction behavior |
 | `utils.py` | Shared splits, metrics, SMILES, fingerprints, and IO | Changing cross-cutting utilities |
-| `tensornet.py`, `visnet.py` | Vendored closed 3D A/B implementations | Reproducing `experiments/_closed/ab3d/comparison.md` only |
-| `late_router.py` | Conservative late blending between frozen predictors | Reproducing the closed late-blend branch only |
-| `archive/phase8_*` | Closed reusable experiment snapshots | Reproducing the linked archive branch only |
+| `__init__.py` | Lazy package-level public exports | Changing the public import surface |
 
 ## Loading Structure
 
@@ -116,8 +71,7 @@ one-line change in `constants.py`.
 
 Every active CLI must resolve paths from those constants rather than from
 `Path(__file__).parents[n]`, because a depth-derived root breaks the moment a
-file moves. `tests/test_repository_layout.py` enforces this, checks the
-test-time CLI alias table still resolves, and runs `--help` on one CLI per tree.
+file moves.
 
 `production/history/` holds the frozen phase 1-7 line. It is reproducibility
 evidence and is not extended.
@@ -133,14 +87,9 @@ evidence and is not extended.
 Experiment method and conclusions live in each experiment's own decision record;
 follow `experiments/README.md` rather than restating them here.
 
-## Track B Research Code
+## Removed Code
 
-`src/molgap/` also holds the Track B (PCQM4Mv2 Gap) research library promoted
-from `molgap-desktop` on 2026-11-17: the K1 and GPT-T (`gptrans*.py`) models,
-the shared family training core (`family_training_*.py`), the experiment
-catalog and local runtime (`experiment_*.py`), EdgeState and PCQM modules
-(`edge_state_*.py`, `pcqm_*.py`), and `research_memory/`. Package-level
-ownership is `src/molgap/__init__.py` plus each module's docstring. The full
-desktop package map is in `ARCHITECTURE.md` on `molgap-desktop`
-(commit `e53120da`). Experiments, platform records and research-memory data
-are not on master; see `PROMOTION_20261117.md`.
+The 2026-11-17 slim removed the older model modules (`hybrid.py`,
+`late_router.py`, `multi2d_data.py`, `schnetpack.py`, `visnet.py`, `archive/`),
+the K1 and GPT-T research library, the experiment tooling, and the scripts and
+tests that need them. `PROMOTION_20261117.md` lists where to get them back.
