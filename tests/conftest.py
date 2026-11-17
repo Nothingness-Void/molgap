@@ -17,20 +17,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # dotted alias -> path relative to the repository root
 CLI_MODULES = {
-    "cli.train_encoder": "production/03_train/scripts/training/train_encoder.py",
-    "cli.eval_multi2d_experts": (
-        "production/04_evaluate/scripts/evaluation/eval_multi2d_experts.py"
-    ),
     "cli.build_repaired_2m_schnet_ab_subset": (
         "production/02_graphs/scripts/data/build_repaired_2m_schnet_ab_subset.py"
     ),
-    "cli.train_three_gps_embedding_residual": (
-        "experiments/_scripts/train_three_gps_embedding_residual.py"
-    ),
-    "cli.train_hierarchical_2d3d_fusion": (
-        "experiments/_scripts/train_hierarchical_2d3d_fusion.py"
-    ),
-    "cli.build_database": "production/07_database/scripts/build_database.py",
 }
 
 
