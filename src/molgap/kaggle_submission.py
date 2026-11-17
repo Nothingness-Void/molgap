@@ -54,20 +54,26 @@ def connect_kaggle(credentials):
     return api_for_credentials(credentials)
 
 
+def quota_seconds(item):
+    """Kaggle quota duration: "69126.4s" string or {seconds, nanos}; ValueError on anything else."""
+    if isinstance(item, str) and item.endswith("s"):
+        value = float(item[:-1])
+    elif isinstance(item, dict):
+        value = float(item.get("seconds", 0)) + float(item.get("nanos", 0)) / 1e9
+    else:
+        raise ValueError("Malformed Kaggle quota")
+    if not math.isfinite(value) or value < 0:
+        raise ValueError("Malformed Kaggle quota")
+    return value
+
+
 def _quota(http, budget):
     response = http.get("https://www.kaggle.com/api/v1/kernels/quota", headers={"User-Agent": "kaggle-api/molgap"}, timeout=(10, 30))
     response.raise_for_status()
     raw = response.json()
     quota = raw["gpuQuota"]
-    def seconds(item):
-        if isinstance(item, str) and item.endswith("s"):
-            value = float(item[:-1])
-        else:
-            value = item["seconds"] + item.get("nanos", 0) / 1e9
-        if not math.isfinite(value) or value < 0:
-            raise ValueError("Malformed Kaggle quota")
-        return value
-    remaining = seconds(quota["totalTimeAllowed"]) - seconds(quota["timeUsed"]) - seconds(quota["timeReserved"])
+    remaining = (quota_seconds(quota["totalTimeAllowed"]) - quota_seconds(quota["timeUsed"])
+                 - quota_seconds(quota["timeReserved"]))
     if remaining < budget * 3600:
         raise ValueError("Available Kaggle GPU quota is below the frozen allocation ceiling")
     return {"observed_at": datetime.now(timezone.utc).isoformat(), "quota": raw,

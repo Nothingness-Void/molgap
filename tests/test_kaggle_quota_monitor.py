@@ -46,7 +46,7 @@ def test_parse_quota_payload_and_table_formatting():
     with pytest.raises(ValueError, match="Missing Kaggle GPU quota"):
         mod.parse_quota_payload("kaggle2", "kaseichou", {}, now=now)
     del payload["gpuQuota"]["timeUsed"]
-    with pytest.raises(ValueError, match="Missing Kaggle quota duration"):
+    with pytest.raises(ValueError, match="Malformed Kaggle quota"):
         mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)
     payload["gpuQuota"]["timeUsed"] = {"seconds": 0}
     assert mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)["used_hours"] == 0

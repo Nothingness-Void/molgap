@@ -4,10 +4,11 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
-import math
 import os
 from pathlib import Path
 import requests
+
+from molgap.kaggle_submission import quota_seconds
 
 
 DEFAULT_KEY_DIR = Path(os.environ.get("MOLGAP_KAGGLE_KEY_DIR", "D:/\u4e0b\u8f7d/Key"))
@@ -17,18 +18,6 @@ DEFAULT_ACCOUNTS = (
     ("kaggle3", ".kaggle3_cli/kaggle.json"),
 )
 QUOTA_URL = "https://www.kaggle.com/api/v1/kernels/quota"
-
-
-def _duration_seconds(entry: dict | None) -> float:
-    if isinstance(entry, str) and entry.endswith("s"):
-        seconds = float(entry[:-1])
-    elif isinstance(entry, dict):
-        seconds = float(entry.get("seconds", 0)) + float(entry.get("nanos", 0)) / 1e9
-    else:
-        raise ValueError("Missing Kaggle quota duration")
-    if not math.isfinite(seconds) or seconds < 0:
-        raise ValueError("Malformed Kaggle quota duration")
-    return seconds
 
 
 def _format_hm(hours: float) -> str:
@@ -42,9 +31,9 @@ def parse_quota_payload(label: str, username: str, payload: dict, *, now: dateti
     gpu = payload.get("gpuQuota")
     if not isinstance(gpu, dict):
         raise ValueError("Missing Kaggle GPU quota")
-    total_s = _duration_seconds(gpu.get("totalTimeAllowed"))
-    used_s = _duration_seconds(gpu.get("timeUsed"))
-    reserved_s = _duration_seconds(gpu.get("timeReserved"))
+    total_s = quota_seconds(gpu.get("totalTimeAllowed"))
+    used_s = quota_seconds(gpu.get("timeUsed"))
+    reserved_s = quota_seconds(gpu.get("timeReserved"))
     remaining_s = max(0.0, total_s - used_s - reserved_s)
 
     refresh_raw = payload.get("quotaRefreshTime")

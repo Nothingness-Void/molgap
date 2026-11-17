@@ -236,7 +236,8 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
 
         def get(self, url, **kwargs):
             if url.endswith("/quota"):
-                seconds = lambda n: {"seconds": n * 3600, "nanos": 0}
+                assert kwargs["headers"]["User-Agent"] == "kaggle-api/molgap"
+                seconds = lambda n: f"{n * 3600}.5s"  # Kaggle sends "Ns" strings
                 return Response({"gpuQuota": {"totalTimeAllowed": seconds(self.quota_hours),
                     "timeUsed": seconds(0), "timeReserved": seconds(0)}})
             if "/logs/stream/" in url:
