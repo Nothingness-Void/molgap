@@ -4,12 +4,8 @@ from pathlib import Path
 
 import torch
 
-from cli.train_three_gps_embedding_residual import (
-    load_chunked,
-)
-
-
-def test_load_chunked_embedding_contract(tmp_path: Path):
+def test_load_chunked_embedding_contract(tmp_path: Path, cli_module):
+    load_chunked = cli_module("cli.train_three_gps_embedding_residual").load_chunked
     directory = tmp_path / "gps7"
     directory.mkdir()
     artifacts = []

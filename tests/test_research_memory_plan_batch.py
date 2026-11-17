@@ -1,0 +1,499 @@
+from __future__ import annotations
+
+import json
+import subprocess
+from collections import Counter
+from importlib import import_module
+from pathlib import Path
+
+import pytest
+
+from molgap.research_memory.discovery import DiscoveredRecords
+from molgap.research_memory.paired import PAIR_SCHEMA
+
+
+plan_module = import_module("molgap.research_memory.plan")
+
+
+def _write_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value), encoding="utf-8")
+
+
+@pytest.fixture
+def planning_root(tmp_path, monkeypatch):
+    root = tmp_path
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    subprocess.run(["git", "add", ".gitattributes"], cwd=root, check=True)
+    subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        "commit", "-qm", "Preserve fixture bytes"], cwd=root, check=True)
+    seed = root / "experiments/seed"
+    _write_json(seed / "trajectory.json", {
+        "trajectory_id": "T-existing",
+        "hypothesis": {"hypothesis_id": "H-existing"},
+    })
+    _write_json(seed / "v5_evidence.json", {"evidence_id": "E-existing"})
+    _write_json(seed / "costs/C-existing.json", {"cost_event_id": "C-existing"})
+    for name in ("contract-a.json", "contract-b.json", "roles.json", "budget.json"):
+        (root / name).write_text(name, encoding="utf-8")
+    for name in ("decision-a.md", "decision-b.md"):
+        (root / name).write_text(name, encoding="utf-8")
+
+    discovery_calls = []
+
+    def discover(path):
+        assert Path(path) == root
+        discovery_calls.append(path)
+        return DiscoveredRecords(
+            evidence=tuple(sorted(root.glob("experiments/**/v5_evidence.json"))),
+            trajectories=tuple(sorted(root.glob("experiments/**/trajectory.json"))),
+            costs=tuple(sorted(root.glob("experiments/**/costs/*.json"))),
+            roles=(),
+            traces=(),
+            ready=(),
+        )
+
+    monkeypatch.setattr(plan_module, "discover_records", discover)
+    monkeypatch.setattr(plan_module.subprocess, "check_output", lambda *args, **kwargs: "b" * 40 + "\n")
+    monkeypatch.setattr(
+        "molgap.research_memory.policy.load_policy_registry",
+        lambda _: [{"policy_id": "fixture-policy", "version": "v1"}],
+    )
+    return root, discovery_calls
+
+
+def _item(label: str, output: str | Path | None = None) -> dict:
+    trajectory_id = f"T-{label}"
+    hypothesis_id = f"H-{label}"
+    cost_id = f"C-{label}"
+    action_id = f"A-{label}"
+    return {
+        "output": output if output is not None else f"experiments/arm-{label}",
+        "spec": {
+            "trajectory": {
+                "trajectory_id": trajectory_id,
+                "track": "B",
+                "owner": "desktop",
+                "family_id": f"fixture-{label}",
+                "question": "Is the fixture action decision-relevant?",
+                "hypothesis": {
+                    "hypothesis_id": hypothesis_id,
+                    "supporting_evidence_ids": ["E-existing"],
+                    "alternative_explanations": ["Fixture alternative"],
+                    "related_closed_family_ids": ["fixture-closed"],
+                    "observed_deficiency": "Fixture deficiency",
+                    "changed_mechanism": "Fixture mechanism",
+                    "cheapest_falsifier": "Fixture diagnostic",
+                    "expected_native_cost_ref": cost_id,
+                    "decision_changed_if_positive": "Continue fixture",
+                    "decision_changed_if_negative": "Stop fixture",
+                },
+                "state_at_start": {
+                    "source_commit": "placeholder",
+                    "source_config_identity": f"fixture-config-{label}",
+                    "contract_refs": [f"contract-{label}.json"],
+                    "reference_ids": ["E-existing"],
+                    "parent_trajectory_ids": [],
+                    "prior_evidence_ids": ["E-existing"],
+                    "role_snapshot_refs": ["roles.json"],
+                    "budget_snapshot_ref": "budget.json",
+                },
+                "actions": [{
+                    "action_id": action_id,
+                    "type": "DIAGNOSTIC",
+                    "source_commit": "b" * 40,
+                    "run_ids": [f"run-{label}"],
+                    "attempt_ids": [f"attempt-{label}"],
+                    "evidence_refs": [],
+                    "cost_event_ids": [cost_id],
+                }],
+                "decision": {
+                    "outcome": "ACTIVE",
+                    "decision_ref": f"decision-{label}.md",
+                    "next_allowed_actions": [action_id],
+                    "reopen_conditions": [],
+                },
+            },
+            "decision_state": {
+                "available_actions": [action_id],
+                "chosen_action": action_id,
+                "policy_id": "fixture-policy",
+                "policy_version": "v1",
+                "state_timestamp": "2026-01-01T00:00:00Z",
+            },
+            "costs": [{
+                "schema": "molgap-cost-event-v1",
+                "cost_event_id": cost_id,
+                "action_id": action_id,
+                "run_id": f"run-{label}",
+                "attempt_id": f"attempt-{label}",
+                "platform": "fixture",
+                "hardware": "fixture-cpu",
+                "evidence_ref": f"contract-{label}.json",
+                "category": "preflight",
+                "measurement": {
+                    key: {"value": None, "status": "measurement_missing"}
+                    for key in ("device_hours", "cpu_hours", "wall_hours", "queue_hours")
+                },
+            }],
+        },
+    }
+
+
+@pytest.mark.parametrize("plans", [
+    [],
+    [{}],
+    [{"output": "experiments/arm-a"}],
+    [{"spec": {}, "output": "experiments/arm-a", "extra": 1}],
+])
+def test_batch_rejects_empty_or_nonexact_items(planning_root, plans):
+    root, _ = planning_root
+    with pytest.raises(ValueError):
+        plan_module.plan_many(root, plans)
+    assert not (root / "experiments/arm-a").exists()
+
+
+@pytest.mark.parametrize("identity", ["trajectory", "hypothesis", "cost"])
+def test_batch_rejects_cross_arm_duplicate_ids_before_writing(planning_root, identity):
+    root, _ = planning_root
+    first, second = _item("a"), _item("b")
+    if identity == "trajectory":
+        second["spec"]["trajectory"]["trajectory_id"] = "T-a"
+        match = "duplicate trajectory_id"
+    elif identity == "hypothesis":
+        second["spec"]["trajectory"]["hypothesis"]["hypothesis_id"] = "H-a"
+        match = "duplicate hypothesis_id"
+    else:
+        second["spec"]["costs"][0]["cost_event_id"] = "C-a"
+        match = "duplicate cost_event_id"
+    with pytest.raises(ValueError, match=match):
+        plan_module.plan_many(root, [first, second])
+    assert not (root / "experiments/arm-a").exists()
+    assert not (root / "experiments/arm-b").exists()
+
+
+@pytest.mark.parametrize("identity", ["trajectory", "hypothesis", "cost"])
+def test_batch_rejects_existing_ids_before_writing(planning_root, identity):
+    root, _ = planning_root
+    item = _item("a")
+    if identity == "trajectory":
+        item["spec"]["trajectory"]["trajectory_id"] = "T-existing"
+    elif identity == "hypothesis":
+        item["spec"]["trajectory"]["hypothesis"]["hypothesis_id"] = "H-existing"
+    else:
+        item["spec"]["costs"][0]["cost_event_id"] = "C-existing"
+    with pytest.raises(ValueError, match="duplicate"):
+        plan_module.plan_many(root, [item])
+    assert not (root / "experiments/arm-a").exists()
+
+
+def test_batch_shares_frozen_snapshot_and_preserves_input_order(planning_root):
+    root, discovery_calls = planning_root
+    # Override only the future destination: rejection must precede any publish.
+    with (root / ".gitattributes").open("ab") as handle:
+        handle.write(b"experiments/arm-a/trajectory.json text\n")
+    with pytest.raises(ValueError, match="Git may transform hash-bound bytes"):
+        plan_module.plan_many(root, [_item("b"), _item("a")])
+    assert not (root / "experiments/arm-b").exists()
+    assert not (root / "experiments/rml_decision_snapshots").exists()
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    discovery_calls.clear()
+    result = plan_module.plan_many(root, [_item("b"), _item("a")])
+    assert len(discovery_calls) == 1
+    assert result["status"] == "PLANNED"
+    assert result["batch"]["size"] == 2
+    assert result["results"] == [
+        {"trajectory_id": "T-b", "status": "PLANNED", "path": "experiments/arm-b"},
+        {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"},
+    ]
+    records = [
+        json.loads((root / item["path"] / "trajectory.json").read_text(encoding="utf-8"))
+        for item in result["results"]
+    ]
+    first_state, second_state = (plan_module.resolve_decision_state(root, record)["decision_state"] for record in records)
+    for key in ("known_trajectory_ids", "known_evidence_ids", "source_commit",
+                "source_hashes", "policy_sha256"):
+        assert first_state[key] == second_state[key]
+    assert first_state["known_trajectory_ids"] == ["T-existing"]
+    assert first_state["known_evidence_ids"] == ["E-existing"]
+    assert first_state["source_commit"] == "b" * 40
+    assert records[0]["state_at_start"]["source_commit"] == records[1]["state_at_start"]["source_commit"] == "b" * 40
+    assert {"contract-a.json", "contract-b.json", "decision-a.md", "decision-b.md"} <= set(first_state["source_hashes"])
+    assert result["batch"]["source_commit"] == first_state["source_commit"]
+    assert result["batch"]["policy_sha256"] == first_state["policy_sha256"]
+    assert records[0]["trajectory_id"] != records[1]["trajectory_id"]
+    assert records[0]["hypothesis"]["hypothesis_id"] != records[1]["hypothesis"]["hypothesis_id"]
+
+
+def _paired_items():
+    reference, candidate = _item("a"), _item("b")
+    common = {
+        "schema": PAIR_SCHEMA,
+        "spec_identity": "a" * 64,
+        "logical_run_id": "one-job",
+        "reference_arm_id": "a",
+        "reference_trajectory_id": "T-a",
+        "reference_trajectory_ref": "experiments/arm-a/trajectory.json",
+    }
+    for item, role, arm_id in ((reference, "reference", "a"), (candidate, "candidate", "b")):
+        item["spec"]["trajectory"]["state_at_start"]["same_run_replay"] = {
+            **common, "comparison_role": role, "arm_id": arm_id,
+        }
+    return reference, candidate
+
+
+def test_same_run_pair_is_frozen_in_one_batch(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    with pytest.raises(ValueError, match="one frozen multi-arm batch"):
+        plan_module.plan(root, reference["spec"], reference["output"])
+    result = plan_module.plan_many(root, [reference, candidate])
+    assert result["status"] == "PLANNED"
+    records = [json.loads((root / item["path"] / "trajectory.json").read_text()) for item in result["results"]]
+    assert records[0]["state_at_start"]["same_run_replay"]["comparison_role"] == "reference"
+    assert records[1]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] == "T-a"
+    assert all(plan_module.resolve_decision_state(root, record)["decision_state"]["known_evidence_ids"] == ["E-existing"] for record in records)
+
+
+def test_same_run_pair_rejects_unbound_peer_before_publication(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    candidate["spec"]["trajectory"]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] = "T-other"
+    with pytest.raises(ValueError, match="does not bind the batch reference"):
+        plan_module.plan_many(root, [reference, candidate])
+    assert not (root / "experiments/arm-a").exists()
+
+
+def test_same_run_pair_rejects_different_source_commits(planning_root):
+    root, _ = planning_root
+    reference, candidate = _paired_items()
+    candidate["spec"]["trajectory"]["state_at_start"]["source_commit"] = "2" * 40
+    with pytest.raises(ValueError, match="one source commit"):
+        plan_module.plan_many(root, [reference, candidate])
+    assert not (root / "experiments/arm-a").exists()
+
+
+@pytest.mark.parametrize("second_output", [
+    "experiments/arm-a",
+    "experiments/arm-a/.",
+    "experiments/existing",
+    "other/arm-b",
+    "experiments/../escape",
+])
+def test_batch_rejects_unsafe_or_duplicate_outputs(planning_root, second_output):
+    root, _ = planning_root
+    (root / "experiments/existing").mkdir()
+    with pytest.raises(ValueError):
+        plan_module.plan_many(root, [_item("a"), _item("b", second_output)])
+    assert not (root / "experiments/arm-a").exists()
+
+
+def test_batch_rejects_absolute_output(planning_root):
+    root, _ = planning_root
+    with pytest.raises(ValueError, match="repository-relative"):
+        plan_module.plan_many(root, [_item("a", root / "experiments/arm-a")])
+    assert not (root / "experiments/arm-a").exists()
+
+
+def test_single_plan_still_discovers_each_time(planning_root):
+    root, discovery_calls = planning_root
+    first = plan_module.plan(root, _item("a")["spec"], "experiments/arm-a")
+    second = plan_module.plan(root, _item("b")["spec"], "experiments/arm-b")
+    assert first == {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"}
+    assert second == {"trajectory_id": "T-b", "status": "PLANNED", "path": "experiments/arm-b"}
+    assert len(discovery_calls) == 2
+    first_state = plan_module.resolve_decision_state(root, json.loads((root / first["path"] / "trajectory.json").read_text(encoding="utf-8")))["decision_state"]
+    second_state = plan_module.resolve_decision_state(root, json.loads((root / second["path"] / "trajectory.json").read_text(encoding="utf-8")))["decision_state"]
+    assert first_state["known_trajectory_ids"] == ["T-existing"]
+    assert second_state["known_trajectory_ids"] == ["T-a", "T-existing"]
+    assert str(Path("experiments/arm-a/trajectory.json")) in second_state["source_hashes"]
+
+
+def test_single_plan_accepts_absolute_confined_output(planning_root):
+    root, _ = planning_root
+    output = root / "experiments" / "absolute-arm"
+    result = plan_module.plan(root, _item("a")["spec"], output)
+
+    assert result == {
+        "trajectory_id": "T-a",
+        "status": "PLANNED",
+        "path": "experiments/absolute-arm",
+    }
+    assert (output / "trajectory.json").is_file()
+
+
+def test_single_plan_rejects_absolute_output_outside_experiments(planning_root):
+    root, _ = planning_root
+    outside = root / "outside-arm"
+
+    with pytest.raises(ValueError, match="under experiments"):
+        plan_module.plan(root, _item("a")["spec"], outside)
+
+    assert not outside.exists()
+
+
+def test_validate_only_uses_real_batch_validators_without_publication(planning_root):
+    root, _ = planning_root
+    plans = [_item("a"), _item("b")]
+    def tree():  # Git byte-preservation qualification may add an empty-tree object to .git.
+        return {p.relative_to(root): p.read_bytes() for p in root.rglob("*")
+                if p.is_file() and ".git" not in p.relative_to(root).parts}
+    before = tree()
+    result = plan_module.plan_many(root, plans, validate_only=True)
+    assert result["status"] == "VALIDATED"
+    assert [r["status"] for r in result["results"]] == ["VALIDATED", "VALIDATED"]
+    assert before == tree()
+    assert not (root / "research_memory/.staging").exists()
+    assert plan_module.plan_many(root, plans)["status"] == "PLANNED"
+
+
+def test_bad_second_arm_is_rejected_before_any_publication(planning_root, monkeypatch):
+    root, discovery_calls = planning_root
+    second = _item("b")
+    second["spec"]["costs"][0]["measurement"]["device_hours"] = {
+        "value": 1.0, "status": "measured",
+    }
+    publish_calls = []
+    monkeypatch.setattr(plan_module, "_publish_plan",
+                        lambda *args, **kwargs: publish_calls.append((args, kwargs)))
+    with pytest.raises(ValueError, match="prospective cost cannot be measured"):
+        plan_module.plan_many(root, [_item("a"), second])
+    assert publish_calls == []
+    assert not (root / "experiments/arm-a").exists()
+    assert not (root / "experiments/arm-b").exists()
+    assert len(discovery_calls) == 1
+
+
+def test_publish_failure_preserves_only_the_completed_arm(planning_root, monkeypatch):
+    root, _ = planning_root
+    publish = plan_module._publish_plan
+    calls = 0
+
+    def fail_second_publish(repo_root, prepared):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("synthetic publication failure")
+        return publish(repo_root, prepared)
+
+    monkeypatch.setattr(plan_module, "_publish_plan", fail_second_publish)
+    with pytest.raises(plan_module.PlanBatchError, match="item 2/2") as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")])
+
+    assert caught.value.failed_index == 1
+    assert caught.value.completed_results == (
+        {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"},
+    )
+    assert isinstance(caught.value.__cause__, OSError)
+    assert (root / "experiments/arm-a/trajectory.json").is_file()
+    assert not (root / "experiments/arm-b").exists()
+
+
+@pytest.mark.parametrize("validate_only,expected_reads", [(True, 2), (False, 3)])
+def test_batch_rechecks_shared_sources_once_for_validation_and_each_publication(
+        planning_root, monkeypatch, validate_only, expected_reads):
+    root, _ = planning_root
+    digest = plan_module.file_digest
+    reads = Counter()
+
+    def counted(path):
+        reads[Path(path)] += 1
+        return digest(path)
+
+    monkeypatch.setattr(plan_module, "file_digest", counted)
+    result = plan_module.plan_many(root, [_item("a"), _item("b")], validate_only=validate_only)
+    assert result["status"] == ("VALIDATED" if validate_only else "PLANNED")
+    assert reads[root / "contract-a.json"] == expected_reads
+    assert reads[root / "contract-b.json"] == expected_reads
+    assert set(reads.values()) == {expected_reads}
+
+
+@pytest.mark.parametrize("mutation", ["changed", "missing"])
+def test_validation_batch_detects_source_mutation_after_last_arm_without_publication(
+        planning_root, monkeypatch, mutation):
+    root, _ = planning_root
+    prepare = plan_module._prepare_plan
+    calls = 0
+
+    def mutate_after_preparation(*args, **kwargs):
+        nonlocal calls
+        prepared = prepare(*args, **kwargs)
+        calls += 1
+        if calls == 2:
+            source = root / "contract-b.json"
+            if mutation == "changed":
+                source.write_text("changed", encoding="utf-8")
+            else:
+                source.unlink()
+        return prepared
+
+    monkeypatch.setattr(plan_module, "_prepare_plan", mutate_after_preparation)
+    with pytest.raises(plan_module.PlanBatchError) as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")], validate_only=True)
+    assert caught.value.failed_index == 0
+    assert caught.value.completed_results == ()
+    assert isinstance(caught.value.__cause__, ValueError)
+    assert not (root / "experiments/arm-a").exists()
+    assert not (root / "experiments/arm-b").exists()
+    assert not (root / "research_memory/.staging").exists()
+
+
+def test_formal_batch_still_rechecks_sources_before_each_publication(planning_root, monkeypatch):
+    root, _ = planning_root
+    publish = plan_module._publish_plan
+
+    def mutate_after_first_publish(repo_root, prepared):
+        result = publish(repo_root, prepared)
+        (root / "contract-b.json").write_text("changed", encoding="utf-8")
+        return result
+
+    monkeypatch.setattr(plan_module, "_publish_plan", mutate_after_first_publish)
+    with pytest.raises(plan_module.PlanBatchError, match="item 2/2") as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")])
+    assert caught.value.failed_index == 1
+    assert len(caught.value.completed_results) == 1
+    assert (root / "experiments/arm-a/trajectory.json").is_file()
+    assert not (root / "experiments/arm-b").exists()
+
+
+def test_compact_batch_binds_one_policy_snapshot_and_keeps_actual_references(planning_root):
+    root, _ = planning_root
+    def files():
+        return {path for path in root.rglob("*")
+                if path.is_file() and ".git" not in path.relative_to(root).parts}
+    before = files()
+    result = plan_module.plan_many(root, [_item("a"), _item("b")])
+    published = files() - before
+    assert len(published) == 5  # two trajectories, two costs, one common snapshot
+    records = [json.loads((root / row["path"] / "trajectory.json").read_text()) for row in result["results"]]
+    assert len({row["decision_state"]["snapshot_ref"] for row in records}) == 1
+    assert len(list(root.glob("experiments/**/rml_decision_snapshots/*.json"))) == 1
+    for row in records:
+        state = row["decision_state"]
+        assert "known_evidence_ids" not in state and "source_hashes" not in state
+        assert state["active_reference_ids"] == ["E-existing"]
+        directory = root / next(item["path"] for item in result["results"] if item["trajectory_id"] == row["trajectory_id"])
+        assert not (directory / "decision_state.json").exists()
+        assert not (directory / "policy_snapshot.json").exists()
+        expanded = plan_module.resolve_decision_state(root, row)
+        assert expanded["decision_state"]["known_evidence_ids"] == ["E-existing"]
+        assert expanded["decision_state"]["policy_snapshot"]["policy_id"] == "fixture-policy"
+    # New evidence later cannot enter the frozen decision-time knowledge.
+    _write_json(root / "experiments/future/v5_evidence.json", {"evidence_id": "E-future"})
+    assert plan_module.resolve_decision_state(root, records[0])["decision_state"]["known_evidence_ids"] == ["E-existing"]
+    snapshot = root / records[0]["decision_state"]["snapshot_ref"]
+    snapshot.write_bytes(snapshot.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        plan_module.resolve_decision_state(root, records[1])
+
+
+def test_legacy_inline_state_remains_readable(planning_root):
+    root, _ = planning_root
+    result = plan_module.plan(root, _item("a")["spec"], "experiments/arm-a")
+    record = json.loads((root / result["path"] / "trajectory.json").read_text())
+    record = plan_module.resolve_decision_state(root, record)
+    for key in ("schema", "snapshot_ref", "snapshot_sha256", "policy_snapshot"):
+        record["decision_state"].pop(key)
+    plan_module.validate_decision_state(record["decision_state"])
+    assert plan_module.resolve_decision_state(root, record) == record

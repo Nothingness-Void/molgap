@@ -4,8 +4,6 @@ import pytest
 import torch
 from torch_geometric.data import Data
 
-from cli.train_encoder import _explicit_split
-
 
 def graph(source_idx: int) -> Data:
     return Data(source_idx=torch.tensor([source_idx]))
@@ -18,7 +16,8 @@ def write_split(path, rows) -> None:
         writer.writerows(rows)
 
 
-def test_explicit_split_preserves_manifest_order(tmp_path) -> None:
+def test_explicit_split_preserves_manifest_order(tmp_path, cli_module) -> None:
+    _explicit_split = cli_module("cli.train_encoder")._explicit_split
     path = tmp_path / "split.csv"
     write_split(
         path,
@@ -34,7 +33,8 @@ def test_explicit_split_preserves_manifest_order(tmp_path) -> None:
     assert report["rows"] == {"train": 1, "validation": 1, "test": 1}
 
 
-def test_explicit_split_rejects_missing_graph(tmp_path) -> None:
+def test_explicit_split_rejects_missing_graph(tmp_path, cli_module) -> None:
+    _explicit_split = cli_module("cli.train_encoder")._explicit_split
     path = tmp_path / "split.csv"
     write_split(
         path,

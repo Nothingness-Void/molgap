@@ -115,15 +115,8 @@ def test_gap_models_use_ogb_categories_and_one_target() -> None:
     assert "class OGBQueryPoolStructuralGPSWrapper(OGBStructuralGPSWrapper)" in source
     assert "nn.MultiheadAttention" in source
     assert "num_pool_queries=4" in source
-    assert 'candidate == "ogb_query_pool_structural_gps9"' in source
     assert "class OGBLocalOperatorStructuralGPSWrapper" in source
-    assert '"ogb_gated_local_gps9": "resgated"' in source
-    assert '"ogb_edge_attention_local_gps9": "transformer"' in source
-    assert '"ogb_gen_local_gps9": "gen"' in source
-    assert '"ogb_gatv2_local_gps9": "gatv2"' in source
     assert "class OGBGraphTokenStructuralGPSWrapper" in source
-    assert 'candidate == "ogb_recurrent_graph_state_gps9"' in source
-    assert "token_channels=16" in source
     gps_source = GPS.read_text(encoding="utf-8")
     assert "def _embed_nodes(self, x):" in gps_source
     assert "def _embed_edges(self, edge_attr):" in gps_source

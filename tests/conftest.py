@@ -11,6 +11,7 @@ from __future__ import annotations
 import importlib.util
 import sys
 from pathlib import Path
+import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +34,9 @@ CLI_MODULES = {
 }
 
 
-def _load(alias: str, relative: str) -> None:
+def _load(alias: str, relative: str):
+    if alias in sys.modules:
+        return sys.modules[alias]
     path = REPO_ROOT / relative
     if not path.exists():
         raise FileNotFoundError(f"CLI alias {alias!r} points to missing file: {path}")
@@ -42,8 +45,17 @@ def _load(alias: str, relative: str) -> None:
         raise ImportError(f"Cannot create module spec for CLI alias {alias!r}: {path}")
     module = importlib.util.module_from_spec(spec)
     sys.modules[alias] = module
-    spec.loader.exec_module(module)
+    try:
+        spec.loader.exec_module(module)
+    except BaseException:
+        sys.modules.pop(alias, None)
+        raise
+    return module
 
 
-for _alias, _relative in CLI_MODULES.items():
-    _load(_alias, _relative)
+@pytest.fixture
+def cli_module():
+    """Only the test asking for a CLI imports it; normal collection stays light."""
+    def load(alias):
+        return _load(alias, CLI_MODULES[alias])
+    return load
