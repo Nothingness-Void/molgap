@@ -28,6 +28,8 @@ def runner_recipe(run_config):
     """gptrans_t recipe of a B1024-runner run, rebuilt by that runner's own make_recipe from the run's run_config.json sidecar."""
     import importlib.util
     cfg = json.loads(Path(run_config).read_text(encoding="utf-8"))
+    if cfg["train_rows"] > TAIL_START:
+        raise SystemExit(f"STOP: run_config train_rows={cfg['train_rows']} exceeds TAIL_START={TAIL_START}; training rows would overlap the tail holdout")
     shape_file = Path(run_config).with_name("arm_record.json")  # capacity runs record their model shape here; run_config.json does not
     if shape_file.is_file():
         for key, value in json.loads(shape_file.read_text(encoding="utf-8"))["shape"].items():
@@ -38,6 +40,8 @@ def runner_recipe(run_config):
     recipe, _ = runner.make_recipe(cfg["arm"], total_rows=cfg["train_rows"], gptrans_batch_size=cfg["batch_size"], gptrans_lr_mult=cfg["lr_mult"],
                                    gptrans_ema_decay=cfg["ema_decay"], gptrans_init_sha=cfg["init_sha"], gptrans_stats=(cfg["target_mean_eV"], cfg["target_std_eV"]))
     assert recipe.family == "gptrans_t" and recipe.learning_rate == cfg["learning_rate"], "run_config does not rebuild its recorded recipe"
+    if cfg.get("torch_version"):  # the launcher records its torch version (2.7.1); match it instead of the 2.11.0 default
+        object.__setattr__(recipe, "torch_version", cfg["torch_version"])
     return recipe
 
 
