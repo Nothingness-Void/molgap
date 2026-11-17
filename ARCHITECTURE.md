@@ -132,3 +132,15 @@ evidence and is not extended.
 
 Experiment method and conclusions live in each experiment's own decision record;
 follow `experiments/README.md` rather than restating them here.
+
+## Track B Research Code
+
+`src/molgap/` also holds the Track B (PCQM4Mv2 Gap) research library promoted
+from `molgap-desktop` on 2026-11-17: the K1 and GPT-T (`gptrans*.py`) models,
+the shared family training core (`family_training_*.py`), the experiment
+catalog and local runtime (`experiment_*.py`), EdgeState and PCQM modules
+(`edge_state_*.py`, `pcqm_*.py`), and `research_memory/`. Package-level
+ownership is `src/molgap/__init__.py` plus each module's docstring. The full
+desktop package map is in `ARCHITECTURE.md` on `molgap-desktop`
+(commit `e53120da`). Experiments, platform records and research-memory data
+are not on master; see `PROMOTION_20261117.md`.

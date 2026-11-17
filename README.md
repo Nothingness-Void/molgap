@@ -58,7 +58,9 @@ and `src/molgap/inference.py`. Supported families include:
 - routed dual-GPS hybrid loading and batch prediction;
 - legacy 3D-only helpers;
 - conformer-ensemble helpers;
-- Delta/UQ helpers for explicitly selected historical bundles.
+- Delta/UQ helpers (`load_uq_bundle`, `predict_smiles_with_uq`). They need a
+  checkout of the `archive` branch (`archive_root`) and are calibrated to the
+  historical v3 base, not to the repaired-2M presets.
 
 Inspect function docstrings for return shapes and optional arguments. Do not
 infer the recommended registry key from an old experiment document.
