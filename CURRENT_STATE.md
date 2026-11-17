@@ -1,9 +1,9 @@
 # Current State
 
-> This file owns only live project truth: the production identity, active
-> candidate, blocker, and immediate handoff. Metrics and historical conclusions
-> belong to their dated decision records under `production/` or `experiments/`.
-> Task ordering belongs only in `ROADMAP.md`.
+> This file owns the production identity and closed Track B conclusions on
+> master. Full evidence stays on `molgap-desktop` and its experiment branches
+> (see `PROMOTION_20261117.md`). Master keeps stable results only, no job
+> status. `ROADMAP.md` on master is older than this file.
 
 ## Production Identity
 
@@ -17,76 +17,71 @@
 
 The previous routed-v4 model remains registered for compatibility. Historical
 Delta and UQ bundles remain calibrated to their historical v3 base, not to the
-repaired-2M presets. Asset paths and hashes belong to `models/README.md` and the
+repaired-2M presets, and `load_uq_bundle` needs an `archive` branch checkout
+(`archive_root`). Asset paths and hashes belong to `models/README.md` and the
 production decision linked above.
 
-## Active Objective
+## Track B Results
 
-Track B is open for an official PCQM4Mv2 leaderboard specialist. The target is
-the single official HOMO-LUMO Gap, not the Track A three-target contract.
-Architecture selection uses only an internal 100K/10K split derived from the
-official PCQM training role on Kaggle. Official validation and test-dev remain
-sealed during selection.
+Track B predicts the official PCQM4Mv2 HOMO-LUMO Gap only. It does not change
+Track A. This section lists closed, verified results. Each line names the
+`molgap-desktop` commit or branch that holds the evidence; see
+`PROMOTION_20261117.md` for how to fetch it. Experiment folders are not on
+master.
 
-The first matched official-PCQM question completed and froze persistent
-real-bond EdgeState GPS9 as the seed-42 comparator. Learned-query pooling and
-three matched local-operator replacements then failed their strict gates and
-are closed. The next seed-42 question is a recurrent graph state inside the
-accepted EdgeState backbone, selected by the resource-bounded route audit. It
-has no seed-43/44 or full-data authorization. Exact completed conclusions
-belong to the decisions under `experiments/pcqm_gap_architecture/results/`.
+- **K1 with FP32 Muon, 100K: adopted for the 500K transfer pair.** Selected
+  Live MAE 0.132521 eV against 0.141294 eV for AdamW in the same job. It is
+  not a full-scale or production replacement. Evidence:
+  `experiments/pcqm_k1_muon_100k_20261106/decision.md`, desktop commit
+  `5039fa0c`.
+- **K1 with Muon, 500K: positive but below the gate.** Muon 0.102468 eV against
+  AdamW 0.104282 eV, a gain of 1.814 meV (95% interval -2.386 to -1.250 meV).
+  The frozen bar was 3 meV, so nothing is adopted. The 100K gain of 8.774 meV
+  shrank to 1.814 meV at 500K. Evidence:
+  `experiments/pcqm_k1_muon_500k_20261106/decision.md`, branch
+  `codex/exp/k1-muon-500k-20261106`, commit `6b824342`.
+- **GPT-T full-scale levers (decided 2026-11-16).** Tail holdout, scored once
+  per endpoint, one-sided 99% bound.
+  - A passed. Four B1024 inits (seeds 42-45), equal weights: tail MAE 83.992
+    meV, 1.357 meV better than the two-init pair (85.349 meV). Init-only noise
+    std is 0.099 meV, which understates full training noise.
+  - B (batch 256), C (depth 20), D (90 passes) and E (cross-recipe ensemble)
+    failed their bars. B256 was worse than B1024 by 1.4-1.5 meV.
+  - The tail picked the lever, so 83.992 meV is optimistic. The final
+    four-init ensemble scored 0.08281 eV on official valid (reported, not
+    used to choose). Official test was not read. No adoption or production
+    change follows.
+  - Evidence: `experiments/pcqm_gptrans_full_levers_20261115/`, branch
+    `codex/exp/gptrans-full-levers-20261115`, commit `33ab4571`.
+- **K1 plus GPT-T fusion, full scale: FAIL.** Tail MAE: K1 97.026 and 99.006
+  meV, GPT-T 87.941 and 87.846 meV. The fusion was 0.229 meV worse than GPT-T
+  seed 42. Evidence:
+  `experiments/pcqm_full_minus_tail_fusion_20261113/decision_full_minus_tail.md`,
+  branch `codex/exp/gptrans-full-minus-tail-20261110`, commit `e32009ae`.
+- **TokenGT bond tokens, 100K: NEGATIVE_UNDER_CONTRACT (2026-11-17).** One seed
+  on the internal 50K development set: 140.676 meV against 139.440 meV for the
+  control, +1.236 meV (95% interval +0.281 to +2.174 meV). The bar was -3.0 meV.
+  Official valid and test were not read. Evidence:
+  `experiments/pcqm_gptrans_tokengt_bond_100k_20261117/decision.md`, branch
+  `codex/exp/gptrans-tokengt-bond-100k-20261117`, commit `1dc9c014`.
+- **GPT-T width and FFN, 500K: no arm passed, route still open (2026-11-17).**
+  Tail MAE, two seeds. Base R 110.913 and 110.924 meV. W320 was 2.387 meV worse.
+  F3 gained 0.363 meV, below the 1.5 meV bar. The depth-20 calibration arm
+  (L20) showed no signal (-0.440 meV; full scale gave +0.89 meV). By the
+  pre-registered rule, 500K cannot show a capacity effect here, so these
+  zero results do not close the width or FFN route. No full-scale run
+  follows. Evidence: `experiments/pcqm_gptrans_width_500k_20261117/decision.md`,
+  branch `codex/exp/gptrans-width-500k-20261117`, commits `532be162` and
+  `ac983785`.
 
-## Prior Architecture Evidence
-
-The independent PairGPS2D line completed its matched PubChemQC-100K
-validation-only search and passed that stage against the fixed GPS7 plus GPS9
-equal comparator. Its test role remains sealed, and neither full-data training
-nor Track B transfer is authorized. A train-role-only A100 benchmark selected a
-safer higher-throughput configuration but did not establish an accuracy result.
-The decisions are owned by
-`experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md`
-and
-`experiments/pubchemqc100k_architecture/results/pair_gps_2d_a100_benchmark/decision.md`.
-
-The QM9 pure-2D tournament selected persistent EdgeState R3; R5-R10 failed their
-strict validation gates and are closed. Those runs inform architecture choice
-only. They do not supply weights, splits, metrics, or advancement authority to
-the official PCQM screen. Their decisions are indexed by
-`experiments/top20_architecture_qm9/README.md`.
-
-The P1 conservative 2D+3D repair remains separate from the EdgeState scale-up.
-Its exact-identity head, compact aligned payload, Colab runner, and resume
-contract are implemented and locally tested. Model training has not started.
-Its status and evidence pointers are owned by
-`experiments/resource_bounded_architecture/README.md` and
-`platforms/colab/conservative_2d3d_fusion/README.md`.
-
-The previously rejected frozen-2D plus dual-SchNet residual remains closed and
-must not be represented as this new conservative head.
-
-## Execution State
-
-- Kaggle2 kernel `kaseichou/molgap-pcqm-gap100k-local-operators-seed42`,
-  version 1, completed. Its three required candidates passed no-inference
-  artifact acceptance but all failed the scientific advancement gate; the
-  time-gated fourth candidate was not launched.
-- The official-train-derived PCQM 100K graph cache and all completed seed-42
-  comparisons are accepted. Kaggle2 is running the sole matched recurrent
-  graph-state seed-42 screen; no multiseed or full-data run is authorized.
-- All accepted 100K architecture outputs have local manifests, metrics,
-  predictions, and hashes under the experiment and `platforms/_records/` trees.
-- No molecular-research-server access is authorized before Kaggle selects one
-  three-seed winner.
-- Any new remote run must first appear in `ROADMAP.md` with an input contract,
-  timing bound, atomic checkpoint path, and independently retrievable outputs.
+Other reusable code is in `src/molgap/` (K1 and GPT-T models, tail-holdout
+scoring support, registry). Weights are not in the repository.
 
 ## Boundaries
 
 - The leaderboard specialist predicts Gap only and stays isolated from the
   Track A three-target production registry.
 - PCQM official validation and test-dev are not architecture-tuning data.
-- The molecular-research-server boundary is `/lustre/home/users/sm2/chou/`;
-  the current Kaggle stage does not access the server at all.
 - Common, OOD, and P8-hard are a one-time acceptance gate after the standalone
   repaired-2M candidate completes; they are not architecture-tuning data.
 - Future sealed data remains locked.
@@ -103,22 +98,9 @@ must not be represented as this new conservative head.
 |---|---|
 | What ships now? | `production/README.md` |
 | Why is the repaired-2M pure-2D model recommended? | `production/04_evaluate/project_freeze/track_a_final_decision.md` |
-| What is the active leaderboard experiment? | `experiments/pcqm_gap_architecture/README.md` |
-| What exactly passed for EdgeState? | `experiments/resource_bounded_architecture/results/edge_state_100k_multiseed/decision.md` |
-| What did the independent PairGPS2D validation screen decide? | `experiments/pubchemqc100k_architecture/results/pair_gps_2d_fair_screen/decision.md` |
-| What did the pure-2D R3 validation tournament decide? | `experiments/top20_architecture_qm9/pair_gps_2d_r3_decision.md` |
-| What is the official-PCQM 100K selection contract? | `experiments/pcqm_gap_architecture/pcqm100k_gap_screen_protocol.md` |
-| Did replacing EdgeState with OGB local operators help? | `experiments/pcqm_gap_architecture/results/local_operator_search_seed42/decision.md` |
-| Why is recurrent graph state the next PCQM candidate? | `experiments/pcqm_gap_architecture/architecture_route_audit.md` |
-| Did the R5 multi-depth readout improve R3? | `experiments/top20_architecture_qm9/edge_state_jk_readout_r5_decision.md` |
-| Did R6 node-level edge conditioning improve R3? | `experiments/top20_architecture_qm9/edge_conditioned_r6_decision.md` |
-| Did R7 recurrent graph memory improve R3? | `experiments/top20_architecture_qm9/graph_token_r7_decision.md` |
-| Did R8 multihop local messaging improve R3? | `experiments/top20_architecture_qm9/multihop_edge_state_r8_decision.md` |
-| Did R9 shortest-path sparse attention improve R3? | `experiments/top20_architecture_qm9/sparse_path_attention_r9_decision.md` |
-| Where is the complete IMS record snapshot? | `platforms/_records/ims/README.md` |
-| Where are all active and completed experiment questions indexed? | `experiments/README.md` |
-| Where are rejected branches indexed? | `experiments/_closed/README.md` |
-| How are remote jobs packaged and retained? | `platforms/README.md` |
+| Where do the Track B results above come from? | `PROMOTION_20261117.md` |
+| What is the Track B final decision? | `production/04_evaluate/project_freeze/track_b_final_decision.md` |
 | Which model artifacts exist? | `models/README.md` |
+| Which reference models were used for which role? | `models/REFERENCE_INDEX.md` |
 
 The immediate execution order is defined only in `ROADMAP.md`.
