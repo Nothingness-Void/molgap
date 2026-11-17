@@ -1,0 +1,56 @@
+{
+  "format": "molgap-tail-holdout-eval-v1",
+  "role": "tail_holdout_v1",
+  "rows": [
+    3250000,
+    3378606
+  ],
+  "tail_source_idx_sha256": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+  "dev_range": null,
+  "dev_source_idx_sha256": null,
+  "protected_roles_read": {
+    "official_validation": false,
+    "test_dev": false,
+    "test_challenge": false
+  },
+  "results": {
+    "L2043": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "310140741fbfa130e397fcc323e3b204a2ae8257b1da669ec28776606bb8b966",
+      "tail_holdout_v1": {
+        "mae_ev": 0.11165233701467514,
+        "rows": 128606
+      }
+    }
+  },
+  "script_sha256": "0156c0a44750fd2a011f69610ece64de82efe8561acbd1f003eac126e63b6563",
+  "environment": {
+    "torch": "2.7.1+cu128",
+    "torch_geometric": "2.6.1",
+    "rdkit": "2025.03.5",
+    "numpy": "1.26.4",
+    "python": "3.10.6",
+    "platform": "Windows-10-10.0.26320-SP0",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060"
+  },
+  "recipe_source": {
+    "D:/molgap-artifacts/retrieved/gptrans-width-500k-20261117/s43/l20/run_config.json": {
+      "path": "D:\\molgap-artifacts\\retrieved\\gptrans-width-500k-20261117\\s43\\l20\\run_config.json",
+      "sha256": "cd18e7438f76afbf53648a98f47563f1d23e22f9ad749cb1218c83af9fe6d17e"
+    },
+    "D:/molgap-artifacts/initializations/gptrans-width-500k-20261117/gptrans_init_l20_s43.pt": {
+      "path": "D:\\molgap-artifacts\\initializations\\gptrans-width-500k-20261117\\gptrans_init_l20_s43.pt",
+      "sha256": "bb375fee040e239eaf37f116143834a23ebc1dab36f04d7d7081c86062ed3fe8"
+    },
+    "b1024_runner_sha256": "3730af26a8bb2664c0ac79c909f45d738e8e49cb9277e5c15d11cdecdbc5aa13"
+  },
+  "weights_key": "model",
+  "gptrans_shape_env": {
+    "MOLGAP_GPTRANS_LAYERS": "20",
+    "MOLGAP_GPTRANS_WIDTH": "256",
+    "MOLGAP_GPTRANS_HEADS": "8",
+    "MOLGAP_GPTRANS_FFN_RATIO": "1"
+  },
+  "per_row_predictions_saved": true
+}
