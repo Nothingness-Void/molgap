@@ -111,6 +111,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-grit-spse-100k-20261118-s42-grit_spse:A001",
+      "target": "experiments/pcqm_grit_spse_100k_20261118/generated/7e6d201386972688c0e9e8b63be96907a58d47bdb04e6491272b00fd777640c7/grit_spse/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-grit-spse-100k-20261118-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_grit_spse_100k_20261118/generated/7e6d201386972688c0e9e8b63be96907a58d47bdb04e6491272b00fd777640c7/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse:A001",
+      "target": "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
       "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
       "type": "action_produced_evidence"
@@ -1811,6 +1826,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-grit-spse-100k-20261118-s42-grit_spse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-grit-spse-100k-20261118-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
       "type": "prior_evidence"
@@ -1848,6 +1873,16 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-grit-spse-100k-20261118-s42-grit_spse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-grit-spse-100k-20261118-s42-pair_update_norm",
       "type": "prior_evidence"
     },
     {
@@ -1908,6 +1943,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse",
       "type": "prior_evidence"
     },
     {
@@ -4724,6 +4764,18 @@
     },
     {
       "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-grit-spse-100k-20261118-s42-grit_spse",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-grit-spse-100k-20261118-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse",
       "type": "trajectory"
     },
     {

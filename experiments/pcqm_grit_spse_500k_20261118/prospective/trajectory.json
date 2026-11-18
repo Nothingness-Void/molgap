@@ -1,0 +1,100 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-grit-spse-500k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-grit-spse-500k-20261118-s42-grit_spse-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_grit_spse_500k_20261118/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream"
+      ],
+      "source_commit": "70d628da352bcf317b2b8ebdd3d5fa49e9612ca0",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+    "next_allowed_actions": [
+      "one authorized frozen 500K run, then offline tail scoring"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_500K_TAIL",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+    "chosen_action": "RUN_500K_TAIL",
+    "policy_id": "pcqm-grit-spse-500k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_grit_spse_500k_20261118/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_decision_snapshots/272127cf6d2d6e1a7da60f3d03f80201c012c58b5e40cefc6b4f18c920d587d3.json",
+    "snapshot_sha256": "272127cf6d2d6e1a7da60f3d03f80201c012c58b5e40cefc6b4f18c920d587d3",
+    "state_timestamp": "2026-11-18T23:00:00+09:00"
+  },
+  "family_id": "pcqm-grit-spse-500k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "GRIT SignedSqrt edge-vector attention + RRWP + SPSE does not clear the -3.0 meV material gate over GPTrans-T at 100K",
+      "Additional pair/edge tensor capacity overfits at 100K or exceeds T4 wall budget"
+    ],
+    "changed_mechanism": "pure-2d-grit-spse-rrwp-signed-sqrt-ads-swiglu",
+    "cheapest_falsifier": "One 60-pass BS128 FP32 500K run, tail MAE (final EMA) above 104.273 meV (gptrans_500k_init_s44 107.273 minus 3.0) or paired 95% upper bound vs s44 not below 0; single seed, init-noise floor about 1.1 meV.",
+    "decision_changed_if_negative": "Close this intervention at 500K under contract; no grid, no retry.",
+    "decision_changed_if_positive": "Nominate only; cross-runtime single-seed comparison cannot adopt or scale up automatically.",
+    "expected_native_cost_ref": "cost-T-pcqm-grit-spse-500k-20261118-s42-grit_spse-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-grit-spse-500k-20261118-s42-grit_spse",
+    "observed_deficiency": "GPTrans-T relies on dot-product attention with shortest-path distance bias and 1D outer-product pair updates, without explicit random-walk return/transition probabilities (RRWP), simple-path/cycle structural encodings (SPSE), signed-sqrt edge-vector attention, or adaptive degree scaling.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ]
+  },
+  "owner": "desktop",
+  "question": "At 500K, does grit_spse lower tail_holdout_v1 MAE by 3.0 meV or more against the best retained GPT-T BondLocal+PairNorm init (107.273 meV, BS128)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+      "experiments/pcqm_grit_spse_500k_20261118/training_contract.json",
+      "experiments/pcqm_grit_spse_500k_20261118/run_spec.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_grit_spse_500k_20261118/role_plan.json"
+    ],
+    "source_commit": "70d628da352bcf317b2b8ebdd3d5fa49e9612ca0",
+    "source_config_identity": "24c1d0824c31a72f519e109e56b52db7704655758b8410440e1215d98f7131fe"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+}
