@@ -7,8 +7,11 @@ import json
 import os
 from pathlib import Path
 import requests
+import sys
 
-from molgap.kaggle_submission import quota_seconds
+# The venv's editable .pth holds a non-ASCII path that Windows decodes wrongly.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+from molgap.kaggle_submission import quota_seconds  # noqa: E402
 
 
 DEFAULT_KEY_DIR = Path(os.environ.get("MOLGAP_KAGGLE_KEY_DIR", "D:/\u4e0b\u8f7d/Key"))

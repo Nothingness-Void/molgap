@@ -11,7 +11,7 @@ import sys
 import tempfile
 import requests
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parent), str(Path(__file__).resolve().parents[2] / "src")]
 from check_quota import DEFAULT_ACCOUNTS, DEFAULT_KEY_DIR  # noqa: E402
 from molgap.kaggle_submission import connect_kaggle  # noqa: E402
 
