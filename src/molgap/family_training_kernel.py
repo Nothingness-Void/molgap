@@ -181,7 +181,6 @@ class FamilyKernel:
             source_indices=lambda batch: batch.source_idx.reshape(-1))
 
     def _gptrans_batch(self, batch, *, training):
-        from .family_training_policy import policy_batch_fields
         from .gptrans_execution_backend import prepare_layout
         from .gptrans_execution_hotpath import MODEL_FIELDS
         # Borrow immutable CPU data through a fresh PyG storage wrapper.
@@ -189,7 +188,7 @@ class FamilyKernel:
         policy = mode_policy(self.recipe.family, self.recipe.mode)
         if policy.prepare_batch is not None:
             prepared = policy.prepare_batch(prepared, training=training)
-        extra = tuple(f for f in policy_batch_fields(policy) if hasattr(prepared, f))
+        extra = tuple(f for f in policy.extra_batch_fields if hasattr(prepared, f))
         fields = (*MODEL_FIELDS, *extra, *(("y",) if training else ()))
         return prepared.to(self.device, *fields, non_blocking=True)
 

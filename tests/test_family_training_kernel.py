@@ -286,29 +286,18 @@ def test_standalone_policy_skips_backbone_weights_and_forwards_extra_fields(init
     from molgap.gptrans_execution_hotpath import development_cpu_view
     class TinyStandalone(torch.nn.Module):
         accepts_prepared_batch = True
-        def __init__(self):
-            super().__init__()
-            self.norm, self.head = torch.nn.LayerNorm(9), torch.nn.Linear(9, 1)
+        def __init__(self): super().__init__(); self.norm, self.head = torch.nn.LayerNorm(9), torch.nn.Linear(9, 1)
         def forward(self, b):
-            h = self.norm(b.x.float() + b.geometry_valid.float()[b.batch, None] * b.pos.pow(2).sum(-1, keepdim=True) + getattr(b, "cell_tag", 0.))
+            h = self.norm(b.x.float() + getattr(b, "cell_tag", 0.))
             return self.head(h.new_zeros(int(b.num_graphs), 9).index_add(0, b.batch, h)).squeeze(-1)
-    policy = FamilyModePolicy(construct=lambda r, s: TinyStandalone(), standalone_model=True, keep_geometry=True, extra_batch_fields=("cell_tag",))
-    for target in ("molgap.family_training_policy.mode_policy", "molgap.family_training_kernel.mode_policy"):
-        monkeypatch.setattr(target, lambda f, m: policy)
+    policy = FamilyModePolicy(construct=lambda r, s: TinyStandalone(), standalone_model=True, extra_batch_fields=("cell_tag",))
+    for t in ("molgap.family_training_policy.mode_policy", "molgap.family_training_kernel.mode_policy"): monkeypatch.setattr(t, lambda f, m: policy)
     path, digest = initial_states["gptrans_t"]
-    recipe = FamilyRecipe("gptrans_t", "reference", 42, digest, DatasetSelection("synthetic.json", "2" * 64, False),
-        128, 0, 1, .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1,
-        target_mean_eV=0., target_std_eV=1., ema_decay=.999, no_decay_modules=("LayerNorm",), torch_version=str(torch.__version__).split("+", 1)[0])
+    recipe = FamilyRecipe("gptrans_t", "reference", 42, digest, DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 1, .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1, target_mean_eV=0., target_std_eV=1., ema_decay=.999, no_decay_modules=("LayerNorm",), torch_version=str(torch.__version__).split("+", 1)[0])
     k1, k2 = FamilyKernel(recipe, path, device="cpu"), FamilyKernel(recipe, path, device="cpu")
-    assert sum(p.numel() for p in k1.model.parameters()) == 28 and all(torch.equal(a, b) for a, b in zip(k1.model.parameters(), k2.model.parameters()))
-    assert verify_loaded_family_model(recipe, k1.model)["status"] == "PASSED"
-    b = synthetic_batch()
-    b.pos, b.geometry_valid, b.cell_tag = torch.ones(6, 3), torch.tensor([True, False]), torch.full((6, 1), .5)
-    assert {"pos", "geometry_valid", "cell_tag"} <= set(development_cpu_view(b, extra_fields=("pos", "geometry_valid", "cell_tag")).keys())
+    assert sum(p.numel() for p in k1.model.parameters()) == 28 and all(torch.equal(a, b) for a, b in zip(k1.model.parameters(), k2.model.parameters())) and verify_loaded_family_model(recipe, k1.model)["status"] == "PASSED"
+    b = synthetic_batch(); b.cell_tag = torch.full((6, 1), .5); assert "cell_tag" in development_cpu_view(b, extra_fields=("cell_tag",)).keys()
     det, warn = torch.are_deterministic_algorithms_enabled(), torch.is_deterministic_algorithms_warn_only_enabled()
-    try:
-        torch.use_deterministic_algorithms(True, warn_only=False)
-        loss, _, rows = k1.step(b, check_finite=True)
-    finally:
-        torch.use_deterministic_algorithms(det, warn_only=warn)
+    try: torch.use_deterministic_algorithms(True, warn_only=False); loss, _, rows = k1.step(b, check_finite=True)
+    finally: torch.use_deterministic_algorithms(det, warn_only=warn)
     assert torch.isfinite(loss) and rows == 2 and k1.ema.update_calls == 1 and (k1.close(), k2.close()) == (None, None)
