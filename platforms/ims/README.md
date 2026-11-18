@@ -24,3 +24,6 @@ explicit index inside scheduler-assigned `CUDA_VISIBLE_DEVICES`. This is a thin
 entrypoint, not a submitter. See the [prepared bundle boundary](../../docs/operations/FAMILY_TRAINING_EXAMPLES.md#sandbox-to-package-to-platform):
 neutral sidecar transport, native preflight and actual PBS execution require
 their owning IMS release; the Git-archive uploader does not stage arbitrary bundles.
+
+Standalone models with a frozen recipe skip that package route and use `family_recipe_run.py`
+(see the [V4 resume notes](v4_submit/README.md#standalone-family-models-and-resume)).

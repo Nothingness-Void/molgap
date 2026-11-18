@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 from datetime import datetime, timedelta
@@ -21,6 +22,7 @@ RUN_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{2,63}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 COMMIT = re.compile(r"^[0-9a-f]{40}$")
 WALLTIME = re.compile(r"^(\d{2}):(\d{2}):(\d{2})$")
+PAUSED_EXIT = 2  # a train entrypoint that checkpointed and stopped on SIGTERM or its own wall budget
 PLACEHOLDERS = {
     "code_root",
     "dataset_root",
@@ -320,7 +322,40 @@ def parse_job_id(output: str) -> str:
     return matches[-1]
 
 
+def resume_run(inbox: Path, run_root: Path) -> dict:
+    """Resubmit train.pbs of a run whose training paused. Same source only; no preflight dependency."""
+    spec, submission = load_json(run_root / "run_spec.json"), load_json(run_root / "submission.json")
+    status = {stage: load_json(run_root / "output" / stage / "stage_status.json").get("status") for stage in ("preflight", "train")}
+    if (load_json(inbox / "run_spec.json")["source"] != spec["source"] or submission.get("status") != "submitted"
+            or status != {"preflight": "complete", "train": "paused"}):
+        raise RuntimeError("Run is not a paused run of this exact source")
+    maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
+    submission.update(status="resume_submitting")
+    atomic_json(run_root / "submission.json", submission)
+    try:
+        resumed = subprocess.run(
+            ["jsub", "-q", spec["resources"]["queue"], "-N", spec["run_id"][:15], str(run_root / "train.pbs")],
+            check=True, capture_output=True, text=True,
+        )
+        job = parse_job_id(resumed.stdout + resumed.stderr)
+    except BaseException as error:
+        submission.update(status="resume_unknown", error_type=type(error).__name__)
+        atomic_json(run_root / "submission.json", submission)
+        raise
+    submission.update(status="submitted", resume_jobs=[*submission.get("resume_jobs", []), job])
+    atomic_json(run_root / "submission.json", submission)
+    # The queued job has not paused yet: block a second resume until its worker writes a new status.
+    atomic_json(run_root / "output" / "train" / "stage_status.json", {"status": "resume_queued", "stage": "train", "job": job})
+    return submission
+
+
 def submit_run(inbox: Path, infrastructure: Path) -> dict:
+    infrastructure = require_below(infrastructure, BOUNDARY)
+    inbox = require_below(inbox, infrastructure)
+    run_id = str(load_json(inbox / "run_spec.json").get("run_id", ""))
+    existing = infrastructure / "runs" / run_id
+    if RUN_ID.fullmatch(run_id) and existing.exists():
+        return resume_run(inbox, existing)
     run_root = stage_run(inbox, infrastructure)
     spec = load_json(run_root / "run_spec.json")
     maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
@@ -411,12 +446,19 @@ def worker(run_root: Path, stage_name: str) -> None:
     status_path = run_root / "output" / stage_name / "stage_status.json"
     atomic_json(status_path, {"status": "running", "stage": stage_name, "command": command})
     try:
-        subprocess.run(command, check=True, cwd=run_root, env=environment)
+        code = subprocess.run(command, cwd=run_root, env=environment).returncode
+        if code == PAUSED_EXIT and stage_name == "train":
+            atomic_json(status_path, {"status": "paused", "stage": stage_name})
+            sys.exit(PAUSED_EXIT)
+        if code:
+            raise subprocess.CalledProcessError(code, command)
         for relative in stage["required_outputs"]:
             output = require_below(run_root / "output" / relative, run_root / "output")
             if not output.is_file():
                 raise FileNotFoundError(f"Required output missing: {output}")
         atomic_json(status_path, {"status": "complete", "stage": stage_name})
+    except SystemExit:
+        raise
     except BaseException as error:
         atomic_json(
             status_path,
