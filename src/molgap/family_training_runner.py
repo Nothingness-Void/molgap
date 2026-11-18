@@ -350,7 +350,7 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     if cost_root is not None:
         _begin_data_open_record(Path(cost_root).absolute(), input_root, selection, context)
     policy = mode_policy(recipe.family, recipe.mode)
-    data = load_training_data(Path(input_root), selection, keep_geometry=policy.keep_geometry)
+    data = load_training_data(Path(input_root), selection)
     if recipe.input_sidecar is not None or policy.attach_inputs is not None:
         data = policy.attach_inputs(Path(input_root), recipe.input_sidecar, data)
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)

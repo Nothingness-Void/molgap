@@ -192,11 +192,6 @@ def test_existing_kaggle_mirror_uses_same_topology_loader(pinned_data, developme
     assert all("pos" not in graph for graph in data.train)
     if development:
         assert all("pos" not in graph for graph in data.development)
-    kept = load_training_data(root, replace(selection, manifest_sha256=sha256_file(path),
-                                            development=development), keep_geometry=True)
-    assert all(torch.equal(graph.pos, torch.ones(1, 3)) for graph in kept.train)
-    if development:
-        assert all(torch.equal(graph.pos, torch.ones(1, 3)) for graph in kept.development)
 
 
 @pytest.mark.parametrize("flag", ["official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"])

@@ -32,9 +32,9 @@ class FamilyLoaders:
         self.generator = torch.Generator()
         self.training = DataLoader(data.train, batch_sampler=self.sampler,
             generator=self.generator, **training_loader_options(tuning.training_workers))
-        from .family_training_policy import FamilyModePolicy, mode_policy, policy_batch_fields
+        from .family_training_policy import FamilyModePolicy, mode_policy
         policy = (FamilyModePolicy() if recipe._frozen_read else mode_policy(recipe.family, recipe.mode))
-        extra_fields = policy_batch_fields(policy)
+        extra_fields = policy.extra_batch_fields
         self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
         if device_inputs is not None:
             from .family_training_device_inputs import DeviceResidentTrain
