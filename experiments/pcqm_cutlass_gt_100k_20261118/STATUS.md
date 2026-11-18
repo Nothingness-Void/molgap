@@ -1,3 +1,3 @@
 # Status
 
-Staged locally on `codex/exp/cutlass-gt-100k-20261118`, awaiting RTX 5060 CUDA verification and `@verifier` review before submission (DO NOT `--execute` submit yet).
+Submitted 2026-11-18 JST on `codex/exp/cutlass-gt-100k-20261118`: `SUBMISSION_BOUND` (`nvoid912/molgap-cutlass-gt-100k-20261118-s42`, `kernel_id=145779324`, `version=1`, `KernelWorkerStatus.RUNNING`).

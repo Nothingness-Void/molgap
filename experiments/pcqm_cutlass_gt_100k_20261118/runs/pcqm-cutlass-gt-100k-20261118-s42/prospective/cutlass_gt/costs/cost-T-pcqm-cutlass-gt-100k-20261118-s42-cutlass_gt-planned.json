@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-cutlass-gt-100k-20261118-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt-planned",
+  "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 7.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-cutlass-gt-100k-20261118-s42:cutlass_gt:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt"
+}

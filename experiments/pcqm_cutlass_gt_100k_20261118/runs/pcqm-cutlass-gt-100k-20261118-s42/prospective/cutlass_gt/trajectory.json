@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-cutlass-gt-100k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/cutlass_gt/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-cutlass-gt-100k-20261118-s42:cutlass_gt:downstream"
+      ],
+      "source_commit": "957c93e782992c715f936192ef03708d1c99b547",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_cutlass_gt_100k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-cutlass-gt-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_cutlass_gt_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-s42/prospective/rml_decision_snapshots/e85059325387c82089faa712de0996ba03e93a2a717850f3404b760456d936b0.json",
+    "snapshot_sha256": "e85059325387c82089faa712de0996ba03e93a2a717850f3404b760456d936b0",
+    "state_timestamp": "2026-11-18T16:55:00+09:00"
+  },
+  "family_id": "pcqm-cutlass-gt-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Explicit 4D pair-state propagation is necessary beyond low-rank FlashBias",
+      "Fused SDPA without 4D pair updates underfits at 100K",
+      "Effect is below the 3 meV material gate"
+    ],
+    "changed_mechanism": "standalone-cutlass-gt-wire-rope-flashbias-resformer-gated-sdpa-swiglu",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing BondLocal+PairNorm GPTrans-T (from gptrans.pt) against standalone CutlassGT-2026.",
+    "decision_changed_if_negative": "Close this CutlassGT-2026 intervention without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+    "observed_deficiency": "Dense 4D pair tensors in GPTrans-T incur O(N^2 C) memory and Conv2d overhead without modern fused SDPA, sign-free resistance/walk RoPE, value residuals, or SwiGLU FFNs.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a standalone Zero-4D-Tensor Fused Graph Transformer (sparse BondLocal + 8-head Cutlass SDPA with sign-free WIRE RoPE, FlashBias, ResFormer value residual, Gated Attention, and Pre-LN SwiGLU) improve matched 100K development MAE over BondLocal+PairNorm GPTrans-T?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/cutlass_gt/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_cutlass_gt_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_cutlass_gt_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "cutlass_gt",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-cutlass-gt-100k-20261118-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "c691b25540c6a5bd76dfcad2a08b6aff9f34c22208d64feacb142458b7d0e972"
+    },
+    "source_commit": "957c93e782992c715f936192ef03708d1c99b547",
+    "source_config_identity": "9efcd0a74658c9a8e23ce69d7d8376332a7ea488a1bf21936e6fff35de3d12e1"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt"
+}
