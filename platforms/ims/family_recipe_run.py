@@ -28,7 +28,7 @@ def sha256(path: Path) -> str:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(allow_abbrev=False)
     ap.add_argument("--recipe", type=Path, required=True)
-    ap.add_argument("--initial-state", type=Path, required=True, help="frozen state file; standalone models read it for identity only")
+    ap.add_argument("--initial-state", type=Path, help="frozen state file; standalone models need none, they build from the recipe seed")
     ap.add_argument("--input-root", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--phase", choices=("preflight", "train"), required=True)
@@ -82,10 +82,17 @@ def main(argv=None) -> int:
     gpu = torch.cuda.get_device_name(0)
     if args.accelerator:
         validate_accelerator_request(args.accelerator, gpu, hip_runtime=False)
+    initial = args.initial_state
+    if initial is None:
+        if not policy.standalone_model:
+            raise ValueError("Only a standalone model may omit --initial-state")
+        # The kernel still verifies a frozen state hash; this tiny fixed state carries it and is kept for scoring.
+        initial = out / "initial_state_placeholder.pt"
+        atomic_torch_save(initial, {"unused_standalone_model_builds_from_seed": torch.zeros(1)})
     tuning = ExecutionTuning(independent_models=1, total_cpu_budget=args.cpus)
     torch.set_num_threads(tuning.cpu_threads)
     runtime = build_runtime_manifest(configure_fp32_determinism(recipe.seed))
-    kernel = FamilyKernel(recipe, args.initial_state, device="cuda")
+    kernel = FamilyKernel(recipe, initial, device="cuda")
     total = recipe.optimizer_steps
     checkpoint = out / "last_checkpoint.pt"
     log = out / "train_log.jsonl"
@@ -94,7 +101,7 @@ def main(argv=None) -> int:
             "source_commit": args.source_commit, "recipe_sha256": recipe_sha, "recipe_identity": recipe.identity,
             "manifest_sha256": recipe.dataset.manifest_sha256, "train_rows": rows, "train_row_range": [first, first + rows],
             "tail_holdout_v1_read": False, "official_valid_read": False, "test_read": False,
-            "initial_state_sha256": sha256(args.initial_state), "gpu": gpu, "torch": torch.__version__,
+            "initial_state_sha256": sha256(initial), "gpu": gpu, "torch": torch.__version__,
             "runtime_fingerprint": runtime["runtime_fingerprint"], "batch_size": recipe.batch_size, "precision": "fp32"})
 
     def on_selected(progress, weights, state, _evaluation):
