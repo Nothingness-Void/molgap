@@ -68,9 +68,9 @@ A frozen family recipe (CutlassGT, GRIT-SPSE) runs through
 30 minutes); the driver pauses itself there or on SIGTERM and exits 2. The
 launcher records exit 2 as `paused`, not `error`. To continue a paused run, run
 the same `submit_from_windows.py` command again: it reuses the payload of the
-same clean commit, and the launcher submits `train.pbs` alone (no preflight
+same run (unchanged archive, even if HEAD moved), and the launcher submits `train.pbs` alone (no preflight
 dependency) only for an unchanged source whose preflight is complete and whose
 training is `paused`. A run left `running` or `error` is never resubmitted
-automatically; reconcile it with the scheduler first. The helper uploads
+automatically; reconcile it with the scheduler first (`jobinfo -c`, per REMOTE_HANDOFF) before any resume. The helper uploads
 `launcher.py` with the payload and runs that copy, so no separate remote install
 is needed.
