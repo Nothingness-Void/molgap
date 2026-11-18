@@ -44,7 +44,7 @@
   "authority": {
     "format": "molgap-execution-authority-v1",
     "user_authorized": true,
-    "account": "nothingnessvoid",
+    "account": "nvoid912",
     "arms": [
       "pair_update_norm",
       "grit_spse"
@@ -53,14 +53,14 @@
       42
     ],
     "same_run_reference_arm_id": "pair_update_norm",
-    "allocated_t4_hours_ceiling": 9,
-    "user_notebook_wall_ceiling_seconds": 16200,
-    "allocation_wall_limit_seconds": 16200,
+    "allocated_t4_hours_ceiling": 6,
+    "user_notebook_wall_ceiling_seconds": 12600,
+    "allocation_wall_limit_seconds": 12600,
     "cleanup_reserve_seconds": 180,
     "development_role_label_use": true,
     "protected_roles_authorized": [],
     "authority": "User explicitly ordered Pure-2D GRIT-SPSE 100K architecture comparison on Kaggle.",
-    "scope": "One 100K 60-pass T4x2 paired run on nothingnessvoid; train and internal development only; no protected roles or automatic scale-up."
+    "scope": "One 100K 60-pass T4x2 paired run on nvoid912; train and internal development only; no protected roles or automatic scale-up."
   },
   "platform": {
     "platform": {
@@ -73,16 +73,16 @@
       "retrievable_chunks": true
     },
     "kaggle": {
-      "account": "nothingnessvoid",
-      "kernel": "nothingnessvoid/molgap-grit-spse-100k-20261118-s42",
+      "account": "nvoid912",
+      "kernel": "nvoid912/molgap-grit-spse-100k-20261118-s42",
       "title": "MolGap GRIT SPSE 100K 20261118 S42",
       "datasets": [
-        "nothingnessvoid/grit-spse-100k-20261118-src",
-        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+        "nvoid912/grit-spse-100k-20261118-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
       ],
-      "source_dataset": "nothingnessvoid/grit-spse-100k-20261118-src",
+      "source_dataset": "nvoid912/grit-spse-100k-20261118-src",
       "accelerator": "NvidiaTeslaT4",
-      "allocation_wall_limit_seconds": 16200,
+      "allocation_wall_limit_seconds": 12600,
       "cleanup_reserve_seconds": 180
     }
   },
