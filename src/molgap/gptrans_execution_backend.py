@@ -106,6 +106,8 @@ def prepared_forward(model, batch):
     """Registered training forward; missing preparation cannot select a fallback."""
     if not hasattr(batch, "execution_layout"):
         raise ValueError("Accelerated GPTrans requires a CPU-prepared batch layout")
+    if getattr(model, "accepts_prepared_batch", False):
+        return model(batch).view(-1)
     if hasattr(model, "_execution_layout"):
         raise ValueError("Nested GPTrans forward is unsupported")
     model._execution_layout = batch.execution_layout

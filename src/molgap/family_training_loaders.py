@@ -32,11 +32,13 @@ class FamilyLoaders:
         self.generator = torch.Generator()
         self.training = DataLoader(data.train, batch_sampler=self.sampler,
             generator=self.generator, **training_loader_options(tuning.training_workers))
+        from .family_training_policy import FamilyModePolicy, mode_policy, policy_batch_fields
+        policy = (FamilyModePolicy() if recipe._frozen_read else mode_policy(recipe.family, recipe.mode))
+        extra_fields = policy_batch_fields(policy)
         self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
         if device_inputs is not None:
             from .family_training_device_inputs import DeviceResidentTrain
-            from .family_training_policy import mode_policy
-            if mode_policy(recipe.family, recipe.mode).prepare_batch is not None:
+            if policy.prepare_batch is not None or extra_fields:
                 self.device_inputs_reason = "mode has a prepare_batch hook"
             else:
                 store = DeviceResidentTrain(data.train, data.train_rows)
@@ -56,7 +58,7 @@ class FamilyLoaders:
             self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
                 batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
                 source_start=data.development_source_start, retain_model_inputs=True,
-                retain_random_walk_pe=recipe.family == "neural_atom_k1")
+                retain_random_walk_pe=recipe.family == "neural_atom_k1", extra_fields=extra_fields)
 
     def train(self, pass_index, start_batch):
         if self.closed:

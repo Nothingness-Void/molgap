@@ -45,10 +45,10 @@ class LoadedDatasetCache:
         self.entries.clear()
 
 
-def development_cpu_view(batch, *, retain_random_walk_pe=False):
+def development_cpu_view(batch, *, retain_random_walk_pe=False, extra_fields=()):
     """Do not spend the bounded dev cache on unused RWSE/geometry payloads."""
     result = copy(batch)
-    retained = set(MODEL_FIELDS) | {'y', 'source_idx', 'row_index', 'ptr', 'num_nodes'}
+    retained = set(MODEL_FIELDS) | {'y', 'source_idx', 'row_index', 'ptr', 'num_nodes'} | set(extra_fields)
     if retain_random_walk_pe:
         retained.add('random_walk_pe')
     for key in list(result.keys()):

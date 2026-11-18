@@ -444,9 +444,11 @@ def verify_loaded_family_model(recipe, model, *, seed=42, threads=1):
     import torch
     from .shared_model_adapter import validate_model_output
     prepare = None
+    keep_geometry = False
     if recipe.family != "neural_atom_k1":
         from .family_training_policy import mode_policy
-        prepare = mode_policy(recipe.family, recipe.mode).prepare_batch
+        policy = mode_policy(recipe.family, recipe.mode)
+        prepare, keep_geometry = policy.prepare_batch, policy.keep_geometry
     forward = _family_forward(recipe.family, getattr(recipe, "k1_execution", None), prepare)
     call = lambda current_model, batch: forward(current_model, batch)
 
@@ -457,6 +459,10 @@ def verify_loaded_family_model(recipe, model, *, seed=42, threads=1):
         original_gradients = [(parameter, parameter.grad) for parameter in model.parameters()]
         try:
             batch = synthetic_batch()
+            if keep_geometry:
+                batch.pos = torch.tensor([[0.0, 0.0, 0.0], [1.4, 0.0, 0.0], [0.7, 1.2, 0.5],
+                                          [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]], dtype=torch.float32)
+                batch.geometry_valid = torch.tensor([True, False])
             target = batch.y.reshape(-1)
             parameters, groups = _groups(model, None)
             model.train()

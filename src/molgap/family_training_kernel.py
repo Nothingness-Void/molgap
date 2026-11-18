@@ -37,6 +37,12 @@ def load_family_model(recipe, initial_state):
         if recipe.mode == "ssma":
             from .k1_joint_aggregation import attach_k1_joint_aggregation
             attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=recipe.seed)
+    elif policy.standalone_model:
+        with torch.random.fork_rng(devices=[]):
+            torch.random.default_generator.manual_seed(recipe.seed)
+            model = policy.construct(recipe, None)
+        if not getattr(model, "accepts_prepared_batch", False):
+            raise ValueError("Standalone family model must set accepts_prepared_batch = True")
     else:
         from .family_model_ops import make_gptrans_backbone
         from .gptrans_execution_backend import bind_model_layout
@@ -175,14 +181,16 @@ class FamilyKernel:
             source_indices=lambda batch: batch.source_idx.reshape(-1))
 
     def _gptrans_batch(self, batch, *, training):
+        from .family_training_policy import policy_batch_fields
         from .gptrans_execution_backend import prepare_layout
         from .gptrans_execution_hotpath import MODEL_FIELDS
         # Borrow immutable CPU data through a fresh PyG storage wrapper.
         prepared = copy(batch) if hasattr(batch, "execution_layout") else prepare_layout(copy(batch))
-        prepare = mode_policy(self.recipe.family, self.recipe.mode).prepare_batch
-        if prepare is not None:
-            prepared = prepare(prepared, training=training)
-        fields = (*MODEL_FIELDS, "y") if training else MODEL_FIELDS
+        policy = mode_policy(self.recipe.family, self.recipe.mode)
+        if policy.prepare_batch is not None:
+            prepared = policy.prepare_batch(prepared, training=training)
+        extra = tuple(f for f in policy_batch_fields(policy) if hasattr(prepared, f))
+        fields = (*MODEL_FIELDS, *extra, *(("y",) if training else ()))
         return prepared.to(self.device, *fields, non_blocking=True)
 
     def step(self, cpu_batch, *, check_finite, observer=None):

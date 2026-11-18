@@ -68,13 +68,13 @@ def resolve_pinned_manifest(root, selection):
 resolve_training_manifest = resolve_pinned_manifest
 
 
-def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
+def load_training_data(root: Path, selection: DatasetSelection, *, keep_geometry: bool = False) -> TrainingData:
     """Verify the selected view and shard bytes before trusted deserialization.
 
     This reads only selected official-train/internal-development shards. It
-    never selects coordinates or official-validation/test roles. Accepted legacy
-    packed files incidentally deserialize coordinates; model transfer excludes
-    them. Data preparation remains CPU.
+    never selects official-validation/test roles. Pure-2D runs strip packed
+    geometry in memory; explicit Generated-3D runs may set keep_geometry=True.
+    Data preparation remains CPU.
     """
     import torch
     from torch.utils.data import ConcatDataset
@@ -82,6 +82,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
 
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
+    if type(keep_geometry) is not bool:
+        raise ValueError("Geometry retention flag must be an exact bool")
     root = Path(root).absolute()
     path = resolve_pinned_manifest(root, selection)
     if sha256_file(path) != selection.manifest_sha256:
@@ -131,7 +133,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
             shard_path = _artifact_path(path.parent, record["file"])
             if sha256_file(shard_path) != record["sha256"]:
                 raise ValueError("Topology shard SHA differs from its manifest")
-            shard = PackedGraphDataset(shard_path, mmap=True).topology_only()
+            raw_shard = PackedGraphDataset(shard_path, mmap=True)
+            shard = raw_shard if keep_geometry else raw_shard.topology_only()
             if len(shard) != count:
                 raise ValueError("Decoded graph count differs from manifest")
             indices = shard._data.source_idx.reshape(-1)
