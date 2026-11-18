@@ -107,7 +107,10 @@ def _output_log_lines(cred_path: Path, ref: str) -> list[str]:
     lines: list[str] = []
     with tempfile.TemporaryDirectory() as td:
         api.kernels_output(ref, path=td, quiet=True)
-        for log_file in sorted(Path(td).glob("*.log")):
+        extra_logs = sorted(Path(td).rglob("preflight.log")) + sorted(Path(td).rglob("stderr.log"))
+        for log_file in [*extra_logs, *sorted(Path(td).glob("*.log"))]:
+            if log_file.is_file() and extra_logs and log_file in Path(td).glob("*.log"):
+                lines.append(f"--- {log_file.name} ---")
             raw_text = log_file.read_text(encoding="utf-8", errors="replace")
             for ln in raw_text.splitlines():
                 if not ln.strip():
@@ -121,6 +124,8 @@ def _output_log_lines(cred_path: Path, ref: str) -> list[str]:
                     except Exception:
                         pass
                 lines.append(ln)
+            if extra_logs and log_file == extra_logs[-1]:
+                break
     return lines
 
 
