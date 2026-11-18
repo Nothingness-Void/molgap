@@ -43,7 +43,8 @@ def _compute_wire_topo_and_pad(batch_idx: torch.Tensor, edge_index: torch.Tensor
         eye_pad = torch.diag_embed(1.0 - valid_r)
         eye_reg = 1e-2 * torch.eye(max_real, device=batch_idx.device, dtype=torch.float32).unsqueeze(0) * valid_r.unsqueeze(-1)
         l_reg = lap + proj + eye_pad + eye_reg
-        l_pinv = torch.linalg.inv(l_reg) - proj
+        # Invert tiny (B, N, N) regularized Laplacian on CPU inside no_grad to avoid T4 MAGMA missing sm_75 kernel image.
+        l_pinv = torch.linalg.inv(l_reg.cpu()).to(device=batch_idx.device, dtype=torch.float32) - proj
         diag_lpinv = torch.diagonal(l_pinv, dim1=-2, dim2=-1).clamp(0.0, 20.0) * valid_r
 
         # Sign-free multi-scale random walk return probabilities diag(P^1..P^8)

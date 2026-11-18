@@ -1,7 +1,7 @@
 {
   "format": "molgap-scientific-experiment-v1",
   "experiment_id": "pcqm_cutlass_gt_100k_20261118",
-  "logical_run_id": "pcqm-cutlass-gt-100k-20261118-s42",
+  "logical_run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42",
   "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
   "timestamp": "2026-11-18T16:55:00+09:00",
@@ -45,7 +45,7 @@
   "authority": {
     "format": "molgap-execution-authority-v1",
     "user_authorized": true,
-    "account": "nvoid912",
+    "account": "nothingnessvoid",
     "arms": [
       "pair_update_norm",
       "cutlass_gt"
@@ -54,14 +54,14 @@
       42
     ],
     "same_run_reference_arm_id": "pair_update_norm",
-    "allocated_t4_hours_ceiling": 6,
-    "user_notebook_wall_ceiling_seconds": 12600,
-    "allocation_wall_limit_seconds": 12600,
+    "allocated_t4_hours_ceiling": 8,
+    "user_notebook_wall_ceiling_seconds": 14400,
+    "allocation_wall_limit_seconds": 14400,
     "cleanup_reserve_seconds": 180,
     "development_role_label_use": true,
     "protected_roles_authorized": [],
     "authority": "User explicitly requested 4th-family CutlassGT-2026 100K experiment under 4th Court Directive on 2026-11-18.",
-    "scope": "One 100K 60-pass T4x2 paired run on nvoid912; train and internal development only; no protected roles or automatic scale-up."
+    "scope": "One 100K 60-pass T4x2 paired run on nothingnessvoid; train and internal development only; no protected roles or automatic scale-up."
   },
   "platform": {
     "platform": {
@@ -74,16 +74,16 @@
       "retrievable_chunks": true
     },
     "kaggle": {
-      "account": "nvoid912",
-      "kernel": "nvoid912/molgap-cutlass-gt-100k-20261118-s42",
-      "title": "MolGap Cutlass GT 100K 20261118 S42",
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-cutlass-gt-r2-100k-20261118-s42",
+      "title": "MolGap Cutlass GT R2 100K 20261118 S42",
       "datasets": [
-        "nvoid912/cutlass-gt-100k-20261118-src",
-        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+        "nothingnessvoid/cutlass-gt-r2-100k-20261118-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
       ],
-      "source_dataset": "nvoid912/cutlass-gt-100k-20261118-src",
+      "source_dataset": "nothingnessvoid/cutlass-gt-r2-100k-20261118-src",
       "accelerator": "NvidiaTeslaT4",
-      "allocation_wall_limit_seconds": 12600,
+      "allocation_wall_limit_seconds": 14400,
       "cleanup_reserve_seconds": 180
     }
   },
