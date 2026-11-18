@@ -41,7 +41,8 @@ def _compute_wire_topo_and_pad(batch_idx: torch.Tensor, edge_index: torch.Tensor
         valid_r = (torch.arange(max_real, device=batch_idx.device).unsqueeze(0) < counts.unsqueeze(1)).to(torch.float32)
         proj = (valid_r.unsqueeze(2) * valid_r.unsqueeze(1)) / n_vec
         eye_pad = torch.diag_embed(1.0 - valid_r)
-        l_reg = lap + proj + eye_pad
+        eye_reg = 1e-2 * torch.eye(max_real, device=batch_idx.device, dtype=torch.float32).unsqueeze(0) * valid_r.unsqueeze(-1)
+        l_reg = lap + proj + eye_pad + eye_reg
         l_pinv = torch.linalg.inv(l_reg) - proj
         diag_lpinv = torch.diagonal(l_pinv, dim1=-2, dim2=-1).clamp(0.0, 20.0) * valid_r
 
