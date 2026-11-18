@@ -4,13 +4,12 @@ from __future__ import annotations
 from collections import deque
 from dataclasses import replace
 
+from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
 import torch
 from torch import nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset
 from torch_geometric.data import Batch, Data
-
-from .ogb_features import ATOM_FEATURE_DIMS, BOND_FEATURE_DIMS
 
 EXTRA_BATCH_FIELDS = (
     "atom_spse",
@@ -318,8 +317,8 @@ class DeMolCIN(nn.Module):
 
     def __init__(self, d_a: int = 144, d_b: int = 112, d_r: int = 112, d_v: int = 144, num_layers: int = 8) -> None:
         super().__init__()
-        self.atom_emb = nn.ModuleList([nn.Embedding(dim, d_a) for dim in ATOM_FEATURE_DIMS])
-        self.bond_emb = nn.ModuleList([nn.Embedding(dim, d_b) for dim in BOND_FEATURE_DIMS])
+        self.atom_emb = AtomEncoder(d_a)
+        self.bond_emb = BondEncoder(d_b)
         self.atom_spse_proj = nn.Linear(6, d_a)
         self.bond_spse_proj = nn.Linear(6, d_b)
         self.ring_emb = nn.Embedding(MAX_RING_SIZE + 1, d_r)
@@ -337,13 +336,11 @@ class DeMolCIN(nn.Module):
     def forward(self, batch) -> torch.Tensor:
         batch = prepare_batch(batch)
         bsz = int(batch.num_graphs)
-        x = batch.x.long()
-        h_a = sum(emb(x[:, i].clamp(0, emb.num_embeddings - 1)) for i, emb in enumerate(self.atom_emb)) + self.atom_spse_proj(batch.atom_spse)
+        h_a = self.atom_emb(batch.x.long()) + self.atom_spse_proj(batch.atom_spse)
         if batch.bond_attr.shape[0] > 0:
-            ba = batch.bond_attr.long()
-            h_b = sum(emb(ba[:, i].clamp(0, emb.num_embeddings - 1)) for i, emb in enumerate(self.bond_emb)) + self.bond_spse_proj(batch.bond_spse)
+            h_b = self.bond_emb(batch.bond_attr.long()) + self.bond_spse_proj(batch.bond_spse)
         else:
-            h_b = h_a.new_zeros((0, self.bond_emb[0].embedding_dim))
+            h_b = h_a.new_zeros((0, self.bond_spse_proj.out_features))
         h_r = self.ring_emb(batch.ring_size.long().clamp(0, MAX_RING_SIZE)) if batch.ring_size.shape[0] > 0 else h_a.new_zeros((0, self.ring_emb.embedding_dim))
         h_v = self.virt_init.expand(bsz, -1)
         for block in self.blocks:

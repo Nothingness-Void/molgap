@@ -1,6 +1,6 @@
 # DeMol-CIN 100K: Protocol
 
-2026-11-18 JST. Desktop-owned Track B pair (`nothingnessvoid/molgap-demol-cin-100k-20261118-s42`).
+2026-11-18 JST. Desktop-owned Track B pair (`nothingnessvoid/molgap-demol-cin-r2-100k-20261118-s42`).
 Arms: `pair_update_norm` (same-job control from `gptrans.pt`) vs `demol_cin` (standalone Pure-2D sparse cellular complex network with 0-cell atoms, 1-cell undirected bonds + line-graph BLA, 2-cell chordless rings of size 3–8 capped at 16, and an $O(|V|+|E_u|+|R|)$ virtual hub).
 
 ## Fixed Contract

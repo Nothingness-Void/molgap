@@ -79,7 +79,6 @@ ADDONS = MappingProxyType({
         family_versions=("2",), single_addon=True,
         execution_modes=(("2", "demol_cin"),),
         policy_hook="molgap.demol_cin:policy",
-        extra_source_files=("src/molgap/ogb_features.py",),
     ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",

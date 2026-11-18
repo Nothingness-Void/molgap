@@ -1,3 +1,4 @@
 # Status
 
-Prepared and submitted 2026-11-18 JST on `codex/exp/demol-cin-100k-20261118`: `SUBMISSION_BOUND` (`nothingnessvoid/molgap-demol-cin-100k-20261118-s42`, `kernel_id=145744975`, `version=1`, `KernelWorkerStatus.QUEUED`).
+- Prior run `pcqm-demol-cin-100k-20261118-s42` (`nothingnessvoid/molgap-demol-cin-100k-20261118-s42`, `kernel_id=145744975`) failed at Kaggle import (`KernelWorkerStatus.ERROR`) because `src/molgap/demol_cin.py` imported `.ogb_features`, which imports `rdkit`. Journal preserved untouched at `D:/molgap-artifacts/runs/pcqm-demol-cin-100k-20261118-s42/v1`.
+- Fixed in `r2-s42` by replacing `.ogb_features` with `AtomEncoder` and `BondEncoder` from `ogb.graphproppred.mol_encoder` (zero `rdkit` dependency).

@@ -1,7 +1,7 @@
 {
   "format": "molgap-scientific-experiment-v1",
   "experiment_id": "pcqm_demol_cin_100k_20261118",
-  "logical_run_id": "pcqm-demol-cin-100k-20261118-s42",
+  "logical_run_id": "pcqm-demol-cin-100k-20261118-r2-s42",
   "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
   "timestamp": "2026-11-18T16:20:00+09:00",
@@ -75,13 +75,13 @@
     },
     "kaggle": {
       "account": "nothingnessvoid",
-      "kernel": "nothingnessvoid/molgap-demol-cin-100k-20261118-s42",
-      "title": "MolGap DeMol CIN 100K 20261118 S42",
+      "kernel": "nothingnessvoid/molgap-demol-cin-r2-100k-20261118-s42",
+      "title": "MolGap DeMol CIN R2 100K 20261118 S42",
       "datasets": [
-        "nothingnessvoid/demol-cin-100k-20261118-src",
+        "nothingnessvoid/demol-cin-r2-100k-20261118-src",
         "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
       ],
-      "source_dataset": "nothingnessvoid/demol-cin-100k-20261118-src",
+      "source_dataset": "nothingnessvoid/demol-cin-r2-100k-20261118-src",
       "accelerator": "NvidiaTeslaT4",
       "allocation_wall_limit_seconds": 16200,
       "cleanup_reserve_seconds": 180
