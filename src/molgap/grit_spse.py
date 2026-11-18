@@ -188,7 +188,7 @@ class GRITSPSEModel(nn.Module):
         cnt = real_valid.float().sum(dim=1, keepdim=True).clamp_min(1.0)
         h_mean = h_real.sum(dim=1) / cnt
         h_sum = h_real.sum(dim=1) * 0.1
-        return self.readout(torch.cat((h[:, 0, :], h_mean, h_sum), dim=-1))
+        return self.readout(torch.cat((h[:, 0, :], h_mean, h_sum), dim=-1)).squeeze(-1)
 
 
 def construct_family_model(recipe, _initial_state=None):
