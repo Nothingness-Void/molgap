@@ -8,7 +8,6 @@ import json
 import os
 from pathlib import Path
 import sys
-import tempfile
 import requests
 
 sys.path[:0] = [str(Path(__file__).resolve().parent), str(Path(__file__).resolve().parents[2] / "src")]
@@ -102,30 +101,47 @@ def _stream_sse_lines(username: str, key: str, ref: str, *, read_timeout: float)
     return lines, note
 
 
-def _output_log_lines(cred_path: Path, ref: str) -> list[str]:
-    api = connect_kaggle(cred_path)
+def _decode_kaggle_log_text(raw_text: str) -> list[str]:
     lines: list[str] = []
-    with tempfile.TemporaryDirectory() as td:
-        api.kernels_output(ref, path=td, quiet=True)
-        extra_logs = sorted(Path(td).rglob("preflight.log")) + sorted(Path(td).rglob("stderr.log"))
-        for log_file in [*extra_logs, *sorted(Path(td).glob("*.log"))]:
-            if log_file.is_file() and extra_logs and log_file in Path(td).glob("*.log"):
-                lines.append(f"--- {log_file.name} ---")
-            raw_text = log_file.read_text(encoding="utf-8", errors="replace")
-            for ln in raw_text.splitlines():
-                if not ln.strip():
+    for ln in raw_text.splitlines():
+        if not ln.strip():
+            continue
+        stripped = ln.lstrip(", ")
+        if stripped.startswith("{"):
+            try:
+                obj = json.loads(stripped)
+                if isinstance(obj, dict) and "data" in obj:
+                    lines.extend(x for x in str(obj["data"]).splitlines() if x.strip())
                     continue
-                if ln.lstrip().startswith((",{", "[{", "{")):
-                    try:
-                        obj = json.loads(ln.lstrip(", "))
-                        if isinstance(obj, dict) and "data" in obj:
-                            lines.extend(x for x in str(obj["data"]).splitlines() if x.strip())
-                            continue
-                    except Exception:
-                        pass
-                lines.append(ln)
-            if extra_logs and log_file == extra_logs[-1]:
-                break
+            except Exception:
+                pass
+        lines.append(ln)
+    return lines
+
+
+def _output_log_lines(username: str, key: str, ref: str, *, include_worker_error_logs: bool = False) -> list[str]:
+    owner, slug = ref.split("/", 1)
+    session = requests.Session()
+    session.auth = (username, key)
+    session.headers["User-Agent"] = "kaggle-api/molgap"
+    resp = session.get("https://www.kaggle.com/api/v1/kernels/output",
+                       params={"userName": owner, "kernelSlug": slug}, timeout=(6, 15))
+    if not resp.ok:
+        return []
+    payload = resp.json()
+    lines = _decode_kaggle_log_text(str(payload.get("log") or ""))
+    if include_worker_error_logs:
+        for f in payload.get("files") or ():
+            fname = str(f.get("fileName") or "")
+            furl = f.get("url")
+            if furl and fname.endswith(("preflight.log", "stderr.log")):
+                try:
+                    fr = session.get(str(furl), timeout=(6, 10))
+                    if fr.ok and fr.text.strip():
+                        lines.append(f"--- {fname} ---")
+                        lines.extend(x for x in fr.text.splitlines() if x.strip())
+                except Exception:
+                    pass
     return lines
 
 
@@ -177,14 +193,19 @@ def inspect_kernel(ref: str, label: str, accounts: dict[str, tuple[Path, dict]],
     cred_path, cred_raw = accounts[owner]
     if sched is None:
         sched, fail_msg = _query_scheduler(ref, accounts)
-    lines, stream_note = _stream_sse_lines(cred_raw["username"], cred_raw["key"], ref, read_timeout=read_timeout)
-    if not lines and sched == "ERROR":
-        try:
-            lines = _output_log_lines(cred_path, ref)
+    lines: list[str] = []
+    stream_note = "none"
+    if sched in {"COMPLETE", "ERROR", "CANCELLED"}:
+        lines = _output_log_lines(cred_raw["username"], cred_raw["key"], ref,
+                                  include_worker_error_logs=(sched == "ERROR"))
+        if lines:
+            stream_note = "kernels_output"
+    if not lines:
+        lines, stream_note = _stream_sse_lines(cred_raw["username"], cred_raw["key"], ref, read_timeout=read_timeout)
+        if not lines and sched == "ERROR":
+            lines = _output_log_lines(cred_raw["username"], cred_raw["key"], ref, include_worker_error_logs=True)
             if lines:
                 stream_note = "kernels_output"
-        except Exception:
-            pass
     parsed = _parse_training_lines(lines)
     return {
         "run": label, "kernel": ref, "account": owner, "scheduler": sched, "failure_message": fail_msg,
@@ -206,10 +227,10 @@ def _format_summary(records: list[dict]) -> str:
             lt = arm["latest"]
             p = int(lt.get("completed_passes") or 0)
             p_tot = int(round(float(lt.get("planned_passes") or 0)))
-            best = float(lt["best_development_mae_eV"]) * 1000.0 if "best_development_mae_eV" in lt else None
-            last = float(lt["development_mae_eV"]) * 1000.0 if "development_mae_eV" in lt else None
-            trn = float(lt["train_live_mae_eV"]) * 1000.0 if "train_live_mae_eV" in lt else None
-            pw = float(lt["pass_wall_seconds"]) if "pass_wall_seconds" in lt else None
+            best = float(lt["best_development_mae_eV"]) * 1000.0 if lt.get("best_development_mae_eV") is not None else None
+            last = float(lt["development_mae_eV"]) * 1000.0 if lt.get("development_mae_eV") is not None else None
+            trn = float(lt["train_live_mae_eV"]) * 1000.0 if lt.get("train_live_mae_eV") is not None else None
+            pw = float(lt["pass_wall_seconds"]) if lt.get("pass_wall_seconds") is not None else None
             el = _fmt_duration(lt.get("elapsed_seconds"))
             eta = _fmt_duration(lt.get("eta_seconds"))
             delta = "-"
