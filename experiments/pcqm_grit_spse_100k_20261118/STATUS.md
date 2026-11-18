@@ -1,3 +1,3 @@
 # Status
 
-Submitted 2026-11-18 JST on `codex/exp/grit-spse-100k-20261118`: `SUBMISSION_BOUND` (`nvoid912/molgap-grit-spse-100k-20261118-s42`, `kernel_id=145782179`, `version=1`, `KernelWorkerStatus.QUEUED` -> `RUNNING`).
+Fixing preflight optimizer-moment failure on `2026-11-18` JST on `codex/exp/grit-spse-100k-20261118` (`s42` `145782179` exited `ERROR` in `validate_session_resume`); staging replacement `pcqm-grit-spse-100k-20261118-r2-s42` (`nvoid912/molgap-grit-spse-r2-100k-20261118-s42`).

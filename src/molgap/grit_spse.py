@@ -78,7 +78,7 @@ class _SwiGLU(nn.Module):
 
 
 class _GRITBlock(nn.Module):
-    def __init__(self, d_node: int = 256, d_pair: int = 48, n_heads: int = 8, d_head: int = 16) -> None:
+    def __init__(self, d_node: int = 256, d_pair: int = 48, n_heads: int = 8, d_head: int = 16, update_pair: bool = True) -> None:
         super().__init__()
         self.n_heads = n_heads
         self.d_head = d_head
@@ -94,8 +94,8 @@ class _GRITBlock(nn.Module):
         self.theta_1 = nn.Parameter(torch.ones(d_node))
         self.theta_2 = nn.Parameter(torch.zeros(d_node))
         self.w_o = nn.Linear(d_node, d_node)
-        self.norm_ehat = nn.LayerNorm(self.d_attn)
-        self.w_e_out = nn.Linear(self.d_attn, d_pair)
+        self.norm_ehat = nn.LayerNorm(self.d_attn) if update_pair else None
+        self.w_e_out = nn.Linear(self.d_attn, d_pair) if update_pair else None
         self.norm_ffn = nn.LayerNorm(d_node)
         self.ffn = _SwiGLU(d_node, 2 * d_node)
 
@@ -115,8 +115,9 @@ class _GRITBlock(nn.Module):
         m = torch.einsum("bijh,bjhd->bihd", attn, v).reshape(b, n, -1)
         m = m * self.theta_1 + torch.log1p(deg).unsqueeze(-1) * (m * self.theta_2)
         node = node + self.w_o(m)
-        pair_mask = (valid.unsqueeze(1) & valid.unsqueeze(2)).unsqueeze(-1)
-        pair = (pair + self.w_e_out(self.norm_ehat(e_hat.reshape(b, n, n, self.d_attn)))).masked_fill(~pair_mask, 0.0)
+        if self.w_e_out is not None:
+            pair_mask = (valid.unsqueeze(1) & valid.unsqueeze(2)).unsqueeze(-1)
+            pair = (pair + self.w_e_out(self.norm_ehat(e_hat.reshape(b, n, n, self.d_attn)))).masked_fill(~pair_mask, 0.0)
         node = (node + self.ffn(self.norm_ffn(node))).masked_fill(~valid.unsqueeze(-1), 0.0)
         return node, pair
 
@@ -138,7 +139,7 @@ class GRITSPSEModel(nn.Module):
         self.virt_row = nn.Parameter(torch.zeros(1, 1, d_pair))
         self.virt_col = nn.Parameter(torch.zeros(1, 1, d_pair))
         self.virt_self = nn.Parameter(torch.zeros(1, 1, d_pair))
-        self.blocks = nn.ModuleList([_GRITBlock(d_node, d_pair) for _ in range(n_layers)])
+        self.blocks = nn.ModuleList([_GRITBlock(d_node, d_pair, update_pair=(i < n_layers - 1)) for i in range(n_layers)])
         self.norm_out = nn.LayerNorm(d_node)
         self.readout = nn.Sequential(
             nn.Linear(3 * d_node, d_node),

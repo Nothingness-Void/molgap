@@ -1,6 +1,6 @@
 # Pure-2D GRIT-SPSE at 100K: Protocol
 
-2026-11-18 JST. Desktop-owned Track B pair (`nvoid912/molgap-grit-spse-100k-20261118-s42`).
+2026-11-18 JST. Desktop-owned Track B pair (`nvoid912/molgap-grit-spse-r2-100k-20261118-s42`). Earlier `s42` (`145782179`) failed preflight (`ValueError: Resume is missing required optimizer moments`) due to unused final-block pair projection (`update_pair=False` added on the last `_GRITBlock`).
 Arms: `pair_update_norm` (same-job GPTrans-T control) vs `grit_spse` (100% Pure-2D `GRITSPSEModel` with CPU `SPSE` 3..8-step walk/cycle counts, `P^1..P^16` pairwise RRWP, Bahdanau SignedSqrt edge-vector attention, Adaptive Degree Scaler `ADS`, and Pre-LN SwiGLU across 8 blocks).
 
 ## Fixed Contract
