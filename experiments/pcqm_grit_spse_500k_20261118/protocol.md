@@ -32,7 +32,7 @@ Init-only spread is 1.09 meV (SD 0.47). A single seed cannot show a gain smaller
 - The tail scorer builds the model from the family recipe through `load_family_model`. That dispatch builds `CutlassGT2026` and `GRITSPSEModel` (checked on CPU from the 100K recipes). The scorer forward path (batch 1024 memory, GRIT preparation) was not run. It needs the run's own `recipe.json` and the owning worktree `src` on PYTHONPATH, because the primary checkout lacks these modules. The scorer is not edited here.
 
 ## Time (estimates, not measurements)
-Step time 73 ms GPU plus about 65 ms CPU featurization on an RTX 5060, FP32, measured by a subagent; not A100, and A100 FP32 without TF32 is not assumed faster. Estimate: about 5 h at BS128 if CPU featurization overlaps the GPU, 9.0 to 9.5 h if serial; plan for up to two 10 h segments. 
+Step time 73 ms GPU plus about 65 ms CPU featurization on an RTX 5060, FP32, measured by a subagent. Since the data-path change the atom SPSE features are cached once at dataset load (about 4 s per 50K graphs, about 340 B per graph) and the worker only gathers them: worker time per batch of 128 fell from 51 ms to 11 ms (RTX 5060 host, workers=0 in-process timing), and the 60-step trained state hash is identical to the uncached code (124b7d831716a3df). Older numbers here are the uncached ones; not A100, and A100 FP32 without TF32 is not assumed faster. Estimate: about 5 h at BS128 if CPU featurization overlaps the GPU, 9.0 to 9.5 h if serial; plan for up to two 10 h segments. 
 
 ## Records
 Prospective trajectory `prospective/trajectory.json` (`record_mode=prospective`); it authorises no training. See [ims_submission.md](ims_submission.md), [run_spec.json](run_spec.json), [training_contract.json](training_contract.json).

@@ -17,11 +17,11 @@ def _atom_spse_features(n_nodes: int, edge_index: torch.Tensor) -> torch.Tensor:
         return torch.empty((0, 6), dtype=torch.float32)
     adj = torch.zeros((n_nodes, n_nodes), dtype=torch.float32)
     if edge_index.numel() > 0:
-        u, v = edge_index[0].tolist(), edge_index[1].tolist()
-        for a, b in zip(u, v):
-            if a != b:
-                adj[a, b] = 1.0
-                adj[b, a] = 1.0
+        u, v = edge_index[0], edge_index[1]
+        keep = u != v
+        u, v = u[keep], v[keep]
+        adj[u, v] = 1.0
+        adj[v, u] = 1.0
     p = adj @ adj
     cols = []
     for _ in range(3, 9):
@@ -30,17 +30,41 @@ def _atom_spse_features(n_nodes: int, edge_index: torch.Tensor) -> torch.Tensor:
     return torch.stack(cols, dim=-1)
 
 
+def _graph_topology(base):
+    """Yield (n_nodes, edge_index) per graph without filling PyG's per-graph cache."""
+    for ds in getattr(base, "datasets", (base,)):
+        if getattr(ds, "slices", None) is not None and "edge_index" in ds.slices:
+            nodes, edges, ei = ds.slices["x"].tolist(), ds.slices["edge_index"].tolist(), ds._data.edge_index
+            for i in range(len(nodes) - 1):
+                yield nodes[i + 1] - nodes[i], ei[:, edges[i]:edges[i + 1]]
+        else:
+            for i in range(len(ds)):
+                g = ds[i]
+                yield int(g.num_nodes), g.edge_index
+
+
 class _SpseDataset(Dataset):
+    """Atom SPSE features are computed once from graph content at load, then only gathered."""
+
     def __init__(self, base) -> None:
         super().__init__()
         self.base = base
+        feats, counts = [], []
+        for n, edge_index in _graph_topology(base):
+            feats.append(_atom_spse_features(n, edge_index))
+            counts.append(n)
+        self.spse = torch.cat(feats) if feats else torch.empty((0, 6), dtype=torch.float32)
+        self.starts = torch.cumsum(torch.tensor([0] + counts, dtype=torch.int64), 0)
 
     def len(self) -> int:
         return len(self.base)
 
     def get(self, idx: int):
         g = self.base[idx].clone()
-        g.atom_spse = _atom_spse_features(int(g.num_nodes), g.edge_index)
+        lo, hi = int(self.starts[idx]), int(self.starts[idx + 1])
+        if hi - lo != int(g.num_nodes):
+            raise ValueError("SPSE cache does not match the graph")
+        g.atom_spse = self.spse[lo:hi]
         return g
 
 
