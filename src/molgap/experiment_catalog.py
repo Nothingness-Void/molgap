@@ -74,6 +74,12 @@ ADDONS = MappingProxyType({
         execution_modes=(("2", "degree_bond_local_pair_update_norm_ema999"),),
         policy_hook="molgap.gptrans_bond_pair_norm:policy",
     ),
+    ("grit_spse", "1"): AddonContract(
+        "gptrans_t", "local-bond-architecture", "molgap.grit_spse",
+        family_versions=("2",), single_addon=True,
+        execution_modes=(("2", "grit_spse"),),
+        policy_hook="molgap.grit_spse:policy",
+    ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
         (AddonConfigField("num_layers", "integer", minimum=EDGE_STATE_MIN_LAYERS,
