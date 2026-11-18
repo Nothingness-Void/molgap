@@ -13,6 +13,7 @@ from pathlib import Path
 RUN_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{2,63}$")
 REMOTE_BOUNDARY = "/lustre/home/users/sm2/chou"
 REMOTE_INFRA = f"{REMOTE_BOUNDARY}/molgap-v4-submit"
+LAUNCHER = Path(__file__).with_name("launcher.py")  # runs from the inbox, so it needs no separate remote install
 
 
 def run(command: list[str], *, cwd: Path | None = None, capture: bool = False) -> str:
@@ -73,6 +74,16 @@ def package(repo: Path, template: Path, output: Path) -> dict:
     return spec
 
 
+def reusable(repo: Path, template: Path, payload: Path) -> dict | None:
+    """The same command after a walltime cut reuses this payload: same clean commit, same run_id."""
+    path = payload / "run_spec.json"
+    if not path.is_file() or run(["git", "status", "--porcelain"], cwd=repo, capture=True):
+        return None
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    same = spec.get("source", {}).get("commit") == run(["git", "rev-parse", "HEAD"], cwd=repo, capture=True)
+    return spec if same and spec.get("run_id") == json.loads(template.read_text(encoding="utf-8")).get("run_id") else None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, required=True)
@@ -83,15 +94,16 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=22)
     parser.add_argument("--user", default="sm2")
     args = parser.parse_args()
-    spec = package(args.repo.resolve(), args.spec.resolve(), args.payload.resolve())
+    repo, payload = args.repo.resolve(), args.payload.resolve()
+    spec = reusable(repo, args.spec.resolve(), payload) or package(repo, args.spec.resolve(), payload)
     run_id = spec["run_id"]
     destination = f"{args.user}@{args.host}"
     inbox = f"{REMOTE_INFRA}/inbox/{run_id}"
     ssh = ["ssh", "-T", "-i", str(args.key.resolve()), "-p", str(args.port), destination]
     scp = ["scp", "-i", str(args.key.resolve()), "-P", str(args.port)]
     run(ssh + [f"cd {REMOTE_BOUNDARY} && mkdir -p {inbox}"])
-    run(scp + [str(args.payload / "source.tar.gz"), str(args.payload / "run_spec.json"), str(args.payload / "source_files.json"), f"{destination}:{inbox}/"])
-    run(ssh + [f"cd {REMOTE_BOUNDARY} && {REMOTE_BOUNDARY}/molgap/.venv/bin/python {REMOTE_INFRA}/launcher.py submit --inbox {inbox}"])
+    run(scp + [str(args.payload / "source.tar.gz"), str(args.payload / "run_spec.json"), str(args.payload / "source_files.json"), str(LAUNCHER), f"{destination}:{inbox}/"])
+    run(ssh + [f"cd {REMOTE_BOUNDARY} && {REMOTE_BOUNDARY}/molgap/.venv/bin/python {inbox}/launcher.py submit --inbox {inbox}"])
 
 
 if __name__ == "__main__":

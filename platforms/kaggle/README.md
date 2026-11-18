@@ -159,7 +159,16 @@ performing an unbounded manual rewrite or downloading every raw artifact.
 
 The three accounts hold accepted, byte-identical private OGB PCQM4Mv2 100K
 and SCNet-matched 500K graph datasets. The records above own the exact dataset
-references and hashes. Kaggle1 and Kaggle2 are excluded from holding the 1M
+references and hashes.
+
+## Live Progress and Log Inspection
+
+While a kernel is `RUNNING` (before `kernels_output` publishes files), read-only
+`platforms/kaggle/check_logs.py` streams Kaggle's live SSE endpoint
+(`/api/v1/kernels/logs/stream/<owner>/<slug>`) and parses structured `TRAIN_LOG`
+passes, dev/train MAE, ETA, and same-pass paired deltas. Omit targets to
+auto-discover active bound runs under `D:/molgap-artifacts/runs`, or pass kernel
+refs, `--run-id`, `--tail N`, or `--json`. Kaggle1 and Kaggle2 are excluded from holding the 1M
 and full identities. These mirrors confer no access to protected evaluation
 roles. Verify the active credential owner against the intended kernel and
 dataset slugs before every push; this table does not describe the current
