@@ -74,14 +74,15 @@ def package(repo: Path, template: Path, output: Path) -> dict:
     return spec
 
 
-def reusable(repo: Path, template: Path, payload: Path) -> dict | None:
-    """The same command after a walltime cut reuses this payload: same clean commit, same run_id."""
+def reusable(template: Path, payload: Path) -> dict | None:
+    """The same command after a walltime cut reuses its payload: same run_id, archive bytes unchanged.
+    HEAD may have moved since (receipts are committed); the launcher compares the source with the staged run."""
     path = payload / "run_spec.json"
-    if not path.is_file() or run(["git", "status", "--porcelain"], cwd=repo, capture=True):
+    if not path.is_file():
         return None
     spec = json.loads(path.read_text(encoding="utf-8"))
-    same = spec.get("source", {}).get("commit") == run(["git", "rev-parse", "HEAD"], cwd=repo, capture=True)
-    return spec if same and spec.get("run_id") == json.loads(template.read_text(encoding="utf-8")).get("run_id") else None
+    same = spec.get("run_id") == json.loads(template.read_text(encoding="utf-8")).get("run_id")
+    return spec if same and sha256_file(payload / "source.tar.gz") == spec["source"]["archive_sha256"] else None
 
 
 def main() -> None:
@@ -95,7 +96,7 @@ def main() -> None:
     parser.add_argument("--user", default="sm2")
     args = parser.parse_args()
     repo, payload = args.repo.resolve(), args.payload.resolve()
-    spec = reusable(repo, args.spec.resolve(), payload) or package(repo, args.spec.resolve(), payload)
+    spec = reusable(args.spec.resolve(), payload) or package(repo, args.spec.resolve(), payload)
     run_id = spec["run_id"]
     destination = f"{args.user}@{args.host}"
     inbox = f"{REMOTE_INFRA}/inbox/{run_id}"
