@@ -79,11 +79,11 @@ $run = "D:/molgap-artifacts/runs/$runId/$attemptId"
 & $python platforms/local/run.py --profile $profilePath -- sandbox --spec $run/inputs/experiment_spec.json --arm candidate --plan $run/inputs/workflow_plan.json --repo-root .
 ```
 
-**Steps 6-7: wait and retrieve.** Each status call takes about 3 s, makes no
-download and submits nothing. Keep each wait plus call under a 10 minute tool
-limit.
+**Steps 6-7: monitor, wait and retrieve.** Read-only `check_logs.py` parses live
+`TRAIN_LOG` progress (~3 s); `--status` checks terminal state without download.
 
 ```powershell
+& $python platforms/kaggle/check_logs.py --run-id $runId --tail 5
 & $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --status --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root .
 & $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --strict --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --execute
 ```
