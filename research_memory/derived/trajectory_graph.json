@@ -1,6 +1,21 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt:A001",
+      "target": "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/cutlass_gt/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_cutlass_gt_100k_20261118/generated/f3cae06a0c73754cbcc11a31383d6ddfd7458a6bd7c7612fbc91df6dc82d6fa5/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt:A001",
+      "target": "experiments/pcqm_cutlass_gt_500k_20261118/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local:A001",
       "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
       "type": "action_produced_evidence"
@@ -1752,6 +1767,16 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
       "type": "prior_evidence"
     },
@@ -1812,6 +1837,16 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
       "type": "prior_evidence"
     },
@@ -1868,6 +1903,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
       "type": "prior_evidence"
     },
     {
@@ -4636,6 +4676,18 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
       "type": "trajectory"
     },
     {

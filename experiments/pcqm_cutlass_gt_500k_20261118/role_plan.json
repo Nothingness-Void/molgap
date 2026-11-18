@@ -1,0 +1,17 @@
+{
+  "development": "rows 500000..549999, used for selection",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "held_out": "tail_holdout_v1 untouched",
+  "roles": [
+    {
+      "role": "train",
+      "rows": "0..499999"
+    },
+    {
+      "role": "development",
+      "rows": "500000..549999"
+    }
+  ]
+}

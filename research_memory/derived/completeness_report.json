@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 207,
+    "trajectories_total": 210,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 196,
-    "with_incomplete_native_measurement": 164,
+    "with_cost_event": 199,
+    "with_incomplete_native_measurement": 167,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,9 +15,12 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 105,
+      "count": 108,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -154,9 +157,12 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 164,
+      "count": 167,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
@@ -343,9 +349,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 56,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -403,8 +412,11 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 21,
       "items": [
+        "T-pcqm-cutlass-gt-100k-20261118-s42-cutlass_gt",
+        "T-pcqm-cutlass-gt-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",

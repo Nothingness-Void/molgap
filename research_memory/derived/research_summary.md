@@ -5,7 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 7
+- ACTIVE: 10
 - CLOSED: 37
 - INCONCLUSIVE: 23
 - INFRASTRUCTURE_ONLY: 10
@@ -108,6 +108,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
+- NVIDIA A100 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA A100 FP32 device_hours: measured=unknown (0 measured records), estimated=3.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA A100 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA A100 FP32 wall_hours: measured=unknown (0 measured records), estimated=3.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA A100-SXM4-40GB cpu_hours: measured=0.064568 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
@@ -244,10 +248,10 @@
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation device_hours: measured=0.003323 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation wall_hours: measured=0.003323 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4x2 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=14, not_applicable=0
-- Tesla T4x2 FP32 device_hours: measured=unknown (0 measured records), estimated=104.000000 (14 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4x2 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=14, not_applicable=0
-- Tesla T4x2 FP32 wall_hours: measured=unknown (0 measured records), estimated=65.000000 (14 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
+- Tesla T4x2 FP32 device_hours: measured=unknown (0 measured records), estimated=118.000000 (16 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
+- Tesla T4x2 FP32 wall_hours: measured=unknown (0 measured records), estimated=72.000000 (16 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4x2 FP32, one arm per device cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=30, not_applicable=0
 - Tesla T4x2 FP32, one arm per device device_hours: measured=unknown (0 measured records), estimated=259.200000 (30 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4x2 FP32, one arm per device queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=30, not_applicable=0
@@ -292,8 +296,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 424
-- Cost-event coverage: 196/207 trajectories; incomplete native measurement=164
+- Measurement-missing cost events: 427
+- Cost-event coverage: 199/210 trajectories; incomplete native measurement=167
 
 ## Screening Backtest
 - Status: available
@@ -301,9 +305,9 @@
 - Excluded traces: 38
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 105
+- [INFO] trace_unavailable_for_backtest: 108
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 164
+- [WARN] incomplete_native_cost_measurement: 167
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 53
-- [WARN] trajectory_without_v5_evidence: 18
+- [WARN] missing_explicit_role_identity: 56
+- [WARN] trajectory_without_v5_evidence: 21

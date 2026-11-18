@@ -1,0 +1,35 @@
+{
+  "format": "molgap-ims-500k-training-contract-v1",
+  "benchmark_id": "pcqm-fixed500k-dev50k-matched60-v4",
+  "candidate": "cutlass_gt",
+  "roles": {
+    "train": [
+      0,
+      500000
+    ],
+    "development": [
+      500000,
+      550000
+    ],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "physical_batch_per_device": 128,
+  "device_count": 1,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "maximum_epochs": 60,
+  "reference": {
+    "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42",
+    "attempt_id": "v1",
+    "arm": "pairnorm_lr1e3",
+    "batch_size": 128,
+    "dev_mae_eV": 0.099987377815,
+    "predictions_sha256": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2"
+  },
+  "minimum_gain_eV": 0.003
+}
