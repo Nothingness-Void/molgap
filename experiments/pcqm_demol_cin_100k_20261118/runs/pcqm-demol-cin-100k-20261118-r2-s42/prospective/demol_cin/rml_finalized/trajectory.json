@@ -1,0 +1,130 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-demol-cin-100k-20261118-r2-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin-planned",
+        "cost-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin-0",
+        "cost-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/demol_cin/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-demol-cin-100k-20261118-r2-s42:demol_cin:downstream"
+      ],
+      "source_commit": "e7fd6d378ac59eee5f435a4b394b2396560c4f55",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": "discriminator_missing",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol_cin",
+        "cellular",
+        "runtime_certificate_scope",
+        "strict_blocked",
+        "cost_tradeoff"
+      ],
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-demol-cin-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/rml_decision_snapshots/1005f9374054c5faf6266cb3bb553eca83a4b42994ceb90d3352e3dc2addbc6a.json",
+    "snapshot_sha256": "1005f9374054c5faf6266cb3bb553eca83a4b42994ceb90d3352e3dc2addbc6a",
+    "state_timestamp": "2026-11-18T16:20:00+09:00"
+  },
+  "family_id": "pcqm-demol-cin-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Dense shortest-path pair attention already captures ring topology",
+      "Sparse cellular message passing underfits long-range conjugation",
+      "Effect is below the 3 meV material gate"
+    ],
+    "changed_mechanism": "demol-cin-sparse-cellular-complex-0-1-2-cell-virtual-hub",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against standalone DeMol-CIN.",
+    "decision_changed_if_negative": "Close this DeMol-CIN family candidate without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+    "observed_deficiency": "GPTrans-T uses dense O(N^2) shortest-path pair attention without explicit chordless ring 2-cell representations. Whether sparse 0/1/2-cell cellular message passing improves generalization at 100K under matched training budget is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a Pure-2D sparse cellular complex network (DeMol-CIN: 0-cell atoms, 1-cell undirected bonds with line-graph BLA, 2-cell chordless rings up to size 8, and a linear-time virtual molecule-ring hub) improve matched 100K development MAE over the retained BondLocal+PairNorm GPTrans-T parent?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/demol_cin/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/demol_cin/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_demol_cin_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "demol_cin",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-demol-cin-100k-20261118-r2-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "11297bcddb348537bb4858aa7cda401c777911d6ecd5d78ebe0bb0ec96b2db58"
+    },
+    "source_commit": "e7fd6d378ac59eee5f435a4b394b2396560c4f55",
+    "source_config_identity": "30019acbe31134cb720d2b4ae27cc61c5101497c6692a81b2758e09f6a8f9be3"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin"
+}

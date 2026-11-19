@@ -1,0 +1,41 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-demol-cin-100k-20261118-r2-s42:demol_cin:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": "discriminator_missing",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol_cin",
+        "cellular",
+        "runtime_certificate_scope",
+        "strict_blocked",
+        "cost_tradeoff"
+      ],
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  }
+}

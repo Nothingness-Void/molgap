@@ -1,6 +1,26 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin:A001",
+      "target": "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/demol_cin/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-100k-20261118-s42-demol_cin:A001",
+      "target": "experiments/pcqm_demol_cin_100k_20261118/generated/57842abcb75989615e831566a6742a3e1a1c24c6cb03b24ec58e6058028a123e/demol_cin/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-100k-20261118-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_demol_cin_100k_20261118/generated/57842abcb75989615e831566a6742a3e1a1c24c6cb03b24ec58e6058028a123e/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local:A001",
       "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
       "type": "action_produced_evidence"
@@ -1752,6 +1772,26 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-100k-20261118-s42-demol_cin",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-100k-20261118-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
       "type": "prior_evidence"
     },
@@ -1808,6 +1848,26 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-demol-cin-100k-20261118-s42-demol_cin",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-demol-cin-100k-20261118-s42-pair_update_norm",
       "type": "prior_evidence"
     },
     {
@@ -3943,6 +4003,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
       "type": "evidence"
     },
@@ -4636,6 +4704,22 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-100k-20261118-s42-demol_cin",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-100k-20261118-s42-pair_update_norm",
       "type": "trajectory"
     },
     {

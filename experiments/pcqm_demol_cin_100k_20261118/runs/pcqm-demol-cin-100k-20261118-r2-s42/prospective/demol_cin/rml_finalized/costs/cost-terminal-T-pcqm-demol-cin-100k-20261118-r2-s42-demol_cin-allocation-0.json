@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-demol-cin-100k-20261118-r2-s42-v2",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin-allocation-0",
+  "evidence_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/demol_cin/terminal_staging/v1/7d2760c132b1b063/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.6210991160058332
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-demol-cin-100k-20261118-r2-s42:demol_cin:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin"
+}

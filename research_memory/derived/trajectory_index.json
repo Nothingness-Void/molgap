@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e6cbf9efa9aca1ca81263d310191b519d791abc5522378dc5d89ac9b56136db3",
+  "source_digest": "3510a05c8eec4f06b867c3e09952acbe8fbe428253f7bbb724c63eaed7b6a603",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,66 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+      "family_id": "pcqm-demol-cin-100k-20261118",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/demol_cin/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+      "family_id": "pcqm-demol-cin-100k-20261118",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+      "family_id": "pcqm-demol-cin-100k-20261118",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-s42/prospective/demol_cin/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-s42-demol_cin"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_100k_20261118/decision.md",
+      "family_id": "pcqm-demol-cin-100k-20261118",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-s42-pair_update_norm"
     },
     {
       "completeness_status": "complete",

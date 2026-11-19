@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "47c818eef3f00baeaf5897b5084652015302dcac6a4d074e60b103f277c16045"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "a72f3056ae105f74a0e7fcc7c73c41aa2cb9b5dd95009164463ee8a15ff45fc9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/_execution/demol_cin/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "a72f3056ae105f74a0e7fcc7c73c41aa2cb9b5dd95009164463ee8a15ff45fc9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/training_contract.json",
+      "name": "contract",
+      "sha256": "04945d1f0d360f61ada47e9177fb12683b3f9f94acfa5507c220a76891d4d83d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "f7e0cfbaf8973009833e9c16b7c9044d4f4ff2fe705ca23801b2d5c482274c39"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "3eae6ce3c9f4febd41977e6b33b05c1b644acf03eb1c53b430206ea92f974da1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/development_predictions_ema0.9999.pt",
+      "name": "predictions_ema_0p9999",
+      "sha256": "aba033ce4eb08ae0bacd52ab5d5c4deddb0f2d53a9b6066538f8a960d72189fa"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "466d70a3e3beb7154d8cfe1205c1aa15a72027a8d426f0ae694c720d3a366b07"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "a971a5960bf6c164f5f9b67468a64f0a5f71de96e62b7e979f16fd9c0b1011e1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/selected_model_ema0.9999.pt",
+      "name": "selected_model_ema_0p9999",
+      "sha256": "81924b8eb9ab4e6cc929373305cf3ba2251cd1c02d38d346a59f9784d0020bce"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "ef2027c6bf46e468be8a084a509f1549b40432183dbd7b52015881325ad9df1b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "1339d45f19ac38e29a9775c3596790fc6eb357cacfcb739d2eae009703d2eebe"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_demol_cin_100k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_demol_cin_100k_20261118/generated/2e8b995acdba22b8e448557da76d12518473322f07860004aac78b81d48b5f9a/demol_cin/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13463522148549556,
+    "missing_reason": null,
+    "selected_optimizer_step": 27335,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/demol_cin/terminal_staging/v1/7d2760c132b1b063/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}
