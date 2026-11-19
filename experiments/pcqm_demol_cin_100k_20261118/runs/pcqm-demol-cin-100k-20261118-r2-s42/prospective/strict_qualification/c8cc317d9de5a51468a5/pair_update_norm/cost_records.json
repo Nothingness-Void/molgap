@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-demol-cin-100k-20261118-r2-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm-0",
+      "evidence_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/pair_update_norm/terminal_staging/v1/3839d9be1b1ea092/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.7382447689019442
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-demol-cin-100k-20261118-r2-s42:pair_update_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-demol-cin-100k-20261118-r2-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm-allocation-0",
+      "evidence_ref": "experiments/pcqm_demol_cin_100k_20261118/runs/pcqm-demol-cin-100k-20261118-r2-s42/prospective/pair_update_norm/terminal_staging/v1/3839d9be1b1ea092/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.6210991160058332
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-demol-cin-100k-20261118-r2-s42:pair_update_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-cin-100k-20261118-r2-s42-pair_update_norm"
+    }
+  ]
+}

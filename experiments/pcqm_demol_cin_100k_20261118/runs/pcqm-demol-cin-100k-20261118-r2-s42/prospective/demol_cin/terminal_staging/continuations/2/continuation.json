@@ -1,0 +1,75 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/_resume_preflight/demol_cin/actual_resume_certificate.json",
+    "sha256": "6c68cdc9561c211b06bba89f5dc356d6133f6678a7d6afc1a08d8b024d096a3f"
+  },
+  "authority": {
+    "path": "experiments/pcqm_demol_cin_100k_20261118/continuation_v2/authorization.md",
+    "sha256": "0c83e3d5ebabeee662351205aa7fde9d9f05e4d6cb47930a81dea60ab3e51509"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2/source_dataset/resume/demol_cin/files/last_checkpoint.pt",
+    "sha256": "7fff4e9002e70e3130ede56534161642563c9abeee9f16cdeb26a850a0a96397"
+  },
+  "continued": {
+    "attempt_id": "pcqm-demol-cin-100k-20261118-r2-s42-v2",
+    "logical_run_id": "pcqm-demol-cin-100k-20261118-r2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-demol-cin-r2-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "e7fd6d378ac59eee5f435a4b394b2396560c4f55",
+    "source_package_sha256": "5d653e708d43a469d6c996ab5c042e403bb3ffd935b0f04f9cc3ace1a01cb4a3",
+    "spec_identity": "11297bcddb348537bb4858aa7cda401c777911d6ecd5d78ebe0bb0ec96b2db58"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/output_manifest.json",
+    "sha256": "3795fefaf532212512e255d6b108fd06b933174863ac8e3b4f413290e20c2da2"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/operations_v2/launch_receipt.json",
+    "sha256": "d56993c07f07695bc3adffc680ce9254177b56d9101dcdc9a536c4f68e74c9d5"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/demol_cin/canonical_trace.json",
+    "sha256": "ef2027c6bf46e468be8a084a509f1549b40432183dbd7b52015881325ad9df1b"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-cin-100k-20261118-r2-s42/v1/version2/_resume_preflight/demol_cin/runtime_certificate.json",
+    "sha256": "80c4b8fe9a8b32d2bafe3d79f4edd2d873e203e7e0d89e662c00dc1e06e274a4"
+  },
+  "origin": {
+    "attempt_id": "pcqm-demol-cin-100k-20261118-r2-s42-v1",
+    "logical_run_id": "pcqm-demol-cin-100k-20261118-r2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-demol-cin-r2-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "e7fd6d378ac59eee5f435a4b394b2396560c4f55",
+    "source_package_sha256": "5d653e708d43a469d6c996ab5c042e403bb3ffd935b0f04f9cc3ace1a01cb4a3",
+    "spec_identity": "11297bcddb348537bb4858aa7cda401c777911d6ecd5d78ebe0bb0ec96b2db58"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-demol-cin-100k-20261118-r2-s42/v1/operations/launch_receipt.json",
+    "sha256": "e62180247c2143a4e4565da01a01a7e6ef76f7b1fbfdd7095e4452e16e1a658a"
+  },
+  "recovery_repair": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2/source_dataset/recovery_repair.json",
+    "sha256": "8e5490b4233fed5302bbf3aef49cb94870ce5e60735c85471c3bd4cc209813d2"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2/source_dataset/resume/demol_cin/resume_bundle.json",
+    "sha256": "fbb312e06eec85cfd927ebb9087a695bd90b8e8296c6feb2064b70ec310cc5df"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2/source_dataset/resume/demol_cin/files/canonical_trace.json.context.json",
+    "sha256": "1339d45f19ac38e29a9775c3596790fc6eb357cacfcb739d2eae009703d2eebe"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-demol-cin-100k-20261118-r2-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "82643bab9fb28c87c84a5308f3f50de1506b9c5ce65d30319bca90efbf7ab708"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2/source_dataset/resume/demol_cin/files/canonical_trace.json",
+    "sha256": "12044e56820e999ea45ebffcd10e72106691696249f04cc1e39653179af37cd0"
+  }
+}

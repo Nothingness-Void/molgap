@@ -34,3 +34,12 @@ Existing terminal acceptance has `TargetIdentityBinding.from_frozen_package`; th
 - Source/spec/scientific recipe/producer package remain frozen; only demol_cin resumes from original checkpoint42636 to46860. pair_update_norm remains its original version1 terminal evidence.
 - Continuation preparation: D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2. Continuation operation journal/receipt: D:/molgap-artifacts/resume/demol-cin-r2-20261119/operations_v2.
 - No post-submit monitoring will run per the user's explicit instruction. Wait for user completion notification; then retrieve version2 with this continuation receipt/prepared/authorization and close through the existing strict acceptance/RML path. Native resume proof and final training completion are not yet claimed.
+
+### 2026-11-19 terminal retrieval and strict acceptance attempt
+
+- Latest scheduler COMPLETE, exact kernel145779299/version2. Candidate final progress60 passes /46860 optimizer steps /5998080 presentations; retained reference also complete60 passes.
+- Existing pinned retrieval downloaded only declared arm artifacts, native proof archives and execution retention. Reference weights/predictions were reused, and only its missing native dependencies were fetched from version1.
+- Mechanical inspection and native qualification VERIFIED for both arms, including the candidate actual-resume proof. Main-EMA aligned50000-row comparison: reference0.139440192079eV, candidate0.134635221485eV; delta-4.804970593meV, 2000/42 bootstrap95%[-5.939758524,-3.724133322]meV.
+- Strict comparison blocks SCIENTIFIC_CONTRACT_MISMATCH: architecture identity is the declared change, but runtime_certificate_scope differs. Candidate originalv1 and continuedv2 share f0b18183bd71f2cc42035a02dffd66bbea33b6acf0fa78f204fa59b47eb254f4; referencev1 has c75011519274a52cd40b1610d8b967276fc8fcad5887ab4ca2b68969533ba539. This difference predates continuation. Its constituent cause is not proven by the retained fingerprint-only provenance.
+- Attempting the existing INCONCLUSIVE runtime-mismatch path still returns BLOCKED: demol_cin:accepted_replay_evidence_missing_or_invalid. Both native checks pass; candidate strict comparison is not ready, and replay remains PENDING_FINALIZATION. No terminal RML rebuild/finalization succeeded or is claimed.
+- Closure input, generated role audits, diagnosis, proposed decision and attribution are retained under closure_v2 and the owner prospective strict_qualification folders. No new training, new kernel or scientific-contract bypass was performed.

@@ -1,0 +1,30 @@
+{
+  "status": "BLOCKED",
+  "scheduler": "COMPLETE",
+  "kernel_id": 145779299,
+  "version": 2,
+  "candidate_completed_passes": 60,
+  "candidate_optimizer_steps": 46860,
+  "mechanical_acceptance": {
+    "demol_cin": "MECHANICALLY_VERIFIED",
+    "pair_update_norm": "MECHANICALLY_VERIFIED"
+  },
+  "native_qualification": {
+    "demol_cin": "VERIFIED",
+    "pair_update_norm": "VERIFIED"
+  },
+  "strict_comparison_blocker": "SCIENTIFIC_CONTRACT_MISMATCH",
+  "undeclared_mismatch": "runtime_certificate_scope",
+  "strict_execute_blocker": "demol_cin:accepted_replay_evidence_missing_or_invalid",
+  "replay_readiness": "PENDING_FINALIZATION",
+  "terminal_rml_finalized": false,
+  "reference_mae_eV": 0.13944019207894803,
+  "candidate_mae_eV": 0.13463522148549556,
+  "delta_meV": -4.804970593452453,
+  "ci95_meV": [
+    -5.939758523583412,
+    -3.724133322119714
+  ],
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 42
+}
