@@ -11,6 +11,8 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import os
+import shutil
 import signal
 import sys
 import time
@@ -23,6 +25,21 @@ START = time.monotonic()
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _dataset_mount(input_root: Path, selection, out: Path) -> Path:
+    """The loader reads shards beside the manifest; IMS keeps them under the fixed root. Hard links satisfy
+    its no-escape rule without copying gigabytes."""
+    manifest = (input_root / selection.manifest).resolve()
+    mount = out / "dataset_mount" / Path(selection.manifest).parent
+    mount.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(manifest, mount / manifest.name)
+    for record in json.loads(manifest.read_text(encoding="utf-8")).get("assets", {}).get("topology", []):
+        target = mount / record["file"]
+        if not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            os.link(input_root / record["file"], target)
+    return out / "dataset_mount"
 
 
 def main(argv=None) -> int:
@@ -68,7 +85,7 @@ def main(argv=None) -> int:
             raise ValueError("Preflight receipt is missing, rejected or for another recipe")
     # Data acceptance is CPU work and comes before any GPU model, as in the governed worker.
     policy = mode_policy(recipe.family, recipe.mode)
-    data = load_training_data(args.input_root, recipe.dataset)
+    data = load_training_data(_dataset_mount(args.input_root.absolute(), recipe.dataset, out), recipe.dataset)
     if recipe.input_sidecar is not None or policy.attach_inputs is not None:
         data = policy.attach_inputs(args.input_root, recipe.input_sidecar, data)
     first, rows = data.train_source_start, data.train_rows
