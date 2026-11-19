@@ -123,10 +123,9 @@ def main(argv=None) -> int:
             "runtime_fingerprint": runtime["runtime_fingerprint"], "batch_size": recipe.batch_size, "precision": "fp32"})
 
     def on_selected(progress, weights, state, evaluation):
-        if weights.startswith("ema-"):  # an auxiliary EMA must not overwrite the primary selection
-            return
-        atomic_torch_save(out / "selected_model.pt", {"model": state, "weights": weights, "optimizer_step": progress.optimizer_step})
-        if evaluation is not None:  # the scorer's --expect-dev-mae check reads this
+        name = f"selected_model_ema{weights[4:]}.pt" if weights.startswith("ema-") else "selected_model.pt"  # auxiliary EMA keeps its own file
+        atomic_torch_save(out / name, {"model": state, "weights": weights, "optimizer_step": progress.optimizer_step})
+        if evaluation is not None and name == "selected_model.pt":  # step and dev MAE of the primary selection, for the scoring cross-check
             atomic_json(out / "selected_eval.json", {"step": progress.optimizer_step, "dev_mae_eV": evaluation["mae_eV"]})
 
     def on_pass(progress, metrics):
