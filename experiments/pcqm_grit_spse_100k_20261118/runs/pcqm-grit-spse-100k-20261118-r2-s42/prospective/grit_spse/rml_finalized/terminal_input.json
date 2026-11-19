@@ -1,0 +1,150 @@
+{
+  "acceptance_ref": "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/grit_spse/terminal_staging/v1/a7f48bda0899dfbd/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_grit_spse_100k_20261118/closure_v1/closure_facts_grit_spse.json": "157fd678e88679753690c34eafa100ba9e4d29b4c79262ab1c34d8441e245d08",
+    "experiments/pcqm_grit_spse_100k_20261118/closure_v1/measured_pcqm-grit-spse-100k-20261118-r2-s42.json": "9c1178b1ed99821e59622ce167a15ee46dad41378fbf6ad9aab597e40f1a53fd",
+    "experiments/pcqm_grit_spse_100k_20261118/closure_v1/roles_grit_spse.json": "c10715b071bf9cc445a372222828ee1541dc277c5d3510f2ec303e65500e0100",
+    "experiments/pcqm_grit_spse_100k_20261118/decision.md": "1202cb7fb6923e4dc54ece9bd9fa86642beea3088683c790a815288257d03f00",
+    "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/authority.json": "e8019b99b2163f29cdf0ab1485c5a878e230e7079c50f58e0716cd2ae5cfd7f4",
+    "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/grit_spse/recipe.json": "e6a133aa1ebc77f52cb3d5c1e3b4f7d61cd895cc7192e47685e08fbb2427fa56",
+    "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/grit_spse/terminal_staging/v1/a7f48bda0899dfbd/acceptance.json": "df3b42edb302fc07722d1856d7b5fc0702b080b011d104793f6c50fae42584df",
+    "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/grit_spse/terminal_staging/v1/a7f48bda0899dfbd/observed.json": "232f6698eac4b6432cb6b0345408fc1d34834dac58ae1290958c6a463bb3e6a1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/allocation_ledger.json": "c21591f03934d86774252d288a3aa7949bf630d4cf245635916cead84be8185c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/execution_retention.json": "6c71765884bd89e5a62c45fe696baa458d6741aa13ff71255395fd3688b5a103",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/grit_spse/allocation_ledger.json": "c21591f03934d86774252d288a3aa7949bf630d4cf245635916cead84be8185c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/canonical_trace.json": "8299d23802d4cef0b0a5ac5f647e3b68ff8e5df55e9bebf08ea4277c42e698a4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/canonical_trace.json.context.json": "757a02cfb19fa85aa5df8cf7cf69e7a3dde40f9d9efff5364325b803949e9f2f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/data_open_provenance.json": "d7053b32425d0c3cfbc1f51cf19dcfe6451db6604edd25224b7d6efaffba8970",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/development_predictions.pt": "12be2c038e0b9f3915d82933571b1bdce3d8c7e3987f6fbfc890c583f3cd046d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/development_predictions_ema0.9999.pt": "dcc7fc5c5c00adfaf402ce1959114d9aca37b8d5e31e45629258c7fbd185bb2a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/last_checkpoint.pt": "58b106946968d7f1bbe1f252a83132e1271b816a5559fb19a0368c4291b67b7e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/output_manifest.json": "463f86d097b2931542742e4542610e29207a7f94658c1c386df8560e40ca7d24",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/selected_model.pt": "c08102533ba18884f49deae3e7dd73694e6aeb6de27f873644e6f5b58d1e797f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/selected_model_ema0.9999.pt": "aa1db40139dc22b9078e79c494f7977d0ff19b468b5a3cd0491f4019abdd7c88",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/training_contract.json": "e6a133aa1ebc77f52cb3d5c1e3b4f7d61cd895cc7192e47685e08fbb2427fa56",
+    "external:///D:/molgap-artifacts/runs/pcqm-grit-spse-100k-20261118-r2-s42/v1/reports/diagnostic_6300058cf74b8ebd4ca380745ada46660bc9e5ef326b88b21bd0ab139a86a648.json": "e2ec9c46baa21731bf50ba9e2190d47a3097c027bf0cdc0a931420cccbe174da"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-19T10:54:08.929179+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-0.json",
+        "sha256": "ebcf369023ec21ad6fbc8dc1e208cc79f27d45d9635cc71df40f71c2f4e89426"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-allocation-0.json",
+        "sha256": "bb8cd9290a466858166d3be8f2edf75695f21b5e93c43ed887156fc74b059ced"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "93caf3c83dd396b79d43010579faeeee5daa989993d6287299a8cf390f26b786"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "aa4bc676e2a420882bdc8ee28c36294fb6afb15f902bb246dc4e86e2b27d4daf"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-train-training_membership.json",
+        "sha256": "bd36965fc0b6712eb9181c624bf0d56a128362dbf2c11e66d0c2cfcbcebac460"
+      },
+      {
+        "ref": "roles/role-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-development-prediction_input.json",
+        "sha256": "6ef700532155bddf2a5b35ae7d1cda9b7a5b6c69f8ece973af14630fa9d465c0"
+      },
+      {
+        "ref": "roles/role-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-development-labels_read.json",
+        "sha256": "cd0d7fe032fe979b6cbc68e76c67a612cb6a9e547055e3634fcb73bf7ce82768"
+      },
+      {
+        "ref": "roles/role-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-development-metric_computed.json",
+        "sha256": "767e5ae9d3486b0cb3485b707967fba0dc641f9eadff1534761c60388047c05e"
+      },
+      {
+        "ref": "roles/role-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-development-selection_used.json",
+        "sha256": "0f53c0e2be94471b5fd3d727be27aa4a8c130c6ceb98e4fa37d5f315529f0063"
+      }
+    ]
+  },
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-grit-spse-100k-20261118-r2-s42-v1",
+    "logical_run_id": "pcqm-grit-spse-100k-20261118-r2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-grit-spse-r2-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "0d61c96290db90007a472890355a711cb748eece",
+    "source_package_sha256": "6f8b0946bccdc3d8346ebaaf6ef74abafc76f714868c25363867f01fb438d07b",
+    "spec_identity": "cc5c216d99517de62b2999bfc6bf116fa2ba938ddb833d65e9a3760666218faf"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/grit_spse/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/grit_spse/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm",
+    "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/grit_spse/terminal_staging/v1/a7f48bda0899dfbd/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/grit_spse/canonical_trace.json",
+    "trace_artifact_sha256": "8299d23802d4cef0b0a5ac5f647e3b68ff8e5df55e9bebf08ea4277c42e698a4",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse"
+}
