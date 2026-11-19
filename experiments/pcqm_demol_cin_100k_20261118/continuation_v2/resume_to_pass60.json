@@ -1,0 +1,31 @@
+{
+  "format": "molgap-workflow-resume-v1",
+  "spec_identity": "11297bcddb348537bb4858aa7cda401c777911d6ecd5d78ebe0bb0ec96b2db58",
+  "arms": {
+    "demol_cin": "D:/molgap-artifacts/recovery/demol-cin-100k-20261118-target-binding/bundle_checkpoint_cursor/resume_bundle.json"
+  },
+  "recovery_repair": {
+    "commit": "8a7287beb267eda38f577548ed92a75b40bb36fa",
+    "files": {
+      "src/molgap/family_training_runner.py": {
+        "original_sha256": "ba82d9b178090d398a61c09e64d24f1c5506566636e121469b3e0484874dbc47",
+        "repaired_sha256": "e361de0eb2669a47390212da4e90972c1aeb7da72843d5fd105b8d067eb1ea17"
+      },
+      "src/molgap/experiment_resume.py": {
+        "original_sha256": "df286eb6ab01ac2016d24803e122b0513e14ae830d69cfa77cc236c9636d9ea9",
+        "repaired_sha256": "3f831498134dbc79972a8462295fd2fef651382254358e77d2dfe3f805c78ca0"
+      },
+      "src/molgap/kaggle_pair_runtime.py": {
+        "original_sha256": "d0e5c073326222e2563edf8b4dce5d2ca14cfba066b928efa987160cc937b139",
+        "repaired_sha256": "98742c5487b3c87c597f2e262988898f5efd4aca2dac65c16be99f768809f5da"
+      },
+      "src/molgap/experiment_launch_config.py": {
+        "original_sha256": "12a2389d324e720935a836546b10a7b66516787f3863e04aa157e4ba27150f6c",
+        "repaired_sha256": "abb1621ecb0f4eff7198a3f0e5c3192142198aea3e1ecde47196de1e90cdb90f"
+      }
+    }
+  },
+  "allocation_wall_limit_seconds": 5400,
+  "cleanup_reserve_seconds": 180,
+  "pause_after_step": 46860
+}
