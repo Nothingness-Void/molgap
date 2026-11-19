@@ -26,3 +26,11 @@ Existing terminal acceptance has `TargetIdentityBinding.from_frozen_package`; th
 - Original checkpoint SHA remains 7fff4e9002e70e3130ede56534161642563c9abeee9f16cdeb26a850a0a96397. The native cursor exporter now prioritizes checkpoint counters over the last complete-epoch trace observation: actual 42636 steps / 5457408 presentations, pass54 + batch462. Original state is unchanged.
 - Fresh bundle manifest SHA fbb312e06eec85cfd927ebb9087a695bd90b8e8296c6feb2064b70ec310cc5df. Existing prepare-resume passed RESUME_INPUTS_PREPARED with errors=[] at D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2; pair_update_norm is retained at original manifest 556072152d6f03808af65b2f21b8497ef5c063566e7bdfbc8024c0d4414cef7a.
 - User requested no monitoring after submission; wait for their completion notification before terminal retrieval and acceptance.
+
+### Continuation v2 bound
+
+- Existing submitter first stopped before kernel submission because Kaggle still exposed source version1 after publication. The same SOURCE_PUBLISHED journal was re-entered after metadata propagation; no source was published twice.
+- SUBMISSION_BOUND: original kernel145779299/version2, nothingnessvoid/molgap-demol-cin-r2-100k-20261118-s42; submit-time observed scheduler KernelWorkerStatus.RUNNING. Source version2 is pinned and verified by the existing submitter.
+- Source/spec/scientific recipe/producer package remain frozen; only demol_cin resumes from original checkpoint42636 to46860. pair_update_norm remains its original version1 terminal evidence.
+- Continuation preparation: D:/molgap-artifacts/resume/demol-cin-r2-20261119/prepared_v2. Continuation operation journal/receipt: D:/molgap-artifacts/resume/demol-cin-r2-20261119/operations_v2.
+- No post-submit monitoring will run per the user's explicit instruction. Wait for user completion notification; then retrieve version2 with this continuation receipt/prepared/authorization and close through the existing strict acceptance/RML path. Native resume proof and final training completion are not yet claimed.
