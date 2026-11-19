@@ -551,7 +551,7 @@ def _probe_recipe(recipe):
 
 
 def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, sidecars,
-                           trajectory, context=None):
+                           trajectory, context=None, target_identity=None):
     """Recheck the actual shared checkpoint/trace before portable transport."""
     import torch
     from .family_training_session import validate_session_resume
@@ -593,7 +593,7 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
                 _finite_tree(aux_sel, "resume.auxiliary_selected")
                 _assert_model_schema(aux_sel.get("model"), saved["model"])
                 predictions = _inspect_predictions(artifacts[pred_role], context=RunContext(**producer_context),
-                    expected=record["acceptance_requirements"], target_identity=None)
+                    expected=record["acceptance_requirements"], target_identity=target_identity)
                 at = next(row for row in observations if row["optimizer_step"] == selection["selected_step"])
                 for value in (aux_sel.get("development_mae_eV"), selection["best_development_mae_eV"],
                               at.get(metric), min(row[metric] for row in observations)):

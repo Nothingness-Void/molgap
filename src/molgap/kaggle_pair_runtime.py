@@ -49,7 +49,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     output.mkdir(parents=True, exist_ok=True)
     prior_segments, resumed = [], set()
     if "resume" in config:
-        from .experiment_family_workflow import RunContext
+        from .experiment_family_workflow import RunContext, TargetIdentityBinding
         from .experiment_launch_config import _validate_resume
         from .experiment_resume import validate_resume_bundle, _restore_verified_bundle
         from .screen_policy import canonical_fingerprint
@@ -59,6 +59,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         resume = _validate_resume(config, bound, Path(launch_path).parent)
         resumed = bound
         checked, seen_segments = {}, set()
+        target = (TargetIdentityBinding.from_frozen_package(spec, source_root, package_dir,
+                  config["target_identity"]["plan_path"]) if "target_identity" in config else None)
         for job in jobs:
             arm_id = job["arm_id"]
             if arm_id not in resumed:
@@ -69,7 +71,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             bundle = Path(launch_path).parent / resume[arm_id]["manifest"]
             trajectory = Path(launch_path).parent / "prospective" / arm_id / "trajectory.json"
             item = validate_resume_bundle(bundle, spec, arm_id=arm_id, context=context, trajectory=trajectory,
-                expected_manifest_sha256=resume[arm_id]["sha256"])
+                expected_manifest_sha256=resume[arm_id]["sha256"], target_identity=target)
             checked[arm_id] = item
             for path in item["sidecars"]["cost_segments"]:
                 segment = _json(path)

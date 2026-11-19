@@ -12,7 +12,7 @@ from pathlib import Path
 import shutil
 from tempfile import TemporaryDirectory
 
-from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json
+from .experiment_family_workflow import RunContext, TargetIdentityBinding, _artifact_path, _check_context, _json
 from .experiment_launch import _safe_local
 from .experiment_launch_config import validate_launch_config, RECOVERY_REPAIR_PATHS, validate_recovery_repair
 from .experiment_package import _PackageVerification, verify_experiment_source_package, read_packaged_text
@@ -24,8 +24,8 @@ from .experiment_workflow import _platform_adapter, _path
 RESUME_PLAN_FORMAT = "molgap-workflow-resume-v1"
 
 
-def _runner_repair_ast(raw, *, original=False):
-    """Allow the verifier and one exact scratch-probe isolation repair only."""
+def _runner_repair_ast(raw, *, original=False, target_binding=False):
+    """Allow verifier, exact scratch isolation and explicit target binding repairs."""
     tree = ast.parse(raw)
     owners = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
     if "_loaded_source" not in owners or "run_screen_resume_preflight" not in owners:
@@ -33,6 +33,18 @@ def _runner_repair_ast(raw, *, original=False):
     owners["_loaded_source"].body = [ast.Pass()]
     if "_assert_target_statistics" in owners:  # verifier tolerance only
         owners["_assert_target_statistics"].body = [ast.Pass()]
+    if target_binding:
+        validator = owners["validate_screen_resume"]
+        validator.args.kwonlyargs.append(ast.arg(arg="target_identity"))
+        validator.args.kw_defaults.append(ast.Constant(value=None))
+        calls = [node for node in ast.walk(validator) if isinstance(node, ast.Call)
+                 and isinstance(node.func, ast.Name) and node.func.id == "_inspect_predictions"]
+        if len(calls) != 1:
+            raise ValueError("Expected exactly one auxiliary prediction resume check")
+        keyword = next(k for k in calls[0].keywords if k.arg == "target_identity")
+        if not isinstance(keyword.value, ast.Constant) or keyword.value.value is not None:
+            raise ValueError("Expected unbound original auxiliary target identity")
+        keyword.value = ast.Name(id="target_identity", ctx=ast.Load())
     if original:
         probe = owners["run_screen_resume_preflight"]
         probe.body.insert(1, ast.Import(names=[ast.alias(name="copy")]))
@@ -67,9 +79,9 @@ def _repair_payloads(spec, root, package, manifest, declaration):
             raise ValueError("Local recovery validator differs from the committed repair")
         compile(payload, name, "exec")
         if name.endswith("family_training_runner.py"):
-            if (_runner_repair_ast(original) != _runner_repair_ast(payload)
-                    and _runner_repair_ast(original, original=True) != _runner_repair_ast(payload)):
-                raise ValueError("Runner repair permits only the verifier and exact resume-probe deepcopy")
+            if not any(_runner_repair_ast(original, original=probe, target_binding=target) == _runner_repair_ast(payload)
+                       for probe, target in ((False, False), (False, True), (True, False), (True, True))):
+                raise ValueError("Runner repair permits only verifier, exact resume-probe deepcopy and target binding")
         payloads[name] = payload
     return {"format": "molgap-recovery-repair-v1", "spec_identity": spec.identity,
             "package_identity": manifest["package_identity"], "archive_sha256": manifest["archive_sha256"],
@@ -354,7 +366,9 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
     with _original(spec, repo_root, prepared, package_dir,
                    expected_package_identity, receipt_path, _verification=verification,
                    recovery_repair=recovery_repair) as original:
-        manifest, _, _, contexts, trajectories = original
+        manifest, _, launch, contexts, trajectories = original
+        target = (TargetIdentityBinding.from_frozen_package(spec, Path(repo_root), Path(package_dir),
+                  launch["target_identity"]["plan_path"], _verification=verification) if "target_identity" in launch else None)
         if arm_id not in contexts:
             raise ValueError("Unknown recovery arm")
         output = Path(output).absolute()
@@ -363,7 +377,7 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
             raise ValueError("Resume export requires a fresh destination")
         bundle = create_resume_bundle(Path(source_output), contexts[arm_id], trajectories[arm_id], output)
         checked = validate_resume_bundle(output, spec, arm_id=arm_id,
-                                        context=contexts[arm_id], trajectory=trajectories[arm_id])
+                                        context=contexts[arm_id], trajectory=trajectories[arm_id], target_identity=target)
         _unchanged_prospectives(spec, repo_root, trajectories)
         return {"status": checked["status"], "spec_identity": spec.identity,
                 "package_identity": manifest["package_identity"], "arm_id": arm_id,
@@ -380,6 +394,8 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                    expected_package_identity, receipt_path, _verification=verification,
                    recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original:
         manifest, release, launch, contexts, trajectories = original
+        target = (TargetIdentityBinding.from_frozen_package(spec, Path(repo_root), Path(package_dir),
+                  launch["target_identity"]["plan_path"], _verification=verification) if "target_identity" in launch else None)
         if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
                 or type(plan["arms"]) is not dict or not plan["arms"] or not set(plan["arms"]) <= set(contexts)):
@@ -390,7 +406,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         checked = {}
         for arm_id, path in plan["arms"].items():
             checked[arm_id] = validate_resume_bundle(_path(Path(repo_root), path), spec,
-                arm_id=arm_id, context=contexts[arm_id], trajectory=trajectories[arm_id])
+                arm_id=arm_id, context=contexts[arm_id], trajectory=trajectories[arm_id], target_identity=target)
         output = Path(output).absolute()
         _safe_local(output)
         if output.exists():
