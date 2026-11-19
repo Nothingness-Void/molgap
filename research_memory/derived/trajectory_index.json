@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "798697ae89b7c2f695d416350f02b6a34d22d64a3b8a7d71b40f61b6b325bc73",
+  "source_digest": "2e93215a35cd048953078472c6312d75e98eecdde423aa7b0fe292994f5d44bd",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -52,29 +52,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md",
       "family_id": "pcqm-gptrans-multihop-edge-20261112-e2",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md",
       "family_id": "pcqm-gptrans-multihop-edge-20261112-e2",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/ref_s47/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/ref_s47/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
     },

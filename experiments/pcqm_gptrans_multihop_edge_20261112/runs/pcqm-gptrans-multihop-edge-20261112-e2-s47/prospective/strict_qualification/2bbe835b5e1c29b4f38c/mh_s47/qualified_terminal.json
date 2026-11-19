@@ -1,0 +1,365 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/closure_facts_mh_s47.json": "8e9f104cf9aa99281e3681d479b19544b6ac0a6a8d237c95eaa6c06283e91d4d",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/measured_pcqm-gptrans-multihop-edge-20261112-e2-s47.json": "b163868aff7300557a87c20e4a71dc22b203d1104f900aa07c8f67201ce3dcca",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json": "ad2b6b9caad0b1992ad81f69a8526942f17049c6e01b3a6e70e8e618d989763f",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md": "c896c182f34e0b35d328a6bbb95f86643c77bf1693fad575d9974a6a7f2f5fd3",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/e2/kA_s47_v2/continuation_authorization.md": "e3628190c188853cc51fc3a433b9a70f3d60dc3e4506da466f29988e30ad0a8e",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/authority.json": "3586f4abcb893a6f6c0ed9f37a03314ff7f2c9990aaeee30fc0c7b29eda7e73a",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/mh_s47/recipe.json": "2de2bab534e61cb3c8a4af68ab6381ab939dad03c30bf883e7ff28b5fc304402",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/continuations/2/continuation.json": "fdab86d038e15147acc029c2d2a65ec33ee4bf7e76cd447d5c8e77ae8883c727",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/acceptance.json": "ca9665dd1ffc24dee94171795ad7ef7ea8ad03d36b726f7b726a28f1c1d776fe",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/observed.json": "c9fbf7b7e61c59a434e3c0d2facade3ca4eb1334b330377d4c59dadcee34ad7e",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/strict_qualification/2bbe835b5e1c29b4f38c/mh_s47/comparison_readiness.json": "f98ed7e1f68a5f123e6ae3c8d39c4ca4029461d7939c72a163a43e8541a662fe",
+    "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/strict_qualification/2bbe835b5e1c29b4f38c/ref_s47/reference_bundle.json": "b13e225a9e88bd1e0e31861d540bb552dbc3572d1524e980ecf165e5a9af2c8f",
+    "external:///D:/molgap-artifacts/continuations/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/operations/launch_receipt.json": "fba0a001879cc7a159eb64583a4aea03f4073d48931bb9d942e5dedf7c7fb644",
+    "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/canonical_trace.json": "3cd1b595de9635f36ecd2f2109fbc3cc5ef93c77716fc7175d1fbc320d6e3903",
+    "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/canonical_trace.json.context.json": "8cd6334efa54352324ea9f03debfaa0a970cf706dd076379736db403f1010e49",
+    "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/files/last_checkpoint.pt": "632c0a23ab86f6277d11ac03da7e62e7e6f4ee4a465b318be1ec54d202025a85",
+    "external:///D:/molgap-artifacts/resume-prepared/pcqm-gptrans-multihop-edge-20261112-e2-s47/v2/source_dataset/resume/mh_s47/resume_bundle.json": "0664cdc9f3e634fd0ccbd2b60bf66a52d482ed43a26b462ed37031a83403bfb1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/allocation_ledger.json": "f2e86f37dd276160d83af811ec29f5b0c7624ac45a959fb2cd2f76fdc30997b6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/execution_retention.json": "a1e046afe5f04f19ec0cab463cc180c456fe3fcaa4aec932fc96e43a91c4b455",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/mh_s47/allocation_ledger.json": "f2e86f37dd276160d83af811ec29f5b0c7624ac45a959fb2cd2f76fdc30997b6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_resume_preflight/mh_s47/actual_resume_certificate.json": "fd73312672220fafb706bb8d0806bf6051440285531e319038b20cf151ef7fcc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_resume_preflight/mh_s47/runtime_certificate.json": "93a6c9841d7e34cdd84aafaeb5875d15f844b524f51ce296594e8cab578a68fc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json": "1684789bb711b03d4e2218c581bfcf11d1283d6d0c2554e6e57e337f366f6729",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json.context.json": "8cd6334efa54352324ea9f03debfaa0a970cf706dd076379736db403f1010e49",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/data_open_provenance.json": "8219cb47a3c0268dcb23a6934440e903bab72e8effac9b3f407b33a32f17a458",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/development_predictions.pt": "f5e983657ce08b3924debe7b36c26ae23f4938052d53b3e9abd5d4f1efa07ce7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/last_checkpoint.pt": "bb39331939f2609037e2aeb64d42fade547d9a51fcccebb0b9e4214cf8efb405",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/output_manifest.json": "0c97d94369a1b0c9bec5178acd67b6ee45b89dbde852ddd598227fbd51b9a5ce",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/selected_model.pt": "48c7d390c951d71e9b2dd713705ad57ec974857220c76dfac87871eb7fe9e393",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/training_contract.json": "2de2bab534e61cb3c8a4af68ab6381ab939dad03c30bf883e7ff28b5fc304402",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/operations/launch_receipt.json": "d2fd0228a2cb6050a8e033f26c27d6a367f24760956f24b3a7f640347fda920a",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/prepared/package/package_manifest.json": "cb1b2984d9b07346fdd8db2df79669438a404e38fe724a6e8baa7b289735ff52",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/reports/diagnostic_c47838dd0611b54994bebadda7648ca05094d4a2f0cc9058582ecc8786504044.json": "1ad5412a1a2b5f58199bdb5793989f183b56de10a384e6c92e7f8ba14809ac7d"
+  },
+  "closure_blockers": [],
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/strict_qualification/2bbe835b5e1c29b4f38c/mh_s47/comparison_readiness.json",
+  "continuation_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/continuations/2/continuation.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v2",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-0",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 12.549642274732221
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v2",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.7979179318183336
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md",
+    "facts": {
+      "ci_meV": [
+        -1.8235918303728103,
+        -0.8145354391336443
+      ],
+      "effect_meV": -1.3400019693374634,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/measured_pcqm-gptrans-multihop-edge-20261112-e2-s47.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "a1e046afe5f04f19ec0cab463cc180c456fe3fcaa4aec932fc96e43a91c4b455"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "f2e86f37dd276160d83af811ec29f5b0c7624ac45a959fb2cd2f76fdc30997b6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/_execution/mh_s47/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "f2e86f37dd276160d83af811ec29f5b0c7624ac45a959fb2cd2f76fdc30997b6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/training_contract.json",
+        "name": "contract",
+        "sha256": "2de2bab534e61cb3c8a4af68ab6381ab939dad03c30bf883e7ff28b5fc304402"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "8219cb47a3c0268dcb23a6934440e903bab72e8effac9b3f407b33a32f17a458"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "f5e983657ce08b3924debe7b36c26ae23f4938052d53b3e9abd5d4f1efa07ce7"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "bb39331939f2609037e2aeb64d42fade547d9a51fcccebb0b9e4214cf8efb405"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "48c7d390c951d71e9b2dd713705ad57ec974857220c76dfac87871eb7fe9e393"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "1684789bb711b03d4e2218c581bfcf11d1283d6d0c2554e6e57e337f366f6729"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "8cd6334efa54352324ea9f03debfaa0a970cf706dd076379736db403f1010e49"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/mh_s47/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.10018900703907013,
+      "missing_reason": null,
+      "selected_optimizer_step": 183582,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-19T11:29:29.154279+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s47_v1/roles_mh_s47.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+    }
+  ],
+  "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47-v2",
+    "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-gptrans-multihop-edge-e2-a-s47",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "b28b515fc00df2017555447c5917ed2ebf7b4d4e",
+    "source_package_sha256": "0b1221652a25511f415c961719767dabeabf1d7c396f22679655687826ec44ca",
+    "spec_identity": "156444e7508639c424e577a68e853a97ff5927897d164acf87c9935402f8f96b"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_234360",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/mh_s47/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/mh_s47/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+    "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s47:mh_s47:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-e2-s47/prospective/mh_s47/terminal_staging/v1/5b833b82011b1aeb/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-e2-s47/v1/version2/mh_s47/canonical_trace.json",
+    "trace_artifact_sha256": "1684789bb711b03d4e2218c581bfcf11d1283d6d0c2554e6e57e337f366f6729",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47"
+}
