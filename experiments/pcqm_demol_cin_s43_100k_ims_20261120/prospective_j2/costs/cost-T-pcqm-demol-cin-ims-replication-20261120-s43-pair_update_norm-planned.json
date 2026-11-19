@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-pun-100k-ims-20261120-s43-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-planned",
+  "evidence_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
+  "hardware": "NVIDIA A100 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 1.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 1.5
+    }
+  },
+  "platform": "ims",
+  "run_id": "pcqm-gptrans-pun-100k-ims-20261120-s43",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm"
+}
