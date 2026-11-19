@@ -49,6 +49,14 @@ def pair_binding(trajectory: Mapping[str, Any]) -> dict[str, str] | None:
     return validate_pair_binding(value) if value is not None else None
 
 
+def _resume_target_identity(spec, root, package_dir, package):
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+    plans = [name for name in package.get("generated_records", {}) if name.endswith("/acceptance_plan.json")]
+    if len(plans) > 1:
+        raise ValueError("Resume target identity requires one frozen acceptance plan")
+    return TargetIdentityBinding.from_frozen_package(spec, root, package_dir, plans[0]) if plans else None
+
+
 def validate_pair_observation(value: Any) -> dict[str, str]:
     required = {
         "schema", "spec_identity", "logical_run_id", "platform_name", "platform_run_reference",
@@ -192,7 +200,8 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
         prospective = next(item for item in spec.to_dict()["prospective"]["arms"]
                            if item["arm_id"] == context["arm_id"])
         validate_resume_bundle(retained[resume_key], spec, arm_id=context["arm_id"], context=context,
-            trajectory=root / prospective["output"] / "trajectory.json")
+            trajectory=root / prospective["output"] / "trajectory.json",
+            target_identity=_resume_target_identity(spec, root, package_dir, package))
         recipe = manifest["artifacts"]["contract"]
         recipe_path = retained["continued_manifest"].parent / recipe["path"]
         verify_bound_artifact(root, artifact_locator(root, recipe_path), recipe["sha256"])
@@ -279,7 +288,8 @@ def build_terminal_continuation(root: Path, *, package_dir: Path, origin_receipt
 
     package = verify_experiment_source_package(package_dir)
     spec = ExperimentSpec.from_frozen_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
-    checked = validate_resume_bundle(resume_bundle, spec)
+    checked = validate_resume_bundle(resume_bundle, spec,
+        target_identity=_resume_target_identity(spec, root, package_dir, package))
     bundle, arm_id = checked["manifest"], checked["manifest"]["arm"]["id"]
     manifest = load_json_object(continued_output / "output_manifest.json")
     hashes = {}

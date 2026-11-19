@@ -276,6 +276,9 @@ def _native_cursor(checkpoint: dict, trace: dict) -> dict:
     # the JSON manifest carries progress metadata, never a second state copy.
     for key in ("weight_state", "pending_absolute"):
         cursor.pop(key, None)
+    for key in ("optimizer_step", "sample_presentations"):
+        if key not in cursor and key in checkpoint:
+            cursor[key] = checkpoint[key]
     if type(trace.get("rows")) is list and trace["rows"]:
         rows = trace["rows"]
         last = rows[-1]
@@ -288,9 +291,6 @@ def _native_cursor(checkpoint: dict, trace: dict) -> dict:
         if rows:
             cursor.setdefault("optimizer_step", rows[-1].get("optimizer_step"))
             cursor.setdefault("sample_presentations", rows[-1].get("sample_presentations"))
-    for key in ("optimizer_step", "sample_presentations"):
-        if key not in cursor and key in checkpoint:
-            cursor[key] = checkpoint[key]
     return cursor
 
 
