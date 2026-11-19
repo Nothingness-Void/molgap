@@ -103966,6 +103966,38 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:pair_update_norm:downstream",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
     },
@@ -104377,5 +104409,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "64d9402042e8a0c55e35e90caa2fda02f0fafe988aa941eafd154e62fc8053a2"
+  "source_digest": "58a6db339f19cf2b2ca8aa70f226f48e882575150da5d224deabe2e547ce9b44"
 }

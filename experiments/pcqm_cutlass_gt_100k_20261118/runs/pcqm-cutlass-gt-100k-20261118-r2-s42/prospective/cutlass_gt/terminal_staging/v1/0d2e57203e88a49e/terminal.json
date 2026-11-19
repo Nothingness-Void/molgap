@@ -1,0 +1,372 @@
+{
+  "acceptance_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/closure_facts_cutlass_gt.json": "39914fcc52bca768f02b557e2b34b2bcc6264f66b2da146b9488351d8ff8940e",
+    "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/measured_pcqm-cutlass-gt-100k-20261118-r2-s42.json": "3fb11725a5477d50b98ccb00e3f27842a489dc3003077e98d1d2148e719b5e14",
+    "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json": "49f69661db33f3054c091c80fce4f12512395e0b71988d5a6372291b73512047",
+    "experiments/pcqm_cutlass_gt_100k_20261118/decision.md": "e59f74e3238b7677bc025e0bc7f1c338f489ad004fb57bee10ee0e275fc8cb70",
+    "experiments/pcqm_cutlass_gt_100k_20261118/generated/009ba2cb84ff0d7c7aa8c19278eff6d5db8cf66797e4cd840fe2e9d55042bc1f/authority.json": "0245cad9da631882ea4ccb8de9a36e05de28dcdf02f0b912420868a929e128de",
+    "experiments/pcqm_cutlass_gt_100k_20261118/generated/009ba2cb84ff0d7c7aa8c19278eff6d5db8cf66797e4cd840fe2e9d55042bc1f/cutlass_gt/recipe.json": "a810b32f0258d63f86daf68457a670f25abfca9366b6b07c6f4d54fefb5436ad",
+    "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/acceptance.json": "000e2dff6d658dd8f21d87e5c2f41f3b06f55b775f8da377bfff94e5e0ed534c",
+    "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/observed.json": "bd855646074d79d0eda4e0f76c4e231c3337a7557b059fb8352637474da091db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/allocation_ledger.json": "06e5966ffc883daf021665bb3ad50d0f4cda432e9a7ef542d3366ba73459d1b0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/cutlass_gt/allocation_ledger.json": "06e5966ffc883daf021665bb3ad50d0f4cda432e9a7ef542d3366ba73459d1b0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/execution_retention.json": "8a1628d1cb6675469c8074914a5bfba1f4b18e9b878c4b20b5cf80569b38fdd4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/canonical_trace.json": "d29db5779d6cf694ec15a589752d3f7ae377b74c021a822f8be3685e0ac147ef",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/canonical_trace.json.context.json": "291f3cbf2094d10e1c2038a77d622f50804a705e3b18104c837e7db870faf4ea",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/data_open_provenance.json": "9ad4b226d51b25b3b76913a72ddc51fb147ea4208aaac93bb6a56edcb1f5b6a0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/development_predictions.pt": "acbf19d6fdacc2fb1deef7b733f8e799662b6ef034240cd9ec446cee3bd17ac3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/development_predictions_ema0.9999.pt": "a9bb071becaa967d662f599acdd213c0144dd926dad889dcd99a9deca7c0c401",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/last_checkpoint.pt": "612d7fc0c18547266f05d3396c04779bf3af4a7eed4d0741147f9fcf711b6055",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/output_manifest.json": "c5b032d7c5e8ed5317f242ade5f4abb50491935a70567de5cfe6209f9da25ee1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/selected_model.pt": "f448337d1bf26974f09d1d6b3bfae141fc9773bbc6045aad2e746dab6cf7341b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/selected_model_ema0.9999.pt": "def4de71394a31ab31c2407a15c9fac8aaf765a9a8766d9efc62854b3e7bafb0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/training_contract.json": "a810b32f0258d63f86daf68457a670f25abfca9366b6b07c6f4d54fefb5436ad",
+    "external:///D:/molgap-artifacts/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/reports/diagnostic_3e322c33413d364a056e6741ae744894e67210f2b18541eb83572cc87ca5155a.json": "319a06794d23565afbcafa7995a2cdad76390e5bdd60db35c247836e038cbe19"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-cutlass-gt-100k-20261118-r2-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-0",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.7079064289658334
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-cutlass-gt-100k-20261118-r2-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-allocation-0",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.732410371513333
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_cutlass_gt_100k_20261118/decision.md",
+    "facts": {
+      "ci_meV": [
+        10.2187542668581,
+        12.380550144433975
+      ],
+      "effect_meV": 11.318691291809081,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "cutlass_gt",
+        "endpoint_regression",
+        "100K",
+        "pair_update_norm control"
+      ],
+      "source": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/measured_pcqm-cutlass-gt-100k-20261118-r2-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "8a1628d1cb6675469c8074914a5bfba1f4b18e9b878c4b20b5cf80569b38fdd4"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "06e5966ffc883daf021665bb3ad50d0f4cda432e9a7ef542d3366ba73459d1b0"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/_execution/cutlass_gt/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "06e5966ffc883daf021665bb3ad50d0f4cda432e9a7ef542d3366ba73459d1b0"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/training_contract.json",
+        "name": "contract",
+        "sha256": "a810b32f0258d63f86daf68457a670f25abfca9366b6b07c6f4d54fefb5436ad"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "9ad4b226d51b25b3b76913a72ddc51fb147ea4208aaac93bb6a56edcb1f5b6a0"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "acbf19d6fdacc2fb1deef7b733f8e799662b6ef034240cd9ec446cee3bd17ac3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/development_predictions_ema0.9999.pt",
+        "name": "predictions_ema_0p9999",
+        "sha256": "a9bb071becaa967d662f599acdd213c0144dd926dad889dcd99a9deca7c0c401"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "612d7fc0c18547266f05d3396c04779bf3af4a7eed4d0741147f9fcf711b6055"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "f448337d1bf26974f09d1d6b3bfae141fc9773bbc6045aad2e746dab6cf7341b"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/selected_model_ema0.9999.pt",
+        "name": "selected_model_ema_0p9999",
+        "sha256": "def4de71394a31ab31c2407a15c9fac8aaf765a9a8766d9efc62854b3e7bafb0"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "d29db5779d6cf694ec15a589752d3f7ae377b74c021a822f8be3685e0ac147ef"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "291f3cbf2094d10e1c2038a77d622f50804a705e3b18104c837e7db870faf4ea"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_cutlass_gt_100k_20261118/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_cutlass_gt_100k_20261118/generated/009ba2cb84ff0d7c7aa8c19278eff6d5db8cf66797e4cd840fe2e9d55042bc1f/cutlass_gt/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.1507588833707571,
+      "missing_reason": null,
+      "selected_optimizer_step": 24211,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-19T10:54:00.767498+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json",
+      "role_event_id": "role-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json",
+      "role_event_id": "role-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json",
+      "role_event_id": "role-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json",
+      "role_event_id": "role-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/roles_cutlass_gt.json",
+      "role_event_id": "role-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    }
+  ],
+  "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-cutlass-gt-100k-20261118-r2-s42-v1",
+    "logical_run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-cutlass-gt-r2-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "e93df23392523ca323a91a817084a7c612946873",
+    "source_package_sha256": "d155df4ec9cbcc817f0d939bf66bbec6f3ba9ad4caaa655f988645cc2ff39870",
+    "spec_identity": "8e750eca6bf23a4b05b477e985cf2bdf82528239e09e355ca1d498f345a6f335"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_cutlass_gt_100k_20261118/generated/009ba2cb84ff0d7c7aa8c19278eff6d5db8cf66797e4cd840fe2e9d55042bc1f/cutlass_gt/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_cutlass_gt_100k_20261118/generated/009ba2cb84ff0d7c7aa8c19278eff6d5db8cf66797e4cd840fe2e9d55042bc1f/cutlass_gt/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-pair_update_norm",
+    "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/terminal_staging/v1/0d2e57203e88a49e/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-100k-20261118-r2-s42/v1/version1/cutlass_gt/canonical_trace.json",
+    "trace_artifact_sha256": "d29db5779d6cf694ec15a589752d3f7ae377b74c021a822f8be3685e0ac147ef",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+}

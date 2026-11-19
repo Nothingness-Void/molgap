@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-cutlass-gt-100k-20261118-r2-s42\\v1\\version1\\pair_update_norm\\development_predictions.pt",
+      "sha256": "09fd3785ecc6c99504689f05df903cfd39b69f53d27caff5fa8ebbdbe8da6a6c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-cutlass-gt-100k-20261118-r2-s42\\v1\\version1\\cutlass_gt\\development_predictions.pt",
+      "sha256": "acbf19d6fdacc2fb1deef7b733f8e799662b6ef034240cd9ec446cee3bd17ac3"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 11.318691291809074,
+    "ensemble_gain_meV": 8.993852894306173,
+    "ensemble_mae_meV": 136.10568483054638,
+    "fit": null,
+    "m_meV": 11.318691291809081,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "cutlass_gt",
+        "ci95": [
+          10.2187542668581,
+          12.380550144433975
+        ],
+        "delta": 11.318691291809081,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "reference": "pair_update_norm",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "cutlass_gt": 150.7588833707571,
+      "pair_update_norm": 139.44019207894803
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

@@ -1,0 +1,43 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-cutlass-gt-100k-20261118-r2-s42:cutlass_gt:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_cutlass_gt_100k_20261118/decision.md",
+    "facts": {
+      "ci_meV": [
+        10.2187542668581,
+        12.380550144433975
+      ],
+      "effect_meV": 11.318691291809081,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "cutlass_gt",
+        "endpoint_regression",
+        "100K",
+        "pair_update_norm control"
+      ],
+      "source": "experiments/pcqm_cutlass_gt_100k_20261118/closure_v1/measured_pcqm-cutlass-gt-100k-20261118-r2-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

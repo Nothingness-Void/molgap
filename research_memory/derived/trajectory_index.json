@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "bfee5eadb3668b256137d106cddcd2222f6781024d4e62fb5f8b1834c3a876ca",
+  "source_digest": "ee3ba701d4265ee732c874df7c2334977d09a00b8bbfb9f2a18118b677ec1d6b",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_cutlass_gt_100k_20261118/decision.md",
+      "family_id": "pcqm-cutlass-gt-100k-20261118",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/cutlass_gt/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_cutlass_gt_100k_20261118/decision.md",
+      "family_id": "pcqm-cutlass-gt-100k-20261118",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_cutlass_gt_100k_20261118/runs/pcqm-cutlass-gt-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-cutlass-gt-100k-20261118-r2-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-cutlass-gt-100k-20261118-r2-s42-pair_update_norm"
     },
     {
       "completeness_status": "complete",
