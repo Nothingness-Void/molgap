@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 927,
+  "ambiguous_historical_role_record_count": 933,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -612,6 +612,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6491,7 +6533,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 779,
+  "explicit_role_event_count": 789,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -9576,6 +9618,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -10141,6 +10239,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
       },
       {
         "access_kind": "training_membership",
@@ -12119,6 +12231,8 @@
       "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
@@ -12327,6 +12441,8 @@
       "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
       "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
@@ -14696,6 +14812,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
       },
       {
         "access_kind": "labels_read",
@@ -19306,6 +19478,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -19841,6 +20069,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
       },
       {
         "access_kind": "training_membership",

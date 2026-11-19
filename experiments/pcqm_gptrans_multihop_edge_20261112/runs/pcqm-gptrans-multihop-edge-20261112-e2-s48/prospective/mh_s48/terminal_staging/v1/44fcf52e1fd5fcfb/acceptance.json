@@ -1,0 +1,38 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s48:mh_s48:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md",
+    "facts": {
+      "ci_meV": [
+        -1.1470838259458542,
+        -0.0887926424741749
+      ],
+      "effect_meV": -0.6333606576919556,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_e2_s48_v1/measured_pcqm-gptrans-multihop-edge-20261112-e2-s48.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

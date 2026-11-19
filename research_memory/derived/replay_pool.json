@@ -139495,6 +139495,38 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s48:mh_s48:downstream",
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-e2-s48:ref_s48:downstream",
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
     },
@@ -139906,5 +139938,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "99dc9055848c71de7297093b6d7ad996548540d5f19473ea136a76a05f0daeed"
+  "source_digest": "877c36dfe2fb2c107964cf0c2b92c7fa41e7625c73c894c108bd0e6f5e210469"
 }
