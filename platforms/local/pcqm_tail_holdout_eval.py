@@ -30,7 +30,8 @@ def gptrans_scorer(recipe_path, initial_state, key):
     from molgap.gptrans_execution_backend import prepare_layout, prepared_forward
     from molgap.gptrans_execution_hotpath import MODEL_FIELDS
     _, recipe = read_recipe(recipe_path)
-    prepare = mode_policy(recipe.family, recipe.mode).prepare_batch
+    policy = mode_policy(recipe.family, recipe.mode)
+    prepare = policy.prepare_batch
 
     def load(path, device):
         model, _ = load_family_model(recipe, Path(initial_state))
@@ -44,7 +45,8 @@ def gptrans_scorer(recipe_path, initial_state, key):
                 batch = prepare_layout(copy(batch))
                 if prepare is not None:
                     batch = prepare(batch, training=False)
-                out.append(prepared_forward(model, batch.to(device, *MODEL_FIELDS)).double().cpu())
+                extra = tuple(f for f in policy.extra_batch_fields if hasattr(batch, f))
+                out.append(prepared_forward(model, batch.to(device, *MODEL_FIELDS, *extra)).double().cpu())
         return torch.cat(out) * std + mean
     return load, predict, recipe
 

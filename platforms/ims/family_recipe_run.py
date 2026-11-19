@@ -55,6 +55,7 @@ def main(argv=None) -> int:
     ap.add_argument("--accelerator", help="expected device name, for example A100")
     ap.add_argument("--wall-s", type=float, default=0.0, help="pause after this many seconds from process start (0 = no limit)")
     ap.add_argument("--max-steps", type=int, default=0, help="pause at this absolute optimizer step (local dry runs)")
+    ap.add_argument("--training-workers", type=int, default=1, help="loader worker processes; 0 on Windows dry runs")
     ap.add_argument("--ogb-zip", type=Path, help="pure-python ogb archive, used only when ogb is not importable")
     args = ap.parse_args(argv)
     out = args.output.absolute()
@@ -106,7 +107,7 @@ def main(argv=None) -> int:
         # The kernel still verifies a frozen state hash; this tiny fixed state carries it and is kept for scoring.
         initial = out / "initial_state_placeholder.pt"
         atomic_torch_save(initial, {"unused_standalone_model_builds_from_seed": torch.zeros(1)})
-    tuning = ExecutionTuning(independent_models=1, total_cpu_budget=args.cpus)
+    tuning = ExecutionTuning(independent_models=1, training_workers=args.training_workers, total_cpu_budget=args.cpus)
     torch.set_num_threads(tuning.cpu_threads)
     runtime = build_runtime_manifest(configure_fp32_determinism(recipe.seed))
     kernel = FamilyKernel(recipe, initial, device="cuda")
@@ -121,13 +122,19 @@ def main(argv=None) -> int:
             "initial_state_sha256": sha256(initial), "gpu": gpu, "torch": torch.__version__,
             "runtime_fingerprint": runtime["runtime_fingerprint"], "batch_size": recipe.batch_size, "precision": "fp32"})
 
-    def on_selected(progress, weights, state, _evaluation):
+    def on_selected(progress, weights, state, evaluation):
+        if weights.startswith("ema-"):  # an auxiliary EMA must not overwrite the primary selection
+            return
         atomic_torch_save(out / "selected_model.pt", {"model": state, "weights": weights, "optimizer_step": progress.optimizer_step})
+        if evaluation is not None:  # the scorer's --expect-dev-mae check reads this
+            atomic_json(out / "selected_eval.json", {"step": progress.optimizer_step, "dev_mae_eV": evaluation["mae_eV"]})
 
     def on_pass(progress, metrics):
         lr = (metrics.get("learning_rates_used") or [recipe.learning_rate])[0]
         row = {"epoch": progress.pass_index, "step": progress.optimizer_step, "lr": lr, "elapsed_s": round(time.monotonic() - START),
                "train_mae_eV": metrics["normalized_train_gap_mae"] * recipe.target_std_eV}
+        if metrics.get("development") is not None:
+            row["dev_mae_eV"] = metrics["development"]["mae_eV"]
         with log.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps(row) + "\n")
         print("[pass]", json.dumps(row), flush=True)
