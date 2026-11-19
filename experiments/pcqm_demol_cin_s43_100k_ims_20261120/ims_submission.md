@@ -22,5 +22,11 @@ Run these with cwd = `$wt` (the adapter reads clean committed source; the worktr
 ## After the jobs
 Retrieve `training/` (`selected_model.pt`, `last_checkpoint.pt`, `completion_manifest.json`, `train_log.jsonl`, `selected_eval.json`, `run_provenance.json`, `initial_state_placeholder.pt` for J1) with remote sha256 into `D:\molgap-artifacts\retrieved\<run_id>\`. Score once with `platforms/local/pcqm_tail_holdout_eval.py` (dev 100000:150000 with `--expect-dev-mae` taken from `selected_eval.json`, plus tail; DeMol needs this worktree's `src` on PYTHONPATH). Apply only the frozen rules in protocol.md.
 
+## Local checks done (2026-11-20)
+- `read_recipe`, `mode_policy` and `load_family_model` on CPU for both recipes: pass (DeMolCIN 5.53M params; BondLocalGPTrans 5.87M; J2 state sha c95da412 loads with the s43 file).
+- J2 driver dry run on the RTX 5060 (guard: peak handles 1,247, working set 1.95 GB, no trip): preflight (2 steps) accepted; train phase paused at step 20 with exit 2 as designed; `--training-workers 0`. Local root = IMS manifest fed575a4 with byte-identical shards. This run found that the Kaggle role identities fail the driver check; fixed in the recipes.
+- J1 (DeMol) had no driver run on Windows (ruling). Its model and scorer path ran in F0 (500K branch). The first real DeMol driver step is the IMS preflight.
+- F0: Delta_tail = -6.102 meV (see the 500K branch protocol).
+
 ## Job ids
 (filled at submission)
