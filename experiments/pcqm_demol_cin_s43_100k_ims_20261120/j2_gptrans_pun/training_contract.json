@@ -1,0 +1,34 @@
+{
+  "format": "molgap-ims-100k-training-contract-v1",
+  "benchmark_id": "pcqm-fixed100k-dev50k-matched60-ims",
+  "candidate": "pair_update_norm",
+  "roles": {
+    "train": [
+      0,
+      100000
+    ],
+    "development": [
+      100000,
+      150000
+    ],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false,
+    "tail_holdout_v1_read": false
+  },
+  "seed": 43,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "physical_batch_per_device": 128,
+  "device_count": 1,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "maximum_epochs": 60,
+  "selection": "best-development-ema",
+  "kaggle_s42_reference": {
+    "demol_cin_dev_mae_eV": 0.134635,
+    "pair_update_norm_dev_mae_eV": 0.13944,
+    "platform": "Kaggle T4, torch 2.11"
+  },
+  "verdict": "non-strict nomination only (no Spec/package/runtime-certificate layer on IMS)"
+}
