@@ -385,6 +385,8 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
     The draft leaves outcome and decision_ref empty, so the closure loader rejects it until a
     human fills them in. Numbers come from the run's saved development predictions only.
     """
+    if Path(output_dir).name in {"roles", "costs", "handoff"}:  # RML discovery reads these folders as records
+        raise ValueError("draft-closure output directory must not be named roles, costs or handoff")
     from .experiment_run import resolve_run_acceptance_inputs
     from .research_memory.saved_analysis import run as analyze
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,

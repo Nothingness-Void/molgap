@@ -40,7 +40,8 @@ def discover_records(repo_root: str | Path) -> DiscoveredRecords:
         kinds = set()
         if not suffix_only and name in names and path.exists():
             kinds.add(names[name])
-        if parent in {"costs", "roles"} and name.endswith(".json"):
+        draft = parent == "roles" and (name == "audit_map.json" or name.startswith("roles_"))
+        if parent in {"costs", "roles"} and name.endswith(".json") and not draft:
             kinds.add(parent)
         elif parent == "handoff" and name == os.path.normcase("READY_FOR_DESKTOP.json"):
             if path.exists():
