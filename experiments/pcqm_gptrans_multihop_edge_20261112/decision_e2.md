@@ -39,3 +39,9 @@ E1 verdict, N1, P1 and every frozen threshold are untouched. The route is closed
 ## Closure record, 2026-11-19
 - The shared closure binds this file as `decision_ref` for ref_s47 and ref_s48 (CLOSED) and mh_s47 and mh_s48 (NEGATIVE_UNDER_CONTRACT). Closure inputs: `closure_e2_s47_v1/` and `closure_e2_s48_v1/`.
 - Source gap for the tail scores: the E2 tail figures above are owner-reported. They are not in `tail_holdout_master_leaderboard.json`, and no per-arm tail file is stored beside this decision, so closure does not verify them. The closure facts carry only the measured internal-development effect from saved predictions (`effect_meV`, candidate minus reference); that number is not the gate metric.
+
+## s48 closure path: non-strict, 2026-11-19
+- e2-s47 closed on the strict path (native qualification and strict comparison verified).
+- e2-s48 could not. `accept_run.py --strict` stopped with `Strict family comparison requires observed native device cost`. mh_s48 ran its last passes in the v2 continuation that carries the `recovery_repair` overlay (`kB_s48_v2/recovery_repair.json`), and this does not give strict acceptance the observed device cost it needs. The failure is in the evidence format, not in the scores.
+- s48 therefore closes through the non-strict mechanical path (no `--strict`; terminal staging verified, no blockers). Arm outcomes are the same as for s47: ref_s48 CLOSED, mh_s48 NEGATIVE_UNDER_CONTRACT. The gate uses the owner-reported tail MAE above, so the missing strict comparison does not change the ruling.
+- Consequence: s48 is not eligible for strict comparison or replay-pool use.
