@@ -35,3 +35,7 @@ kernel B v2 was submitted on 2026-11-13 17:50 UTC. `kB_s48_v2/continuation_autho
 
 ## Effect on other decisions
 E1 verdict, N1, P1 and every frozen threshold are untouched. The route is closed under Amendment 2; reopening needs a new pre-registered question.
+
+## Closure record, 2026-11-19
+- The shared closure binds this file as `decision_ref` for ref_s47 and ref_s48 (CLOSED) and mh_s47 and mh_s48 (NEGATIVE_UNDER_CONTRACT). Closure inputs: `closure_e2_s47_v1/` and `closure_e2_s48_v1/`.
+- Source gap for the tail scores: the E2 tail figures above are owner-reported. They are not in `tail_holdout_master_leaderboard.json`, and no per-arm tail file is stored beside this decision, so closure does not verify them. The closure facts carry only the measured internal-development effect from saved predictions (`effect_meV`, candidate minus reference); that number is not the gate metric.
