@@ -1,12 +1,14 @@
-# IMS submission record: CutlassGT-2026 500K (prepared, NOT submitted)
+# IMS submission record: CutlassGT-2026 500K (submitted, completed, retrieved; tail not scored)
 
 Rules: [protocol.md](protocol.md). Before any IMS command read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`. No smoke or preflight-only job (queue rule); V4 chains preflight and training with `afterok`.
 
-## Status: prepared; the V4 bridge exists, not submitted
+## Status 2026-11-20 (updated): submitted to IMS (preflight 2066226, train 2066227), COMPLETE with 60 passes, retrieved to `D:/molgap-artifacts/retrieved/pcqm-cutlass-gt-500k-20261118-r2-s42` (selected_model.pt, train_log.jsonl, completion_manifest.json). Not closed: no terminal acceptance or RML record; tail holdout not scored (waits for user approval, one score per model). Scheduler state was not re-queried for this update; the text below is the original preparation record.
+
+## Preparation record (historical)
 Route: `platforms/ims/run_family_training.py --recipe` runs `recipe.json` (frozen family recipe, BS128, FP32, TF32 off, final-pass EMA 0.999, 234,360 steps) through the existing family kernel and session; see [V4 resume notes](../../platforms/ims/v4_submit/README.md#standalone-family-models-and-resume). There is no Spec/package/`launch.json`: that route compiles only for platform `kaggle`. Preflight reads and hashes the 500K shards, checks target statistics and the train-row identity, then takes 2 real steps. Training writes `last_checkpoint.pt` atomically every 512 steps, pauses itself before the walltime (exit 2 = paused, not an error) and writes `completion_manifest.json`, `selected_model.pt` (final EMA) and `initial_state_placeholder.pt` (for the tail scorer) at the end.
 Unverified until the first real job: the A100 run itself, `ogb` import on the IMS runtime (`--ogb-zip` fallback path from the K1 full job), and the shard paths inside the IMS 500K manifest view. Dev MAE is not computed (selection is final EMA; `development: false`). Source commit and archive hash are filled by the submit helper from the clean committed tree.
 
-## Command (not run)
+## Command (as prepared; since executed, see status above)
 ```powershell
 .venv\Scripts\python.exe platforms\ims\v4_submit\submit_from_windows.py `
   --repo D:\molgap-worktrees\cutlass-gt-100k-20261118 `
