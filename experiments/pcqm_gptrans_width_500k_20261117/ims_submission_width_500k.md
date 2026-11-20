@@ -1,6 +1,6 @@
 # IMS submission record: GPT-T 500K capacity question
 
-Rules: [protocol.md](protocol.md). Status: **submitted 2026-11-16 19:12 and 19:15 UTC (2026-11-17 04:12 JST); both running, R task first.** Scheduler truth wins over this file. Before any IMS command, read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`, resolve every path with `realpath`, never touch jobs that are not ours, and submit no smoke or preflight job.
+Rules: [protocol.md](protocol.md). Status: **submitted 2026-11-16 19:12 and 19:15 UTC (2026-11-17 04:12 JST); both jobs COMPLETE (8/8 tasks, exit 0) and retrieved 2026-11-17; scored once on tail_holdout_v1 and closed in [decision.md](decision.md) (no arm nominated, L20 NO_SIGNAL).** RML: only the prospective trajectory exists; no terminal record is finalized. Scheduler truth wins over this file. Before any IMS command, read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`, resolve every path with `realpath`, never touch jobs that are not ours, and submit no smoke or preflight job.
 
 ## Jobs
 | Card | Job ID | Name | Submitted (UTC) | Node | Root |
