@@ -1,4 +1,4 @@
-# IMS submission record: DeMol-CIN replication (J1, J2) (prepared, NOT submitted)
+# IMS submission record: DeMol-CIN replication (J1, J2) (J1/J2 submitted then cancelled; serial single job pending)
 
 Rules: [protocol.md](protocol.md). Before any IMS command read `platforms/REMOTE_HANDOFF.md`; stay below `/lustre/home/users/sm2/chou/`. No smoke job (queue rule); V4 chains preflight and training with `afterok`. One `submit_from_windows.py` call per run. The same command resumes a paused run (exit 2 = paused, not an error).
 
@@ -29,4 +29,4 @@ Retrieve `training/` (`selected_model.pt`, `last_checkpoint.pt`, `completion_man
 - F0: Delta_tail = -6.102 meV (see the 500K branch protocol).
 
 ## Job ids
-(filled at submission)
+J1 preflight 2077090, training 2077091; J2 preflight 2077093, training 2077094. Cancelled by the user (user-reported 2026-11-20, scheduler not re-queried). Replaced by one serial job, not yet submitted.
