@@ -205,6 +205,8 @@ def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
         for flag, token in (("--wall-s", "{train_wall_s}"), ("--memory-limit-bytes", "{mem_bytes}")):
             if args.count(flag) != 1 or args[args.index(flag) + 1:args.index(flag) + 2] != [token]:
                 raise RuntimeError(f"Chain train args must pass {flag} {token}; do not type the number")
+    if not chain and any(token in arg for stage in spec.get("stages", {}).values() for arg in stage.get("args", []) for token in ("{mem_bytes}", "{train_wall_s}")):
+        raise RuntimeError("{mem_bytes} and {train_wall_s} exist only in chain mode")
     if not chain and walltime_seconds(resources["preflight_walltime"]) > 3600:
         raise RuntimeError("Preflight walltime exceeds one hour")
     if walltime_seconds(resources["train_walltime"]) > 24 * 3600:

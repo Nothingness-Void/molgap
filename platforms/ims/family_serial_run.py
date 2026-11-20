@@ -12,11 +12,11 @@ Spec (JSON, committed and bound by the launcher as the run contract):
               "extra_args"?, "gate"?}]}
 Paths are relative to --code-root. "gate" is optional and sits on the item it may skip; it may only name items that
 come earlier in the list:
-  "dev_delta": {"a": item, "b": item, "max_delta_meV": -1.5}   skip unless (MAE_a - MAE_b) * 1000 <= max_delta
+  "dev_delta": {"a": item, "b": item, "max_delta_meV": -3.0}   skip unless (MAE_a - MAE_b) * 1000 <= max_delta
   "memory":    {"from": item, "factor": 5, "margin": 1.3, "max_fraction": 0.5}
                 skip if peak_rss(from) * factor * margin > max_fraction * --memory-limit-bytes
 A gate that cannot read its input (item not COMPLETE, no selected_eval.json, no peak) skips: no evidence, no expensive run.
---memory-limit-bytes is the PBS mem= request, passed by the launcher. The driver never probes cgroup or /proc files:
+--memory-limit-bytes is the job's memory share (ncpus x 1.875e9), passed by the launcher. The driver never probes cgroup or /proc files:
 IMS access stops at the authorized directory (platforms/REMOTE_HANDOFF.md).
 
 Exit 0: every item is COMPLETE or gate-skipped. 2: something can resume (PAUSED, NOT_STARTED, SKIPPED_FOR_TIME).
@@ -187,7 +187,11 @@ def check_inputs(spec: dict, code_root: Path, input_root: Path, ogb_zip: Path | 
             if rec is not None and not str(rec.get("selection", "")).startswith("best-development"):
                 problems.append(f"{item['name']}: gate item {ref} has selection {rec.get('selection')!r}; it writes no selected_eval.json")
         if "dev_delta" in gate:
-            ids = {records[ref]["development_role_identity"] for ref in (gate["dev_delta"]["a"], gate["dev_delta"]["b"]) if ref in records}
+            try:
+                ids = {records[ref]["development_role_identity"] for ref in (gate["dev_delta"]["a"], gate["dev_delta"]["b"]) if ref in records}
+            except KeyError as error:
+                problems.append(f"{item['name']}: gate item recipe lacks {error}")
+                continue
             if len(ids) > 1:
                 problems.append(f"{item['name']}: gate.dev_delta items use different development roles; their MAE is not comparable")
     return problems
@@ -197,7 +201,7 @@ def run_child(command: list[str], env: dict, state: dict) -> tuple[int, int | No
     """Run one child and return (exit code, peak memory in bytes). The two platforms measure different things.
     Linux: wait4 gives the rusage of this child; ru_maxrss (KiB) is the peak RSS of the single largest process among the
     child and its waited descendants, not their sum. Windows (local rehearsal only): the largest sampled SUM of peak
-    working sets over the process tree, which is never smaller. A gate fed by the Windows number is therefore conservative."""
+    working sets over the process tree, which is never smaller. On Linux fork()ed DataLoader workers are separate processes, so total job memory can approach twice this number."""
     child = subprocess.Popen(command, env=env)
     state["child_pid"] = child.pid
     try:
@@ -237,20 +241,21 @@ def gate_decision(item: dict, tasks: dict, out_dirs: dict, limit: int) -> tuple[
         a, b = (dev_mae(out_dirs[rule[key]]) if tasks.get(rule[key], {}).get("status") == "COMPLETE" else None for key in ("a", "b"))
         if a is None or b is None:
             return "SKIPPED_BY_GATE", f"no dev MAE for {rule['a'] if a is None else rule['b']}; the gate cannot show the gain"
-        delta, line = (a - b) * 1000, rule.get("max_delta_meV", -1.5)
+        delta, line = (a - b) * 1000, rule.get("max_delta_meV", -3.0)
         if delta > line:
             return "SKIPPED_BY_GATE", f"dev MAE delta {rule['a']} - {rule['b']} = {delta:.3f} meV is above {line} meV"
     if "memory" in gate:
         rule = gate["memory"]
-        peak = tasks[rule["from"]].get("peak_rss_bytes") if rule["from"] in tasks else None
+        source = tasks.get(rule["from"], {})
+        peak = source.get("peak_rss_bytes") if source.get("status") == "COMPLETE" else None
         if not peak:
-            return "SKIPPED_FOR_MEMORY", f"no measured peak memory for {rule['from']}"
+            return "SKIPPED_FOR_MEMORY", f"{rule['from']} is not COMPLETE or has no measured peak memory"
         need = peak * rule.get("factor", 5) * rule.get("margin", 1.3)
         budget = rule.get("max_fraction", 0.5) * limit
         if need > budget:
             return "SKIPPED_FOR_MEMORY", (f"predicted peak {need / 2**30:.1f} GiB ({rule['from']} {peak / 2**30:.2f} GiB x "
                                           f"{rule.get('factor', 5)} x {rule.get('margin', 1.3)}) exceeds {rule.get('max_fraction', 0.5)} x "
-                                          f"{limit / 2**30:.1f} GiB (PBS mem request)")
+                                          f"{limit / 2**30:.1f} GiB (memory share of the job)")
     return None
 
 
@@ -278,7 +283,7 @@ def main(argv=None) -> int:
     ap.add_argument("--device", type=int, default=0)
     ap.add_argument("--training-workers", type=int, default=1, help="0 on Windows rehearsals")
     ap.add_argument("--wall-s", type=float, required=True, help="seconds this job may run (the launcher passes walltime - 120); the clock starts at driver start")
-    ap.add_argument("--memory-limit-bytes", type=int, required=True, help="the PBS mem= request in bytes (the launcher passes it)")
+    ap.add_argument("--memory-limit-bytes", type=int, required=True, help="memory share of the job in bytes, ncpus x 1.875e9 (the launcher passes it)")
     ap.add_argument("--reserve-s", type=float, default=1800.0, help="kept free at the end for the last checkpoint")
     ap.add_argument("--max-attempts", type=int, default=2, help="a FAILED item is retried on rerun until it has this many attempts")
     ap.add_argument("--continue-after-pause", action="store_true", help="local rehearsal only: a paused item does not stop the driver")
@@ -336,8 +341,9 @@ def main(argv=None) -> int:
         if state["stop"]:
             task.update(status="NOT_STARTED", reason="driver was told to stop before this item")
             continue
-        if task["status"] == "FAILED" and len(task["attempts"]) >= a.max_attempts:
-            task["reason"] = f"failed {len(task['attempts'])} times; attempt limit {a.max_attempts} reached, not retried"
+        failures = sum(1 for x in task["attempts"] if x.get("failed"))  # pauses do not count
+        if task["status"] == "FAILED" and failures >= a.max_attempts:
+            task["reason"] = f"failed {failures} times; attempt limit {a.max_attempts} reached, not retried"
             continue
         skip = gate_decision(item, tasks, out_dirs, a.memory_limit_bytes)
         if skip:
@@ -369,13 +375,14 @@ def main(argv=None) -> int:
         print(f"[driver] {name} start, estimate {need:.0f}s, wall left {left:.0f}s", flush=True)
         began = time.monotonic()
         code, peak = run_child(command, dict(os.environ), state)
-        task["attempts"].append({"end_utc": now(), "exit_code": code, "wall_s": round(time.monotonic() - began, 1), "peak_rss_bytes": peak})
+        task["attempts"].append({"end_utc": now(), "exit_code": code, "wall_s": round(time.monotonic() - began, 1), "peak_rss_bytes": peak, "failed": False})
         task["peak_rss_bytes"] = max(filter(None, [x.get("peak_rss_bytes") for x in task["attempts"]]), default=None)
         if is_complete(out_dir):
             task.update(status="COMPLETE", reason="completion_manifest.json written", dev_mae_eV=dev_mae(out_dir))
         elif code == PAUSED and (out_dir / "pause_receipt.json").is_file():
             task.update(status="PAUSED", reason="wall limit, SIGTERM or step limit; rerun the same command to resume")
         else:
+            task["attempts"][-1]["failed"] = True
             task.update(status="FAILED", reason=f"child exit code {code}" + (" (rejected by its own start checks)" if code == 1 else ""))
         print(f"[driver] {name} {task['status']}: {task['reason']}", flush=True)
         write()

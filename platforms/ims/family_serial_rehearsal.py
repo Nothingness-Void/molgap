@@ -293,7 +293,15 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     single["source"] = {"commit": "0" * 40, "archive_sha256": "0" * 64}
     single["contract"]["sha256"] = "0" * 64
     launcher.validate_spec(single, datasets, runtimes)
-    record("launcher: the single-recipe example spec still validates, stages are preflight + train", launcher.stage_names(single) == ("preflight", "train"))
+    bad_single = json.loads(json.dumps(single))
+    bad_single["stages"]["train"]["args"] = bad_single["stages"]["train"]["args"] + ["--memory-limit-bytes", "{mem_bytes}"]
+    try:
+        launcher.validate_spec(bad_single, datasets, runtimes)
+        single_refused = False
+    except RuntimeError:
+        single_refused = True
+    record("launcher: the single-recipe example spec still validates, stages are preflight + train; {mem_bytes} in a single-recipe spec is refused",
+           launcher.stage_names(single) == ("preflight", "train") and single_refused)
     # 2. PBS text: render with a fake run root and let bash parse it.
     pbs = launcher.render_pbs(Path("/lustre/home/users/sm2/chou/molgap-v4-submit/runs/rehearsal-chain-20261120"), "train", spec, runtimes["runtimes"]["ims-a100-torch271-v1"])
     (work / "train.pbs").write_text(pbs, encoding="utf-8", newline="\n")
@@ -374,7 +382,8 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     alone.pop("mode"), alone.pop("dataset_ids")
     alone.update(run_id="rehearsal-single-20261120", dataset_id="ogb-train-100k")
     alone["resources"]["preflight_walltime"] = "00:45:00"
-    alone["stages"] = {"preflight": alone["stages"]["train"], "train": alone["stages"]["train"]}
+    plain = {**alone["stages"]["train"], "args": ["--spec", "x"]}  # chain placeholders are refused outside chain mode
+    alone["stages"] = {"preflight": plain, "train": plain}
     (inbox2 / "run_spec.json").write_text(json.dumps(alone), encoding="utf-8")
     calls.clear()
     out = launcher.submit_run(inbox2, infra)

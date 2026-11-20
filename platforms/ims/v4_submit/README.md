@@ -95,7 +95,7 @@ another through `run_family_training.py`.
 - A failed item does not stop the next one. An item that cannot finish in the
   wall left (minus 1800 s) is `SKIPPED_FOR_TIME`. A finished item is never redone.
 - Optional gates sit on the item they may skip. `dev_delta`: skip unless the dev
-  MAE of item `a` minus item `b` is at most -1.5 meV. `memory`: skip if the
+  MAE of item `a` minus item `b` is at most -3.0 meV (the DeMol review rule asks for a gain of 3.0 meV or more AND a confidence upper bound below 0; the job cannot compute the interval, so after retrieval check it before treating the 500K result as a replication). `memory`: skip if the
   measured 100K peak memory x 5 x 1.3 exceeds half of
   min(cgroup `memory.max`, `MemAvailable`). A gate with no input fails closed.
 - Exit codes: 0 done, 2 can resume (paused, time skip, not started), 1 an item
@@ -119,12 +119,13 @@ another through `run_family_training.py`.
   reading), and the memory gate uses it. Points (same page): 1 point per core-hour
   plus 60 points per GPU-hour.
 - Chain resources: `ngpus` 1-3 and `ncpus` 8/16/32/48 with at most 16 cores per
-  GPU, and `--cpus` equal to `ncpus`. 1 GPU gives at most 30 GB. Memory gate:
-  predicted peak = 100K peak x 5 x 1.3 must be at most half of that limit. For the
-  DeMol 500K case (4.89 GiB measured on Windows, about 34 GB predicted) the limit
-  must exceed 68 GB, which needs `ncpus` 48 and `ngpus` 3 (90 GB, 228 points per
-  hour, 5,472 points for 24 h; two GPUs sit idle because only memory is wanted).
-  With `ngpus` 1 and `ncpus` 16 the gate always skips that item.
+  GPU, and `--cpus` equal to `ncpus`. 1 GPU gives at most 30 GB (the example uses
+  1 GPU, 16 cores). Memory gate: predicted peak = 100K peak x 5 x 1.3 must be at
+  most half of that limit; the source item must be COMPLETE. Whether an item
+  passes is decided in the job from the measured Linux peak. For scale: the
+  Windows rehearsal measured 4.89 GiB for DeMol 100K (about 34 GB predicted for
+  500K), which would need a limit above 68 GB, that is `ncpus` 48 and `ngpus` 3
+  (90 GB, 228 points per hour, 5,472 points for 24 h, two GPUs idle).
   Not verified: whether the scheduler enforces the proportional memory, and the
   H versus PN queue name (the manual's gpu class is PN; this adapter has always
   used `-q H`).
@@ -133,10 +134,14 @@ another through `run_family_training.py`.
   1800 s reserve, gates naming earlier items, `extra_args` not touching driver
   flags. Otherwise exit 3 with `early_exit.json`.
 - A FAILED item is retried on rerun up to `--max-attempts` (default 2).
-- Peak memory: Linux `ru_maxrss` is the largest single process of the child
-  tree; the Windows rehearsal samples the sum of the tree, which is never
-  smaller. The memory gate is therefore conservative locally and uses the
-  per-process maximum on IMS.
+- Peak memory: Linux `ru_maxrss` is the peak of the single largest process among
+  the child and its waited descendants, not their sum. A fork()ed DataLoader
+  worker is a separate process, so total job memory can approach twice the
+  measured number. With `training_workers` 0 the 0.5 fraction can be relaxed;
+  with fork workers keep it at 0.5. The Windows rehearsal samples the sum of the
+  process tree, a different quantity.
+- Single-recipe specs may not use `{mem_bytes}` or `{train_wall_s}`; staging
+  refuses them.
 
 ### Checks that chain mode relaxes (single-recipe mode is unchanged)
 
