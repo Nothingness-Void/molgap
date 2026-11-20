@@ -1,3 +1,5 @@
+Update 2026-11-20 (record audit): The CLOSED status above is the decision-level outcome. No RML terminal record was written; the trajectories stay ACTIVE.
+
 # Direction screen decision record
 
 Status: CLOSED (2026-11-14). Outcome: NEGATIVE_UNDER_CONTRACT. No C batch is recommended (no filler submissions).
