@@ -290,7 +290,9 @@ def mem(args):
                 cuda_allocated_after_model_and_store_MiB=round(resident_bytes / 2**20, 1),
                 cuda_peak_allocated_MiB=round(torch.cuda.max_memory_allocated() / 2**20, 1),
                 host_MiB_after_data_load=base_peak, host_MiB_peak_during_build={k: round(v / 2**20, 1) if k != "handles" else v for k, v in after_build.items()},
-                host_peak_whole_run=mon.result())
+                host_peak_whole_run=mon.result(),
+                ru_maxrss_equiv_MiB=round(getattr(psutil.Process().memory_info(), 'peak_wset', 0) / 2**20, 1),
+                peak_private_commit_MiB=round(getattr(psutil.Process().memory_info(), 'peak_pagefile', 0) / 2**20, 1))
     if args.variant == "new":
         info["compact_store_MiB"] = round((data.train.store.nbytes + data.development.store.nbytes) / 2**20, 1)
         info["bytes_per_molecule"] = round((data.train.store.nbytes + data.development.store.nbytes) / (len(data.train) + len(data.development)), 1)
