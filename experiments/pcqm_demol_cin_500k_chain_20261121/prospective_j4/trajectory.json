@@ -1,0 +1,108 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "demol500k-chain-20261121-j4-demol-500k-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md"
+      ],
+      "run_ids": [
+        "demol500k-chain-20261121"
+      ],
+      "source_commit": "a740e6fc988143cab0569c91d4e61da779a3ff74",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/opus_ruling_20261121.md",
+    "next_allowed_actions": [
+      "one serial chain job on IMS, retrieval, offline dev and tail scoring, then the frozen rules"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_500K_CHAIN_IMS",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+    "chosen_action": "RUN_500K_CHAIN_IMS",
+    "policy_id": "pcqm-demol-cin-500k-chain-20261121",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_500k_chain_20261121/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_decision_snapshots/aec90a4ca720750ce2a59ac2abb991230285401bcd28882833fdee10d1d24134.json",
+    "snapshot_sha256": "aec90a4ca720750ce2a59ac2abb991230285401bcd28882833fdee10d1d24134",
+    "state_timestamp": "2026-11-21T12:00:00+09:00"
+  },
+  "family_id": "pcqm-demol-cin-ims-replication-20261120",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Selection bias on dev (best of 60 passes on the same dev rows)",
+      "Init and seed noise, about 1.6 meV at 100K",
+      "A 100K-only regime: K1 Muon beat GPT-T by 6 meV at 100K tail and lost at 500K",
+      "Platform effect (IMS A100 torch 2.7.1 vs Kaggle T4): measured by J5"
+    ],
+    "changed_mechanism": "demol-cin-sparse-cellular-complex-0-1-2-cell-virtual-hub",
+    "cheapest_falsifier": "J4 gate (Opus ruling (ii)): J4 runs only if dev MAE(J3) minus dev MAE(J5) <= 0.0 meV; a dev delta (J3 minus J5) above 0.0 meV skips J4 at no cost. After retrieval: J3 and J4 tail deltas against G = 107.940 meV; a tail delta above -1.5 meV on either seed fails the frozen PASS.",
+    "decision_changed_if_negative": "Close DeMol-CIN single-model 500K and full under contract once J3 and J4 are both read; no retries, no weight-decay or schedule grids. A skipped J4 caps the transfer verdict at INCONCLUSIVE.",
+    "decision_changed_if_positive": "Second seed supports a full-scale DeMol-CIN nomination with J3 (one-seed cap lifted); nomination only, non-strict, nothing adopted. F0 (tail delta -6.102 meV at 100K, branch codex/exp/demol-cin-500k-ims-20261120 commit a7c5f7d74) is cited in the contract refs, not as a parent record.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43-planned",
+    "historical_unknowns": [
+      "Kaggle strict pairing blocked by runtime-certificate scope mismatch; cause unproven",
+      "A100 step rate for DeMol-CIN at 500K is unmeasured (frozen estimate 60-110 ms per step)"
+    ],
+    "hypothesis_id": "H-T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43",
+    "observed_deficiency": "The GPT-T 500K floor, 107.27-108.36 meV on tail_holdout_v1; the 100K DeMol-CIN gain (dev -4.805, tail -6.102 meV, one seed, Kaggle) has no 500K evidence.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the DeMol-CIN 500K gain replicate on a second seed (seed 43, IMS A100, run only if dev delta J3 minus J5 <= 0.0 meV)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "experiments/pcqm_demol_cin_500k_chain_20261121/serial_spec.json",
+      "experiments/pcqm_demol_cin_500k_chain_20261121/run_spec.json",
+      "experiments/pcqm_demol_cin_500k_chain_20261121/j4_demol_cin_s43/recipe.json",
+      "experiments/pcqm_demol_cin_500k_chain_20261121/opus_ruling_20261121.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_500k_chain_20261121/role_plan.json"
+    ],
+    "source_commit": "a740e6fc988143cab0569c91d4e61da779a3ff74",
+    "source_config_identity": "43a5cfca11e3c0d66bd6b2bff93663826fbf6d69eabd958dcf306183f451ab65"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+}

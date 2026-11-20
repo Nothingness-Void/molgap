@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b3431cb713e398b7931b209362d987bd45cda7dc90c7e5705072afe910c48b9c",
+  "source_digest": "461504b57ff4226f6d092aa555664de74000e5b22d0e4bdb61034a7501a87c56",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,48 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/opus_ruling_20261121.md",
+      "family_id": "pcqm-demol-cin-ims-replication-20261120",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j3-demol_cin_s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/opus_ruling_20261121.md",
+      "family_id": "pcqm-demol-cin-ims-replication-20261120",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j4/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/opus_ruling_20261121.md",
+      "family_id": "pcqm-demol-cin-ims-replication-20261120",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j5/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
     },
     {
       "completeness_status": "complete",

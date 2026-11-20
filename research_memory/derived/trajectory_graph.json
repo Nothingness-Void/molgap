@@ -1,6 +1,21 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-demol-cin-500k-chain-20261121-j3-demol_cin_s42:A001",
+      "target": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43:A001",
+      "target": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44:A001",
+      "target": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin:A001",
       "target": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
       "type": "action_produced_evidence"
@@ -1762,6 +1777,21 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-500k-chain-20261121-j3-demol_cin_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin",
       "type": "prior_evidence"
     },
@@ -1878,6 +1908,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44",
       "type": "prior_evidence"
     },
     {
@@ -4656,6 +4691,18 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-500k-chain-20261121-j3-demol_cin_s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44",
       "type": "trajectory"
     },
     {
