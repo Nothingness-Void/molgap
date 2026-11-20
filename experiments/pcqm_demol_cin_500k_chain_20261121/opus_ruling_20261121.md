@@ -72,7 +72,9 @@ reason given there.
 
 ## Submit-day preconditions (Q2, Q3; this ruling cannot connect to IMS)
 
-- Q2: run `jobinfo -c` and `showlim -c` under `platforms/REMOTE_HANDOFF.md`. This chain counts as one job. Non-terminal MolGap chains
+- Q2: run `jobinfo -c` and `showlim -c` under `platforms/REMOTE_HANDOFF.md`. This chain counts as one job: the cap in REMOTE_HANDOFF
+  counts concurrent scheduler tasks ("capped at four concurrent shard tasks"), and frozen Q2 counts each preflight + train chain once.
+  This run is one train job with no preflight, so it adds 1. The old count gave each J item its own run; the serial chain removes that. Non-terminal MolGap chains
   (each preflight + train pair counts once) + 1 ≤ 4. Jobs 2077090-2077094 (old J1/J2) must be gone; if any is live or left outputs,
   stop and reconcile, do not submit (J1 and J2 would run twice).
 - Q3: (remaining − hard line) ≥ 3 jobs × 24 h × 73.1 points per A100-h ≈ 5,263 points (one job plus two resumes). Use the measured
