@@ -1,7 +1,8 @@
 # DeMol-CIN 500K serial chain on IMS (J1-J5 in one job), prepared 2026-11-21, not submitted
 
 One A100 job runs five frozen recipes in series. Decision rules were frozen before any submit; this file adds
-no science rule except the one marked NEW RULE. Frozen sources, read from Git, not copied:
+no science rule. Gates, budgets and admission follow `opus_ruling_20261121.md` (Opus, 2026-11-21), which amends ruling Q4.
+Frozen sources, read from Git, not copied:
 - Replication rules (a), (b) and the Opus rulings: `experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md`
   (branch `codex/exp/demol-cin-ims-replication-20261120`, base commit `ee0e791b9` of this branch).
 - 500K transfer, hetero ensemble, J5 shift, cost and give-back rules: `experiments/pcqm_demol_cin_500k_ims_20261120/protocol.md`
@@ -12,16 +13,18 @@ no science rule except the one marked NEW RULE. Frozen sources, read from Git, n
 ## Chain
 
 Resources: queue H, 1 A100, `ncpus` 16, walltime 24:00:00. The launcher injects `--wall-s 86280` and `--memory-limit-bytes 30000000000`.
-Reserve 1800 s. Allowed per item and in total: 84,480 s. Budgets are the planner's mid estimates; the sum is 84,240 s.
+Reserve 1800 s. Allowed per item and in total: 84,480 s. The sum is 62,640 s.
 A budget only decides whether an item may start. A started item runs until the wall and then pauses (exit 2; run the same submit command again).
+J4's 7,200 s is a start threshold, not an estimate: J4 starts if 7,200 s remain, checkpoints every 512 steps, pauses at the wall,
+and a resume job runs the rest. In the all-pass case expect J4 to finish in one resume job.
 
 | Order | Item | Recipe | Seed | Init | Budget s | Gates (all must pass) |
 |---|---|---|---|---|---|---|
 | 1 | `j1-demol-100k-s43` DeMol-CIN 100K | `experiments/pcqm_demol_cin_s43_100k_ims_20261120/j1_demol_cin` | 43 | placeholder | 7200 | none |
 | 2 | `j2-gptt-100k-s43` GPT-T pair-update-norm 100K | `.../j2_gptrans_pun` | 43 | `init/s43.pt` | 4140 | none |
-| 3 | `j3-demol-500k-s42` DeMol-CIN 500K | `j3_demol_cin_s42` | 42 | placeholder | 28800 | dev delta J1-J2 <= -3.0 meV; memory |
-| 4 | `j5-gptt-500k-s44` GPT-T 500K, platform control | `j5_gptrans_pun_s44` | 42 | `init/s44.pt` | 15300 | same two gates as J3 |
-| 5 | `j4-demol-500k-s43` DeMol-CIN 500K | `j4_demol_cin_s43` | 43 | placeholder | 28800 | NEW RULE: dev delta J3-J5 <= -1.5 meV |
+| 3 | `j3-demol-500k-s42` DeMol-CIN 500K | `j3_demol_cin_s42` | 42 | placeholder | 28800 | dev delta J1-J2 <= -3.0 meV |
+| 4 | `j5-gptt-500k-s44` GPT-T 500K, platform control | `j5_gptrans_pun_s44` | 42 | `init/s44.pt` | 15300 | same gate as J3 |
+| 5 | `j4-demol-500k-s43` DeMol-CIN 500K | `j4_demol_cin_s43` | 43 | placeholder | 7200 | dev delta J3-J5 <= 0.0 meV (Opus ruling (ii)) |
 
 - All DeMol items pass `--gpu-resident-cells` (compact inputs on the GPU, no host cell list).
 - 100K items: IMS 100K view, train rows 0-99,999, dev rows 100,000-149,999. 500K items: IMS view `ogb-train-500k-scnet-v1`
@@ -40,28 +43,31 @@ A budget only decides whether an item may start. A started item runs until the w
   The job cannot compute the confidence interval. After retrieval check that the paired row-bootstrap upper bound is below 0.
   If it is not, report the 500K results but flag them (rule (a) already says read them under their own rule and flag the conflict).
   A Delta43 between -3.0 and -1.5 is "inconclusive, no scale-up from 100K evidence"; the gate skips there too.
-- Memory gate (J3, J5): skip if peak(J1) x 5 x 1.3 > 0.8 x 30e9 bytes (24e9 bytes, 22.35 GiB). That allows a J1 peak up to 3.44 GiB.
-  - Limit: 16 cores x 1.875e9 = 30e9 bytes (RCCS manual, jsub page; see the v4_submit README).
-  - Fraction 0.8, not 0.5: the DeMol resident path has no loader worker. `FamilyLoaders.train()` returns the device stream when
-    `data.train` has `train_stream` (`src/molgap/family_training_loaders.py`, branch on `hasattr(data.train, "train_stream")`); the `DataLoader` built
-    with one worker is never iterated; the dev set uses `sequential_stream`; calibration (the only other loader) needs `clean_bn`, which these recipes lack.
-    So the job holds one process, and the driver measures that process with `ru_maxrss`. Fork workers would need 0.5. FLAGGED for Opus.
-  - Local measurement (Windows, one process, 0 workers): see "Measured locally". The real 500K peak is far below the x5 x1.3 proxy.
-    At 0.5 the gate would wrongly skip J3 on local numbers: J1 peak 2.25 GiB x 6.5 = 14.6 GiB is above 0.5 x 27.94 = 13.97 GiB, while J3 really peaked at 3.98-4.06 GiB.
-  - J5 carries the memory gate only because J5 has no value without J3 (frozen text: J5 depends on J3).
-- NEW RULE, pending Opus review (planner proposal in the plan, section 4; not in the frozen protocol): J4 runs only if dev MAE(J3) - dev MAE(J5) <= -1.5 meV.
-  Reason: it saves 6.5-9.5 A100 hours when the first 500K seed shows no dev edge over the same-platform control. J4 has no other gate of its own:
-  it needs J3 and J5 COMPLETE, and J3 is gated by J1/J2. J4 has no memory gate (J3 COMPLETE already proves the fit).
-  The frozen 500K rule still reads J3 and J4 together; with J4 skipped, the transfer rule caps at INCONCLUSIVE unless tail J3 <= 104.94 and its bootstrap upper < 0 against all cohort members.
-- A gate that cannot read its input skips (item not COMPLETE, no `selected_eval.json`, no measured peak): no evidence, no expensive run.
-- A skipped item is not final: rerunning the same command re-evaluates its gate. A finished item is never redone.
+- No memory gate (Opus ruling (i), (iii)). Memory is an admission fact, checked once: the real 500K build peaked at 6.4 GiB private commit
+  locally; with about 1 GiB of CUDA library pages that is about 7.4 GiB, under 0.5 x 30e9 bytes (14.0 GiB). The share is 16 cores x 1.875e9
+  (RCCS manual, jsub page). The DeMol resident path holds one process (`FamilyLoaders.train()` returns the device stream when `data.train`
+  has `train_stream`, `src/molgap/family_training_loaders.py`). The build peak equals the whole-run peak, so an OOM would fail J3 in about 5 minutes.
+  J5 (GPT-T) forks one loader worker on Linux: its local 7.0 GiB could reach about 14 GiB in total, still under 30 GB.
+- J4 gate (Opus ruling (ii)): J4 runs only if dev MAE(J3) - dev MAE(J5) <= 0.0 meV. It also needs J3 and J5 COMPLETE; J3 is gated by J1/J2.
+  Limits: it reads dev, not tail; one seed each; J3 and J5 differ in architecture and init. It is a cost rule, not a verdict.
+  The frozen 500K rule reads J3 and J4 together; with J4 skipped, the transfer rule caps at INCONCLUSIVE unless tail J3 <= 104.94 and its
+  bootstrap upper < 0 against all cohort members. A NEGATIVE closure then needs J4 in a separate, separately decided job.
+- A gate that cannot read its input skips (item not COMPLETE, no `selected_eval.json`): no evidence, no expensive run.
+- A finished item is never redone. Gate skips are judged again only inside a resume job, and a resume job exists only after exit 2 (see Stop rules).
 
 ## Stop rules
 
 - Delta43 > -3.0: J3, J5, J4 skip; the job ends after about 3-4 h. Do not fill the slot. Read rule (a) (close the lead above -1.5, inconclusive between).
-- A FAILED item is retried once on rerun (limit 2 attempts), then left. Do not change a recipe to rescue a run. No weight-decay or schedule grids.
-- Exit 2 (paused, time skip, not started): reconcile with the scheduler (`jobinfo -c`), then run the same submit command once. J4 may end `SKIPPED_FOR_TIME`; one more queue wait is accepted.
-- Exit 1: an item failed and nothing can resume. Exit 3: the start-of-job check rejected an input; read `early_exit.json`, fix, and re-review. No blind resubmit.
+- Only driver exit 2 (paused, time skip, not started) can resume: the launcher writes `paused`, and `resume_run` accepts only that
+  (`platforms/ims/v4_submit/launcher.py`, `resume_run` and `run_stage`). Reconcile with `jobinfo -c`, then run the same submit command once.
+  At most 2 resume jobs. Each must pass the maintenance guard; submit the last before 2026-12-06 03:00 JST (first Monday 2026-12-07 09:00
+  minus 1.25 x 24 h). The guard ignores queue wait.
+- Exit 0 (all COMPLETE or gate-skipped) and exit 1 (an item FAILED, nothing resumable) are final for this run id: the launcher writes
+  `complete` or `error` and refuses a resume. A new run id means a new queue wait and fresh J1 and J2 runs.
+- A FAILED item is retried (limit 2 attempts) only inside an exit-2 resume. Do not change a recipe to rescue a run. No weight-decay or schedule grids.
+- If J3 FAILED, J5 still runs (up to its 15,300 s budget, about 4.25 h), J4 is SKIPPED_BY_GATE, and the job exits 1 with nothing to resume.
+  J5 alone still measures the platform shift.
+- Exit 3: the start-of-job check rejected an input; read `early_exit.json`, fix, and re-review. No blind resubmit.
 - A quiet or unknown job is `UNKNOWN`, not failed. Never submit a successor because local status is stale.
 
 ## After retrieval
@@ -84,12 +90,14 @@ See `local_rehearsal_record.json` for each check and `Local checks` below.
 
 - Real 500K compact build (train 500,000 + dev 50,000 rows), `platforms/local/demol_cin_resident_check.py mem --variant new`:
   build 311.8 s single thread; host peak working set 4,064 MiB (process-tree sum equals the single process); peak private commit 6,401 MiB;
-  compact store 882.7 MiB (1,682.8 bytes per molecule); GPU 930.5 MiB resident after model and store, 1,507.3 MiB peak over 50 steps; 0.136 s per step.
+  compact store 882.7 MiB (1,682.8 bytes per molecule); GPU 930.5 MiB resident after model and store, 1,507.3 MiB peak over 50 steps.
   The old linear extrapolation was about 7.3 GB host and about 0.9 GB GPU; the host figure was 1.8 times too high.
-- The 100K run (150K rows) peaked at about 2.0 GiB, so host memory grew by 2.0 times for 3.7 times the rows. The gate proxy (x5 x1.3 = x6.5) is about 3 times too cautious on this evidence.
-  Not measured: the Linux `ru_maxrss` of J1. A false skip happens only if that peak exceeds 3.44 GiB.
-- Rate: 0.136 s per step on the 5060 gives 8.9 h for 234,360 steps. The A100 rate is unmeasured (DeMol is launch-bound, about 6,400 kernels per update).
-  If the A100 is no faster, J3 and J4 each use about 8.9 h and the all-pass case needs about 25 h: J4 pauses or skips for time, and one resume job is needed.
+- The 100K run (150K rows) peaked at about 2.0 GiB, so host memory grew by 2.0 times for 3.7 times the rows. Not measured: Linux `ru_maxrss`.
+- Rate, one set of numbers (Opus ruling, "Step rate"): local 5060 at most 0.099 s per step for DeMol 500K, derived from the J3 one-pass
+  rehearsal (699 s wall - 312 s build, over 3,906 steps, with one dev pass and start-up inside). The rehearsal operator reports about
+  0.087 s per step steady state; the record holds no trace of it. The 0.136 s figure above is a 50-step check with warm-up; 0.141 (plan) is not a steady rate either.
+  The A100 rate is unmeasured: frozen estimate 60-110 ms; DeMol is launch-bound (about 6,400 kernels per update) and may be no faster.
+  So J3 and J4 each need about 4-9 h for 234,360 steps; in the all-pass case J4 likely pauses and one resume job finishes it.
 
 ## Local checks
 
@@ -97,11 +105,12 @@ Real flow on the real spec, all with `--training-workers 0`, one GPU task at a t
 rehearsal helpers (`platforms/ims/family_serial_rehearsal.py`) through `local_rehearsal.py`. Differences from IMS: no `--accelerator A100`, no lustre `--ogb-zip`,
 one-pass copies of the recipes in the chain part, and a hard-linked local mirror of the fixed root (topology shards 0000-0010 extracted from the archive; each file's
 sha256 and size equal the manifest; the 500K manifest was regenerated by the builder's own rules and its sha equals the registry value `6a53bb27`; no dataset was rebuilt).
-Results: `local_rehearsal_record.json`.
+Results: `local_rehearsal_record.json`. The `early` and `launcher` parts were rerun on 2026-11-21 on the amended spec (fresh work dir);
+the chain parts (A-D) ran on the earlier spec (memory gates present, J4 line -1.5, J4 budget 28,800) and were not rerun.
 
 Outcomes (details in the record; every check PASS):
 - Real spec and real 100K/500K mirror data: spec and input checks return no problem with `ogb` blocked.
-- Exit 3 with a named problem and no child, for 13 broken inputs: recipe sha, J2 and J5 init sha, train role identity, final-ema gate item,
+- Exit 3 with a named problem and no child, for 14 broken inputs: recipe sha, J2 and J5 init sha, train role identity, final-ema gate item,
   mixed 100K/500K dev roles, budget above 84,480, driver flag in `extra_args`, gate naming a later item, memory limit 0, 500K manifest missing,
   dev shard 0010 missing, dev shard 0010 wrong size, train shard 0007 wrong size.
 - Chain (one-pass copies, same names, gates and flags as the real spec): kill during J1 then resume from step 128; real dev gate (-3.0) skips J3, J5 and J4;
@@ -116,7 +125,11 @@ Outcomes (details in the record; every check PASS):
 
 - Linux memory peak (`ru_maxrss`), A100 accelerator check, A100 step rates, the real queue, SIGTERM handling (Windows has no SIGTERM; the driver's own wall pause was tested instead).
 - The scheduler's memory enforcement and the H versus PN queue name (README of v4_submit lists both as unverified).
-- Whether jobs 2077090-2077094 are really gone, the live account cap (ruling Q2), credits (ruling Q3), and Cutlass/GRIT state: all need `jobinfo -c` and `showlim -c` at submit time.
-- Ruling Q4 asked for an IMS-measured RAM fact. None exists. The in-job memory gate replaces it; ask Opus to accept that.
-- `platforms/ims/v4_submit/README.md` lines 98-100 still describe the cgroup and MemAvailable probe that the driver no longer uses (the driver takes `--memory-limit-bytes`). The text is stale, the code is right.
-- Maintenance guard: a first-Monday window starts Sunday 09:00 JST; the next Monday is 2026-12-07, so the window opens 2026-12-06 09:00 JST. The guard also needs now + 1.25 x 24 h before that time. Queue wait can still push the run into the window; check the expected start.
+- Submit-day preconditions (Opus ruling, Q2 and Q3): `jobinfo -c` and `showlim -c` under REMOTE_HANDOFF. Q2: this chain counts as one job;
+  non-terminal MolGap chains + 1 <= 4; jobs 2077090-2077094 must be gone (if live or with outputs, stop and reconcile). Q3: remaining minus
+  hard line >= 3 x 24 h x 73.1 points per A100-h (about 5,263 points). Then an Opus review of the final commit.
+- Ruling Q4 asked for an IMS-measured RAM fact that cannot exist (30 GB at 16 cores). Opus amended it on the local 500K measurement; see `opus_ruling_20261121.md`.
+- To do, not on this branch: `platforms/ims/v4_submit/README.md` lines 98-100 (cgroup and MemAvailable probe the driver no longer uses) and
+  121-128 are stale. Fix them on the infra branch.
+- Maintenance guard: refuses a submit at or after Sunday 2026-12-06 09:00 JST, or when now + 1.25 x 24 h reaches Monday 2026-12-07 09:00 JST,
+  so the last submit is before 2026-12-06 03:00 JST. Queue wait can still push the run into the window; check the expected start.

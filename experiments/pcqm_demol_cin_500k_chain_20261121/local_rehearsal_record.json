@@ -2,167 +2,6 @@
  "date": "2026-11-21",
  "results": [
   {
-   "check": "REAL spec + real 100K/500K data: validate_spec and check_inputs return no problem (ogb blocked, PYTHONNOUSERSITE=1, repo checkout as code root)",
-   "passed": true,
-   "spec_problems": "[]",
-   "input_problems": "[]",
-   "stderr": ""
-  },
-  {
-   "check": "budgets: each at most wall - reserve, and the sum too",
-   "passed": true,
-   "budgets": [
-    7200,
-    4140,
-    28800,
-    15300,
-    28800
-   ],
-   "sum": 84240,
-   "limit": 84480
-  },
-  {
-   "check": "exit 3 on broken input: recipe sha differs (J3)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: recipe missing or its sha256 differs from the spec"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: initial state sha differs (J2, s43)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j2-gptt-100k-s43: initial state missing or its sha256 differs from the spec"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: initial state sha differs (J5, s44)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j5-gptt-500k-s44: initial state missing or its sha256 differs from the spec"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: train role identity differs (J3)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: train role identity of the manifest differs from the recipe"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: gate reads a final-ema item (J4 gate on J3)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j4-demol-500k-s43: gate item j3-demol-500k-s42 has selection 'final-ema'; it writes no selected_eval.json"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: gate mixes the 100K and 500K development roles",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j5-gptt-500k-s44: gate.dev_delta items use different development roles; their MAE is not comparable"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: budget above wall - reserve (J3)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: budget_s 84481 exceeds wall_s - reserve_s = 84480; it could never start"
-   ],
-   "child_started": false,
-   "seconds": 0.6
-  },
-  {
-   "check": "exit 3 on broken input: extra_args sets a driver flag (J3 --wall-s)",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: extra_args may not set driver flags ['--wall-s']"
-   ],
-   "child_started": false,
-   "seconds": 0.5
-  },
-  {
-   "check": "exit 3 on broken input: gate names an item listed later",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j1-demol-100k-s43: gate.memory.from must name an item listed before it"
-   ],
-   "child_started": false,
-   "seconds": 0.5
-  },
-  {
-   "check": "exit 3 on broken input: --memory-limit-bytes 0",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "--memory-limit-bytes must be positive"
-   ],
-   "child_started": false,
-   "seconds": 0.5
-  },
-  {
-   "check": "exit 3 on broken input: 500K manifest missing",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: dataset manifest missing or its sha256 differs from the recipe",
-    "j5-gptt-500k-s44: dataset manifest missing or its sha256 differs from the recipe"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: 500K development shard (0010) missing",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: 500K development shard (0010) has the wrong size",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
-   "check": "exit 3 on broken input: 500K train shard (0007) has the wrong size",
-   "passed": true,
-   "exit": 3,
-   "problem": [
-    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0007.pt"
-   ],
-   "child_started": false,
-   "seconds": 2.6
-  },
-  {
    "check": "A: kill mid J1 leaves a parseable summary, J1 RUNNING",
    "passed": true,
    "statuses": {
@@ -295,6 +134,167 @@
    "handles": 1778
   },
   {
+   "check": "REAL spec + real 100K/500K data: validate_spec and check_inputs return no problem (ogb blocked, PYTHONNOUSERSITE=1, repo checkout as code root)",
+   "passed": true,
+   "spec_problems": "[]",
+   "input_problems": "[]",
+   "stderr": ""
+  },
+  {
+   "check": "budgets: each at most wall - reserve, and the sum too",
+   "passed": true,
+   "budgets": [
+    7200,
+    4140,
+    28800,
+    15300,
+    7200
+   ],
+   "sum": 62640,
+   "limit": 84480
+  },
+  {
+   "check": "exit 3 on broken input: recipe sha differs (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: recipe missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: initial state sha differs (J2, s43)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j2-gptt-100k-s43: initial state missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: initial state sha differs (J5, s44)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j5-gptt-500k-s44: initial state missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: train role identity differs (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: train role identity of the manifest differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: gate reads a final-ema item (J4 gate on J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j4-demol-500k-s43: gate item j3-demol-500k-s42 has selection 'final-ema'; it writes no selected_eval.json"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: gate mixes the 100K and 500K development roles",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j5-gptt-500k-s44: gate.dev_delta items use different development roles; their MAE is not comparable"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: budget above wall - reserve (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: budget_s 84481 exceeds wall_s - reserve_s = 84480; it could never start"
+   ],
+   "child_started": false,
+   "seconds": 0.6
+  },
+  {
+   "check": "exit 3 on broken input: extra_args sets a driver flag (J3 --wall-s)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: extra_args may not set driver flags ['--wall-s']"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: gate names an item listed later",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j1-demol-100k-s43: gate.memory.from must name an item listed before it"
+   ],
+   "child_started": false,
+   "seconds": 0.6
+  },
+  {
+   "check": "exit 3 on broken input: --memory-limit-bytes 0",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "--memory-limit-bytes must be positive"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: 500K manifest missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: dataset manifest missing or its sha256 differs from the recipe",
+    "j5-gptt-500k-s44: dataset manifest missing or its sha256 differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: 500K development shard (0010) missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.7
+  },
+  {
+   "check": "exit 3 on broken input: 500K development shard (0010) has the wrong size",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: 500K train shard (0007) has the wrong size",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0007.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
    "check": "REAL run_spec validates; resources ncpus 16 / 1 GPU / 24 h; --cpus equals ncpus; --cpus 8, ncpus 8 with --cpus 16, 25 h walltime, and a typed wall are refused",
    "passed": true,
    "resources": {
@@ -328,7 +328,7 @@
    "jsub": [
     "-N",
     "demol500k-chain",
-    "D:\\molgap-artifacts\\ims_chain_20261121\\rehearsal\\infra\\runs\\demol500k-chain-20261121\\train.pbs"
+    "D:\\molgap-artifacts\\ims_chain_20261121\\recheck_20261121\\infra\\runs\\demol500k-chain-20261121\\train.pbs"
    ]
   }
  ]
