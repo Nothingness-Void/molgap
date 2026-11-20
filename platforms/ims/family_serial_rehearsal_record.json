@@ -1,0 +1,222 @@
+{
+ "date": "2026-11-20",
+ "results": [
+  {
+   "check": "kill mid-run leaves a parseable summary; earlier items done, killed item RUNNING",
+   "passed": true,
+   "statuses": {
+    "accel-fail": "FAILED",
+    "demol-100k": "RUNNING",
+    "demol-500k-gate-skip": "NOT_STARTED",
+    "demol-500k-mem-skip": "NOT_STARTED",
+    "demol-500k-no-input": "NOT_STARTED",
+    "demol-500k-pass": "NOT_STARTED",
+    "demol-500k-time-skip": "NOT_STARTED",
+    "gptt-100k": "COMPLETE"
+   },
+   "bad_summary_reads": 0,
+   "summary_reads": 8599
+  },
+  {
+   "check": "resume: finished item not redone",
+   "passed": true,
+   "gptt_attempts": 1
+  },
+  {
+   "check": "resume: killed item continues from its checkpoint and completes",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ],
+   "status": "COMPLETE"
+  },
+  {
+   "check": "failed item does not block the next item (and is retried on rerun)",
+   "passed": true,
+   "accel_fail_attempts": 2,
+   "reason": "child exit code 1 (rejected by its own start checks)"
+  },
+  {
+   "check": "gate does not skip when the rule passes (delta below the line, memory under budget)",
+   "passed": true,
+   "delta_meV": 145.856,
+   "status": "COMPLETE",
+   "peak_rss_gib": 4.89
+  },
+  {
+   "check": "gate skips: dev MAE delta above the line -> SKIPPED_BY_GATE",
+   "passed": true,
+   "reason": "dev MAE delta demol-100k - gptt-100k = 145.856 meV is above -1000000.0 meV"
+  },
+  {
+   "check": "gate skips: predicted memory above budget -> SKIPPED_FOR_MEMORY",
+   "passed": true,
+   "reason": "predicted peak 31.8 GiB (demol-100k 4.89 GiB x 5 x 1.3) exceeds 1e-09 x 1024.0 GiB (override)"
+  },
+  {
+   "check": "gate fails closed when an input item failed -> SKIPPED_BY_GATE",
+   "passed": true,
+   "reason": "no dev MAE for accel-fail; the gate cannot show the gain"
+  },
+  {
+   "check": "budget longer than wall left -> SKIPPED_FOR_TIME, no child",
+   "passed": true,
+   "reason": "needs about 1000000000s, has 35502s after the 60s reserve"
+  },
+  {
+   "check": "summary writes are atomic (no unparseable read, no temp file left)",
+   "passed": true,
+   "reads": 22655
+  },
+  {
+   "check": "driver exit code 2 when an item could resume (SKIPPED_FOR_TIME)",
+   "passed": true,
+   "exit": 2
+  },
+  {
+   "check": "guard did not trip (handles/working set), DeMol ran with training workers 0",
+   "passed": true,
+   "peak_handles": 1582,
+   "peak_ws_gib": 5.23
+  },
+  {
+   "check": "receipt waiver is written to run_provenance.json",
+   "passed": true,
+   "preflight_receipt": "waived"
+  },
+  {
+   "check": "exit 3 on broken input: recipe sha differs from spec",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "gptt-100k: recipe missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: initial state sha differs",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "gptt-100k: initial state missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 4.7
+  },
+  {
+   "check": "exit 3 on broken input: train role identity differs",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "gptt-100k: train role identity of the manifest differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 3.1
+  },
+  {
+   "check": "exit 3 on broken input: dataset manifest missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "gptt-100k: dataset manifest missing or its sha256 differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 0.6
+  },
+  {
+   "check": "exit 3 on broken input: data shards missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "gptt-100k: data file missing or wrong size: store/topology/train/train_shard_0000.pt"
+   ],
+   "child_started": false,
+   "seconds": 3.1
+  },
+  {
+   "check": "unbroken input is accepted (control, tiny wall gives SKIPPED_FOR_TIME)",
+   "passed": true,
+   "exit": 2,
+   "status": "SKIPPED_FOR_TIME"
+  },
+  {
+   "check": "launcher: chain spec validates; preflight stage / dataset_id / unknown dataset / unknown mode are refused",
+   "passed": true
+  },
+  {
+   "check": "launcher: the single-recipe example spec still validates, stages are preflight + train",
+   "passed": true
+  },
+  {
+   "check": "PBS script for the chain parses (bash -n)",
+   "passed": true,
+   "stderr": ""
+  },
+  {
+   "check": "maintenance guard: Sunday before first Monday is refused by the real guard; chain submit refuses before staging (no run dir, no jsub)",
+   "passed": true,
+   "first_sunday": true
+  },
+  {
+   "check": "chain submit: exactly one jsub, no depend, no preflight job/file/dir; guard saw the train walltime",
+   "passed": true,
+   "jsub": [
+    "jsub",
+    "-q",
+    "H",
+    "-N",
+    "rehearsal-chain",
+    "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-chain-20261120\\train.pbs"
+   ],
+   "status": "submitted"
+  },
+  {
+   "check": "worker -> driver -> child end to end: paused exits 2, stage status paused, item PAUSED",
+   "passed": true,
+   "worker_exit": 2,
+   "stage_status": "paused",
+   "item": "PAUSED"
+  },
+  {
+   "check": "same command after a pause resubmits train.pbs only (one jsub, no depend)",
+   "passed": true,
+   "jsub": [
+    "jsub",
+    "-q",
+    "H",
+    "-N",
+    "rehearsal-chain",
+    "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-chain-20261120\\train.pbs"
+   ]
+  },
+  {
+   "check": "a single-recipe spec reusing a chain run id is refused, not turned into a resume",
+   "passed": true
+  },
+  {
+   "check": "single-recipe mode unchanged: preflight job, then train job with depend=afterok",
+   "passed": true,
+   "jsub": [
+    [
+     "jsub",
+     "-q",
+     "H",
+     "-N",
+     "rehearsal-singl-pre",
+     "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-single-20261120\\preflight.pbs"
+    ],
+    [
+     "jsub",
+     "-q",
+     "H",
+     "-N",
+     "rehearsal-singl",
+     "-W",
+     "depend=afterok:12345.ccfep",
+     "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-single-20261120\\train.pbs"
+    ]
+   ]
+  }
+ ]
+}

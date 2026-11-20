@@ -50,6 +50,9 @@ def main(argv=None) -> int:
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--phase", choices=("preflight", "train"), required=True)
     ap.add_argument("--preflight", type=Path, help="train: the accepted preflight.json")
+    ap.add_argument("--no-preflight-receipt", action="store_true",
+                    help="train: waive the receipt. Only family_serial_run.py sets it; its start-of-job check replaces the recipe binding, "
+                         "and the waiver is recorded in run_provenance.json")
     ap.add_argument("--source-commit", required=True)
     ap.add_argument("--cpus", type=int, required=True)
     ap.add_argument("--accelerator", help="expected device name, for example A100")
@@ -80,7 +83,7 @@ def main(argv=None) -> int:
 
     recipe_sha = sha256(args.recipe)
     record, recipe = read_recipe(args.recipe)
-    if args.phase == "train":
+    if args.phase == "train" and not args.no_preflight_receipt:
         receipt = json.loads(args.preflight.read_text(encoding="utf-8"))
         if receipt.get("status") != "accepted" or receipt.get("recipe_sha256") != recipe_sha:
             raise ValueError("Preflight receipt is missing, rejected or for another recipe")
@@ -120,7 +123,8 @@ def main(argv=None) -> int:
             "manifest_sha256": recipe.dataset.manifest_sha256, "train_rows": rows, "train_row_range": [first, first + rows],
             "tail_holdout_v1_read": False, "official_valid_read": False, "test_read": False,
             "initial_state_sha256": sha256(initial), "gpu": gpu, "torch": torch.__version__,
-            "runtime_fingerprint": runtime["runtime_fingerprint"], "batch_size": recipe.batch_size, "precision": "fp32"})
+            "runtime_fingerprint": runtime["runtime_fingerprint"], "batch_size": recipe.batch_size, "precision": "fp32",
+            "preflight_receipt": "waived" if args.no_preflight_receipt else "accepted"})
 
     def on_selected(progress, weights, state, evaluation):
         name = f"selected_model_ema{weights[4:]}.pt" if weights.startswith("ema-") else "selected_model.pt"  # auxiliary EMA keeps its own file

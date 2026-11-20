@@ -132,12 +132,25 @@ def validate_registries(base: Path) -> tuple[dict, dict]:
     return datasets, runtimes
 
 
+def is_chain(spec: dict) -> bool:
+    """Serial chain: one training job runs several recipes in sequence. No preflight job, no afterok dependency."""
+    return spec.get("mode") == "serial_chain"
+
+
+def stage_names(spec: dict) -> tuple[str, ...]:
+    return ("train",) if is_chain(spec) else ("preflight", "train")
+
+
 def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
     if spec.get("format") != "molgap-ims-v4-run-v1":
         raise RuntimeError("Unsupported run spec")
     if not RUN_ID.fullmatch(str(spec.get("run_id", ""))):
         raise RuntimeError("Unsafe run_id")
-    if spec.get("dataset_id") not in datasets["datasets"]:
+    chain = is_chain(spec)
+    if spec.get("mode") not in (None, "serial_chain"):
+        raise RuntimeError("Unknown run mode")
+    ids = spec.get("dataset_ids") if chain else [spec.get("dataset_id")]
+    if chain == ("dataset_id" in spec) or not isinstance(ids, list) or not ids or any(i not in datasets["datasets"] for i in ids):
         raise RuntimeError("Unknown fixed dataset identity")
     if spec.get("runtime_id") not in runtimes["runtimes"]:
         raise RuntimeError("Unknown runtime identity")
@@ -173,12 +186,14 @@ def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
         raise RuntimeError("Unsupported OMP thread count")
     if resources["ompthreads"] > resources["ncpus"]:
         raise RuntimeError("OMP threads exceed allocated CPUs")
-    if walltime_seconds(resources["preflight_walltime"]) > 3600:
+    if not chain and walltime_seconds(resources["preflight_walltime"]) > 3600:
         raise RuntimeError("Preflight walltime exceeds one hour")
     if walltime_seconds(resources["train_walltime"]) > 24 * 3600:
         raise RuntimeError("Training walltime exceeds 24 hours")
-    for stage_name in ("preflight", "train"):
-        stage = spec.get("stages", {}).get(stage_name, {})
+    if set(spec.get("stages", {})) != set(stage_names(spec)):
+        raise RuntimeError("Run stages do not match the run mode")
+    for stage_name in stage_names(spec):
+        stage = spec["stages"][stage_name]
         entrypoint = Path(stage.get("entrypoint", ""))
         if entrypoint.is_absolute() or ".." in entrypoint.parts:
             raise RuntimeError(f"Unsafe {stage_name} entrypoint")
@@ -269,7 +284,8 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
             if not entrypoint.is_file():
                 raise FileNotFoundError(entrypoint)
         (staging / "logs").mkdir()
-        (staging / "output" / "preflight").mkdir(parents=True)
+        if not is_chain(spec):
+            (staging / "output" / "preflight").mkdir(parents=True)
         (staging / "output" / "training").mkdir(parents=True)
         (staging / "infrastructure").mkdir()
         shutil.copy2(Path(__file__), staging / "infrastructure" / "launcher.py")
@@ -279,7 +295,7 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
         shutil.copy2(inbox / "source_files.json", staging / "source_files.json")
         atomic_json(staging / "run_spec.json", spec)
         runtime = runtimes["runtimes"][spec["runtime_id"]]
-        for stage_name in ("preflight", "train"):
+        for stage_name in stage_names(spec):
             (staging / f"{stage_name}.pbs").write_text(
                 render_pbs(run_root, stage_name, spec, runtime), encoding="utf-8"
             )
@@ -292,8 +308,11 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
                 "source_commit": spec["source"]["commit"],
                 "source_archive_sha256": spec["source"]["archive_sha256"],
                 "contract_sha256": spec["contract"]["sha256"],
-                "dataset_id": spec["dataset_id"],
-                "dataset_manifest_sha256": datasets["datasets"][spec["dataset_id"]]["manifest_sha256"],
+                **({"dataset_ids": spec["dataset_ids"],
+                    "dataset_manifest_sha256s": {i: datasets["datasets"][i]["manifest_sha256"] for i in spec["dataset_ids"]}}
+                   if is_chain(spec) else
+                   {"dataset_id": spec["dataset_id"],
+                    "dataset_manifest_sha256": datasets["datasets"][spec["dataset_id"]]["manifest_sha256"]}),
                 "launcher_sha256": sha256_file(Path(__file__)),
             },
         )
@@ -325,10 +344,13 @@ def parse_job_id(output: str) -> str:
 def resume_run(inbox: Path, run_root: Path) -> dict:
     """Resubmit train.pbs of a run whose training paused. Same source only; no preflight dependency."""
     spec, submission = load_json(run_root / "run_spec.json"), load_json(run_root / "submission.json")
-    status = {stage: load_json(run_root / "output" / stage / "stage_status.json").get("status") for stage in ("preflight", "train")}
-    if (load_json(inbox / "run_spec.json")["source"] != spec["source"] or submission.get("status") != "submitted"
-            or status != {"preflight": "complete", "train": "paused"}):
-        raise RuntimeError("Run is not a paused run of this exact source")
+    status = {stage: load_json(run_root / "output" / stage / "stage_status.json").get("status") for stage in stage_names(spec)}
+    new = load_json(inbox / "run_spec.json")
+    expected = {"train": "paused"} if is_chain(spec) else {"preflight": "complete", "train": "paused"}
+    # The mode must match: a chain spec reusing a single-recipe run id must never resume that run (and the reverse).
+    if (new["source"] != spec["source"] or new.get("mode") != spec.get("mode") or submission.get("status") != "submitted"
+            or status != expected):
+        raise RuntimeError("Run is not a paused run of this exact source and mode")
     maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
     submission.update(status="resume_submitting")
     atomic_json(run_root / "submission.json", submission)
@@ -349,6 +371,28 @@ def resume_run(inbox: Path, run_root: Path) -> dict:
     return submission
 
 
+def submit_chain(inbox: Path, infrastructure: Path) -> dict:
+    """One training job, no preflight job and no afterok. The guard runs before staging so a refusal leaves no run behind."""
+    maintenance_guard(walltime_seconds(load_json(inbox / "run_spec.json")["resources"]["train_walltime"]))
+    run_root = stage_run(inbox, infrastructure)
+    spec = load_json(run_root / "run_spec.json")
+    submission = {"format": "molgap-ims-v4-submission-v1", "mode": "serial_chain", "status": "training_submitting", "run_id": spec["run_id"]}
+    atomic_json(run_root / "submission.json", submission)  # intent first, as for a single recipe
+    try:
+        training = subprocess.run(
+            ["jsub", "-q", spec["resources"]["queue"], "-N", spec["run_id"][:15], str(run_root / "train.pbs")],
+            check=True, capture_output=True, text=True,
+        )
+        job = parse_job_id(training.stdout + training.stderr)
+    except BaseException as error:
+        submission.update(status="training_unknown", error_type=type(error).__name__)
+        atomic_json(run_root / "submission.json", submission)
+        raise
+    submission.update(status="submitted", training_job=job)
+    atomic_json(run_root / "submission.json", submission)
+    return submission
+
+
 def submit_run(inbox: Path, infrastructure: Path) -> dict:
     infrastructure = require_below(infrastructure, BOUNDARY)
     inbox = require_below(inbox, infrastructure)
@@ -356,6 +400,8 @@ def submit_run(inbox: Path, infrastructure: Path) -> dict:
     existing = infrastructure / "runs" / run_id
     if RUN_ID.fullmatch(run_id) and existing.exists():
         return resume_run(inbox, existing)
+    if is_chain(load_json(inbox / "run_spec.json")):
+        return submit_chain(inbox, infrastructure)
     run_root = stage_run(inbox, infrastructure)
     spec = load_json(run_root / "run_spec.json")
     maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
@@ -418,7 +464,8 @@ def worker(run_root: Path, stage_name: str) -> None:
     datasets, runtimes = validate_registries(run_root / "infrastructure")
     validate_spec(spec, datasets, runtimes)
     dataset_root = Path(datasets["fixed_root"])
-    dataset_manifest = dataset_root / datasets["datasets"][spec["dataset_id"]]["manifest"]
+    first_id = spec["dataset_ids"][0] if is_chain(spec) else spec["dataset_id"]  # a chain's recipes name their own manifests
+    dataset_manifest = dataset_root / datasets["datasets"][first_id]["manifest"]
     context = {
         "code_root": str(run_root / "code"),
         "dataset_root": str(dataset_root),
@@ -440,6 +487,8 @@ def worker(run_root: Path, stage_name: str) -> None:
         MKL_NUM_THREADS=str(spec["resources"]["ompthreads"]),
         OPENBLAS_NUM_THREADS="1",
     )
+    if stage_name not in spec["stages"]:
+        raise RuntimeError(f"Run has no {stage_name} stage")
     stage = spec["stages"][stage_name]
     entrypoint = require_below(run_root / "code" / stage["entrypoint"], run_root / "code")
     command = [runtime["python"], "-u", str(entrypoint)] + expand_args(stage["args"], context)
