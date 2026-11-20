@@ -1,5 +1,7 @@
 # Status
 
+Update 2026-11-20 (record audit): The B512 fallback named at the end of this file was not run (no B512 run exists in runs, retrieved or Drive). B1024 was rejected; the later full-scale lever study (B256/B512 questions at full scale) is recorded in `gptrans-full-levers-20261115`. Disposition: not run, superseded.
+
 2026-11-12: protocol frozen before any scoring. Training on Colab L4 started by the user
 (seed 42 run runs/gptrans-b1024-500k-s42-20261112 at least at pass 10 when the rule was written;
 seed 43 run runs/gptrans-b1024-500k-s43-20261112). Nothing scored, no B1024 result seen.
