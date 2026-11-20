@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 146,
-  "event_count": 469,
+  "estimated_event_count": 148,
+  "event_count": 471,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 429,
+  "measurement_missing_event_count": 431,
   "not_applicable_event_count": 103,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -2968,12 +2968,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "NVIDIA A100 FP32:device_hours": {
         "estimated": {
-          "known_records": 5,
-          "known_total": 25.55
+          "known_records": 7,
+          "known_total": 28.7
         },
         "measured": {
           "known_records": 0,
@@ -2992,12 +2992,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "NVIDIA A100 FP32:wall_hours": {
         "estimated": {
-          "known_records": 5,
-          "known_total": 25.55
+          "known_records": 7,
+          "known_total": 28.7
         },
         "measured": {
           "known_records": 0,
@@ -5654,12 +5654,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "device_hours": {
         "estimated": {
-          "known_records": 5,
-          "known_total": 25.55
+          "known_records": 7,
+          "known_total": 28.7
         },
         "measured": {
           "known_records": 0,
@@ -5678,12 +5678,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 5,
-          "known_total": 25.55
+          "known_records": 7,
+          "known_total": 28.7
         },
         "measured": {
           "known_records": 0,
@@ -8293,6 +8293,56 @@
         "unknown_records": 0
       }
     },
+    "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121": {
+      "NVIDIA A100 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm": {
       "NVIDIA A100 FP32:cpu_hours": {
         "estimated": {
@@ -8334,6 +8384,56 @@
         "estimated": {
           "known_records": 1,
           "known_total": 1.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121": {
+      "NVIDIA A100 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.15
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.15
         },
         "measured": {
           "known_records": 0,

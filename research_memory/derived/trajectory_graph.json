@@ -16,8 +16,18 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121:A001",
+      "target": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin:A001",
       "target": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121:A001",
+      "target": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
       "type": "action_produced_evidence"
     },
     {
@@ -1051,6 +1061,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin",
+      "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm",
+      "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "target": "TB-k1-brn-clean-bn-100k-20261024",
       "type": "parent_trajectory"
@@ -1797,7 +1817,17 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121",
       "type": "prior_evidence"
     },
     {
@@ -4710,7 +4740,15 @@
       "type": "trajectory"
     },
     {
+      "id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121",
+      "type": "trajectory"
+    },
+    {
       "id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121",
       "type": "trajectory"
     },
     {
