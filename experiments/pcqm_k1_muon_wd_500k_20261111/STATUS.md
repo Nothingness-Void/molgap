@@ -1,5 +1,7 @@
 # Status
 
+Update 2026-11-20 (record audit): Submitted, continued to pass 60 (version 2), retrieved and closed in `closure_v2/`: `muon_wd5e2`/`muon_wd1e5` candidate POSITIVE_BELOW_GATE, reference CLOSED (s42 delta -1.39 meV, below the -3 meV gate). The lines below are the historical log.
+
 Prepared 2026-11-11 JST; not yet submitted. Run `pcqm-k1-muon-wd-500k-20261111-s42`, account `kaseichou`, kernel `kaseichou/molgap-k1-muon-wd-500k-20261111-s42`.
 
 Planned: segment 1 pauses at step 187488 (pass 48). Segment 2 (pass 48 to 60, step 234360) is submitted by the desktop owner.
