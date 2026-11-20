@@ -59,8 +59,11 @@ def main(argv=None) -> int:
     ap.add_argument("--wall-s", type=float, default=0.0, help="pause after this many seconds from process start (0 = no limit)")
     ap.add_argument("--max-steps", type=int, default=0, help="pause at this absolute optimizer step (local dry runs)")
     ap.add_argument("--training-workers", type=int, default=1, help="loader worker processes; 0 on Windows dry runs")
+    ap.add_argument("--gpu-resident-cells", action="store_true", help="DeMol-CIN only: compact GPU-resident inputs, no host CellData list (default off)")
     ap.add_argument("--ogb-zip", type=Path, help="pure-python ogb archive, used only when ogb is not importable")
     args = ap.parse_args(argv)
+    if args.gpu_resident_cells:
+        os.environ["MOLGAP_DEMOL_GPU_RESIDENT"] = "1"
     out = args.output.absolute()
     out.mkdir(parents=True, exist_ok=True)
     if args.phase == "train" and (out / "completion_manifest.json").is_file():
