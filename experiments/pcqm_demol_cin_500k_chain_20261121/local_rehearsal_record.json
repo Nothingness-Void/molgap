@@ -1,0 +1,335 @@
+{
+ "date": "2026-11-21",
+ "results": [
+  {
+   "check": "REAL spec + real 100K/500K data: validate_spec and check_inputs return no problem (ogb blocked, PYTHONNOUSERSITE=1, repo checkout as code root)",
+   "passed": true,
+   "spec_problems": "[]",
+   "input_problems": "[]",
+   "stderr": ""
+  },
+  {
+   "check": "budgets: each at most wall - reserve, and the sum too",
+   "passed": true,
+   "budgets": [
+    7200,
+    4140,
+    28800,
+    15300,
+    28800
+   ],
+   "sum": 84240,
+   "limit": 84480
+  },
+  {
+   "check": "exit 3 on broken input: recipe sha differs (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: recipe missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: initial state sha differs (J2, s43)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j2-gptt-100k-s43: initial state missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: initial state sha differs (J5, s44)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j5-gptt-500k-s44: initial state missing or its sha256 differs from the spec"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: train role identity differs (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: train role identity of the manifest differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: gate reads a final-ema item (J4 gate on J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j4-demol-500k-s43: gate item j3-demol-500k-s42 has selection 'final-ema'; it writes no selected_eval.json"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: gate mixes the 100K and 500K development roles",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j5-gptt-500k-s44: gate.dev_delta items use different development roles; their MAE is not comparable"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: budget above wall - reserve (J3)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: budget_s 84481 exceeds wall_s - reserve_s = 84480; it could never start"
+   ],
+   "child_started": false,
+   "seconds": 0.6
+  },
+  {
+   "check": "exit 3 on broken input: extra_args sets a driver flag (J3 --wall-s)",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: extra_args may not set driver flags ['--wall-s']"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: gate names an item listed later",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j1-demol-100k-s43: gate.memory.from must name an item listed before it"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: --memory-limit-bytes 0",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "--memory-limit-bytes must be positive"
+   ],
+   "child_started": false,
+   "seconds": 0.5
+  },
+  {
+   "check": "exit 3 on broken input: 500K manifest missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: dataset manifest missing or its sha256 differs from the recipe",
+    "j5-gptt-500k-s44: dataset manifest missing or its sha256 differs from the recipe"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: 500K development shard (0010) missing",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: 500K development shard (0010) has the wrong size",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0010.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "exit 3 on broken input: 500K train shard (0007) has the wrong size",
+   "passed": true,
+   "exit": 3,
+   "problem": [
+    "j3-demol-500k-s42: data file missing or wrong size: store/topology/train/train_shard_0007.pt"
+   ],
+   "child_started": false,
+   "seconds": 2.6
+  },
+  {
+   "check": "A: kill mid J1 leaves a parseable summary, J1 RUNNING",
+   "passed": true,
+   "statuses": {
+    "j1-demol-100k-s43": "RUNNING",
+    "j2-gptt-100k-s43": "NOT_STARTED",
+    "j3-demol-500k-s42": "NOT_STARTED",
+    "j5-gptt-500k-s44": "NOT_STARTED",
+    "j4-demol-500k-s43": "NOT_STARTED",
+    "probe-fail": "NOT_STARTED",
+    "probe-time": "NOT_STARTED"
+   },
+   "bad_reads": 0,
+   "handles": 1785,
+   "ws_gib": 2.42
+  },
+  {
+   "check": "A: resume continues J1 from its checkpoint; J1 and J2 complete (1 pass)",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ],
+   "statuses": {
+    "j1-demol-100k-s43": "COMPLETE",
+    "j2-gptt-100k-s43": "COMPLETE",
+    "j3-demol-500k-s42": "SKIPPED_BY_GATE",
+    "j5-gptt-500k-s44": "SKIPPED_BY_GATE",
+    "j4-demol-500k-s43": "SKIPPED_BY_GATE",
+    "probe-fail": "FAILED",
+    "probe-time": "SKIPPED_FOR_TIME"
+   },
+   "dev_delta_meV": 145.8560824394226,
+   "j1_peak_rss_gib": 2.25
+  },
+  {
+   "check": "A: REAL dev gate (-3.0) after one pass: J3 and J5 skipped when delta is above the line, J4 skipped with them (no dev input); otherwise they ran",
+   "passed": true,
+   "delta_meV": 145.8560824394226,
+   "statuses": {
+    "j1-demol-100k-s43": "COMPLETE",
+    "j2-gptt-100k-s43": "COMPLETE",
+    "j3-demol-500k-s42": "SKIPPED_BY_GATE",
+    "j5-gptt-500k-s44": "SKIPPED_BY_GATE",
+    "j4-demol-500k-s43": "SKIPPED_BY_GATE",
+    "probe-fail": "FAILED",
+    "probe-time": "SKIPPED_FOR_TIME"
+   },
+   "j3": "dev MAE delta j1-demol-100k-s43 - j2-gptt-100k-s43 = 145.856 meV is above -3.0 meV",
+   "j4": "no dev MAE for j3-demol-500k-s42; the gate cannot show the gain"
+  },
+  {
+   "check": "A: failed probe retried up to the limit; time probe skipped for time; exit code 2 (resumable)",
+   "passed": true,
+   "probe_fail": "FAILED",
+   "attempts": 1,
+   "probe_time": "needs about 35940s, has 35629s after the 60s reserve",
+   "exit": 2
+  },
+  {
+   "check": "B: rerun retries the FAILED probe once (attempt 2) and starts no finished item",
+   "passed": true,
+   "attempts": 2,
+   "exit": 2
+  },
+  {
+   "check": "B: a FAILED item stops at the attempt limit (2) and is not started again",
+   "passed": true,
+   "attempts": 2,
+   "reason": "failed 2 times; attempt limit 2 reached, not retried"
+  },
+  {
+   "check": "B: dev gate open, memory gate shut: J3 SKIPPED_FOR_MEMORY with the predicted GiB; J5 (same dev gate, real memory gate) runs and completes; J4 SKIPPED_BY_GATE because J3 is not COMPLETE (no dev input)",
+   "passed": true,
+   "statuses": {
+    "j1-demol-100k-s43": "COMPLETE",
+    "j2-gptt-100k-s43": "COMPLETE",
+    "j3-demol-500k-s42": "SKIPPED_FOR_MEMORY",
+    "j5-gptt-500k-s44": "COMPLETE",
+    "j4-demol-500k-s43": "SKIPPED_BY_GATE",
+    "probe-fail": "FAILED",
+    "probe-time": "SKIPPED_FOR_TIME"
+   },
+   "j3": "predicted peak 14.6 GiB (j1-demol-100k-s43 2.25 GiB x 5 x 1.3) exceeds 1e-09 x 27.9 GiB (memory share of the job)",
+   "j4": "no dev MAE for j3-demol-500k-s42; the gate cannot show the gain",
+   "handles": 1789,
+   "ws_gib": 7.35
+  },
+  {
+   "check": "C: all gates open, J3 (DeMol 500K, GPU-resident, 1 pass) completes; J4 gate (J3 - J5, forced line) skips J4 with the measured delta in the reason",
+   "passed": true,
+   "statuses": {
+    "j1-demol-100k-s43": "COMPLETE",
+    "j2-gptt-100k-s43": "COMPLETE",
+    "j3-demol-500k-s42": "COMPLETE",
+    "j5-gptt-500k-s44": "COMPLETE",
+    "j4-demol-500k-s43": "SKIPPED_BY_GATE",
+    "probe-fail": "FAILED",
+    "probe-time": "SKIPPED_FOR_TIME"
+   },
+   "j3_vs_j5_delta_meV": -37.44111955165863,
+   "j4": "dev MAE delta j3-demol-500k-s42 - j5-gptt-500k-s44 = -37.441 meV is above -1000000.0 meV",
+   "j3_peak_rss_gib": 3.98,
+   "handles": 1778,
+   "ws_gib": 4.4
+  },
+  {
+   "check": "D: J4 gate open: J4 (DeMol 500K s43, 1 pass) completes after J3 and J5; a rerun redoes nothing",
+   "passed": true,
+   "statuses": {
+    "j1-demol-100k-s43": "COMPLETE",
+    "j2-gptt-100k-s43": "COMPLETE",
+    "j3-demol-500k-s42": "COMPLETE",
+    "j5-gptt-500k-s44": "COMPLETE",
+    "j4-demol-500k-s43": "COMPLETE",
+    "probe-fail": "FAILED",
+    "probe-time": "SKIPPED_FOR_TIME"
+   },
+   "handles": 435,
+   "ws_gib": 0.42,
+   "exit": 2
+  },
+  {
+   "check": "D: 500K DeMol item paused by its own wall clock (exit 2, PAUSED, checkpoint written), then resumed by the same command and completed",
+   "passed": true,
+   "first_exit": 2,
+   "first_status": "PAUSED",
+   "resumed": [
+    "resumed at step 1"
+   ],
+   "final": "COMPLETE",
+   "handles": 1778
+  },
+  {
+   "check": "REAL run_spec validates; resources ncpus 16 / 1 GPU / 24 h; --cpus equals ncpus; --cpus 8, ncpus 8 with --cpus 16, 25 h walltime, and a typed wall are refused",
+   "passed": true,
+   "resources": {
+    "queue": "H",
+    "ncpus": 16,
+    "ompthreads": 4,
+    "ngpus": 1,
+    "train_walltime": "24:00:00"
+   }
+  },
+  {
+   "check": "train.pbs of the real spec: bash -n passes, select ncpus=16 ngpus=1, walltime 24:00:00, no mem=",
+   "passed": true,
+   "lines": [
+    "#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=4:ngpus=1",
+    "#PBS -l walltime=24:00:00"
+   ],
+   "stderr": ""
+  },
+  {
+   "check": "launcher expands the real train args: --wall-s 86280, --memory-limit-bytes 30000000000, --cpus 16, accelerator A100",
+   "passed": true,
+   "args": "put-root /out --source-commit cccccccccccccccccccccccccccccccccccccccc --cpus 16 --accelerator A100 --ogb-zip /lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip --wall-s 86280 --memory-limit-bytes 30000000000"
+  },
+  {
+   "check": "worker -> driver -> child with the real resources: injected wall_s 86280 and memory_limit_bytes 30000000000; item paused (exit 2)",
+   "passed": true,
+   "worker_exit": 2,
+   "wall_s": 86280.0,
+   "memory_limit_bytes": 30000000000,
+   "jsub": [
+    "-N",
+    "demol500k-chain",
+    "D:\\molgap-artifacts\\ims_chain_20261121\\rehearsal\\infra\\runs\\demol500k-chain-20261121\\train.pbs"
+   ]
+  }
+ ]
+}
