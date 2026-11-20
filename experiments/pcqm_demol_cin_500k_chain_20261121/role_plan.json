@@ -1,0 +1,17 @@
+{
+  "development": "rows 500000..549999 of the IMS 500K view ogb-train-500k-scnet-v1, used for selection (primary EMA dev MAE)",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "held_out": "tail_holdout_v1 untouched by training; scored offline only, once per selected checkpoint, after retrieval",
+  "roles": [
+    {
+      "role": "train",
+      "rows": "0..499999"
+    },
+    {
+      "role": "development",
+      "rows": "500000..549999"
+    }
+  ]
+}
