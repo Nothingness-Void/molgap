@@ -125,7 +125,7 @@ def write_spec(path: Path, items: list[dict]) -> Path:
 def driver_args(spec: Path, files: dict, root: Path, fixed: Path, **over) -> list[str]:
     args = ["--spec", str(spec), "--code-root", str(files["code"]), "--input-root", str(fixed), "--output-root", str(root),
             "--source-commit", "0" * 40, "--cpus", "4", "--training-workers", "0", "--wall-s", str(over.pop("wall_s", 36000)),
-            "--reserve-s", str(over.pop("reserve_s", 60))]
+            "--reserve-s", str(over.pop("reserve_s", 60)), "--memory-limit-bytes", str(over.pop("memory_limit_bytes", 2**40))]
     for key, value in over.items():
         args += [f"--{key.replace('_', '-')}"] + ([] if value is True else [str(value)])
     return args
@@ -161,7 +161,8 @@ def rehearse_early_exit(work, files, fixed, env) -> None:
                exit=res["exit"], problem=problems[:1], child_started=not no_child, seconds=round(time.monotonic() - started, 1))
     out = work / "early" / "unbroken_check_only"
     # control: the same unbroken spec passes the check (it would start a child, so stop it after the check by a tiny wall)
-    res = run_driver(driver_args(good_spec, files, out, fixed, wall_s=10, reserve_s=0), work / "early_control.log", env)
+    small = write_spec(work / "s_small_budget.json", [{**base[0], "budget_s": 9}])  # budget must fit wall - reserve, so a tiny wall needs tiny budgets
+    res = run_driver(driver_args(small, files, out, fixed, wall_s=10, reserve_s=0), work / "early_control.log", env)
     summary = summary_of(out)["items"]["gptt-100k"]["status"] if (out / "serial_summary.json").is_file() else None
     record("unbroken input is accepted (control, tiny wall gives SKIPPED_FOR_TIME)", res["exit"] == 2 and summary == "SKIPPED_FOR_TIME", exit=res["exit"], status=summary)
 
@@ -170,18 +171,19 @@ def rehearse_chain(work, files, fixed, env) -> Path:
     """gptt fail-first chain with kill, resume, gates, time skip. Returns the output root."""
     root = work / "chain"
     items = [
-        item("accel-fail", "demol", files, extra_args=["--accelerator", "A100"]),  # this PC is not an A100: fails after loading data
+        # DeMol is standalone and its recipe binds another frozen state: the kernel rejects the GPT-T state after loading data
+        item("init-fail", "demol", files, initial_state="init/s43.pt", initial_state_sha256=sha(files["init"])),
         item("gptt-100k", "gptt", files),
         item("demol-100k", "demol", files),
         item("demol-500k-pass", "demol", files, gate={"dev_delta": {"a": "demol-100k", "b": "gptt-100k", "max_delta_meV": 1e6},
                                                       "memory": {"from": "demol-100k", "max_fraction": 0.5}}),
         item("demol-500k-gate-skip", "demol", files, gate={"dev_delta": {"a": "demol-100k", "b": "gptt-100k", "max_delta_meV": -1e6}}),
         item("demol-500k-mem-skip", "demol", files, gate={"memory": {"from": "demol-100k", "max_fraction": 1e-9}}),
-        item("demol-500k-time-skip", "demol", files, budget_s=10**9),
-        item("demol-500k-no-input", "demol", files, gate={"dev_delta": {"a": "accel-fail", "b": "gptt-100k"}}),
+        item("demol-500k-time-skip", "demol", files, budget_s=35940),  # the largest budget the spec check allows (wall 36000 - reserve 60); any elapsed time makes it skip
+        item("demol-500k-no-input", "demol", files, gate={"dev_delta": {"a": "init-fail", "b": "gptt-100k"}}),
     ]
     spec = write_spec(work / "chain_spec.json", items)
-    args = driver_args(spec, files, root, fixed, memory_limit_bytes=2**40)
+    args = driver_args(spec, files, root, fixed)
     summary_path = root / "serial_summary.json"
     ckpt = root / "demol-100k/last_checkpoint.pt"
     # Run A: kill the whole tree once demol-100k has written a checkpoint (after step 128, before it can finish).
@@ -190,7 +192,7 @@ def rehearse_chain(work, files, fixed, env) -> Path:
     gptt_done = (root / "gptt-100k/completion_manifest.json")
     stamp = gptt_done.stat().st_mtime_ns if gptt_done.is_file() else None
     record("kill mid-run leaves a parseable summary; earlier items done, killed item RUNNING",
-           res_a["killed"] and a["accel-fail"]["status"] == "FAILED" and a["gptt-100k"]["status"] == "COMPLETE" and a["demol-100k"]["status"] == "RUNNING",
+           res_a["killed"] and a["init-fail"]["status"] == "FAILED" and a["gptt-100k"]["status"] == "COMPLETE" and a["demol-100k"]["status"] == "RUNNING",
            statuses={k: v["status"] for k, v in a.items()}, bad_summary_reads=res_a["bad_summary_reads"], summary_reads=res_a["summary_reads"])
     # Run B: the same command resumes.
     res_b = run_driver(args, work / "chain_b.log", env, watch_summary=summary_path)
@@ -201,8 +203,8 @@ def rehearse_chain(work, files, fixed, env) -> Path:
            gptt_attempts=len(b["gptt-100k"]["attempts"]))
     record("resume: killed item continues from its checkpoint and completes", bool(resumed) and int(resumed[0].split()[-1]) > 0 and b["demol-100k"]["status"] == "COMPLETE",
            resumed=resumed[:1], status=b["demol-100k"]["status"])
-    record("failed item does not block the next item (and is retried on rerun)", b["accel-fail"]["status"] == "FAILED" and len(b["accel-fail"]["attempts"]) == 2 and b["gptt-100k"]["status"] == "COMPLETE",
-           accel_fail_attempts=len(b["accel-fail"]["attempts"]), reason=b["accel-fail"]["reason"])
+    record("failed item does not block the next item (and is retried on rerun)", b["init-fail"]["status"] == "FAILED" and len(b["init-fail"]["attempts"]) == 2 and b["gptt-100k"]["status"] == "COMPLETE",
+           accel_fail_attempts=len(b["init-fail"]["attempts"]), reason=b["init-fail"]["reason"])
     delta = (b["demol-100k"]["dev_mae_eV"] - b["gptt-100k"]["dev_mae_eV"]) * 1000
     record("gate does not skip when the rule passes (delta below the line, memory under budget)", b["demol-500k-pass"]["status"] == "COMPLETE",
            delta_meV=round(delta, 3), status=b["demol-500k-pass"]["status"], peak_rss_gib=round((b["demol-100k"].get("peak_rss_bytes") or 0) / 2**30, 2))
@@ -218,6 +220,13 @@ def rehearse_chain(work, files, fixed, env) -> Path:
     record("driver exit code 2 when an item could resume (SKIPPED_FOR_TIME)", res_b["exit"] == 2, exit=res_b["exit"])
     record("guard did not trip (handles/working set), DeMol ran with training workers 0", not (res_a["guard_tripped"] or res_b["guard_tripped"]),
            peak_handles=max(res_a["peak_handles"], res_b["peak_handles"]), peak_ws_gib=max(res_a["peak_ws_gib"], res_b["peak_ws_gib"]))
+    res_c = run_driver(args, work / "chain_c.log", env)
+    c = summary_of(root)["items"]
+    log_c = (work / "chain_c.log").read_text(encoding="utf-8", errors="replace")
+    record("failed item stops being retried at the attempt limit (default 2); finished items and gates unchanged on a third run",
+           len(c["init-fail"]["attempts"]) == 2 and "attempt limit" in c["init-fail"]["reason"] and "[driver] init-fail start" not in log_c
+           and "start" not in "".join(ln for ln in log_c.splitlines() if ln.startswith("[driver]") and "start," in ln),
+           exit=res_c["exit"], reason=c["init-fail"]["reason"])
     prov = json.loads((root / "demol-100k/run_provenance.json").read_text(encoding="utf-8"))
     record("receipt waiver is written to run_provenance.json", prov.get("preflight_receipt") == "waived", preflight_receipt=prov.get("preflight_receipt"))
     return root
@@ -253,7 +262,7 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     (inbox / "source_files.json").write_text(json.dumps({"format": "molgap-source-files-v1",
         "files": [{"path": rel, "sha256": sha(src)} for rel, src in code_files.items()]}), encoding="utf-8")
     train_args = ["--spec", "{code_root}/contract/serial_spec.json", "--code-root", "{code_root}", "--input-root", "{dataset_root}", "--output-root", "{training_output}",
-                  "--source-commit", "{source_commit}", "--cpus", "8", "--training-workers", "0", "--wall-s", "3000", "--reserve-s", "60"]
+                  "--source-commit", "{source_commit}", "--cpus", "8", "--training-workers", "0", "--wall-s", "{train_wall_s}", "--memory-limit-bytes", "{mem_bytes}", "--reserve-s", "60"]
     spec = {"format": "molgap-ims-v4-run-v1", "mode": "serial_chain", "run_id": "rehearsal-chain-20261120", "model_id": "serial-chain",
             "dataset_ids": ["ogb-train-100k", "ogb-train-500k-scnet-v1"], "runtime_id": "ims-a100-torch271-v1",
             "source": {"commit": "0" * 40, "archive_sha256": sha(inbox / "source.tar.gz")},
@@ -274,7 +283,11 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     launcher.validate_spec(spec, datasets, runtimes)
     record("launcher: chain spec validates; preflight stage / dataset_id / unknown dataset / unknown mode are refused",
            refused(lambda s: s["stages"].update(preflight=s["stages"]["train"])) and refused(lambda s: s.update(dataset_id="ogb-train-100k"))
-           and refused(lambda s: s.update(dataset_ids=["nope"])) and refused(lambda s: s.update(mode="other")))
+           and refused(lambda s: s.update(dataset_ids=["nope"])) and refused(lambda s: s.update(mode="other"))
+           and refused(lambda s: s["resources"].update(ncpus=32)) and refused(lambda s: s["resources"].update(ngpus=4, ncpus=48))
+           and refused(lambda s: s["stages"]["train"]["args"].__setitem__(s["stages"]["train"]["args"].index("--cpus") + 1, "16"))
+           and refused(lambda s: s.update(run_id="1chain-bad-name")) and refused(lambda s: s["stages"]["train"]["args"].__setitem__(s["stages"]["train"]["args"].index("--wall-s") + 1, "86000"))
+           and refused(lambda s: s["stages"]["train"]["args"].__setitem__(s["stages"]["train"]["args"].index("--memory-limit-bytes") + 1, "1")))
     single = json.loads((HERE / "v4_submit/run_spec.example.json").read_text(encoding="utf-8"))
     single.update(run_id="single-recipe-example")
     single["source"] = {"commit": "0" * 40, "archive_sha256": "0" * 64}
@@ -286,7 +299,7 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     (work / "train.pbs").write_text(pbs, encoding="utf-8", newline="\n")
     bash_exe = shutil.which("bash") or "C:/Program Files/Git/bin/bash.exe"
     bash = subprocess.run([bash_exe, "-n", str(work / "train.pbs").replace("\\", "/")], capture_output=True, text=True)
-    record("PBS script for the chain parses (bash -n)", bash.returncode == 0 and "walltime=08:00:00" in pbs, stderr=bash.stderr[:200])
+    record("PBS script for the chain parses (bash -n)", bash.returncode == 0 and "walltime=08:00:00" in pbs and "mem=" not in pbs and "ncpus=8:" in pbs, select_line=[ln for ln in pbs.splitlines() if "select" in ln], stderr=bash.stderr[:200])
     # 3. maintenance guard: a refusal happens before staging and leaves no run directory and no jsub.
     calls: list[list[str]] = []
     real_run, real_guard = subprocess.run, launcher.maintenance_guard
@@ -329,7 +342,10 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     except SystemExit as stop:
         worker_exit = stop.code
     status = json.loads((run_root / "output/train/stage_status.json").read_text(encoding="utf-8"))["status"]
-    summary = json.loads((run_root / "output/training/serial_summary.json").read_text(encoding="utf-8"))["items"]["gptt-20-steps"]["status"]
+    full = json.loads((run_root / "output/training/serial_summary.json").read_text(encoding="utf-8"))
+    summary = full["items"]["gptt-20-steps"]["status"]
+    record("launcher injects the wall and memory numbers (wall = walltime - 120 s, memory = ncpus x 1.875e9 bytes; both as the driver saw them)",
+           full["wall_s"] == 8 * 3600 - 120 and full["memory_limit_bytes"] == 8 * 1_875_000_000, wall_s=full["wall_s"], memory_limit_bytes=full["memory_limit_bytes"])
     record("worker -> driver -> child end to end: paused exits 2, stage status paused, item PAUSED", worker_exit == 2 and status == "paused" and summary == "PAUSED",
            worker_exit=worker_exit, stage_status=status, item=summary)
     calls.clear()
@@ -368,20 +384,77 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     launcher.subprocess.run, launcher.maintenance_guard = real_run, real_guard
 
 
+def rehearse_hardening(work, files, fixed, repl, env) -> None:
+    """Spec validation, tiny wall, no-ogb environment and the maintenance guard on fixed dates."""
+    items = [item("gptt-100k", "gptt", files), item("demol-100k", "demol", files)]
+    # (a) PYTHONNOUSERSITE=1 and ogb blocked: the start-of-job check must not need ogb.
+    spec = write_spec(work / "h_spec.json", items)
+    code = ("import sys, json; sys.modules['ogb'] = None; sys.path.insert(0, sys.argv[1]); import family_serial_run as m; from pathlib import Path\n"
+            "spec = json.load(open(sys.argv[2])); print('PROBLEMS', json.dumps(m.check_inputs(spec, Path(sys.argv[3]), Path(sys.argv[4]), None, None)))")
+    res = subprocess.run([sys.executable, "-c", code, str(HERE), str(spec), str(files["code"]), str(fixed)], env={**env, "PYTHONNOUSERSITE": "1"}, capture_output=True, text=True)
+    line = next((ln for ln in res.stdout.splitlines() if ln.startswith("PROBLEMS")), "")
+    record("start-of-job check with PYTHONNOUSERSITE=1 and ogb blocked: no ImportError, no problems", res.returncode == 0 and line == "PROBLEMS []",
+           returncode=res.returncode, output=line or res.stderr[-300:])
+    # (b) tiny wall. A budget longer than the wall is rejected at the start (exit 3); budgets that fit but cannot finish are skipped (exit 2).
+    out = work / "h_tiny_reject"
+    res = run_driver(driver_args(spec, files, out, fixed, wall_s=10, reserve_s=0), work / "h_tiny_reject.log", env)
+    record("tiny --wall-s with the real budgets (600 s): rejected at start, exit 3, budget named", res["exit"] == 3 and "budget_s" in (out / "early_exit.json").read_text(encoding="utf-8"), exit=res["exit"])
+    tiny = write_spec(work / "h_tiny.json", [{**i, "budget_s": 9} for i in items])
+    out = work / "h_tiny_skip"
+    res = run_driver(driver_args(tiny, files, out, fixed, wall_s=10, reserve_s=0), work / "h_tiny_skip.log", env)
+    states = {k: v["status"] for k, v in summary_of(out)["items"].items()}
+    record("tiny --wall-s with fitting budgets: exit 2, every item SKIPPED_FOR_TIME, no child started",
+           res["exit"] == 2 and set(states.values()) == {"SKIPPED_FOR_TIME"} and not any((out / n).exists() for n in states), exit=res["exit"], states=states)
+    # (c) bad specs
+    good = items[0]
+    bad = {"missing budget_s": {k: v for k, v in good.items() if k != "budget_s"},
+           "gate names a missing item": {**good, "gate": {"dev_delta": {"a": "nope", "b": "gptt-100k"}}},
+           "gate names a later item": {**good, "gate": {"memory": {"from": "demol-100k"}}},
+           "extra_args sets --wall-s": {**good, "extra_args": ["--wall-s", "999999"]},
+           "extra_args sets --phase=": {**good, "extra_args": ["--phase=preflight"]},
+           "budget above wall - reserve": {**good, "budget_s": 10**6},
+           "wrong type": {**good, "budget_s": "long"}}
+    for name, bad_item in bad.items():
+        path = write_spec(work / "h_bad.json", [bad_item, items[1]])
+        out = work / "h_bad_out" / name.replace(" ", "_")
+        res = run_driver(driver_args(path, files, out, fixed), work / "h_bad.log", env)
+        problem = json.loads((out / "early_exit.json").read_text(encoding="utf-8"))["problems"][0] if (out / "early_exit.json").is_file() else None
+        record(f"bad spec exits 3: {name}", res["exit"] == 3 and problem is not None and not (out / "gptt-100k").exists(), exit=res["exit"], problem=problem)
+    # (d) maintenance guard on fixed dates (JST)
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    spec_mod = importlib.util.spec_from_file_location("launcher_dates", HERE / "v4_submit/launcher.py")
+    launcher = importlib.util.module_from_spec(spec_mod)
+    spec_mod.loader.exec_module(launcher)
+    expect = {(2026, 12, 6, 8, 59): False, (2026, 12, 6, 9, 0): True, (2027, 1, 31, 8, 59): False, (2027, 1, 31, 10, 0): True,
+              (2027, 2, 1, 10, 0): False, (2027, 2, 7, 10, 0): False}
+    seen = {}
+    for when, refuse in expect.items():
+        try:
+            launcher.maintenance_guard(3600, now=datetime(*when, tzinfo=ZoneInfo("Asia/Tokyo")))
+            seen[str(when)] = False
+        except RuntimeError:
+            seen[str(when)] = True
+    record("maintenance guard on fixed dates (train 1 h): window = 24 h before first Monday 09:00 JST; Monday 09:00 onward is open", seen == {str(k): v for k, v in expect.items()},
+           refused={k: v for k, v in seen.items()})
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", type=Path, default=Path("D:/molgap-artifacts/ims_serial_rehearsal_20261120"))
     ap.add_argument("--repl", type=Path, default=Path("D:/molgap-worktrees/demol-cin-ims-replication-20261120"))
     ap.add_argument("--fixed-root", type=Path, default=Path("D:/molgap-artifacts/ims_weekend_20261120/local_fixed_root"))
-    ap.add_argument("--only", choices=("early", "chain", "launcher"), action="append")
+    ap.add_argument("--only", choices=("early", "chain", "launcher", "hardening"), action="append")
     a = ap.parse_args()
     work = a.work.resolve()
     work.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, PYTHONPATH=str(a.repl / "src"), CUDA_VISIBLE_DEVICES="0", PYTHONUNBUFFERED="1")
     files = {**prepare(work, a.repl), "code": work / "code"}
-    only = a.only or ["early", "chain", "launcher"]
+    only = a.only or ["early", "hardening", "chain", "launcher"]
     if "early" in only:
         rehearse_early_exit(work, files, a.fixed_root, env)
+    if "hardening" in only:
+        rehearse_hardening(work, files, a.fixed_root, a.repl, env)
     if "chain" in only:
         rehearse_chain(work, files, a.fixed_root, env)
     if "launcher" in only:

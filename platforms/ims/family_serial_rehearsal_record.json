@@ -2,89 +2,6 @@
  "date": "2026-11-20",
  "results": [
   {
-   "check": "kill mid-run leaves a parseable summary; earlier items done, killed item RUNNING",
-   "passed": true,
-   "statuses": {
-    "accel-fail": "FAILED",
-    "demol-100k": "RUNNING",
-    "demol-500k-gate-skip": "NOT_STARTED",
-    "demol-500k-mem-skip": "NOT_STARTED",
-    "demol-500k-no-input": "NOT_STARTED",
-    "demol-500k-pass": "NOT_STARTED",
-    "demol-500k-time-skip": "NOT_STARTED",
-    "gptt-100k": "COMPLETE"
-   },
-   "bad_summary_reads": 0,
-   "summary_reads": 8599
-  },
-  {
-   "check": "resume: finished item not redone",
-   "passed": true,
-   "gptt_attempts": 1
-  },
-  {
-   "check": "resume: killed item continues from its checkpoint and completes",
-   "passed": true,
-   "resumed": [
-    "resumed at step 128"
-   ],
-   "status": "COMPLETE"
-  },
-  {
-   "check": "failed item does not block the next item (and is retried on rerun)",
-   "passed": true,
-   "accel_fail_attempts": 2,
-   "reason": "child exit code 1 (rejected by its own start checks)"
-  },
-  {
-   "check": "gate does not skip when the rule passes (delta below the line, memory under budget)",
-   "passed": true,
-   "delta_meV": 145.856,
-   "status": "COMPLETE",
-   "peak_rss_gib": 4.89
-  },
-  {
-   "check": "gate skips: dev MAE delta above the line -> SKIPPED_BY_GATE",
-   "passed": true,
-   "reason": "dev MAE delta demol-100k - gptt-100k = 145.856 meV is above -1000000.0 meV"
-  },
-  {
-   "check": "gate skips: predicted memory above budget -> SKIPPED_FOR_MEMORY",
-   "passed": true,
-   "reason": "predicted peak 31.8 GiB (demol-100k 4.89 GiB x 5 x 1.3) exceeds 1e-09 x 1024.0 GiB (override)"
-  },
-  {
-   "check": "gate fails closed when an input item failed -> SKIPPED_BY_GATE",
-   "passed": true,
-   "reason": "no dev MAE for accel-fail; the gate cannot show the gain"
-  },
-  {
-   "check": "budget longer than wall left -> SKIPPED_FOR_TIME, no child",
-   "passed": true,
-   "reason": "needs about 1000000000s, has 35502s after the 60s reserve"
-  },
-  {
-   "check": "summary writes are atomic (no unparseable read, no temp file left)",
-   "passed": true,
-   "reads": 22655
-  },
-  {
-   "check": "driver exit code 2 when an item could resume (SKIPPED_FOR_TIME)",
-   "passed": true,
-   "exit": 2
-  },
-  {
-   "check": "guard did not trip (handles/working set), DeMol ran with training workers 0",
-   "passed": true,
-   "peak_handles": 1582,
-   "peak_ws_gib": 5.23
-  },
-  {
-   "check": "receipt waiver is written to run_provenance.json",
-   "passed": true,
-   "preflight_receipt": "waived"
-  },
-  {
    "check": "exit 3 on broken input: recipe sha differs from spec",
    "passed": true,
    "exit": 3,
@@ -92,7 +9,7 @@
     "gptt-100k: recipe missing or its sha256 differs from the spec"
    ],
    "child_started": false,
-   "seconds": 0.5
+   "seconds": 3.1
   },
   {
    "check": "exit 3 on broken input: initial state sha differs",
@@ -102,7 +19,7 @@
     "gptt-100k: initial state missing or its sha256 differs from the spec"
    ],
    "child_started": false,
-   "seconds": 4.7
+   "seconds": 3.1
   },
   {
    "check": "exit 3 on broken input: train role identity differs",
@@ -112,7 +29,7 @@
     "gptt-100k: train role identity of the manifest differs from the recipe"
    ],
    "child_started": false,
-   "seconds": 3.1
+   "seconds": 3.2
   },
   {
    "check": "exit 3 on broken input: dataset manifest missing",
@@ -122,7 +39,7 @@
     "gptt-100k: dataset manifest missing or its sha256 differs from the recipe"
    ],
    "child_started": false,
-   "seconds": 0.6
+   "seconds": 3.1
   },
   {
    "check": "exit 3 on broken input: data shards missing",
@@ -141,6 +58,80 @@
    "status": "SKIPPED_FOR_TIME"
   },
   {
+   "check": "start-of-job check with PYTHONNOUSERSITE=1 and ogb blocked: no ImportError, no problems",
+   "passed": true,
+   "returncode": 0,
+   "output": "PROBLEMS []"
+  },
+  {
+   "check": "tiny --wall-s with the real budgets (600 s): rejected at start, exit 3, budget named",
+   "passed": true,
+   "exit": 3
+  },
+  {
+   "check": "tiny --wall-s with fitting budgets: exit 2, every item SKIPPED_FOR_TIME, no child started",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "gptt-100k": "SKIPPED_FOR_TIME",
+    "demol-100k": "SKIPPED_FOR_TIME"
+   }
+  },
+  {
+   "check": "bad spec exits 3: missing budget_s",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: budget_s is required and must be a positive number"
+  },
+  {
+   "check": "bad spec exits 3: gate names a missing item",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: gate.dev_delta.a must name an item listed before it"
+  },
+  {
+   "check": "bad spec exits 3: gate names a later item",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: gate.memory.from must name an item listed before it"
+  },
+  {
+   "check": "bad spec exits 3: extra_args sets --wall-s",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: extra_args may not set driver flags ['--wall-s']"
+  },
+  {
+   "check": "bad spec exits 3: extra_args sets --phase=",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: extra_args may not set driver flags ['--phase']"
+  },
+  {
+   "check": "bad spec exits 3: budget above wall - reserve",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: budget_s 1000000 exceeds wall_s - reserve_s = 35940; it could never start"
+  },
+  {
+   "check": "bad spec exits 3: wrong type",
+   "passed": true,
+   "exit": 3,
+   "problem": "gptt-100k: budget_s is required and must be a positive number"
+  },
+  {
+   "check": "maintenance guard on fixed dates (train 1 h): window = 24 h before first Monday 09:00 JST; Monday 09:00 onward is open",
+   "passed": true,
+   "refused": {
+    "(2026, 12, 6, 8, 59)": false,
+    "(2026, 12, 6, 9, 0)": true,
+    "(2027, 1, 31, 8, 59)": false,
+    "(2027, 1, 31, 10, 0)": true,
+    "(2027, 2, 1, 10, 0)": false,
+    "(2027, 2, 7, 10, 0)": false
+   }
+  },
+  {
    "check": "launcher: chain spec validates; preflight stage / dataset_id / unknown dataset / unknown mode are refused",
    "passed": true
   },
@@ -151,6 +142,9 @@
   {
    "check": "PBS script for the chain parses (bash -n)",
    "passed": true,
+   "select_line": [
+    "#PBS -l select=1:ncpus=8:mpiprocs=1:ompthreads=4:ngpus=1"
+   ],
    "stderr": ""
   },
   {
@@ -170,6 +164,12 @@
     "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-chain-20261120\\train.pbs"
    ],
    "status": "submitted"
+  },
+  {
+   "check": "launcher injects the wall and memory numbers (wall = walltime - 120 s, memory = ncpus x 1.875e9 bytes; both as the driver saw them)",
+   "passed": true,
+   "wall_s": 28680.0,
+   "memory_limit_bytes": 15000000000
   },
   {
    "check": "worker -> driver -> child end to end: paused exits 2, stage status paused, item PAUSED",
@@ -217,6 +217,95 @@
      "D:\\molgap-artifacts\\ims_serial_rehearsal_20261120\\infra\\runs\\rehearsal-single-20261120\\train.pbs"
     ]
    ]
+  },
+  {
+   "check": "kill mid-run leaves a parseable summary; earlier items done, killed item RUNNING",
+   "passed": true,
+   "statuses": {
+    "init-fail": "FAILED",
+    "gptt-100k": "COMPLETE",
+    "demol-100k": "RUNNING",
+    "demol-500k-pass": "NOT_STARTED",
+    "demol-500k-gate-skip": "NOT_STARTED",
+    "demol-500k-mem-skip": "NOT_STARTED",
+    "demol-500k-time-skip": "NOT_STARTED",
+    "demol-500k-no-input": "NOT_STARTED"
+   },
+   "bad_summary_reads": 0,
+   "summary_reads": 8897
+  },
+  {
+   "check": "resume: finished item not redone",
+   "passed": true,
+   "gptt_attempts": 1
+  },
+  {
+   "check": "resume: killed item continues from its checkpoint and completes",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ],
+   "status": "COMPLETE"
+  },
+  {
+   "check": "failed item does not block the next item (and is retried on rerun)",
+   "passed": true,
+   "accel_fail_attempts": 2,
+   "reason": "child exit code 1 (rejected by its own start checks)"
+  },
+  {
+   "check": "gate does not skip when the rule passes (delta below the line, memory under budget)",
+   "passed": true,
+   "delta_meV": 145.856,
+   "status": "COMPLETE",
+   "peak_rss_gib": 4.9
+  },
+  {
+   "check": "gate skips: dev MAE delta above the line -> SKIPPED_BY_GATE",
+   "passed": true,
+   "reason": "dev MAE delta demol-100k - gptt-100k = 145.856 meV is above -1000000.0 meV"
+  },
+  {
+   "check": "gate skips: predicted memory above budget -> SKIPPED_FOR_MEMORY",
+   "passed": true,
+   "reason": "predicted peak 31.9 GiB (demol-100k 4.90 GiB x 5 x 1.3) exceeds 1e-09 x 1024.0 GiB (PBS mem request)"
+  },
+  {
+   "check": "gate fails closed when an input item failed -> SKIPPED_BY_GATE",
+   "passed": true,
+   "reason": "no dev MAE for init-fail; the gate cannot show the gain"
+  },
+  {
+   "check": "budget longer than wall left -> SKIPPED_FOR_TIME, no child",
+   "passed": true,
+   "reason": "needs about 35940s, has 35496s after the 60s reserve"
+  },
+  {
+   "check": "summary writes are atomic (no unparseable read, no temp file left)",
+   "passed": true,
+   "reads": 23137
+  },
+  {
+   "check": "driver exit code 2 when an item could resume (SKIPPED_FOR_TIME)",
+   "passed": true,
+   "exit": 2
+  },
+  {
+   "check": "guard did not trip (handles/working set), DeMol ran with training workers 0",
+   "passed": true,
+   "peak_handles": 1787,
+   "peak_ws_gib": 5.27
+  },
+  {
+   "check": "failed item stops being retried at the attempt limit (default 2); finished items and gates unchanged on a third run",
+   "passed": true,
+   "exit": 2,
+   "reason": "failed 2 times; attempt limit 2 reached, not retried"
+  },
+  {
+   "check": "receipt waiver is written to run_provenance.json",
+   "passed": true,
+   "preflight_receipt": "waived"
   }
  ]
 }

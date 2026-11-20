@@ -55,8 +55,15 @@ each scheduler request. A lost or unparseable response records the corresponding
 authoritative scheduler reconciliation; the immutable run still blocks another
 submission. Do not change the run ID to bypass an uncertain outcome.
 
-The first Sunday of each month and any run whose 25%-margined walltime reaches
-the first Monday maintenance window are rejected. An explicit maintenance
+The guard (code is the rule; this text was corrected to match it) refuses a
+submission when `now` is inside the 24 hours before 09:00 JST on the first
+Monday of the month (Sunday 09:00 to Monday 09:00), or when `now` plus 1.25 x
+the train walltime reaches that Monday 09:00. From Monday 09:00 onward the
+window is treated as over and the next month's is used. This is the code's
+assumption; check the RCCS notice. The guard ignores queue wait: a job that
+starts late may still run into the window, so the submitter must check that
+(expected start + walltime) stays clear. A month whose 1st is a Monday has its
+window on the last Sunday of the previous month. An explicit maintenance
 override is intentionally not implemented; check the RCCS notice and update
 the adapter through review when an exception is genuinely required.
 
@@ -99,7 +106,37 @@ another through `run_family_training.py`.
 - `dataset_ids` (a list) replaces `dataset_id`; each recipe names its own manifest.
   The serial spec is the run contract: its hash is bound at staging.
 - The maintenance guard (first Sunday, first Monday) runs before staging.
-- Pass `--wall-s` as the job walltime in seconds minus 120.
+- Do not type the wall or memory numbers. The train args must carry
+  `--wall-s {train_wall_s}` (walltime seconds minus 120) and
+  `--memory-limit-bytes {mem_bytes}`.
+- Memory comes from the cores. RCCS manual, jsub page
+  (<https://ccportal.center.ims.ac.jp/en/node/3642>): "The available memory amount
+  is proportional to ncpus"; 1.875 GB per core for non-largemem jobs; a GPU job
+  needs ncpus/ngpus <= 16 and ngpus 1-8 (8 GPUs per TypeG node). Queue page
+  (<https://ccportal.center.ims.ac.jp/en/node/1893>, dated 2024-03): gpu class,
+  1.875GB/core, 1-16 cores per GPU. The manual never mentions `mem=`, so chain
+  mode sets none. `{mem_bytes}` = `ncpus` x 1.875e9 (decimal GB, the smaller
+  reading), and the memory gate uses it. Points (same page): 1 point per core-hour
+  plus 60 points per GPU-hour.
+- Chain resources: `ngpus` 1-3 and `ncpus` 8/16/32/48 with at most 16 cores per
+  GPU, and `--cpus` equal to `ncpus`. 1 GPU gives at most 30 GB. Memory gate:
+  predicted peak = 100K peak x 5 x 1.3 must be at most half of that limit. For the
+  DeMol 500K case (4.89 GiB measured on Windows, about 34 GB predicted) the limit
+  must exceed 68 GB, which needs `ncpus` 48 and `ngpus` 3 (90 GB, 228 points per
+  hour, 5,472 points for 24 h; two GPUs sit idle because only memory is wanted).
+  With `ngpus` 1 and `ncpus` 16 the gate always skips that item.
+  Not verified: whether the scheduler enforces the proportional memory, and the
+  H versus PN queue name (the manual's gpu class is PN; this adapter has always
+  used `-q H`).
+- The run id must start with a letter (PBS job name). The serial spec must be
+  valid: required fields and types, `budget_s` at most walltime minus the
+  1800 s reserve, gates naming earlier items, `extra_args` not touching driver
+  flags. Otherwise exit 3 with `early_exit.json`.
+- A FAILED item is retried on rerun up to `--max-attempts` (default 2).
+- Peak memory: Linux `ru_maxrss` is the largest single process of the child
+  tree; the Windows rehearsal samples the sum of the tree, which is never
+  smaller. The memory gate is therefore conservative locally and uses the
+  per-process maximum on IMS.
 
 ### Checks that chain mode relaxes (single-recipe mode is unchanged)
 
@@ -114,8 +151,12 @@ another through `run_family_training.py`.
 Start-of-job check (cheap, all items, before any child; exit 3 and
 `early_exit.json` on failure): recipe sha256 equals the spec, manifest sha256
 equals the recipe, manifest complete, train rows end at or before 3,250,000,
-`train_role_identity` recomputed from the manifest range, every data shard
-exists with the manifest byte size, initial-state sha256 equals the spec.
+`train_role_identity` recomputed from the manifest range, development rows end
+at or before 3,250,000, every data shard exists with the manifest byte size,
+input sidecar and `--ogb-zip` files exist, initial-state sha256 equals the spec,
+gate items select by development (they write `selected_eval.json`) and share one
+development role, CUDA is available and the device name matches `--accelerator`.
+An ImportError also exits 3.
 Not re-done at job start: shard content hashes (the launcher checks the fixed
 root acceptance) and the decoded-row identity, which each child still checks.
 

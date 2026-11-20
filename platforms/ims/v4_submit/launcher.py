@@ -33,7 +33,14 @@ PLACEHOLDERS = {
     "source_archive",
     "source_archive_sha256",
     "source_commit",
+    "train_wall_s",  # chain mode only: walltime seconds minus WALL_MARGIN_S, so no one types a wall by hand
+    "mem_bytes",  # chain mode only: ncpus x MEM_PER_CORE_BYTES, the memory the scheduler gives this job
 }
+WALL_MARGIN_S = 120
+# RCCS manual (jsub page, queue page): memory is proportional to ncpus, 1.875 GB per core for a gpu job, and ncpus/ngpus <= 16.
+# The manual never mentions mem=, so chain mode sets none. Decimal GB (the smaller reading) keeps the gate conservative.
+MEM_PER_CORE_BYTES = 1_875_000_000
+GPU_CORES_PER_GPU = 16
 
 
 def sha256_file(path: Path) -> str:
@@ -180,12 +187,24 @@ def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
     runtime = runtimes["runtimes"][spec["runtime_id"]]
     if resources.get("queue") != runtime["queue"] or resources.get("queue") != "H":
         raise RuntimeError("Only the frozen H-queue runtime is supported")
-    if resources.get("ngpus") != 1 or resources.get("ncpus") not in (8, 16):
+    if not chain and (resources.get("ngpus") != 1 or resources.get("ncpus") not in (8, 16)):
         raise RuntimeError("Unsupported IMS resource request")
     if resources.get("ompthreads") not in (4, 8):
         raise RuntimeError("Unsupported OMP thread count")
     if resources["ompthreads"] > resources["ncpus"]:
         raise RuntimeError("OMP threads exceed allocated CPUs")
+    if chain:
+        if resources.get("ngpus") not in (1, 2, 3) or resources.get("ncpus") not in (8, 16, 32, 48) or resources["ncpus"] > GPU_CORES_PER_GPU * resources["ngpus"]:
+            raise RuntimeError("Chain resources: ngpus 1-3, ncpus 8/16/32/48, at most 16 cores per GPU")
+        args_cpu = spec.get("stages", {}).get("train", {}).get("args", [])
+        if args_cpu.count("--cpus") != 1 or args_cpu[args_cpu.index("--cpus") + 1:args_cpu.index("--cpus") + 2] != [str(resources["ncpus"])]:
+            raise RuntimeError("Chain train args must pass --cpus equal to resources.ncpus")
+        if not spec["run_id"][0].isalpha():
+            raise RuntimeError("Chain run_id must start with a letter (it becomes the PBS job name)")
+        args = spec.get("stages", {}).get("train", {}).get("args", [])
+        for flag, token in (("--wall-s", "{train_wall_s}"), ("--memory-limit-bytes", "{mem_bytes}")):
+            if args.count(flag) != 1 or args[args.index(flag) + 1:args.index(flag) + 2] != [token]:
+                raise RuntimeError(f"Chain train args must pass {flag} {token}; do not type the number")
     if not chain and walltime_seconds(resources["preflight_walltime"]) > 3600:
         raise RuntimeError("Preflight walltime exceeds one hour")
     if walltime_seconds(resources["train_walltime"]) > 24 * 3600:
@@ -243,7 +262,7 @@ def render_pbs(run_root: Path, stage: str, spec: dict, runtime: dict) -> str:
     walltime = resources[f"{stage}_walltime"]
     launcher = run_root / "infrastructure" / "launcher.py"
     return f"""#!/bin/bash
-#PBS -l select=1:ncpus={resources['ncpus']}:mpiprocs=1:ompthreads={resources['ompthreads']}:ngpus=1
+#PBS -l select=1:ncpus={resources['ncpus']}:mpiprocs=1:ompthreads={resources['ompthreads']}:ngpus={resources['ngpus']}
 #PBS -l walltime={walltime}
 #PBS -j oe
 #PBS -o {run_root}/logs/{stage}.stdout.log
@@ -477,6 +496,9 @@ def worker(run_root: Path, stage_name: str) -> None:
         "source_archive_sha256": spec["source"]["archive_sha256"],
         "source_commit": spec["source"]["commit"],
     }
+    if is_chain(spec):
+        context["train_wall_s"] = str(walltime_seconds(spec["resources"]["train_walltime"]) - WALL_MARGIN_S)
+        context["mem_bytes"] = str(spec["resources"]["ncpus"] * MEM_PER_CORE_BYTES)
     runtime = runtimes["runtimes"][spec["runtime_id"]]
     pythonpath = [item.format(**context) for item in runtime["pythonpath"]]
     environment = os.environ.copy()
