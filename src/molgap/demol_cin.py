@@ -207,6 +207,15 @@ class _CellDataset(Dataset):
 
 
 def attach_inputs(input_root, sidecar, data):
+    import os
+    if os.environ.get("MOLGAP_DEMOL_GPU_RESIDENT") == "1":
+        # Opt-in compact build, no CellData list; FamilyLoaders uploads it to the GPU.
+        from .demol_cin_resident import ResidentCellDataset
+        return replace(
+            data,
+            train=ResidentCellDataset(data.train),
+            development=ResidentCellDataset(data.development) if data.development is not None else None,
+        )
     return replace(
         data,
         train=_CellDataset(data.train),

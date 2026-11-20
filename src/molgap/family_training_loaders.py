@@ -36,7 +36,10 @@ class FamilyLoaders:
         policy = (FamilyModePolicy() if recipe._frozen_read else mode_policy(recipe.family, recipe.mode))
         extra_fields = policy.extra_batch_fields
         self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
-        if device_inputs is not None:
+        if hasattr(data.train, "train_stream"):  # compact GPU-resident cells (demol_cin_resident)
+            data.train.store.upload("cuda")  # raises when it does not fit; never falls back
+            self.device_train, self.device_inputs_reason = data.train, None
+        elif device_inputs is not None:
             from .family_training_device_inputs import DeviceResidentTrain
             if policy.prepare_batch is not None or extra_fields:
                 self.device_inputs_reason = "mode has a prepare_batch hook"
@@ -49,7 +52,10 @@ class FamilyLoaders:
         self.development = None
         self.development_cache = None
         self.closed = False
-        if data.development is not None:
+        if hasattr(data.development, "sequential_stream"):
+            data.development.store.upload("cuda")
+            self.development_cache = data.development.sequential_stream(recipe.batch_size)
+        elif data.development is not None:
             assert_static_dataset(data.development)
             self.development = DataLoader(data.development, batch_size=recipe.batch_size,
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
@@ -69,6 +75,8 @@ class FamilyLoaders:
             drop_last=self.recipe.drop_last)
         self.sampler.pass_index, self.sampler.start_batch = validated.pass_index, validated.start_batch
         self.generator.manual_seed(self.recipe.seed + pass_index)
+        if hasattr(self.device_train, "train_stream"):
+            return self.device_train.train_stream(self.sampler)
         if self.device_train is not None:
             from .family_training_device_inputs import device_training_stream
             return device_training_stream(self.device_train, self.sampler)
@@ -101,3 +109,5 @@ class FamilyLoaders:
                 loader._iterator = None
         if self.development_cache is not None:
             self.development_cache.clear()
+        if hasattr(self.device_train, "train_stream"):
+            self.device_train.store.release()
