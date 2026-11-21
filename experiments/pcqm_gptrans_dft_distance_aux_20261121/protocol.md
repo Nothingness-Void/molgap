@@ -102,3 +102,21 @@ grid.
   score with no sidecar present and no coordinate field in the batch.
 </content>
 </invoke>
+
+## Deviations (dated, before any training)
+
+- 2026-11-21: the bonded-distance sanity proxy (0.9-2.0 A) was replaced by an
+  element-aware rule and a bond-order length check; see
+  `diagnostic_alignment_20261121.md`. The pre-submit review found the v1
+  sidecar's atom mapping ignored bond order (swapped =O/-OH and similar in
+  about 7.6% of rows); v1 is withdrawn and a chemistry-labelled v2 sidecar
+  replaces it. No arm, constant, role or training gate changed.
+- 2026-11-21: budgets set from the local rehearsal (candidate slower per
+  step); c500 runs before d500 so a time pause falls on the candidate, which
+  resumes. Budgets are estimates used for time skips, not limits on training.
+- The in-job 500K gate uses the point estimate only. The protocol's 100K
+  positive also needs the bootstrap upper bound < 0, checked after retrieval;
+  a 500K run that the job launched does not by itself make 100K positive.
+- c100 and c500 are byte-identical to j2 and j5 of job 2097505 (same recipe,
+  init and seed). Their extra A100 time is booked to this question; if both
+  jobs run, the pair also serves as a determinism check.
