@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 import torch
+from torch.utils.data import DataLoader, TensorDataset
 
 from molgap.multi2d_router_fusion import (
     GateTrainingConfig,
+    _loader,
     dense_gate_features,
     fit_dense_soft_gate,
     fit_predispatch_router,
@@ -44,6 +47,30 @@ def test_feature_shapes_and_finite_values():
     assert predispatch.shape == (600, 9)
     assert np.isfinite(dense).all()
     assert np.isfinite(predispatch).all()
+
+
+@pytest.mark.parametrize("shuffle", [False, True])
+def test_gate_batch_loader_matches_rowwise_collation(shuffle):
+    predictions, targets, _ = synthetic()
+    features = dense_gate_features(predictions)
+    arrays = features, predictions, targets
+    indices = np.arange(1, 23, 2)
+    reference = DataLoader(
+        TensorDataset(*(torch.from_numpy(array[indices]) for array in arrays)),
+        batch_size=4, shuffle=shuffle,
+    )
+    optimized = _loader(*arrays, indices, batch_size=4, shuffle=shuffle)
+
+    def sample(loader):
+        with torch.random.fork_rng():
+            torch.manual_seed(42)
+            epochs = [list(loader) for _ in range(2)]
+            return epochs, torch.rand(1)
+
+    actual, actual_rng = sample(optimized)
+    expected, expected_rng = sample(reference)
+    torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+    torch.testing.assert_close(actual_rng, expected_rng, rtol=0, atol=0)
 
 
 def test_dense_and_predispatch_models_train_and_predict():
