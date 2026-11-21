@@ -42,7 +42,7 @@
   "available_actions": ["CPU_ALIGNMENT_DIAGNOSTIC", "RUN_100K_500K_IMS_CHAIN", "NO_TRAIN"],
   "budget_snapshot_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
   "chosen_action": "CPU_ALIGNMENT_DIAGNOSTIC",
-  "known_evidence_ids": [],
+  "known_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"],
   "known_trajectory_ids": [
    "TB-gptrans-noisy-nodes-100k-s42",
    "TB-gptrans-noisy-nodes-500k-s42",
@@ -109,7 +109,7 @@
     "gptrans-t-geometry-distance_angle",
     "gptrans-feature-denoising"
    ],
-   "supporting_evidence_ids": []
+   "supporting_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"]
   },
   "owner": "desktop",
   "question": "Does a train-only head that regresses DFT interatomic distances from GPT-T's pair state lower development Gap MAE at 100K and at 500K, with pure-2D inference?",
@@ -123,7 +123,7 @@
     "experiments/pcqm_gptrans_dft_distance_aux_20261121/c500_gptrans_pun_s44/recipe.json"
    ],
    "parent_trajectory_ids": [],
-   "prior_evidence_ids": [],
+   "prior_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"],
    "prior_trajectory_ids": [
     "TB-gptrans-noisy-nodes-100k-s42",
     "TB-gptrans-noisy-nodes-500k-s42"
