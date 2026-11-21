@@ -183,6 +183,7 @@ def _loader(
     *,
     batch_size: int,
     shuffle: bool,
+    pin_memory: bool = False,
 ) -> DataLoader:
     tensors = _GateBatchDataset(
         torch.from_numpy(features[indices]),
@@ -191,11 +192,24 @@ def _loader(
     )
     sampler = RandomSampler(tensors) if shuffle else SequentialSampler(tensors)
     batches = BatchSampler(sampler, batch_size, drop_last=False)
-    return DataLoader(tensors, sampler=batches, batch_size=None, num_workers=0)
+    return DataLoader(tensors, sampler=batches, batch_size=None, num_workers=0,
+                      pin_memory=pin_memory)
 
 
 def _state_to_cpu(model: nn.Module) -> dict[str, torch.Tensor]:
     return {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
+
+
+def _epoch_losses(*phases: list[tuple[torch.Tensor, int]]) -> tuple[float, ...]:
+    losses = iter(torch.stack([loss for phase in phases for loss, _ in phase]).tolist())
+    averages = []
+    for phase in phases:
+        total, rows = 0.0, 0
+        for _, count in phase:
+            total += next(losses) * count
+            rows += count
+        averages.append(total / rows)
+    return tuple(averages)
 
 
 def fit_dense_soft_gate(
@@ -233,6 +247,7 @@ def fit_dense_soft_gate(
         train_indices,
         batch_size=config.batch_size,
         shuffle=True,
+        pin_memory=device.type == "cuda",
     )
     validation_loader = _loader(
         features,
@@ -241,40 +256,38 @@ def fit_dense_soft_gate(
         validation_indices,
         batch_size=config.batch_size,
         shuffle=False,
+        pin_memory=device.type == "cuda",
     )
     best_loss, best_epoch, wait, best_state = float("inf"), -1, 0, None
     log = []
     for epoch in range(config.epochs):
         model.train()
-        train_total, train_rows = 0.0, 0
+        train_batches = []
         for feature, prediction, target in train_loader:
             feature, prediction, target = (
-                feature.to(device),
-                prediction.to(device),
-                target.to(device),
+                feature.to(device, non_blocking=True),
+                prediction.to(device, non_blocking=True),
+                target.to(device, non_blocking=True),
             )
             optimizer.zero_grad()
             fused, _ = model(feature, prediction)
             loss = torch.nn.functional.l1_loss(fused, target)
             loss.backward()
             optimizer.step()
-            train_total += float(loss.item()) * len(feature)
-            train_rows += len(feature)
+            train_batches.append((loss.detach(), len(feature)))
         model.eval()
-        validation_total, validation_rows = 0.0, 0
+        validation_batches = []
         with torch.inference_mode():
             for feature, prediction, target in validation_loader:
                 feature, prediction, target = (
-                    feature.to(device),
-                    prediction.to(device),
-                    target.to(device),
+                    feature.to(device, non_blocking=True),
+                    prediction.to(device, non_blocking=True),
+                    target.to(device, non_blocking=True),
                 )
                 fused, _ = model(feature, prediction)
                 loss = torch.nn.functional.l1_loss(fused, target)
-                validation_total += float(loss.item()) * len(feature)
-                validation_rows += len(feature)
-        train_loss = train_total / train_rows
-        validation_loss = validation_total / validation_rows
+                validation_batches.append((loss, len(feature)))
+        train_loss, validation_loss = _epoch_losses(train_batches, validation_batches)
         log.append(
             {
                 "epoch": epoch,
@@ -340,6 +353,7 @@ def fit_predispatch_router(
         train_indices,
         batch_size=config.batch_size,
         shuffle=True,
+        pin_memory=device.type == "cuda",
     )
     validation_loader = _loader(
         features,
@@ -348,6 +362,7 @@ def fit_predispatch_router(
         validation_indices,
         batch_size=config.batch_size,
         shuffle=False,
+        pin_memory=device.type == "cuda",
     )
 
     def loss_block(
@@ -364,33 +379,30 @@ def fit_predispatch_router(
     log = []
     for epoch in range(config.epochs):
         model.train()
-        train_total, train_rows = 0.0, 0
+        train_batches = []
         for feature, prediction, target in train_loader:
             feature, prediction, target = (
-                feature.to(device),
-                prediction.to(device),
-                target.to(device),
+                feature.to(device, non_blocking=True),
+                prediction.to(device, non_blocking=True),
+                target.to(device, non_blocking=True),
             )
             optimizer.zero_grad()
             loss = loss_block(model(feature), prediction, target)
             loss.backward()
             optimizer.step()
-            train_total += float(loss.item()) * len(feature)
-            train_rows += len(feature)
+            train_batches.append((loss.detach(), len(feature)))
         model.eval()
-        validation_total, validation_rows = 0.0, 0
+        validation_batches = []
         with torch.inference_mode():
             for feature, prediction, target in validation_loader:
                 feature, prediction, target = (
-                    feature.to(device),
-                    prediction.to(device),
-                    target.to(device),
+                    feature.to(device, non_blocking=True),
+                    prediction.to(device, non_blocking=True),
+                    target.to(device, non_blocking=True),
                 )
                 loss = loss_block(model(feature), prediction, target)
-                validation_total += float(loss.item()) * len(feature)
-                validation_rows += len(feature)
-        train_loss = train_total / train_rows
-        validation_loss = validation_total / validation_rows
+                validation_batches.append((loss, len(feature)))
+        train_loss, validation_loss = _epoch_losses(train_batches, validation_batches)
         log.append(
             {
                 "epoch": epoch,
