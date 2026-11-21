@@ -26,9 +26,9 @@ MEMBER = "pcqm4m-v2-train.sdf"
 BOND_RANGE = (0.9, 2.0)
 SHARD_FORMAT = "molgap-pcqm-dft-geometry-shard-v1"
 SIDECAR_FORMAT = "molgap-pcqm-dft-geometry-sidecar-v1"
-IDENTITY, ISOMORPHIC, BAD_COUNT, BAD_ELEMENTS, BAD_BONDS = range(5)
+IDENTITY, ISOMORPHIC, BAD_COUNT, BAD_ELEMENTS, BAD_BONDS, BAD_LABELS = range(6)
 CLASS_NAMES = ["identity_order", "isomorphism_mapped", "atom_count_mismatch",
-               "element_mismatch", "bond_set_mismatch"]
+               "element_mismatch", "bond_set_mismatch", "label_mismatch"]
 
 
 def sha256_file(path):
@@ -40,7 +40,7 @@ def sha256_file(path):
 
 
 def parse_molblock(lines):
-    """Return heavy-atom atomic numbers, coordinates and bond pairs from a V2000 block."""
+    """Return heavy-atom Z, H counts, charges, coordinates and bond (a, b, order) rows from a V2000 block."""
     from rdkit import Chem
     table = Chem.GetPeriodicTable()
     n_atoms, n_bonds = int(lines[3][0:3]), int(lines[3][3:6])
@@ -52,53 +52,98 @@ def parse_molblock(lines):
     keep = [i for i, s in enumerate(syms) if s != "H"]
     new = {old: k for k, old in enumerate(keep)}
     z = np.array([table.GetAtomicNumber(syms[i]) for i in keep], dtype=np.int16)
-    xyz = np.array([pos[i] for i in keep], dtype=np.float32).reshape(-1, 3)
+    nh, charge = np.zeros(len(keep), np.int16), np.zeros(len(keep), np.int16)
     bonds = []
     for ln in lines[4 + n_atoms:4 + n_atoms + n_bonds]:
-        a, b = int(ln[0:3]) - 1, int(ln[3:6]) - 1
+        a, b, order = int(ln[0:3]) - 1, int(ln[3:6]) - 1, int(ln[6:9])
         if a in new and b in new:
-            bonds.append((min(new[a], new[b]), max(new[a], new[b])))
-    return z, xyz, sorted(bonds)
+            bonds.append((min(new[a], new[b]), max(new[a], new[b]), order))
+        else:  # heavy-H bond
+            for h, x in ((a, b), (b, a)):
+                if x in new and syms[h] == "H":
+                    nh[new[x]] += 1
+    for ln in lines[4 + n_atoms + n_bonds:]:
+        if ln.startswith("M  CHG"):
+            f = ln.split()[3:]
+            for i in range(0, len(f) - 1, 2):
+                if int(f[i]) - 1 in new:
+                    charge[new[int(f[i]) - 1]] = int(f[i + 1])
+    xyz = np.array([pos[i] for i in keep], dtype=np.float32).reshape(-1, 3)
+    return z, nh, charge, xyz, sorted(bonds)
 
 
-def skeleton(z, bonds):
+def labelled_skeleton(z, nh, charge, bonds, labelled=True):
+    """Single-bond graph; atom isotope encodes (Z, H count, charge) so matches must agree."""
     from rdkit import Chem
     m = Chem.RWMol()
-    for v in z:
-        m.AddAtom(Chem.Atom(int(v)))
-    for a, b in bonds:
+    for zi, h, q in zip(z, nh, charge):
+        atom = Chem.Atom(int(zi))
+        if labelled:
+            atom.SetIsotope(int(zi) * 1000 + int(h) * 20 + int(q) + 10)
+        m.AddAtom(atom)
+    for a, b, *_ in bonds:
         m.AddBond(int(a), int(b), Chem.BondType.SINGLE)
     return m
 
 
+def orders_agree(order_by_pair, g_bonds, match):
+    """Graph SINGLE/DOUBLE/TRIPLE (0/1/2) must equal SDF order 1/2/3; graph AROMATIC (3) takes any Kekule order."""
+    return all(t == 3 or order_by_pair[tuple(sorted((match[a], match[b])))] == t + 1 for a, b, t in g_bonds)
+
+
+def length_flags(pos, gz, g_bonds):
+    """Names of bond-length checks this row fails (fixed range, covalent range, bond order vs length)."""
+    from rdkit import Chem
+    table = Chem.GetPeriodicTable()
+    e = np.array(g_bonds)
+    d = np.linalg.norm(pos[e[:, 0]] - pos[e[:, 1]], axis=1)
+    za, zb = gz[e[:, 0]], gz[e[:, 1]]
+    rsum = np.array([table.GetRcovalent(int(i)) + table.GetRcovalent(int(j)) for i, j in zip(za, zb)])
+    co, cc = ((za == 6) & (zb == 8)) | ((za == 8) & (zb == 6)), (za == 6) & (zb == 6)
+    flags = {
+        "bonded_distance_fixed_range_0.9_2.0": ((d < BOND_RANGE[0]) | (d > BOND_RANGE[1])).any(),
+        "bonded_distance_out_of_range": ((d < 0.75 * rsum) | (d > 1.25 * rsum)).any(),
+        "bol_double_CO_long": (co & (e[:, 2] == 1) & (d > 1.30)).any(),
+        "bol_double_CC_long": (cc & (e[:, 2] == 1) & (d > 1.40)).any(),
+        "bol_single_CO_short": (co & (e[:, 2] == 0) & (d < 1.28)).any(),
+    }
+    names = [k for k, v in flags.items() if v]
+    return names + (["bond_order_length_inconsistent"] if any(n.startswith("bol_") for n in names) else [])
+
+
 def align_row(task):
-    """Return (code, positions in graph order or None, out_of_range) for one row."""
-    text, gz, gbonds = task
-    s_z, s_xyz, s_bonds = parse_molblock(text.split("\n"))
+    """Return (code, positions in graph order or None, failed length checks) for one row."""
+    from rdkit import Chem
+    text, gz, gh, gq, gb = task
+    s_z, s_h, s_q, s_xyz, s_bonds = parse_molblock(text.split("\n"))
     n = len(gz)
     if len(s_z) != n:
-        return BAD_COUNT, None, False
+        return BAD_COUNT, None, []
     if sorted(s_z.tolist()) != sorted(gz.tolist()):
-        return BAD_ELEMENTS, None, False
-    g_bonds = sorted(map(tuple, gbonds.tolist()))
-    if np.array_equal(s_z, gz) and s_bonds == g_bonds:
+        return BAD_ELEMENTS, None, []
+    # OpenBabel writes charge-separated groups (nitro, N-oxide) uncharged with extra double bonds, so SDF charges are
+    # ignored and bonds touching a graph-charged atom accept any order.
+    wild = gq != 0
+    g_bonds = sorted((a, b, 3 if wild[a] or wild[b] else t) for a, b, t in gb.tolist())
+    gq = s_q = np.zeros(n, np.int16)
+    order_by_pair = {(a, b): o for a, b, o in s_bonds}
+    if len(s_bonds) != len(g_bonds):
+        return BAD_BONDS, None, []
+    ident = (np.array_equal(s_z, gz) and np.array_equal(s_h, gh) and np.array_equal(s_q, gq)
+             and [b[:2] for b in s_bonds] == [b[:2] for b in g_bonds] and orders_agree(order_by_pair, g_bonds, range(n)))
+    if ident:
         code, pos = IDENTITY, s_xyz
     else:
-        if len(s_bonds) != len(g_bonds):
-            return BAD_BONDS, None, False
-        match = skeleton(s_z, s_bonds).GetSubstructMatch(skeleton(gz, g_bonds))  # graph j -> sdf p(j)
-        if len(match) != n:
-            return BAD_BONDS, None, False
+        target = labelled_skeleton(s_z, s_h, s_q, s_bonds)
+        params = Chem.SubstructMatchParameters()
+        params.maxMatches = 1
+        params.setExtraFinalCheck(lambda mol, match: orders_agree(order_by_pair, g_bonds, match))
+        match = target.GetSubstructMatch(labelled_skeleton(gz, gh, gq, g_bonds), params)  # graph j -> sdf p(j)
+        if len(match) != n:  # no chemistry-consistent mapping: is the bare skeleton at least isomorphic?
+            bare = target.GetSubstructMatch(labelled_skeleton(gz, gh, gq, g_bonds, False))
+            return (BAD_LABELS if len(bare) == n else BAD_BONDS), None, []
         pos, code = s_xyz[np.array(match)], ISOMORPHIC
-    oor = (False, False)  # (outside fixed 0.9-2.0 A, outside 0.75-1.25 x covalent-radius sum)
-    if g_bonds:
-        from rdkit import Chem
-        table = Chem.GetPeriodicTable()
-        e = np.array(g_bonds)
-        d = np.linalg.norm(pos[e[:, 0]] - pos[e[:, 1]], axis=1)
-        rsum = np.array([table.GetRcovalent(int(gz[i])) + table.GetRcovalent(int(gz[j])) for i, j in g_bonds])
-        oor = (bool(((d < BOND_RANGE[0]) | (d > BOND_RANGE[1])).any()), bool(((d < 0.75 * rsum) | (d > 1.25 * rsum)).any()))
-    return code, pos.astype(np.float32), oor
+    return code, pos.astype(np.float32), length_flags(pos, gz, g_bonds) if g_bonds else []
 
 
 def align_chunk(tasks):
@@ -145,7 +190,11 @@ def row_tasks(data, slices, r0, r1, texts):
         ei = data.edge_index[:, es[r]:es[r + 1]].numpy()
         if ei.size and ei.max() >= len(z):
             ei = ei - int(xs[r])  # global indices: shift to local
-        tasks.append((text, z, ei.T[ei[0] < ei[1]]))
+        keep = ei[0] < ei[1]
+        bt = data.edge_attr[es[r]:es[r + 1], 0].numpy()
+        gb = np.concatenate([ei.T[keep], bt[keep, None]], axis=1)  # (a, b, OGB bond type)
+        tasks.append((text, z, data.x[xs[r]:xs[r + 1], 4].numpy().astype(np.int16),
+                      data.x[xs[r]:xs[r + 1], 3].numpy().astype(np.int16) - 5, gb))
     return tasks
 
 
@@ -222,14 +271,12 @@ def main(argv=None):
             offsets = slices["x"].numpy().astype(np.int64)
             pos = np.zeros((int(offsets[-1]), 3), np.float32)
             valid = np.zeros(SHARD_ROWS, bool)
-            for i, (code, p, oor) in enumerate(res):
+            for i, (code, p, flags) in enumerate(res):
                 note(CLASS_NAMES[code], r0 + i)
                 if p is not None:
                     pos[offsets[i]:offsets[i + 1]], valid[i] = p, True
-                    if oor[0]:
-                        note("bonded_distance_fixed_range_0.9_2.0", r0 + i)
-                    if oor[1]:
-                        note("bonded_distance_out_of_range", r0 + i)
+                    for f in flags:
+                        note(f, r0 + i)
             name = f"shard_{k:04d}.pt"
             write_atomic(out / name, {"format": SHARD_FORMAT, "source_idx": data.source_idx.long(),
                                       "atom_offsets": torch.from_numpy(offsets),
@@ -243,7 +290,8 @@ def main(argv=None):
     rows = a.stop - a.start
     invalid = sum(counts[n] for n in CLASS_NAMES[2:])
     oor = counts["bonded_distance_out_of_range"]
-    ok = invalid / rows <= 0.01 and oor / rows <= 0.001
+    bol = counts["bond_order_length_inconsistent"]
+    ok = invalid / rows <= 0.01 and oor / rows <= 0.001 and bol / rows <= 0.005
     manifest = {
         "format": SIDECAR_FORMAT, "status": "complete" if ok else "rejected",
         "source": {"archive_name": Path(a.archive).name, "archive_sha256": digest, "member": MEMBER,
@@ -253,10 +301,13 @@ def main(argv=None):
         "alignment": {"identity_order": counts["identity_order"], "isomorphism_mapped": counts["isomorphism_mapped"],
                       "invalid": invalid, "invalid_by_class": {n: counts[n] for n in CLASS_NAMES[2:]},
                       "bonded_distance_out_of_range_rows": oor,
+                      "bond_order_length_inconsistent_rows": bol,
+                      "bond_order_length_by_class": {k: v for k, v in counts.items() if k.startswith("bol_")},
                       "bonded_distance_fixed_range_rows": counts["bonded_distance_fixed_range_0.9_2.0"],
                       "bonded_distance_rule": "out of range = any bond outside 0.75-1.25 x covalent-radius sum",
                       "examples": {n: examples[n] for n in examples if n != "identity_order"}},
         "timing_s": {"archive_hash": round(t_hash, 1), "parse_align_write": round(time.time() - t1, 1)},
+        "mapping": "chem-labelled-v2",
         "builder": "platforms/local/pcqm_dft_geometry_sidecar.py",
     }
     write_atomic(out / "manifest.json", manifest)
