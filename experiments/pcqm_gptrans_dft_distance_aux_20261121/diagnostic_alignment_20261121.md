@@ -78,3 +78,11 @@ v3: `sidecars/pcqm-dft-train-geometry-500k-v3/` on the IMS fixed root, manifest
 sha256 `5b1d8f47ee27b067a2d7c089b3ac38483cbe7e30407133bf2426ce24f39b5b51`
 (shards byte-identical to v2). Uploaded, read-only, local and remote hashes
 match. The v1 subtree remains on IMS, read-only and unused.
+
+Second review check of the long C=C class (shard 0, all 1,370 rows with a long
+graph C=C): in every row the bond is also a long double bond under the SDF's
+own labels; 1,043 rows admit exactly one bond-order-consistent mapping, and in
+no row does another valid mapping give fewer long C=C. The labels are correct
+per atom; the class reflects DFT geometry versus the bond orders the SDF and
+the graph share. Independent swap rate after v3: shard 0000 6 rows (0.012%),
+shard 0007 2 rows (0.004%).
