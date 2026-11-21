@@ -1,0 +1,39 @@
+{
+ "format": "molgap-ims-family-serial-v1",
+ "items": [
+  {
+   "name": "c100-gptt-100k-s43",
+   "recipe": "experiments/pcqm_gptrans_dft_distance_aux_20261121/c100_gptrans_pun_s43/recipe.json",
+   "recipe_sha256": "472588fa7ef9df00aab11d8ead599bd46512e96dd7599bef3d797f551018bf3d",
+   "budget_s": 4140,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s43.pt",
+   "initial_state_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c"
+  },
+  {
+   "name": "d100-dft-100k-s43",
+   "recipe": "experiments/pcqm_gptrans_dft_distance_aux_20261121/d100_dft_s43/recipe.json",
+   "recipe_sha256": "b842567840f76fc1937c9fcf5c7afefcaa83e6098ae35a07a6a07e9859b21ab8",
+   "budget_s": 4800,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s43.pt",
+   "initial_state_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c"
+  },
+  {
+   "name": "d500-dft-500k-s44",
+   "recipe": "experiments/pcqm_gptrans_dft_distance_aux_20261121/d500_dft_s44/recipe.json",
+   "recipe_sha256": "e69bfa94974bd422801bc68fc36389993f73ef9439b8f918ffeb85028dc6c94a",
+   "budget_s": 17600,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573",
+   "gate": {"dev_delta": {"a": "d100-dft-100k-s43", "b": "c100-gptt-100k-s43", "max_delta_meV": -3.0}}
+  },
+  {
+   "name": "c500-gptt-500k-s44",
+   "recipe": "experiments/pcqm_gptrans_dft_distance_aux_20261121/c500_gptrans_pun_s44/recipe.json",
+   "recipe_sha256": "c26a3e23dae08185df6830698d20b5c0401e39f2eab12b22b00f1e09eb14f771",
+   "budget_s": 15300,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573",
+   "gate": {"dev_delta": {"a": "d100-dft-100k-s43", "b": "c100-gptt-100k-s43", "max_delta_meV": -3.0}}
+  }
+ ]
+}
