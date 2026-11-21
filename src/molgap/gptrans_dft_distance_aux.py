@@ -10,7 +10,6 @@ over all real heavy-atom pairs i<j of rows with valid coordinates, head
 LayerNorm -> Linear -> GELU -> Linear on pair_channels, symmetrized.
 """
 import json
-from copy import copy
 from dataclasses import replace
 from pathlib import Path
 
@@ -84,20 +83,19 @@ def objective(model, batch, forward, recipe):
     size, widest = layout["batch_size"], layout["max_nodes"]
     valid = batch.dft_valid.view(-1).bool()
     real = layout["mask"] & valid[:, None]
+    # Dense, sync-free: every atom pair of the padded batch, masked to real i<j pairs of valid rows.
     pairs = real[:, :, None] & real[:, None, :] & torch.triu(
         torch.ones(widest, widest, dtype=torch.bool, device=real.device), diagonal=1)
-    graph, first, second = pairs.nonzero(as_tuple=True)
-    if graph.numel() == 0:
-        addon.last_aux = gap.new_zeros(())
-        return gap, metrics
     coordinates = batch.dft_pos.new_zeros(size * widest, 3)
     coordinates[layout["flat_index"]] = batch.dft_pos
     coordinates = coordinates.view(size, widest, 3)
-    distance = (coordinates[graph, first] - coordinates[graph, second]).norm(dim=-1)
+    distance = (coordinates[:, :, None] - coordinates[:, None, :]).pow(2).sum(-1).sqrt()
     # Local index 0 of the dense pair state is the graph token; atom j sits at j + 1.
-    states = torch.cat((pair[graph, :, first + 1, second + 1], pair[graph, :, second + 1, first + 1]))
-    forward_half, reverse_half = addon.head(states).squeeze(-1).chunk(2)
-    aux = (0.5 * (forward_half + reverse_half) - distance).abs().mean()
+    states = pair[:, :, 1:widest + 1, 1:widest + 1].permute(0, 2, 3, 1)
+    predicted = addon.head(states).squeeze(-1)
+    predicted = 0.5 * (predicted + predicted.transpose(1, 2))
+    count = pairs.sum()
+    aux = ((predicted - distance).abs() * pairs).sum() / count.clamp_min(1)
     addon.last_aux = aux.detach()
     return gap + LOSS_WEIGHT * aux, metrics
 
@@ -114,7 +112,7 @@ class _DftTrainDataset:
 
     def __getitem__(self, index):
         import torch
-        graph = copy(self.base[index])
+        graph = self.base[index]  # InMemoryDataset.get returns a fresh Data, so no extra copy
         start, stop = int(self.offsets[index]), int(self.offsets[index + 1])
         graph.dft_pos = self.positions[start:stop]
         graph.dft_valid = self.valid[index:index + 1]
