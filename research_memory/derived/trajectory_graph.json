@@ -11,6 +11,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-dft-distance-aux-20261121:A001",
+      "target": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-dft-distance-aux-20261121:A002",
+      "target": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema:A001",
       "target": "experiments/pcqm_gptrans_norm_ema_100k_20261104/generated/92cb4884c511adb30ed6480456082af2054ec917a8f7d09f0c877c83b8c17bc2/norm_no_decay_multi_ema/recipe.json",
       "type": "action_produced_evidence"
@@ -1748,6 +1758,11 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-dft-distance-aux-20261121",
       "type": "prior_evidence"
     },
     {
@@ -4644,6 +4659,10 @@
     },
     {
       "id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-dft-distance-aux-20261121",
       "type": "trajectory"
     },
     {
