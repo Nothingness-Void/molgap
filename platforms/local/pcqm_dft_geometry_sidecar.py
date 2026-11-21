@@ -92,7 +92,7 @@ def orders_agree(order_by_pair, g_bonds, match):
 
 
 def length_flags(pos, gz, g_bonds):
-    """Names of bond-length checks this row fails (fixed range, covalent range, bond order vs length)."""
+    """Failed bond-length checks (fixed range, covalent range, bond order vs length) and graph C=C lengths."""
     from rdkit import Chem
     table = Chem.GetPeriodicTable()
     e = np.array(g_bonds)
@@ -108,7 +108,8 @@ def length_flags(pos, gz, g_bonds):
         "bol_single_CO_short": (co & (e[:, 2] == 0) & (d < 1.28)).any(),
     }
     names = [k for k, v in flags.items() if v]
-    return names + (["bond_order_length_inconsistent"] if any(n.startswith("bol_") for n in names) else [])
+    gate = any(n in ("bol_double_CO_long", "bol_single_CO_short") for n in names)  # C=C long is report-only
+    return names + (["bond_order_length_inconsistent"] if gate else []), d[cc & (e[:, 2] == 1)]
 
 
 def align_row(task):
@@ -118,9 +119,9 @@ def align_row(task):
     s_z, s_h, s_q, s_xyz, s_bonds = parse_molblock(text.split("\n"))
     n = len(gz)
     if len(s_z) != n:
-        return BAD_COUNT, None, []
+        return BAD_COUNT, None, ([], [])
     if sorted(s_z.tolist()) != sorted(gz.tolist()):
-        return BAD_ELEMENTS, None, []
+        return BAD_ELEMENTS, None, ([], [])
     # OpenBabel writes charge-separated groups (nitro, N-oxide) uncharged with extra double bonds, so SDF charges are
     # ignored and bonds touching a graph-charged atom accept any order.
     wild = gq != 0
@@ -128,7 +129,7 @@ def align_row(task):
     gq = s_q = np.zeros(n, np.int16)
     order_by_pair = {(a, b): o for a, b, o in s_bonds}
     if len(s_bonds) != len(g_bonds):
-        return BAD_BONDS, None, []
+        return BAD_BONDS, None, ([], [])
     ident = (np.array_equal(s_z, gz) and np.array_equal(s_h, gh) and np.array_equal(s_q, gq)
              and [b[:2] for b in s_bonds] == [b[:2] for b in g_bonds] and orders_agree(order_by_pair, g_bonds, range(n)))
     if ident:
@@ -141,9 +142,9 @@ def align_row(task):
         match = target.GetSubstructMatch(labelled_skeleton(gz, gh, gq, g_bonds), params)  # graph j -> sdf p(j)
         if len(match) != n:  # no chemistry-consistent mapping: is the bare skeleton at least isomorphic?
             bare = target.GetSubstructMatch(labelled_skeleton(gz, gh, gq, g_bonds, False))
-            return (BAD_LABELS if len(bare) == n else BAD_BONDS), None, []
+            return (BAD_LABELS if len(bare) == n else BAD_BONDS), None, ([], [])
         pos, code = s_xyz[np.array(match)], ISOMORPHIC
-    return code, pos.astype(np.float32), length_flags(pos, gz, g_bonds) if g_bonds else []
+    return code, pos.astype(np.float32), length_flags(pos, gz, g_bonds) if g_bonds else ([], [])
 
 
 def align_chunk(tasks):
@@ -235,7 +236,7 @@ def main(argv=None):
     t1 = time.time()
     counts = collections.Counter()
     examples = collections.defaultdict(list)
-    topo, shards = [], []
+    topo, shards, cc_lengths = [], [], []
     records = iter_records(a.archive, a.start, a.stop)
     pending = collections.deque()
     pool = mp.get_context("spawn").Pool(min(a.workers, 8))
@@ -271,7 +272,8 @@ def main(argv=None):
             offsets = slices["x"].numpy().astype(np.int64)
             pos = np.zeros((int(offsets[-1]), 3), np.float32)
             valid = np.zeros(SHARD_ROWS, bool)
-            for i, (code, p, flags) in enumerate(res):
+            for i, (code, p, (flags, cc_len)) in enumerate(res):
+                cc_lengths.extend(cc_len)
                 note(CLASS_NAMES[code], r0 + i)
                 if p is not None:
                     pos[offsets[i]:offsets[i + 1]], valid[i] = p, True
@@ -303,6 +305,10 @@ def main(argv=None):
                       "bonded_distance_out_of_range_rows": oor,
                       "bond_order_length_inconsistent_rows": bol,
                       "bond_order_length_by_class": {k: v for k, v in counts.items() if k.startswith("bol_")},
+                      "bond_order_length_note": "gating: C=O > 1.30 A, C-O < 1.28 A. report-only: matcher enforces non-aromatic "
+                                                "bond order; long C=C (> 1.40 A) are conjugated ring bonds",
+                      "graph_double_CC_length_A": {"count": len(cc_lengths), "median": float(np.median(cc_lengths)),
+                                                  "p99": float(np.percentile(cc_lengths, 99))},
                       "bonded_distance_fixed_range_rows": counts["bonded_distance_fixed_range_0.9_2.0"],
                       "bonded_distance_rule": "out of range = any bond outside 0.75-1.25 x covalent-radius sum",
                       "examples": {n: examples[n] for n in examples if n != "identity_order"}},
