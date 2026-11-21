@@ -46,3 +46,35 @@ checked against an official hash.
 Uploaded to the IMS fixed root as an additive subtree
 `sidecars/pcqm-dft-train-geometry-500k-v1/` (no accepted file changed; files
 made read-only). Local and remote sha256 of all 11 files match.
+
+## Correction after pre-submit review (2026-11-21): v1 withdrawn, v3 used
+
+The review found that the v1 mapping matched bare element skeletons and took
+the first match, so symmetric groups were often swapped (C=O vs C-OH and
+similar). A bond-order length check showed 44,837 rows (8.97%) with a graph
+C=O longer than 1.30 A, a graph C-O shorter than 1.28 A, or a graph C=C longer
+than 1.40 A. The v1 sidecar is withdrawn and never trained on.
+
+The builder now matches on (element, H count) and requires SDF bond order to
+equal the graph's for every non-aromatic bond (charged atoms excepted: OpenBabel
+writes nitro and N-oxide groups uncharged). Builder commits 68f08e2da and
+6beba08da on `codex/infra/dft-geometry-sidecar-20261121`.
+
+| Check (500K) | v1 | v3 |
+|---|---:|---:|
+| graph C=O > 1.30 A | 25,103 | 4 |
+| graph C-O < 1.28 A | 25,131 | 32 |
+| graph C=C > 1.40 A (report only) | 20,504 | 12,505 |
+| invalid rows | 1 | 1 |
+| parse + align + write | 35 s | 60 s |
+
+The C=C class does not gate in v3. Since the matcher already enforces the
+non-aromatic bond order, a long C=C is real geometry: of 17,728 such bonds,
+17,210 are ring bonds and 17,519 conjugated; graph C=C lengths over 230,497
+bonds have median 1.344 A and p99 1.471 A. The gating classes (C=O, C-O) give
+34 rows (0.007%), under the 0.5% line.
+
+v3: `sidecars/pcqm-dft-train-geometry-500k-v3/` on the IMS fixed root, manifest
+sha256 `5b1d8f47ee27b067a2d7c089b3ac38483cbe7e30407133bf2426ce24f39b5b51`
+(shards byte-identical to v2). Uploaded, read-only, local and remote hashes
+match. The v1 subtree remains on IMS, read-only and unused.
