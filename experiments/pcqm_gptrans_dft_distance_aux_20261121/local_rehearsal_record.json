@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-21",
+ "results": [
+  {
+   "check": "no modified tracked files under the experiment directory",
+   "passed": true,
+   "modified": []
+  },
+  {
+   "check": "code root built from git archive HEAD of --repo",
+   "passed": true,
+   "head": "cb3470edb7236a8e7dc40aa1a36dff9f14e31906"
+  },
+  {
+   "check": "run spec validates against the repo's dataset and runtime registries",
+   "passed": true,
+   "run_id": "gptdft-chain-20261121",
+   "items": [
+    "c100-gptt-100k-s43",
+    "d100-dft-100k-s43",
+    "c500-gptt-500k-s44",
+    "d500-dft-500k-s44"
+   ]
+  },
+  {
+   "check": "serial spec passes the driver's own validation (wall from the run spec)",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "check": "start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
+   "passed": true,
+   "problems": [],
+   "unexplained": []
+  },
+  {
+   "check": "every rehearsable item took 20 real steps (real recipe bytes + --max-steps)",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "c100-gptt-100k-s43": "PAUSED",
+    "d100-dft-100k-s43": "PAUSED",
+    "c500-gptt-500k-s44": "PAUSED",
+    "d500-dft-500k-s44": "PAUSED"
+   },
+   "steps": {
+    "c100-gptt-100k-s43": 20,
+    "d100-dft-100k-s43": 20,
+    "c500-gptt-500k-s44": 20,
+    "d500-dft-500k-s44": 20
+   },
+   "peak_handles": 1796,
+   "peak_ws_gib": 2.5
+  },
+  {
+   "check": "kill while an item is RUNNING with a checkpoint on disk",
+   "passed": true,
+   "victim": "c100-gptt-100k-s43",
+   "done_before_kill": []
+  },
+  {
+   "check": "rerun resumes the killed item from its checkpoint; finished items are not redone",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ]
+  },
+  {
+   "check": "shrunk chain ends with every item COMPLETE or gate-skipped (gate thresholds rewritten, rehearsal copy only)",
+   "passed": true,
+   "exit": 0,
+   "states": {
+    "c100-gptt-100k-s43": "COMPLETE",
+    "d100-dft-100k-s43": "COMPLETE",
+    "c500-gptt-500k-s44": "COMPLETE",
+    "d500-dft-500k-s44": "COMPLETE"
+   },
+   "force_gates": true
+  }
+ ]
+}
