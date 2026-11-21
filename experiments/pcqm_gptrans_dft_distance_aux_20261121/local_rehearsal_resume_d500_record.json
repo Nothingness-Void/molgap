@@ -1,0 +1,76 @@
+{
+ "date": "2026-11-21",
+ "results": [
+  {
+   "check": "no modified tracked files under the experiment directory",
+   "passed": true,
+   "modified": []
+  },
+  {
+   "check": "code root built from git archive HEAD of --repo",
+   "passed": true,
+   "head": "b458c25904bc6f08684cc4f02f66a41e2c6180b7"
+  },
+  {
+   "check": "run spec validates against the repo's dataset and runtime registries",
+   "passed": true,
+   "run_id": "gptdft-chain-20261121",
+   "items": [
+    "c100-gptt-100k-s43",
+    "d100-dft-100k-s43",
+    "c500-gptt-500k-s44",
+    "d500-dft-500k-s44"
+   ]
+  },
+  {
+   "check": "serial spec passes the driver's own validation (wall from the run spec)",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "check": "start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
+   "passed": true,
+   "problems": [],
+   "unexplained": []
+  },
+  {
+   "check": "gate dropped, its input item is not rehearsed: d500-dft-500k-s44",
+   "passed": true
+  },
+  {
+   "check": "every rehearsable item took 20 real steps (real recipe bytes + --max-steps)",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "d500-dft-500k-s44": "PAUSED"
+   },
+   "steps": {
+    "d500-dft-500k-s44": 20
+   },
+   "peak_handles": 1795,
+   "peak_ws_gib": 2.51
+  },
+  {
+   "check": "kill while an item is RUNNING with a checkpoint on disk",
+   "passed": true,
+   "victim": "d500-dft-500k-s44",
+   "done_before_kill": []
+  },
+  {
+   "check": "rerun resumes the killed item from its checkpoint; finished items are not redone",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ]
+  },
+  {
+   "check": "shrunk chain ends with every item COMPLETE or gate-skipped (real gate thresholds)",
+   "passed": true,
+   "exit": 0,
+   "states": {
+    "d500-dft-500k-s44": "COMPLETE"
+   },
+   "force_gates": false
+  }
+ ]
+}
