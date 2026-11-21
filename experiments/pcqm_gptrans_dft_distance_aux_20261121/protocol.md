@@ -76,11 +76,11 @@ lookup or correction.
 | Item | Model | Scale | Init / seed | Budget (s) | Gate |
 |---|---|---|---|---:|---|
 | c100 | GPT-T BondLocal pair-update-norm (J2 recipe bytes) | 100K | s43 init, seed 43 | 4,140 | none |
-| d100 | same + DFT distance head | 100K | s43 init, seed 43 | 4,800 | none |
-| d500 | same + DFT distance head | 500K | s44 init, seed 42 | 17,600 | dev MAE d100 - c100 <= -3.0 meV |
+| d100 | same + DFT distance head | 100K | s43 init, seed 43 | 5,900 | none |
+| d500 (runs after c500) | same + DFT distance head | 500K | s44 init, seed 42 | 22,000 | dev MAE d100 - c100 <= -3.0 meV |
 | c500 | GPT-T control (J5 recipe bytes) | 500K | s44 init, seed 42 | 15,300 | same gate |
 
-Total budget 41,840 s. Recipes are identical between control and candidate
+Total budget 47,340 s (set by the dated deviation below). Recipes are identical between control and candidate
 except the mode and the sidecar. Head constants are frozen in the addon module:
 loss weight 0.1 on the normalized Gap L1 scale, L1 loss in angstrom over all
 real heavy-atom pairs of rows with valid coordinates, head initialized from its
