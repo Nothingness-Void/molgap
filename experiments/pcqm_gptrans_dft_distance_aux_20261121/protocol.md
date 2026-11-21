@@ -100,8 +100,6 @@ grid.
   full-scale run or production change follows from this protocol.
 - Inference check before any tail score: the selected candidate checkpoint must
   score with no sidecar present and no coordinate field in the batch.
-</content>
-</invoke>
 
 ## Deviations (dated, before any training)
 
@@ -109,8 +107,9 @@ grid.
   element-aware rule and a bond-order length check; see
   `diagnostic_alignment_20261121.md`. The pre-submit review found the v1
   sidecar's atom mapping ignored bond order (swapped =O/-OH and similar in
-  about 7.6% of rows); v1 is withdrawn and a chemistry-labelled v2 sidecar
-  replaces it. No arm, constant, role or training gate changed.
+  8.97% of rows fail a bond-order length check); v1 is withdrawn and the
+  chemistry-labelled v3 sidecar (shards byte-identical to v2, manifest
+  5b1d8f47...) replaces it. No arm, constant, role or training gate changed.
 - 2026-11-21: budgets set from the local rehearsal (candidate slower per
   step); c500 runs before d500 so a time pause falls on the candidate, which
   resumes. Budgets are estimates used for time skips, not limits on training.

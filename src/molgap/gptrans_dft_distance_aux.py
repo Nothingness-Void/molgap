@@ -95,7 +95,7 @@ def objective(model, batch, forward, recipe):
     predicted = addon.head(states).squeeze(-1)
     predicted = 0.5 * (predicted + predicted.transpose(1, 2))
     count = pairs.sum()
-    aux = ((predicted - distance).abs() * pairs).sum() / count.clamp_min(1)
+    aux = torch.where(pairs, (predicted - distance).abs(), 0.0).sum() / count.clamp_min(1)
     addon.last_aux = aux.detach()
     return gap + LOSS_WEIGHT * aux, metrics
 
