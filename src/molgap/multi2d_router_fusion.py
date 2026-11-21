@@ -8,7 +8,7 @@ from typing import Mapping, Sequence
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import BatchSampler, DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
 
 TARGETS = ("homo", "lumo", "gap")
@@ -169,6 +169,12 @@ def _indices(values: Sequence[int], n_rows: int, name: str) -> np.ndarray:
     return result
 
 
+class _GateBatchDataset(TensorDataset):
+    def __getitem__(self, indices):
+        rows = torch.as_tensor(indices, dtype=torch.long)
+        return tuple(tensor.index_select(0, rows) for tensor in self.tensors)
+
+
 def _loader(
     features: np.ndarray,
     predictions: np.ndarray,
@@ -178,17 +184,14 @@ def _loader(
     batch_size: int,
     shuffle: bool,
 ) -> DataLoader:
-    tensors = TensorDataset(
+    tensors = _GateBatchDataset(
         torch.from_numpy(features[indices]),
         torch.from_numpy(predictions[indices]),
         torch.from_numpy(targets[indices]),
     )
-    return DataLoader(
-        tensors,
-        batch_size=batch_size,
-        shuffle=shuffle,
-        num_workers=0,
-    )
+    sampler = RandomSampler(tensors) if shuffle else SequentialSampler(tensors)
+    batches = BatchSampler(sampler, batch_size, drop_last=False)
+    return DataLoader(tensors, sampler=batches, batch_size=None, num_workers=0)
 
 
 def _state_to_cpu(model: nn.Module) -> dict[str, torch.Tensor]:
