@@ -14,13 +14,18 @@ import torch
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=Path(__file__).resolve().parents[4] / "src")
+    parser.add_argument("--source", type=Path)
     parser.add_argument("--rows", type=int, default=131072)
     parser.add_argument("--epochs", type=int, default=4)
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--threads", type=int, default=1)
     args = parser.parse_args()
-    sys.path.insert(0, str(args.source.resolve()))
+    if args.source is None:
+        from molgap.constants import REPO_ROOT
+
+        args.source = REPO_ROOT / "src"
+    else:
+        sys.path.insert(0, str(args.source.resolve()))
     from molgap.multi2d_router_fusion import GateTrainingConfig, fit_dense_soft_gate
 
     torch.set_num_threads(args.threads)
