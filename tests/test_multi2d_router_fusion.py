@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from molgap.multi2d_router_fusion import (
     GateTrainingConfig,
+    _epoch_losses,
     _loader,
     dense_gate_features,
     fit_dense_soft_gate,
@@ -71,6 +72,12 @@ def test_gate_batch_loader_matches_rowwise_collation(shuffle):
     expected, expected_rng = sample(reference)
     torch.testing.assert_close(actual, expected, rtol=0, atol=0)
     torch.testing.assert_close(actual_rng, expected_rng, rtol=0, atol=0)
+
+
+def test_epoch_loss_preserves_weighted_batch_average():
+    batches = [(torch.tensor(0.1234567), 4096), (torch.tensor(0.8765432), 3)]
+    expected = (batches[0][0].item() * 4096 + batches[1][0].item() * 3) / 4099
+    assert _epoch_losses(batches, batches[1:]) == (expected, batches[1][0].item())
 
 
 def test_dense_and_predispatch_models_train_and_predict():
