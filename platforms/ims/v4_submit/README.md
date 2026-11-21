@@ -166,3 +166,5 @@ Not re-done at job start: shard content hashes (the launcher checks the fixed
 root acceptance) and the decoded-row identity, which each child still checks.
 
 Local rehearsal: `platforms/ims/family_serial_rehearsal.py` (record beside it).
+A committed experiment's own chain: `python platforms/ims/family_serial_rehearsal.py spec --repo <worktree> --run-spec <repo-relative run_spec.json> --fixed-root <local root> --work <scratch> [--max-steps 20] [--items a,b] [--force-gates]`
+(validates the spec, runs every locally rehearsable item N real steps, then a one-pass chain with kill and resume, and checks the real spec; record in `<scratch>/spec_rehearsal_record.json`).
