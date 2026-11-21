@@ -486,7 +486,17 @@ def write_code(code: Path, repo: Path, serial: dict, contract: str, max_steps: i
 def rehearse_spec(a) -> int:
     """The experiment's committed run spec and serial spec, run locally: validation, every rehearsable item N real steps, a shrunk
     one-pass chain with kill and resume, and the start-of-job check on the unshrunk spec."""
-    repo, work, fixed = a.repo.resolve(), a.work.resolve(), a.fixed_root.resolve()
+    checkout, work, fixed = a.repo.resolve(), a.work.resolve(), a.fixed_root.resolve()
+    # What IMS gets is `git archive HEAD`, so everything below runs from that archive: ignored or uncommitted files are then missing here too.
+    experiment = Path(a.run_spec).parent.as_posix()
+    dirty = [ln for ln in subprocess.run(["git", "-C", str(checkout), "status", "--porcelain", "--", experiment], capture_output=True, text=True).stdout.splitlines() if not ln.startswith("??")]
+    record("no modified tracked files under the experiment directory", not dirty, modified=dirty[:5])
+    repo = work / "archive"
+    shutil.rmtree(repo, ignore_errors=True)
+    repo.mkdir(parents=True)
+    with subprocess.Popen(["git", "-C", str(checkout), "archive", "--format=tar", "HEAD"], stdout=subprocess.PIPE) as proc, tarfile.open(fileobj=proc.stdout, mode="r|") as tar:
+        tar.extractall(repo)
+    record("code root built from git archive HEAD of --repo", proc.returncode == 0 and (repo / a.run_spec).is_file(), head=subprocess.run(["git", "-C", str(checkout), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip())
     global DRIVER
     DRIVER = repo / "platforms/ims/family_serial_run.py"
     sys.path.insert(0, str(repo / "src"))
