@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-gptrans-dft-distance-aux-20261121",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "dft_alignment_passed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-gptrans-dft-distance-aux-20261121"
+  },
+  "action_rule": {
+    "action": "RUN_100K_500K_IMS_CHAIN",
+    "field": "dft_alignment_passed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "64aeb542d4dcf6f1bc26a2c48d69037e64491e85dd086cbe341b8b2d55ba7f8e"
+}

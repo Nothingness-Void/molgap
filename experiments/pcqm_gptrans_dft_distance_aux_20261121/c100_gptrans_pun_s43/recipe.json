@@ -1,0 +1,66 @@
+{
+ "acceptance_requirements": {
+  "completed_passes": 60,
+  "development_rows": 50000,
+  "next_batch": 0,
+  "optimizer_steps": 46860,
+  "precision": "fp32",
+  "sample_presentations": 5998080,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+ },
+ "batch_size": 128,
+ "checkpoint_every": 128,
+ "dataset": {
+  "development": true,
+  "manifest": "subsets/ogb-train-100k/manifest.json",
+  "manifest_sha256": "fed575a4ae3fa43290d83aa35e42ab85467a0c155b29e453cfbf5db9be5fe256"
+ },
+ "development_role_identity": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+ "development_rows": 50000,
+ "drop_last": true,
+ "ema_decay": 0.999,
+ "execution_policy": {
+  "adamw_betas": [
+   0.9,
+   0.999
+  ],
+  "adamw_epsilon": 1e-08,
+  "cpu_layout": true,
+  "ema": "bound-foreach",
+  "family": "gptrans_t",
+  "name": "shared-family-accelerated",
+  "optimizer": "foreach-adamw",
+  "precision": "fp32",
+  "tf32": false,
+  "torch_version": "2.7.1"
+ },
+ "family": "gptrans_t",
+ "finite_check_every": 50,
+ "format": "molgap-family-training-recipe-v1",
+ "gradient_clip": 1.0,
+ "initialization_sha256": "c95da412764ea1b9a701ae9421c167e32a18f9dc423d364aa3d4fe8c0a8d5f5b",
+ "learning_rate": 0.001,
+ "logging": {
+  "interval": null,
+  "mode": "epoch"
+ },
+ "mode": "degree_bond_local_pair_update_norm_ema999",
+ "optimizer_steps": 46860,
+ "sampler": "torch-pass-randperm",
+ "schedule": {
+  "kind": "warmup_cosine_epoch",
+  "minimum_lr": 1e-06,
+  "reference_epochs": 60,
+  "total_units": 60,
+  "warmup_units": 4
+ },
+ "seed": 43,
+ "selection": "best-development-ema",
+ "target_mean_eV": 5.338300266634226,
+ "target_std_eV": 1.2750902063230574,
+ "torch_version": "2.7.1",
+ "train_role_identity": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+ "train_rows": 100000,
+ "weight_decay": 0.05
+}
