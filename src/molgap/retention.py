@@ -40,6 +40,7 @@ def retention_loss(
     *,
     boundary: int,
     distillation_weight: float,
+    retained_indices: torch.Tensor | None = None,
 ) -> RetentionLoss:
     """Add teacher retention only for rows in the preserved source prefix."""
     if prediction.shape != label.shape or prediction.shape != teacher_prediction.shape:
@@ -50,8 +51,8 @@ def retention_loss(
         raise ValueError("distillation_weight must be non-negative")
 
     label_value = F.l1_loss(prediction, label)
-    retained = source_idx < boundary
-    retained_rows = int(retained.sum().item())
+    retained = source_idx < boundary if retained_indices is None else retained_indices
+    retained_rows = int(retained.sum().item()) if retained_indices is None else retained_indices.numel()
     if retained_rows:
         distillation_value = F.l1_loss(
             prediction[retained],

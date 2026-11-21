@@ -3,6 +3,39 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
+from torch_geometric.nn import GINEConv, GPSConv
+
+
+def gps_attention_layout(ptr):
+    """Build the attention indices and padding mask from a CPU batch pointer."""
+    counts = ptr.diff()
+    width = int(counts.max())
+    graphs = counts.numel()
+    nodes = int(ptr[-1])
+    graph = torch.arange(graphs).repeat_interleave(counts, output_size=nodes)
+    position = torch.arange(nodes) - ptr[graph]
+    return position * graphs + graph, torch.arange(width) >= counts[:, None]
+
+
+class _PackedGPSConv(GPSConv):
+    """GINE/multihead/BatchNorm GPS block with a precomputed batch layout."""
+
+    def forward(self, x, edge_index, batch=None, *, layout=None, **kwargs):
+        if layout is None:
+            return super().forward(x, edge_index, batch, **kwargs)
+
+        index, padding = layout
+        local = self.conv(x, edge_index, **kwargs)
+        local = self.norm1(nn.functional.dropout(local, self.dropout, self.training) + x)
+        graphs, width = padding.shape
+        dense = x.new_zeros(graphs * width, x.size(-1))
+        dense.index_copy_(0, index, x)
+        dense = dense.view(width, graphs, x.size(-1)).transpose(0, 1)
+        attended, _ = self.attn(dense, dense, dense, key_padding_mask=padding, need_weights=False)
+        attended = attended.transpose(0, 1).flatten(0, 1).index_select(0, index)
+        attended = self.norm2(nn.functional.dropout(attended, self.dropout, self.training) + x)
+        out = local + attended
+        return self.norm3(out + self.mlp(out))
 
 
 class GPSWrapper(nn.Module):
@@ -16,7 +49,6 @@ class GPSWrapper(nn.Module):
                  num_layers=6, num_heads=8, dropout=0.1, n_targets=3,
                  pooling="mean"):
         super().__init__()
-        from torch_geometric.nn import GPSConv, GINEConv
 
         if pooling not in {"mean", "mean_max"}:
             raise ValueError(f"Unsupported GPS pooling: {pooling}")
@@ -35,7 +67,7 @@ class GPSWrapper(nn.Module):
                 ),
                 edge_dim=hidden_channels,
             )
-            gps = GPSConv(
+            gps = _PackedGPSConv(
                 channels=hidden_channels,
                 conv=gin,
                 heads=num_heads,
@@ -63,8 +95,8 @@ class GPSWrapper(nn.Module):
             nn.Linear(hidden_channels // 2, n_targets),
         )
 
-    def forward(self, x, edge_index, edge_attr, batch):
-        h = self.encode(x, edge_index, edge_attr, batch)
+    def forward(self, x, edge_index, edge_attr, batch, *, layout=None):
+        h = self.encode(x, edge_index, edge_attr, batch, layout=layout)
         return self.head(h)
 
     def _pool(self, h, batch, *, size=None):
@@ -84,15 +116,15 @@ class GPSWrapper(nn.Module):
         """Embed edge features while preserving the legacy float contract."""
         return self.edge_emb(edge_attr.float())
 
-    def encode(self, x, edge_index, edge_attr, batch):
+    def encode(self, x, edge_index, edge_attr, batch, *, layout=None):
         """Return molecule-level embeddings [num_molecules, hidden_channels]."""
         h = self._embed_nodes(x)
         e = self._embed_edges(edge_attr)
 
         for conv in self.convs:
-            h = conv(h, edge_index, batch, edge_attr=e)
+            h = conv(h, edge_index, batch, edge_attr=e, layout=layout)
 
-        return self._pool(h, batch)
+        return self._pool(h, batch, size=None if layout is None else layout[1].size(0))
 
     def encode_layers(self, x, edge_index, edge_attr, batch, layers=(2, 4, -1)):
         """Return concatenated pooled embeddings from selected GPS layers.
