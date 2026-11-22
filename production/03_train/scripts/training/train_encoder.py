@@ -223,15 +223,6 @@ def _encoder_loader(graphs, *, kind="gps", device="cpu", retention_boundary=None
                       pin_memory=torch.device(device).type == "cuda", **kwargs)
 
 
-def _load_optimizer_state(optimizer, state):
-    fused = optimizer.defaults["fused"]
-    groups = [
-        {**group, "fused": fused, **({"foreach": None} if fused else {})}
-        for group in state["param_groups"]
-    ]
-    optimizer.load_state_dict({**state, "param_groups": groups})
-
-
 def _make_train_loader(train_set, batch_size: int, replay_boundary: int | None,
                        replay_weight: float, seed: int, **loader_options):
     """Optionally oversample an older source-index prefix for replay experiments."""
@@ -670,8 +661,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
             model.load_state_dict(torch.load(args.init_from, weights_only=True, map_location=device))
         print(f"Warm-started from {args.init_from}", flush=True)
     optimizer = torch.optim.AdamW(
-        model.parameters(), lr=training_params["lr"], weight_decay=training_params["weight_decay"],
-        fused=True if args.kind == "gps" and device.type == "cuda" else None,
+        model.parameters(), lr=training_params["lr"], weight_decay=training_params["weight_decay"]
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=args.epochs, eta_min=1e-6
@@ -696,7 +686,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 "Resume checkpoint does not match kind, graph manifest, or seeds"
             )
         model.load_state_dict(resume["model_state"])
-        _load_optimizer_state(optimizer, resume["optimizer_state"])
+        optimizer.load_state_dict(resume["optimizer_state"])
         scheduler.load_state_dict(resume["scheduler_state"])
         scaler.load_state_dict(resume["scaler_state"])
         best_val, best_state = float(resume["best_val"]), resume["best_state"]
@@ -1113,8 +1103,7 @@ def main():
             state = torch.load(args.init_from, weights_only=True, map_location=device)
             model.load_state_dict(state)
             print(f"Warm-started from {args.init_from}", flush=True)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=p["lr"], weight_decay=p["weight_decay"],
-                                  fused=True if args.kind == "gps" and device.type == "cuda" else None)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=p["lr"], weight_decay=p["weight_decay"])
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6)
     scaler = torch.amp.GradScaler("cuda", enabled=torch.cuda.is_available())
     criterion = nn.L1Loss()
@@ -1171,7 +1160,7 @@ def main():
         if resume.get("retention_distillation") != retention_config:
             raise ValueError("Resume checkpoint retention configuration differs")
         model.load_state_dict(resume["model_state"])
-        _load_optimizer_state(optimizer, resume["optimizer_state"])
+        optimizer.load_state_dict(resume["optimizer_state"])
         scheduler.load_state_dict(resume["scheduler_state"])
         scaler.load_state_dict(resume["scaler_state"])
         best_val = float(resume["best_val"])
