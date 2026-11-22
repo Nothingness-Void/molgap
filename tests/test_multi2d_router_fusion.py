@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+from torch.utils.data import DataLoader, TensorDataset
 
 from molgap.multi2d_router_fusion import (
     GateTrainingConfig,
+    _loader,
     dense_gate_features,
     fit_dense_soft_gate,
     fit_predispatch_router,
@@ -36,14 +38,27 @@ def synthetic(seed: int = 7):
     return predictions, targets, descriptors
 
 
-def test_feature_shapes_and_finite_values():
-    predictions, _, descriptors = synthetic()
+def test_features_and_gate_batches_match_input_rows():
+    predictions, targets, descriptors = synthetic()
     dense = dense_gate_features(predictions)
     predispatch = predispatch_features(predictions[:, 0], descriptors)
     assert dense.shape == (600, 27)
     assert predispatch.shape == (600, 9)
     assert np.isfinite(dense).all()
     assert np.isfinite(predispatch).all()
+
+    arrays, rows = (dense, predictions, targets), np.arange(1, 23, 2)
+    dataset = TensorDataset(*(torch.from_numpy(a[rows]) for a in arrays))
+
+    def sample(loader):
+        with torch.random.fork_rng(devices=[]):
+            torch.default_generator.manual_seed(42)
+            return list(loader), torch.get_rng_state()
+
+    for shuffle in (False, True):
+        reference = DataLoader(dataset, batch_size=4, shuffle=shuffle)
+        optimized = _loader(*arrays, rows, batch_size=4, shuffle=shuffle)
+        torch.testing.assert_close(sample(optimized), sample(reference), rtol=0, atol=0)
 
 
 def test_dense_and_predispatch_models_train_and_predict():
