@@ -23,8 +23,9 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
+from torch.utils.data import DataLoader
 from sklearn.metrics import mean_absolute_error, r2_score
-from torch_geometric.loader import DataLoader
+from torch_geometric.data import Batch
 
 from molgap.constants import (
     EXPERIMENTS_DIR,
@@ -39,6 +40,7 @@ from molgap.gps import (
     GPSWrapper,
     NormalizedStructuralGPSWrapper,
     StructuralGPSWrapper,
+    gps_attention_layout,
 )
 from molgap.retention import retention_loss
 from molgap.schnet import SchNetWrapper
@@ -173,7 +175,8 @@ def _load_compatible_state(model, checkpoint: Path, device) -> dict:
 
 def _forward(kind: str, model, batch):
     if kind == "gps":
-        return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+        return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+                     layout=getattr(batch, "gps_layout", None))
     if kind in RWSE_KINDS:
         return model(
             batch.x,
@@ -188,7 +191,8 @@ def _forward(kind: str, model, batch):
 
 def _encode(kind: str, model, batch):
     if kind == "gps":
-        return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch)
+        return model.encode(batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+                            layout=getattr(batch, "gps_layout", None))
     if kind in RWSE_KINDS:
         return model.encode(
             batch.x,
@@ -201,11 +205,29 @@ def _encode(kind: str, model, batch):
     return model.encode(batch.z, batch.pos, batch.batch, charges=charges)
 
 
+def _encoder_loader(graphs, *, kind="gps", device="cpu", retention_boundary=None,
+                    retention_targets=None, **kwargs):
+    def collate(data_list):
+        batch = Batch.from_data_list(data_list)
+        if kind == "gps" and batch.num_nodes:
+            batch.gps_layout = gps_attention_layout(batch.ptr)
+        if retention_boundary is not None:
+            source_idx = batch.source_idx.view(-1).long()
+            rows = (source_idx < retention_boundary).nonzero(as_tuple=True)[0]
+            batch.retention_rows = rows
+            if retention_targets is not None:
+                batch.retention_teacher = retention_targets[source_idx.index_select(0, rows)]
+        return batch
+
+    return DataLoader(graphs, collate_fn=collate,
+                      pin_memory=torch.device(device).type == "cuda", **kwargs)
+
+
 def _make_train_loader(train_set, batch_size: int, replay_boundary: int | None,
-                       replay_weight: float, seed: int):
+                       replay_weight: float, seed: int, **loader_options):
     """Optionally oversample an older source-index prefix for replay experiments."""
     if replay_boundary is None:
-        return DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0), None
+        return _encoder_loader(train_set, batch_size=batch_size, shuffle=True, **loader_options), None
     if replay_weight <= 0.0:
         raise ValueError("--replay-weight must be positive")
     old = np.asarray([
@@ -223,7 +245,7 @@ def _make_train_loader(train_set, batch_size: int, replay_boundary: int | None,
     )
     old_probability = float(weights[old].sum().item() / weights.sum().item())
     return (
-        DataLoader(train_set, batch_size=batch_size, sampler=sampler, num_workers=0),
+        _encoder_loader(train_set, batch_size=batch_size, sampler=sampler, **loader_options),
         {
             "source_idx_lt": int(replay_boundary),
             "old_train_rows": int(old.sum()),
@@ -293,9 +315,8 @@ def _evaluate(kind: str, model, loader, device, target_mode: str):
     model.eval()
     pred, true = [], []
     for batch in loader:
-        batch = batch.to(device)
-        out = _forward(kind, model, batch)
-        pred.append(out.float().cpu().numpy())
+        batch = batch.to(device, non_blocking=True)
+        pred.append(_forward(kind, model, batch).float().cpu().numpy())
         true.append(_select_targets(batch.y, target_mode).float().cpu().numpy())
     return np.concatenate(pred), np.concatenate(true)
 
@@ -321,14 +342,14 @@ def _metrics(pred, true, target_mode: str):
 
 
 def _extract_embeddings(kind: str, model, graphs, device, out_path: Path, batch_size: int):
-    loader = DataLoader(graphs, batch_size=batch_size, shuffle=False, num_workers=0)
+    loader = _encoder_loader(graphs, kind=kind, device=device, batch_size=batch_size)
     n_batches = (len(graphs) + batch_size - 1) // batch_size
     embs, source_idx = [], []
     model.eval()
     t0 = time.time()
     with torch.no_grad():
         for bi, batch in enumerate(loader):
-            batch = batch.to(device)
+            batch = batch.to(device, non_blocking=True)
             with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                 emb = _encode(kind, model, batch)
             embs.append(emb.float().cpu())
@@ -394,8 +415,10 @@ def _load_or_build_retention_targets(
     if boundary <= 0 or boundary > len(graphs):
         raise ValueError("Retention boundary must fall within the graph cache")
     targets = torch.empty((boundary, 3), dtype=torch.float32)
-    loader = DataLoader(
+    loader = _encoder_loader(
         graphs[:boundary],
+        kind=kind,
+        device=device,
         batch_size=batch_size,
         shuffle=False,
         num_workers=0,
@@ -405,7 +428,7 @@ def _load_or_build_retention_targets(
         indices = batch.source_idx.view(-1).long()
         if int(indices.min()) < 0 or int(indices.max()) >= boundary:
             raise ValueError("Retention prefix contains out-of-range source_idx")
-        batch = batch.to(device)
+        batch = batch.to(device, non_blocking=True)
         with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
             prediction = _forward(kind, teacher, batch).float().cpu()
         targets[indices] = prediction
@@ -490,31 +513,36 @@ def _evaluate_shards(kind: str, model, shards: list[dict], roles: np.ndarray,
                      role: int, batch_size: int, device, target_mode: str, *,
                      predictions: bool = False):
     model.eval()
-    total, count = 0.0, 0
+    total, count = torch.zeros((), dtype=torch.float64, device=device), 0
     pred, true = [], []
     criterion = nn.L1Loss()
     for shard_number, entry in enumerate(shards):
         graphs = _load_manifest_shard(entry)
         indices = _local_split_indices(entry, roles, role)
         subset = [graphs[int(i)] for i in indices]
-        loader = DataLoader(subset, batch_size=batch_size, shuffle=False, num_workers=0)
+        loader = _encoder_loader(subset, kind=kind, device=device, batch_size=batch_size)
+        shard_pred, shard_true = [], []
         for batch in loader:
-            batch = batch.to(device)
+            batch = batch.to(device, non_blocking=True)
             with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                 output = _forward(kind, model, batch)
                 selected_targets = _select_targets(batch.y, target_mode)
                 loss = criterion(output, selected_targets)
-            total += loss.item() * batch.num_graphs
-            count += batch.num_graphs
             if predictions:
-                pred.append(output.float().cpu().numpy())
-                true.append(selected_targets.float().cpu().numpy())
+                shard_pred.append(output.float())
+                shard_true.append(selected_targets.float())
+            else:
+                total.add_(loss.detach().double() * batch.num_graphs)
+                count += batch.num_graphs
+        if shard_pred:
+            pred.append(torch.cat(shard_pred).cpu().numpy())
+            true.append(torch.cat(shard_true).cpu().numpy())
         print(f"  eval shard {shard_number + 1}/{len(shards)} rows={len(subset):,}", flush=True)
         del loader, subset, indices, graphs
         gc.collect()
     if predictions:
         return np.concatenate(pred), np.concatenate(true)
-    return total / max(count, 1), count
+    return total.item() / max(count, 1), count
 
 
 def _extract_embeddings_sharded(kind: str, model, shards: list[dict], device,
@@ -540,12 +568,12 @@ def _extract_embeddings_sharded(kind: str, model, shards: list[dict], device,
                 part_paths.append(part_path)
                 continue
         graphs = _load_manifest_shard(entry)
-        loader = DataLoader(graphs, batch_size=batch_size, shuffle=False, num_workers=0)
+        loader = _encoder_loader(graphs, kind=kind, device=device, batch_size=batch_size)
         embeddings, source_indices = [], []
         started = time.time()
         with torch.no_grad():
             for batch in loader:
-                batch = batch.to(device)
+                batch = batch.to(device, non_blocking=True)
                 with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                     embeddings.append(_encode(kind, model, batch).float().cpu())
                 source_indices.append(batch.source_idx.view(-1).cpu())
@@ -669,7 +697,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
     for epoch in range(start_epoch, args.epochs):
         started = time.time()
         model.train()
-        total, count = 0.0, 0
+        total, count = torch.zeros((), dtype=torch.float64, device=device), 0
         shard_order = np.random.RandomState(args.seed + epoch).permutation(len(shards))
         for order_position, shard_number in enumerate(shard_order):
             entry = shards[int(shard_number)]
@@ -679,11 +707,12 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
             generator = torch.Generator().manual_seed(
                 args.seed + epoch * len(shards) + int(shard_number)
             )
-            loader = DataLoader(
-                subset, batch_size=batch_size, shuffle=True, num_workers=0, generator=generator
+            loader = _encoder_loader(
+                subset, kind=args.kind, device=device, batch_size=batch_size,
+                shuffle=True, generator=generator,
             )
             for batch in loader:
-                batch = batch.to(device)
+                batch = batch.to(device, non_blocking=True)
                 optimizer.zero_grad(set_to_none=True)
                 with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                     loss = criterion(
@@ -695,7 +724,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0)
                 scaler.step(optimizer)
                 scaler.update()
-                total += loss.item() * batch.num_graphs
+                total.add_(loss.detach().double() * batch.num_graphs)
                 count += batch.num_graphs
             print(
                 f"  train shard {order_position + 1}/{len(shards)} rows={len(subset):,}",
@@ -703,7 +732,7 @@ def _run_sharded(args, device, model_params: dict, training_params: dict,
             )
             del loader, subset, indices, graphs
             gc.collect()
-        train_loss = total / max(count, 1)
+        train_loss = total.item() / max(count, 1)
         val_loss, val_count = _evaluate_shards(
             args.kind, model, shards, roles, 1, eval_bs, device, args.target_mode
         )
@@ -999,7 +1028,7 @@ def main():
             }
         model = _make_model(args.kind, model_params).to(device)
         model.load_state_dict(torch.load(model_out, weights_only=False, map_location=device))
-        test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
+        test_loader = _encoder_loader(test_set, kind=args.kind, device=device, batch_size=eval_bs)
         pred, true = _evaluate(args.kind, model, test_loader, device, args.target_mode)
         result = {
             "kind": args.kind,
@@ -1079,12 +1108,6 @@ def main():
     scaler = torch.amp.GradScaler("cuda", enabled=torch.cuda.is_available())
     criterion = nn.L1Loss()
     bs = int(p["batch_size"])
-    train_loader, replay_report = _make_train_loader(
-        train_set, bs, args.replay_boundary, args.replay_weight, args.seed,
-    )
-    if replay_report is not None:
-        print(f"Replay sampling: {replay_report}", flush=True)
-    val_loader = DataLoader(val_set, batch_size=eval_bs, shuffle=False, num_workers=0)
     if retention_teacher is not None and args.retention_targets_cache is not None:
         retention_targets = _load_or_build_retention_targets(
             retention_teacher,
@@ -1100,6 +1123,16 @@ def main():
         retention_teacher = None
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+
+    train_loader, replay_report = _make_train_loader(
+        train_set, bs, args.replay_boundary, args.replay_weight, args.seed,
+        kind=args.kind, device=device,
+        retention_boundary=args.retention_boundary if retention_config is not None else None,
+        retention_targets=retention_targets,
+    )
+    if replay_report is not None:
+        print(f"Replay sampling: {replay_report}", flush=True)
+    val_loader = _encoder_loader(val_set, kind=args.kind, device=device, batch_size=eval_bs)
 
     best_val, best_state, best_epoch, wait = float("inf"), None, -1, 0
     log_rows = []
@@ -1140,9 +1173,10 @@ def main():
     for epoch in range(start_epoch, args.epochs):
         t0 = time.time()
         model.train()
-        total, label_total, distillation_total, retained_total, n = 0.0, 0.0, 0.0, 0, 0
+        totals = torch.zeros(3, dtype=torch.float64, device=device)
+        retained_total, n = 0, 0
         for batch in train_loader:
-            batch = batch.to(device)
+            batch = batch.to(device, non_blocking=True)
             optimizer.zero_grad()
             with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                 prediction = _forward(args.kind, model, batch)
@@ -1161,16 +1195,9 @@ def main():
                                 args.kind, retention_teacher, batch
                             )
                     else:
-                        source_idx = batch.source_idx.view(-1).long()
-                        retained = source_idx < int(args.retention_boundary)
-                        teacher_prediction = prediction.detach().clone()
-                        if retained.any():
-                            teacher_prediction[retained] = retention_targets[
-                                source_idx[retained].cpu()
-                            ].to(
-                                device=device,
-                                dtype=teacher_prediction.dtype,
-                            )
+                        teacher_prediction = prediction.detach().clone().index_copy_(
+                            0, batch.retention_rows, batch.retention_teacher.to(dtype=prediction.dtype)
+                        )
                     losses = retention_loss(
                         prediction,
                         batch.y,
@@ -1178,6 +1205,7 @@ def main():
                         teacher_prediction,
                         boundary=int(args.retention_boundary),
                         distillation_weight=float(args.retention_weight),
+                        retained_indices=batch.retention_rows,
                     )
                     loss = losses.total
                     label_loss = losses.label
@@ -1188,28 +1216,29 @@ def main():
             torch.nn.utils.clip_grad_norm_(model.parameters(), 10.0)
             scaler.step(optimizer)
             scaler.update()
-            total += loss.item() * batch.num_graphs
-            label_total += label_loss.item() * batch.num_graphs
-            distillation_total += distillation_loss.item() * retained_rows
+            totals[0].add_(loss.detach().double() * batch.num_graphs)
+            totals[1].add_(label_loss.detach().double() * batch.num_graphs)
+            totals[2].add_(distillation_loss.detach().double() * retained_rows)
             retained_total += retained_rows
             n += batch.num_graphs
+        total, label_total, distillation_total = totals.tolist()
         train_loss = total / max(n, 1)
         train_label_loss = label_total / max(n, 1)
         train_distillation_loss = distillation_total / max(retained_total, 1)
 
         model.eval()
-        vtotal, vn = 0.0, 0
+        vtotal, vn = torch.zeros((), dtype=torch.float64, device=device), 0
         with torch.no_grad():
             for batch in val_loader:
-                batch = batch.to(device)
+                batch = batch.to(device, non_blocking=True)
                 with torch.amp.autocast("cuda", enabled=torch.cuda.is_available()):
                     loss = criterion(
                         _forward(args.kind, model, batch),
                         _select_targets(batch.y, args.target_mode),
                     )
-                vtotal += loss.item() * batch.num_graphs
+                vtotal.add_(loss.detach().double() * batch.num_graphs)
                 vn += batch.num_graphs
-        val_loss = vtotal / max(vn, 1)
+        val_loss = vtotal.item() / max(vn, 1)
         scheduler.step()
 
         improved = val_loss < best_val
@@ -1287,7 +1316,7 @@ def main():
     _atomic_torch_save(best_state, model_out)
     print(f"Model -> {model_out}", flush=True)
 
-    test_loader = DataLoader(test_set, batch_size=eval_bs, shuffle=False, num_workers=0)
+    test_loader = _encoder_loader(test_set, kind=args.kind, device=device, batch_size=eval_bs)
     pred, true = _evaluate(args.kind, model, test_loader, device, args.target_mode)
     result = {
         "kind": args.kind,
