@@ -846,6 +846,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-c3-checkpoint-space:A001",
+      "target": "experiments/pcqm_c3_checkpoint_space/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
       "type": "action_produced_evidence"
@@ -1643,6 +1648,11 @@
     {
       "source": "TB-pcqm-residual-block-transfer",
       "target": "TB-pcqm-residual-spread-fit",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-residual-spread-fit",
+      "target": "TB-pcqm-c3-checkpoint-space",
       "type": "parent_trajectory"
     },
     {
@@ -3531,6 +3541,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-residual-spread-fit-20261123",
+      "target": "TB-pcqm-c3-checkpoint-space",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-attribution-no-train",
       "target": "TB-pcqm-scale-transfer-diagnostic",
       "type": "prior_evidence"
@@ -4322,6 +4337,10 @@
     },
     {
       "id": "k1-saved-trace-pair-20261008-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-c3-checkpoint-space-20261123",
       "type": "evidence"
     },
     {
@@ -5466,6 +5485,10 @@
     },
     {
       "id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-c3-checkpoint-space",
       "type": "trajectory"
     },
     {

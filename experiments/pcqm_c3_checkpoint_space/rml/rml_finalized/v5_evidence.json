@@ -1,0 +1,105 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_checkpoint_space/protocol.md",
+      "name": "protocol.md",
+      "sha256": "e625ed89ea6fc5a100db4e562c7166cccfde287c9a0dc384caf09ca0d81c7fdb"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_checkpoint_space/probe_c3.py",
+      "name": "probe_c3.py",
+      "sha256": "1bbcfa8b92d43adacb4b2505d2ead61cef5bd6662da3159adb50742df3a31c81"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_checkpoint_space/decision.md",
+      "name": "decision.md",
+      "sha256": "4053786334e4574de697fb4b4bffd97b4fd1199fc3e40a7184bfeed3c44c60dc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_checkpoint_space/results.json",
+      "name": "results.json",
+      "sha256": "a1ac24f2757909835f5a0a4fb1f6892e89bd857befdab44ebd39c057f94949de"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "a9ded3c9d8e16b75ebf73ecbf8303eb79a4a19e3662f8e802e3048e3f1ed486e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_residual_2d_p0/probe.py",
+      "name": "probe.py",
+      "sha256": "24aa8e1e8ae3c340ad6562e040e75351bff6d23ca133f6b883f1c3dd0271e59f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_h1_heldout_budget/prepare.py",
+      "name": "prepare.py",
+      "sha256": "93b19e734b7109b3bd0f47bba629282cbf81563fc7aa04b078176678ad6700df"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-checkpoint-space/predict.npz",
+      "name": "predict.npz",
+      "sha256": "016b7fe75e98d173e883730714dcedad063cf0b32c257ebdd4d27701f62438bb"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-checkpoint-space/predict.json",
+      "name": "predict.json",
+      "sha256": "80a90b011e55b5ba669766634357e34301dcd20f38795048d309c41c45b25714"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_c3_checkpoint_space/protocol.md",
+      "experiments/pcqm_c3_checkpoint_space/results.json",
+      "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "experiments/pcqm_c3_checkpoint_space/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-c3-checkpoint-space-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-22",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure of a completed local study; no new execution in closure."
+  },
+  "observed_execution": {
+    "backbone_training": false,
+    "execution_ref": "experiments/pcqm_c3_checkpoint_space/results.json",
+    "inference_executed": true,
+    "postprocessor_fit": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_automatic_tail_or_training_release",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "PASS_MC_DROPOUT_K32_SNAPSHOTS_CANCELLED",
+    "transfer_status": "verified_on_500k_unseen_block_full_scale_not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_50k_primary": "consumed",
+    "dev_replay_128": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "unseen_50k_secondary": "consumed"
+  },
+  "scope": "pcqm-c3-checkpoint-space",
+  "track": "B"
+}

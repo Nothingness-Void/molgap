@@ -1,0 +1,241 @@
+{
+  "analysis_ref": "experiments/pcqm_c3_checkpoint_space/results.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Stage wall and parent CPU times; exclusive GPU device-hours were not measured.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "inference",
+      "cost_event_id": "cost-c3-inference",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.4333810763888889
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.4595264803611078
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "audit",
+      "cost_event_id": "cost-c3-analysis",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.006892361111111111
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.007114938083339237
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    }
+  ],
+  "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_automatic_tail_or_training_release",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "PASS_MC_DROPOUT_K32_SNAPSHOTS_CANCELLED",
+    "transfer_status": "verified_on_500k_unseen_block_full_scale_not_evaluated"
+  },
+  "role_counts": {
+    "dev_50k_primary": 50000,
+    "dev_replay_128": 128,
+    "unseen_50k_secondary": 50000
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_50k_primary": "consumed",
+    "dev_replay_128": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "unseen_50k_secondary": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_replay_128-prediction_input",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_replay_128-metric_computed",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_50k_primary-prediction_input",
+      "role_name": "dev_50k_primary",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_50k_primary-labels_read",
+      "role_name": "dev_50k_primary",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_50k_primary-metric_computed",
+      "role_name": "dev_50k_primary",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-dev_50k_primary-selection_used",
+      "role_name": "dev_50k_primary",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-unseen_50k_secondary-prediction_input",
+      "role_name": "unseen_50k_secondary",
+      "row_manifest_hash": "8b3a0ed69231db959dafbe1a707eca699f9260aac64f221e8b1f805bb2e2cce5",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-unseen_50k_secondary-labels_read",
+      "role_name": "unseen_50k_secondary",
+      "row_manifest_hash": "8b3a0ed69231db959dafbe1a707eca699f9260aac64f221e8b1f805bb2e2cce5",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+      "role_event_id": "role-c3-unseen_50k_secondary-metric_computed",
+      "role_name": "unseen_50k_secondary",
+      "row_manifest_hash": "8b3a0ed69231db959dafbe1a707eca699f9260aac64f221e8b1f805bb2e2cce5",
+      "run_id": "pcqm-c3-checkpoint-space-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+    }
+  ],
+  "run_id": "pcqm-c3-checkpoint-space-score",
+  "scope": "Frozen K=32 dropout-only MC-dropout and pass-60 EMA/live weight probe on 500K s43/s44 over dev [500000,550000) and unseen [3100000,3150000); multi-epoch snapshots not retained; no training and no protected role.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_c3_checkpoint_space/decision.md",
+    "facts": {
+      "ci_meV": [
+        -0.8562757760535786,
+        -0.6464507532755609
+      ],
+      "effect_meV": -0.7522575465928386,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "mc dropout",
+        "checkpoint space",
+        "ema60",
+        "pairnorm 500k",
+        "uncertainty",
+        "snapshots not retained"
+      ],
+      "source": "experiments/pcqm_c3_checkpoint_space/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Explicit user authority and frozen single-score protocol to test K=32 MC-dropout on full-scale B1024 checkpoints (single and 4-init ensemble) on tail_holdout_v1."
+    ]
+  }
+}

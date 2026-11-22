@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 932,
+  "ambiguous_historical_role_record_count": 941,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2436,6 +2436,69 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "dev_50k_primary",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "dev_replay_128",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_identity": null,
+      "role_name": "unseen_50k_secondary",
+      "semantics": "coarse_historical",
+      "state": "consumed"
     },
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -6526,7 +6589,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 776,
+  "explicit_role_event_count": 785,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -11827,6 +11890,36 @@
         "trajectory_id": "TB-pcqm-h1-heldout-budget"
       }
     ],
+    "pcqm4mv2-ogb-official-train:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:dev_50k_primary": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c3-dev_50k_primary-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3-dev_50k_primary-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3-dev_50k_primary-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-c3-dev_50k_primary-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:development_500k_saved_verification": [
       {
         "access_kind": "labels_read",
@@ -12004,6 +12097,29 @@
         "trajectory_id": "TB-pcqm-residual-spread-fit"
       }
     ],
+    "pcqm4mv2-ogb-official-train:8b3a0ed69231db959dafbe1a707eca699f9260aac64f221e8b1f805bb2e2cce5:unseen_50k_secondary": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c3-unseen_50k_secondary-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3-unseen_50k_secondary-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3-unseen_50k_secondary-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:91429acb076e790b2eb5c752c44f90c6653ad178fbfa80017475fd71d56241fb:source_cache_preparation": [
       {
         "access_kind": "labels_read",
@@ -12161,6 +12277,20 @@
       },
       {
         "access_kind": "metric_computed",
+        "role_event_id": "role-c3-dev_replay_128-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3-dev_replay_128-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "metric_computed",
         "role_event_id": "role-sf-dev_replay_128-metric_computed",
         "selection_used": false,
         "semantics": "explicit",
@@ -12261,6 +12391,7 @@
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
+      "pcqm-c3-checkpoint-space-20261123",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -12456,6 +12587,7 @@
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
+      "pcqm-c3-checkpoint-space-20261123",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -16064,6 +16196,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-block-transfer"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:dev_50k_primary": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c3-dev_50k_primary-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3-dev_50k_primary-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3-dev_50k_primary-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-c3-dev_50k_primary-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
       }
     ],
     "pcqm4mv2-ogb-official-train:42edaa4bc3530a5d572d630cc753706809b8d33a2417250b8e8ed2e9379a7f47:small_fit_6k": [
@@ -20857,6 +21019,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-block-transfer"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3-dev_replay_128-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3-dev_replay_128-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-checkpoint-space"
       },
       {
         "access_kind": "metric_computed",
