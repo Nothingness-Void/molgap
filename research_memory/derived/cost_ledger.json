@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 141,
-  "event_count": 464,
+  "estimated_event_count": 142,
+  "event_count": 467,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 424,
-  "not_applicable_event_count": 103,
+  "measurement_missing_event_count": 426,
+  "not_applicable_event_count": 106,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -350,6 +350,102 @@
         "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.10434909850000015
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -1269,6 +1365,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      },
+      "RTX 5060 FP32 and CPU graph loading:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.017144097222222224
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "RTX 5060 FP32 and CPU graph loading:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX 5060 FP32 and CPU graph loading:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "RTX 5060 FP32 and CPU graph loading:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.010671058527776849
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       },
       "local Windows CPU, four intra-op threads:cpu_hours": {
         "estimated": {
@@ -5395,6 +5539,106 @@
         "unknown_records": 0
       }
     },
+    "Desktop CPU and one RTX 5060 for frozen inference only": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "Desktop CPU; four RDKit workers or four OpenMP threads": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.10434909850000015
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "Existing desktop GPU cuda:0; CPU4 threads": {
       "cpu_hours": {
         "estimated": {
@@ -6043,6 +6287,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 23
+      }
+    },
+    "RTX 5060 FP32 and CPU graph loading": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.017144097222222224
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.010671058527776849
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "RTX5060": {
@@ -24350,6 +24644,152 @@
         "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-pcqm-pairnorm-residual-2d-p0": {
+      "Desktop CPU and one RTX 5060 for frozen inference only:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 2.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU and one RTX 5060 for frozen inference only:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Desktop CPU; four RDKit workers or four OpenMP threads:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.10434909850000015
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "RTX 5060 FP32 and CPU graph loading:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.017144097222222224
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "RTX 5060 FP32 and CPU graph loading:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX 5060 FP32 and CPU graph loading:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "RTX 5060 FP32 and CPU graph loading:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.010671058527776849
         },
         "not_applicable_records": 0,
         "unknown_records": 0

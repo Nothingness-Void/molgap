@@ -1,0 +1,123 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "cost_event_ids": [
+        "cost-p0-20261122-cpu",
+        "cost-p0-20261122-replay",
+        "cost-pcqm-pairnorm-residual-2d-p0-expected"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+      ],
+      "run_ids": [
+        "local-pcqm-pairnorm-residual-2d-p0"
+      ],
+      "source_commit": "094f1b57ed92f870e66a425eeed3b6d405df4510",
+      "type": "local_saved_predictions_paired_fit_role_diagnostic"
+    }
+  ],
+  "comparison_blockers": [
+    "Selection-used development cohort; no independent deployable evaluation",
+    "Only initial weights varied"
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_pairnorm_residual_2d_p0/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "New prospective independent holdout design and explicit authority; no automatic H1 or protected-role access."
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-pairnorm-residual-2d-p0",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_pairnorm_residual_2d_p0/rml_decision_snapshots/50a114dfa83bd2c9a83fcb23b4401ee9df7696a1a5398759f89b5a37776ce813.json",
+    "snapshot_sha256": "50a114dfa83bd2c9a83fcb23b4401ee9df7696a1a5398759f89b5a37776ce813",
+    "state_timestamp": "2026-11-22T05:06:37.994159+00:00"
+  },
+  "family_id": "pcqm-pairnorm-residual-2d-p0",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Prediction-only recalibration",
+      "Residual distribution shifts from in-sample fitting",
+      "Already selection-used dev distribution"
+    ],
+    "changed_mechanism": "Single fixed 2D chemistry residual corrector with two matched fitting roles; raw-error N4 description only",
+    "cheapest_falsifier": "Saved development predictions, scaffold-disjoint fit/score, frozen local forward for equal-sized in-sample control.",
+    "decision_changed_if_negative": "No H1 recommendation from this probe.",
+    "decision_changed_if_positive": "Consider only an independently authorized held-out calibration question, no scale-up.",
+    "expected_native_cost_ref": "cost-pcqm-pairnorm-residual-2d-p0-expected",
+    "hypothesis_id": "H-pcqm-pairnorm-residual-2d-p0",
+    "observed_deficiency": "Conditional K1 descriptor gain on out-of-sample fit residuals, not established for PairNorm or in-sample fit.",
+    "related_closed_family_ids": [
+      "pcqm-pairnorm-prediction-router-500k",
+      "gptrans-500k-readout-attribution"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "pcqm-pairnorm-prediction-router-500k-20261027"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can 2D chemistry correct selected GPT-T 500K predictions beyond yhat-only on scaffold-disjoint dev rows in both inits, and does the signal survive fitting on backbone-training residuals?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-pairnorm-residual-2d-p0-20261122"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_pairnorm_residual_2d_p0/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+      "experiments/pcqm_pairnorm_residual_2d_p0/probe.py",
+      "experiments/pcqm_pairnorm_residual_2d_p0/chemistry.py"
+    ],
+    "parent_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "pcqm-pairnorm-prediction-router-500k-20261027"
+    ],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+    ],
+    "source_commit": "094f1b57ed92f870e66a425eeed3b6d405df4510",
+    "source_config_identity": "5f34ae10e3e0872d5c2d73fa12bc8b1194358f028a86a5c7fbff0a7ee0701b87"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+}

@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-pairnorm-residual-2d-p0-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "5f34ae10e3e0872d5c2d73fa12bc8b1194358f028a86a5c7fbff0a7ee0701b87",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-pairnorm-residual-2d-p0",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

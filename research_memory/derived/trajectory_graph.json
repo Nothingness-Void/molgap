@@ -921,6 +921,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-pairnorm-residual-2d-p0:A001",
+      "target": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1024,6 +1029,16 @@
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
       "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "parent_trajectory"
     },
     {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
@@ -1861,6 +1876,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "type": "prior_evidence"
@@ -1868,6 +1888,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
       "type": "prior_evidence"
     },
     {
@@ -3431,6 +3456,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-pairnorm-prediction-router-500k-20261027",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-attribution-no-train",
       "target": "TB-pcqm-scale-transfer-diagnostic",
       "type": "prior_evidence"
@@ -3483,6 +3513,16 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
       "type": "reference_used"
     },
     {
@@ -4607,6 +4647,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-recurrent-graph-state-100k-seed42",
       "type": "evidence"
     },
@@ -5412,6 +5456,10 @@
     },
     {
       "id": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-pairnorm-residual-2d-p0",
       "type": "trajectory"
     },
     {
