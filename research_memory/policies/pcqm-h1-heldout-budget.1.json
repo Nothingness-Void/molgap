@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_FIXED_BUDGET_STUDY",
+    "field": "same_init_bounded_budget_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-h1-heldout-budget-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "d50bbd2f1b0b6417545e63172e3449201468773e0839eda37ca3ec5140bb0987",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-h1-heldout-budget",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "same_init_bounded_budget_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}
