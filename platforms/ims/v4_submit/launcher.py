@@ -238,27 +238,6 @@ def safe_extract(archive_path: Path, output: Path) -> None:
         archive.extractall(output)
 
 
-def validate_source_inventory(archive_path: Path, inventory_path: Path) -> None:
-    inventory = load_json(inventory_path)
-    if inventory.get("format") != "molgap-source-files-v1":
-        raise RuntimeError("Unsupported source inventory")
-    expected = {item["path"]: item["sha256"] for item in inventory.get("files", [])}
-    observed = {}
-    with tarfile.open(archive_path, "r:gz") as archive:
-        for member in archive.getmembers():
-            if not member.isfile():
-                continue
-            stream = archive.extractfile(member)
-            if stream is None:
-                raise RuntimeError(f"Cannot read source member: {member.name}")
-            digest = hashlib.sha256()
-            for block in iter(lambda: stream.read(1024 * 1024), b""):
-                digest.update(block)
-            observed[member.name] = digest.hexdigest()
-    if not expected or observed != expected:
-        raise RuntimeError("Source archive inventory changed")
-
-
 def render_pbs(run_root: Path, stage: str, spec: dict, runtime: dict) -> str:
     resources = spec["resources"]
     walltime = resources[f"{stage}_walltime"]
@@ -288,7 +267,6 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
     archive = inbox / "source.tar.gz"
     if sha256_file(archive) != spec["source"]["archive_sha256"]:
         raise RuntimeError("Source archive identity changed")
-    validate_source_inventory(archive, inbox / "source_files.json")
     staging_parent = infrastructure / "runs"
     staging_parent.mkdir(parents=True, exist_ok=True)
     staging = staging_parent / f".{spec['run_id']}.staging-{os.getpid()}"
@@ -313,7 +291,6 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
         for name in ("dataset_registry.json", "runtime_registry.json"):
             shutil.copy2(infrastructure / name, staging / "infrastructure" / name)
         shutil.copy2(archive, staging / "source.tar.gz")
-        shutil.copy2(inbox / "source_files.json", staging / "source_files.json")
         atomic_json(staging / "run_spec.json", spec)
         runtime = runtimes["runtimes"][spec["runtime_id"]]
         for stage_name in stage_names(spec):
@@ -362,19 +339,39 @@ def parse_job_id(output: str) -> str:
     return matches[-1]
 
 
-def resume_run(inbox: Path, run_root: Path) -> dict:
-    """Resubmit train.pbs of a run whose training paused. Same source only; no preflight dependency."""
-    spec, submission = load_json(run_root / "run_spec.json"), load_json(run_root / "submission.json")
-    status = {stage: load_json(run_root / "output" / stage / "stage_status.json").get("status") for stage in stage_names(spec)}
-    new = load_json(inbox / "run_spec.json")
+def inspect_run(run_root: Path, spec: dict) -> dict:
+    stages = {}
+    for stage in stage_names(spec):
+        path = require_below(run_root / "output" / stage / "stage_status.json", run_root)
+        stages[stage] = load_json(path) if path.is_file() else None
+    journal = require_below(run_root / "submission.json", run_root)
+    return {"run_id": spec["run_id"], "source": spec["source"], "contract": spec["contract"],
+            "output_root": str(run_root / "output"),
+            "required_outputs": {stage: spec["stages"][stage]["required_outputs"] for stage in stages},
+            "submission": load_json(journal) if journal.is_file() else None, "stages": stages}
+
+
+def resume_run(run_root: Path, spec: dict) -> dict:
+    lock = run_root / ".resume-lock"
+    lock.mkdir()
+    try:
+        return _resume_locked(run_root, spec)
+    finally:
+        lock.rmdir()
+
+
+def _resume_locked(run_root: Path, spec: dict) -> dict:
+    observed = inspect_run(run_root, spec)
+    submission = observed["submission"]
+    status = {stage: (record or {}).get("status") for stage, record in observed["stages"].items()}
     expected = {"train": "paused"} if is_chain(spec) else {"preflight": "complete", "train": "paused"}
-    # The mode must match: a chain spec reusing a single-recipe run id must never resume that run (and the reverse).
-    if (new["source"] != spec["source"] or new.get("mode") != spec.get("mode") or submission.get("status") != "submitted"
-            or status != expected):
-        raise RuntimeError("Run is not a paused run of this exact source and mode")
+    if not submission or submission.get("status") != "submitted" or status != expected:
+        raise RuntimeError("Resume requires an exact paused run with a bound submission")
     maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
     submission.update(status="resume_submitting")
     atomic_json(run_root / "submission.json", submission)
+    # Publish before dispatch so a fast worker's terminal record cannot be overwritten.
+    atomic_json(run_root / "output" / "train" / "stage_status.json", {"status": "resume_queued", "stage": "train"})
     try:
         resumed = subprocess.run(
             ["jsub", "-q", spec["resources"]["queue"], "-N", spec["run_id"][:15], str(run_root / "train.pbs")],
@@ -387,8 +384,6 @@ def resume_run(inbox: Path, run_root: Path) -> dict:
         raise
     submission.update(status="submitted", resume_jobs=[*submission.get("resume_jobs", []), job])
     atomic_json(run_root / "submission.json", submission)
-    # The queued job has not paused yet: block a second resume until its worker writes a new status.
-    atomic_json(run_root / "output" / "train" / "stage_status.json", {"status": "resume_queued", "stage": "train", "job": job})
     return submission
 
 
@@ -414,14 +409,27 @@ def submit_chain(inbox: Path, infrastructure: Path) -> dict:
     return submission
 
 
-def submit_run(inbox: Path, infrastructure: Path) -> dict:
+def submit_run(inbox: Path, infrastructure: Path, *, resume=False) -> dict:
     infrastructure = require_below(infrastructure, BOUNDARY)
     inbox = require_below(inbox, infrastructure)
-    run_id = str(load_json(inbox / "run_spec.json").get("run_id", ""))
-    existing = infrastructure / "runs" / run_id
-    if RUN_ID.fullmatch(run_id) and existing.exists():
-        return resume_run(inbox, existing)
-    if is_chain(load_json(inbox / "run_spec.json")):
+    requested = load_json(inbox / "run_spec.json")
+    run_id = str(requested.get("run_id", ""))
+    if not RUN_ID.fullmatch(run_id):
+        raise ValueError("Unsafe run ID")
+    existing = require_below(infrastructure / "runs" / run_id, infrastructure)
+    if existing.exists():
+        spec = load_json(require_below(existing / "run_spec.json", existing))
+        if requested != spec:
+            raise ValueError("Requested IMS spec differs from the staged run")
+        if resume:
+            return resume_run(existing, spec)
+        submission = inspect_run(existing, spec)["submission"]
+        if submission and submission.get("status") == "submitted":
+            return submission
+        raise FileExistsError(f"Run identity already exists and requires reconciliation: {existing}")
+    if resume:
+        raise FileNotFoundError(f"No staged run to resume: {existing}")
+    if is_chain(requested):
         return submit_chain(inbox, infrastructure)
     run_root = stage_run(inbox, infrastructure)
     spec = load_json(run_root / "run_spec.json")
@@ -525,11 +533,13 @@ def worker(run_root: Path, stage_name: str) -> None:
             sys.exit(PAUSED_EXIT)
         if code:
             raise subprocess.CalledProcessError(code, command)
+        outputs = {}
         for relative in stage["required_outputs"]:
             output = require_below(run_root / "output" / relative, run_root / "output")
             if not output.is_file():
                 raise FileNotFoundError(f"Required output missing: {output}")
-        atomic_json(status_path, {"status": "complete", "stage": stage_name})
+            outputs[relative] = sha256_file(output)
+        atomic_json(status_path, {"status": "complete", "stage": stage_name, "outputs_sha256": outputs})
     except SystemExit:
         raise
     except BaseException as error:
@@ -548,6 +558,10 @@ def main() -> None:
     submit = subparsers.add_parser("submit")
     submit.add_argument("--inbox", type=Path, required=True)
     submit.add_argument("--infrastructure", type=Path, default=INFRA_ROOT)
+    submit.add_argument("--resume", action="store_true")
+    status = subparsers.add_parser("status")
+    status.add_argument("--run-id", required=True)
+    status.add_argument("--spec-sha256", required=True)
     work = subparsers.add_parser("worker")
     work.add_argument("--run-root", type=Path, required=True)
     work.add_argument("--stage", choices=("preflight", "train"), required=True)
@@ -556,7 +570,19 @@ def main() -> None:
         datasets, runtimes = validate_registries(args.infrastructure)
         print(json.dumps({"status": "accepted", "datasets": sorted(datasets["datasets"]), "runtimes": sorted(runtimes["runtimes"])}, indent=2))
     elif args.command == "submit":
-        print(json.dumps(submit_run(args.inbox, args.infrastructure), indent=2))
+        print(json.dumps(submit_run(args.inbox, args.infrastructure, resume=args.resume), indent=2))
+    elif args.command == "status":
+        if not RUN_ID.fullmatch(args.run_id):
+            parser.error("Unsafe run ID")
+        run_root = require_below(INFRA_ROOT / "runs" / args.run_id, INFRA_ROOT)
+        require_below(run_root, BOUNDARY)
+        if not run_root.exists():
+            print(json.dumps({"status": "NOT_STAGED", "run_id": args.run_id}))
+            return
+        spec = load_json(require_below(run_root / "run_spec.json", run_root))
+        if hashlib.sha256(json.dumps(spec, sort_keys=True).encode()).hexdigest() != args.spec_sha256:
+            parser.error("Requested IMS spec differs from the staged run")
+        print(json.dumps(inspect_run(run_root, spec), indent=2))
     else:
         worker(args.run_root, args.stage)
 

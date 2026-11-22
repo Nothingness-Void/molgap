@@ -174,7 +174,7 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
 
 def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
                                   retrieved_root=None, supplied=None, locations=None,
-                                  continuation_receipt=None):
+                                  continuation_receipt=None, resume_prepared=None):
     """Resolve all arms from frozen plans, explicit paths or verified retrieval maps."""
     from .experiment_run import _original_run
     verification = _PackageVerification()
@@ -183,6 +183,15 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
     run, package = prepared.parent, options["package_dir"]
     original_receipt = options["receipt_path"]
     canonical_finalizations = {}
+    resume_authority = None
+    if resume_prepared is not None:
+        from .experiment_workflow import _path
+        from .kaggle_submission import bound_resume_submission
+        successor, resume_authority = bound_resume_submission(
+            _path(Path(repo_root), str(resume_prepared)), spec, options)
+        if continuation_receipt is not None and _path(Path(repo_root), str(continuation_receipt)) != successor:
+            raise ValueError("Supplied continuation receipt differs from the bound submission")
+        continuation_receipt = successor
     if continuation_receipt is None:
         continuation_receipt, canonical_finalizations = _accepted_continuation_receipt(spec, options, repo_root)
     options = _continuation_options(spec, options, continuation_receipt, repo_root, verification)
@@ -286,7 +295,7 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
         spec, Path(repo_root), package, workflow["acceptance_plan"], _verification=verification)
     return {"spec": spec, "options": options, "prepared": prepared,
             "_canonical_finalizations": canonical_finalizations,
-            "original_receipt": original_receipt,
+            "original_receipt": original_receipt, "resume_authority": resume_authority,
             "outputs": outputs, "locations": resolved_locations, "contexts": contexts,
             "acceptance_plan": acceptance, "run_directory": run, "raw_traces": raw_traces,
             "target_identities": {arm_id: target_identity for arm_id in arms}}

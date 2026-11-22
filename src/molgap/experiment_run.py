@@ -120,13 +120,15 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         raise ValueError("A scientific outcome and decision reference must be provided together")
     if (role_audit is not None or facts_ref is not None) and not (stage_terminal or outcome is not None):
         raise ValueError("A role audit or closure facts require terminal staging")
-    if (resume_prepared is None) != (resume_authority is None):
-        raise ValueError("Resume preparation and explicit recovery authority are required together")
-    if resume_prepared is not None and (continuation_receipt is None or not (stage_terminal or outcome is not None)):
-        raise ValueError("Resume closure requires a continued receipt and terminal staging")
+    if resume_authority is not None and resume_prepared is None:
+        raise ValueError("Recovery authority requires its resume preparation")
+    if resume_prepared is not None and not (stage_terminal or outcome is not None):
+        raise ValueError("Resume closure requires terminal staging")
     resolution = dict(retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     if continuation_receipt is not None:
         resolution["continuation_receipt"] = continuation_receipt
+    if resume_prepared is not None and (continuation_receipt is None or resume_authority is None):
+        resolution["resume_prepared"] = resume_prepared
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
     for name, value in (("outcome", outcome), ("decision_ref", decision_ref)):
         if isinstance(value, dict) and set(value) != set(resolved["outputs"]):
@@ -138,8 +140,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         _validate_strict_inputs(strict_inputs, resolved["outputs"])
     if resume_prepared is not None:
         from .experiment_workflow_resume import resolve_terminal_resume
+        retained_authority = resolved.get("resume_authority")
+        if resume_authority is not None and retained_authority is not None:
+            if (Path(repo_root) / resume_authority).resolve() != retained_authority.resolve():
+                raise ValueError("Recovery authority differs from the bound submission")
         resolved["continuations"] = resolve_terminal_resume(resolved, resume_prepared,
-            resume_authority, strict_inputs=strict_inputs)
+            retained_authority or resume_authority, strict_inputs=strict_inputs)
     spec, options = resolved["spec"], resolved["options"]
     if execution_root is None:
         parents = {Path(item["output_dir"]).parent for item in resolved["outputs"].values()}
@@ -564,14 +570,14 @@ def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_o
                                  source_output=source_output, output=output, recovery_repair=recovery_repair, **options)
 
 
-def prepare_run_resume(profile, repo_root, run_id, attempt_id, *, plan, output):
+def prepare_run_resume(profile, repo_root, run_id, attempt_id, *, output, **resume_inputs):
     """Stage explicit validated bundles without publishing or submitting."""
     from .experiment_workflow_resume import prepare_resumed_workflow
     from .experiment_package import _PackageVerification
     spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
                                            _verification=_PackageVerification())
     output = _resume_output(repo_root, prepared.parent, output)
-    return prepare_resumed_workflow(spec, prepared=prepared, plan=plan, output=output, **options)
+    return prepare_resumed_workflow(spec, prepared=prepared, output=output, **resume_inputs, **options)
 
 
 def _resume_output(repo_root, run, output):

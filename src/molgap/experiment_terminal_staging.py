@@ -379,7 +379,8 @@ def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_r
 
 
 def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
-                  protected_role_use=None, continuation_receipt=None, role_id="internal_development"):
+                  protected_role_use=None, continuation_receipt=None, resume_prepared=None,
+                  role_id="internal_development"):
     """Draft the mechanical parts of a closure: role audits, measured numbers, closure_input.draft.json.
 
     The draft leaves outcome and decision_ref empty, so the closure loader rejects it until a
@@ -390,7 +391,8 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
     from .experiment_run import resolve_run_acceptance_inputs
     from .research_memory.saved_analysis import run as analyze
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
-        retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
+        retrieved_root=retrieved_root, continuation_receipt=continuation_receipt,
+        resume_prepared=resume_prepared)
     drafted = draft_run_role_audits(profile, repo_root, run_id, attempt_id, retrieved_root=retrieved_root,
         output_dir=output_dir, protected_role_use=protected_role_use, _resolved=resolved)
     root = Path(repo_root).resolve()

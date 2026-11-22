@@ -75,7 +75,10 @@ def resolve_experiment_input(path, repo_root):
 
 _KAGGLE_T4X2 = {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2, "cpu_cores": 4,
                 "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True}
-_FIXED_100K = ("pcqm_fixed_100k_v1/manifest.json", "pcqm4mv2-ogb-fixed-100k-v1")
+_FIXED_KAGGLE_MOUNTS = {
+    "pcqm_fixed_100k_v1/manifest.json": "pcqm4mv2-ogb-fixed-100k-v1",
+    "pcqm_fixed_500k_v1/manifest.json": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+}
 
 
 def _with_mechanical_defaults(value, root):
@@ -100,13 +103,14 @@ def _derived_kaggle(value, authority, manifests):
     account = authority.get("account")
     if type(account) is not str:
         raise ValueError("A derived Kaggle platform requires authority.account")
-    if manifests != {_FIXED_100K[0]}:
-        raise ValueError("A derived Kaggle platform supports the fixed 100K mount only; supply platform explicitly")
+    if len(manifests) != 1 or not manifests <= _FIXED_KAGGLE_MOUNTS.keys():
+        raise ValueError("A derived Kaggle platform requires the fixed 100K or 500K mount; supply platform explicitly")
+    data_slug = _FIXED_KAGGLE_MOUNTS[next(iter(manifests))]
     stem = value["experiment_id"].removeprefix("pcqm_").replace("_", "-")
     words = ["MolGap", *(w.upper() if any(c.isdigit() for c in w) else w.capitalize() for w in stem.split("-")), "S42"]
     source = account + "/" + stem + "-src"
     kaggle = {"account": account, "kernel": account + "/molgap-" + stem + "-s42", "title": " ".join(words),
-              "datasets": [source, account + "/" + _FIXED_100K[1]], "source_dataset": source,
+              "datasets": [source, account + "/" + data_slug], "source_dataset": source,
               "accelerator": "NvidiaTeslaT4"}
     kaggle.update({k: authority[k] for k in ALLOCATION_OPTION_FIELDS if k in authority})
     return kaggle

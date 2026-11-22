@@ -170,18 +170,20 @@ def select(cards, *, outcome=None, term=None) -> list[dict]:
 
 
 def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) -> dict:
-    """Related closed work, why it failed (with source), open directions and search terms."""
+    """Find prior work, its recorded outcomes, and terms for further search."""
     hit = [c for c in select(cards, term=term)
-           if _all_substrings(" ".join(filter(None, (c["mechanism"], c["family_id"], c["failure_mode"]))).lower(),
-                              mechanism)
+           if _all_substrings(" ".join(filter(None, (c["trajectory_id"], c["mechanism"], c["family_id"],
+                                                     c["failure_mode"]))).lower(), mechanism)
            and (failure_mode is None or c["failure_mode"] == failure_mode)
            and (family is None or family.lower() in c["family_id"].lower())]
     by_family = defaultdict(list)
     for c in hit:
         by_family[c["family_id"]].append(c)
-    # A family stays open when none of its negative results carries a measured effect.
+    # Negative arms still close under their own contract and scale when the effect is missing.
     unfalsified = [{"family_id": f, "reason": "no NEGATIVE_UNDER_CONTRACT with a measured effect",
-                    "falsifier": cs[0]["falsifier"], "reopen_conditions": cs[0]["reopen_conditions"]}
+                    "falsifier": cs[0]["falsifier"], "reopen_conditions": cs[0]["reopen_conditions"],
+                    "negative_without_effect": [{"trajectory_id": c["trajectory_id"], "decision_ref": c.get("decision_ref")}
+                                                for c in cs if c["outcome"] == "NEGATIVE_UNDER_CONTRACT"]}
                    for f, cs in sorted(by_family.items())
                    if not any(c["outcome"] == "NEGATIVE_UNDER_CONTRACT" and c["effect_meV"] is not None for c in cs)]
     closing = [t for c in hit for t in c["search_terms"]]
@@ -208,7 +210,8 @@ def _effect(card: dict, *, see_decision=False) -> str:
 def compact_line(card: dict) -> str:
     """One line: id | outcome | family | mechanism slug | effect_meV | failure_mode [| source ref]."""
     return " | ".join([card["trajectory_id"], card["outcome"], card["family_id"], _slug(card["mechanism"]),
-                       _effect(card), card["failure_mode"] or "-", *[s["ref"] for s in [card.get("source")] if s]])
+                       _effect(card, see_decision=True), card["failure_mode"] or "-",
+                       *[s["ref"] for s in [card.get("source")] if s]])
 
 
 def levers(cards, family: str) -> list[str]:
