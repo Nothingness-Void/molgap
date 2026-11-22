@@ -10,32 +10,36 @@ def gps_attention_layout(ptr):
     """Build the attention indices and padding mask from a CPU batch pointer."""
     counts = ptr.diff()
     width = int(counts.max())
-    graphs = counts.numel()
-    nodes = int(ptr[-1])
+    graphs, nodes = counts.numel(), int(ptr[-1])
     graph = torch.arange(graphs).repeat_interleave(counts, output_size=nodes)
     position = torch.arange(nodes) - ptr[graph]
     return position * graphs + graph, torch.arange(width) >= counts[:, None]
 
 
 class _PackedGPSConv(GPSConv):
-    """GINE/multihead/BatchNorm GPS block with a precomputed batch layout."""
+    """GINE/multihead GPS block with a precomputed batch layout."""
+
+    def _norm(self, norm, x, batch):
+        if norm is None:
+            return x
+        return norm(x, batch=batch) if self.norm_with_batch else norm(x)
 
     def forward(self, x, edge_index, batch=None, *, layout=None, **kwargs):
-        if layout is None:
+        if layout is None or self.conv is None or not isinstance(self.attn, nn.MultiheadAttention):
             return super().forward(x, edge_index, batch, **kwargs)
 
         index, padding = layout
         local = self.conv(x, edge_index, **kwargs)
-        local = self.norm1(nn.functional.dropout(local, self.dropout, self.training) + x)
+        local = self._norm(self.norm1, nn.functional.dropout(local, self.dropout, self.training) + x, batch)
         graphs, width = padding.shape
         dense = x.new_zeros(graphs * width, x.size(-1))
         dense.index_copy_(0, index, x)
         dense = dense.view(width, graphs, x.size(-1)).transpose(0, 1)
         attended, _ = self.attn(dense, dense, dense, key_padding_mask=padding, need_weights=False)
         attended = attended.transpose(0, 1).flatten(0, 1).index_select(0, index)
-        attended = self.norm2(nn.functional.dropout(attended, self.dropout, self.training) + x)
+        attended = self._norm(self.norm2, nn.functional.dropout(attended, self.dropout, self.training) + x, batch)
         out = local + attended
-        return self.norm3(out + self.mlp(out))
+        return self._norm(self.norm3, out + self.mlp(out), batch)
 
 
 class GPSWrapper(nn.Module):
