@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 195
+- Validated V5 evidence: 196
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - CLOSED: 38
 - INCONCLUSIVE: 23
 - INFRASTRUCTURE_ONLY: 10
-- NEGATIVE_UNDER_CONTRACT: 66
+- NEGATIVE_UNDER_CONTRACT: 67
 - NO_TRAIN: 59
 - POSITIVE_UNDER_CONTRACT: 10
 
@@ -19,9 +19,9 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 785
-- Coarse historical role records: 941
-- Repeatedly selected role identities: 47
+- Explicit role events: 796
+- Coarse historical role records: 951
+- Repeatedly selected role identities: 48
 
 ## Cost
 - A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -292,10 +292,14 @@
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU wall_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- desktop CPU cpu_hours: measured=1.130343 (4 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- desktop CPU device_hours: not applicable (7 records); measurement_missing=0
-- desktop CPU queue_hours: not applicable (7 records); measurement_missing=0
-- desktop CPU wall_hours: measured=0.506264 (7 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- desktop CPU cpu_hours: measured=1.456050 (5 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- desktop CPU device_hours: not applicable (9 records); measurement_missing=0
+- desktop CPU queue_hours: not applicable (9 records); measurement_missing=0
+- desktop CPU wall_hours: measured=0.551604 (8 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- desktop CPU (12 xtb workers) cpu_hours: measured=5.219553 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- desktop CPU (12 xtb workers) device_hours: not applicable (1 records); measurement_missing=0
+- desktop CPU (12 xtb workers) queue_hours: not applicable (1 records); measurement_missing=0
+- desktop CPU (12 xtb workers) wall_hours: measured=0.442619 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - desktop CPU; synthetic-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - desktop CPU; synthetic-only device_hours: not applicable (2 records); measurement_missing=0
 - desktop CPU; synthetic-only queue_hours: not applicable (2 records); measurement_missing=0
@@ -316,8 +320,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 439
-- Cost-event coverage: 202/213 trajectories; incomplete native measurement=166
+- Measurement-missing cost events: 440
+- Cost-event coverage: 203/214 trajectories; incomplete native measurement=166
 
 ## Screening Backtest
 - Status: available
@@ -325,7 +329,7 @@
 - Excluded traces: 39
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 110
+- [INFO] trace_unavailable_for_backtest: 111
 - [WARN] historical_partial_record: 20
 - [WARN] incomplete_native_cost_measurement: 166
 - [WARN] missing_cost_event: 11

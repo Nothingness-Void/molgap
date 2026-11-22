@@ -1727,6 +1727,33 @@
       "comparison_status": "paired_rows_frozen_checkpoints_context_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "pcqm-c2-xtb-diagnostic-20261123",
+      "role_use": {
+        "common": "untouched",
+        "far_score_block_reused": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "p0_dev_score_scaffold": "consumed",
+        "p0_fit_rows_reused": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "xtb_pilot_2k": "consumed"
+      },
+      "scientific_scope": "pcqm-c2-xtb-diagnostic",
+      "source_envelope": "experiments/pcqm_c2_xtb_diagnostic/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "failed_on_far_block_plus2p5_meV",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "pcqm-c3-checkpoint-space-20261123",
       "role_use": {
         "common": "untouched",

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "cache_build",
+  "cost_event_id": "cost-c2-xtb_features",
+  "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+  "hardware": "desktop CPU (12 xtb workers)",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 5.219553066084304
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.44261929547221773
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-c2-xtb-diagnostic-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+}

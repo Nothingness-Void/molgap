@@ -1,0 +1,269 @@
+{
+  "analysis_ref": "experiments/pcqm_c2_xtb_diagnostic/results.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Measured wall and cumulative worker+parent CPU times across all stages; no GPU used.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "cache_build",
+      "cost_event_id": "cost-c2-xtb_features",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "hardware": "desktop CPU (12 xtb workers)",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 5.219553066084304
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.44261929547221773
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "audit",
+      "cost_event_id": "cost-c2-analysis",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.3257074652777778
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.045340503250004584
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    }
+  ],
+  "evidence_id": "pcqm-c2-xtb-diagnostic-20261123",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "close_c2_xtb_residual_line",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "FAIL",
+    "transfer_status": "failed_on_far_block_plus2p5_meV"
+  },
+  "role_counts": {
+    "far_score_block_reused": 50000,
+    "p0_dev_score_scaffold": 19845,
+    "p0_fit_rows_reused": 30155,
+    "xtb_pilot_2k": 2000
+  },
+  "role_use": {
+    "common": "untouched",
+    "far_score_block_reused": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "p0_dev_score_scaffold": "consumed",
+    "p0_fit_rows_reused": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "xtb_pilot_2k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-xtb_pilot_2k-prediction_input",
+      "role_name": "xtb_pilot_2k",
+      "row_manifest_hash": "8b2586cd6c7bfb0610bd2ee99fada52199daeadc75cd799adee34b4a7ec5ab51",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_fit_rows_reused-training_membership",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_fit_rows_reused-labels_read",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_fit_rows_reused-prediction_input",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_dev_score_scaffold-prediction_input",
+      "role_name": "p0_dev_score_scaffold",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_dev_score_scaffold-labels_read",
+      "role_name": "p0_dev_score_scaffold",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_dev_score_scaffold-metric_computed",
+      "role_name": "p0_dev_score_scaffold",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-p0_dev_score_scaffold-selection_used",
+      "role_name": "p0_dev_score_scaffold",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-far_score_block_reused-prediction_input",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-far_score_block_reused-labels_read",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+      "role_event_id": "role-c2-far_score_block_reused-metric_computed",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-c2-xtb-diagnostic-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+    }
+  ],
+  "run_id": "pcqm-c2-xtb-diagnostic-score",
+  "scope": "2K pilot gate plus 100K ETKDGv3+MMFF94s+GFN2-xTB calculations (50K dev, 50K far) and residual-corrector fits on 500K s43/s44; no backbone training and no protected role.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_c2_xtb_diagnostic/decision.md",
+    "facts": {
+      "ci_meV": [
+        -0.43282813495018335,
+        0.15601328604405487
+      ],
+      "effect_meV": -0.135803849545621,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "xtb",
+        "gfn2",
+        "etkdg",
+        "mmff",
+        "residual corrector",
+        "pairnorm 500k"
+      ],
+      "source": "experiments/pcqm_c2_xtb_diagnostic/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Closed for post-hoc GFN2-xTB residual correction on these backbones; only a different training-time or architecture mechanism under a new protocol reopens xTB features."
+    ]
+  }
+}

@@ -846,6 +846,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-c2-xtb-diagnostic:A001",
+      "target": "experiments/pcqm_c2_xtb_diagnostic/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-c3-checkpoint-space:A001",
       "target": "experiments/pcqm_c3_checkpoint_space/protocol.md",
       "type": "action_produced_evidence"
@@ -1603,6 +1608,11 @@
     {
       "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
       "target": "TB-pcqm-k1-single-true-ema-100k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-c3-checkpoint-space",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
       "type": "parent_trajectory"
     },
     {
@@ -2413,6 +2423,11 @@
     {
       "source": "k1-saved-bn-rows-20261008-evidence",
       "target": "TB-k1-clean-fit-generalization-500k-20261009",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-c3-checkpoint-space-20261123",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
       "type": "prior_evidence"
     },
     {
@@ -3517,6 +3532,11 @@
     },
     {
       "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
       "target": "TB-pcqm-h1-heldout-budget",
       "type": "prior_evidence"
     },
@@ -3533,6 +3553,11 @@
     {
       "source": "pcqm-pairnorm-residual-2d-p0-20261122",
       "target": "TB-pcqm-residual-spread-fit",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-residual-block-transfer-20261123",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
       "type": "prior_evidence"
     },
     {
@@ -4337,6 +4362,10 @@
     },
     {
       "id": "k1-saved-trace-pair-20261008-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-c2-xtb-diagnostic-20261123",
       "type": "evidence"
     },
     {
@@ -5485,6 +5514,10 @@
     },
     {
       "id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-c2-xtb-diagnostic",
       "type": "trajectory"
     },
     {

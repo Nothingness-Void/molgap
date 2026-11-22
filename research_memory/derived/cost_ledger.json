@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 147,
-  "event_count": 484,
+  "estimated_event_count": 148,
+  "event_count": 487,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 439,
-  "not_applicable_event_count": 122,
+  "measurement_missing_event_count": 440,
+  "not_applicable_event_count": 125,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -744,11 +744,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 4,
-          "known_total": 1.1303428819444445
+          "known_records": 5,
+          "known_total": 1.4560503472222224
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "desktop CPU:device_hours": {
         "estimated": {
@@ -759,7 +759,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "desktop CPU:queue_hours": {
@@ -771,17 +771,17 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "desktop CPU:wall_hours": {
         "estimated": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.5
         },
         "measured": {
-          "known_records": 4,
-          "known_total": 0.3980662777222258
+          "known_records": 5,
+          "known_total": 0.4434067809722304
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -928,6 +928,54 @@
         "measured": {
           "known_records": 2,
           "known_total": 0.32504546766666764
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 5.219553066084304
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.44261929547221773
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -8334,11 +8382,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 4,
-          "known_total": 1.1303428819444445
+          "known_records": 5,
+          "known_total": 1.4560503472222224
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "device_hours": {
         "estimated": {
@@ -8349,7 +8397,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 7,
+        "not_applicable_records": 9,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -8361,7 +8409,57 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 7,
+        "not_applicable_records": 9,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 8,
+          "known_total": 0.551604424861115
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "desktop CPU (12 xtb workers)": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 5.219553066084304
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -8370,8 +8468,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 7,
-          "known_total": 0.5062639216111104
+          "known_records": 1,
+          "known_total": 0.44261929547221773
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -23700,6 +23798,104 @@
         "measured": {
           "known_records": 0,
           "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-pcqm-c2-xtb-diagnostic": {
+      "desktop CPU (12 xtb workers):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 5.219553066084304
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU (12 xtb workers):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.44261929547221773
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.3257074652777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "desktop CPU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.045340503250004584
         },
         "not_applicable_records": 0,
         "unknown_records": 0
