@@ -316,9 +316,9 @@ def _evaluate(kind: str, model, loader, device, target_mode: str):
     pred, true = [], []
     for batch in loader:
         batch = batch.to(device, non_blocking=True)
-        pred.append(_forward(kind, model, batch).float())
-        true.append(_select_targets(batch.y, target_mode).float())
-    return torch.cat(pred).cpu().numpy(), torch.cat(true).cpu().numpy()
+        pred.append(_forward(kind, model, batch).float().cpu().numpy())
+        true.append(_select_targets(batch.y, target_mode).float().cpu().numpy())
+    return np.concatenate(pred), np.concatenate(true)
 
 
 def _metrics(pred, true, target_mode: str):

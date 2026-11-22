@@ -69,8 +69,7 @@ def test_packed_gps_matches_legacy_training_step() -> None:
         torch.testing.assert_close(module._forward("gps", model, batch), reference(*inputs))
         torch.testing.assert_close(module._encode("gps", model, batch), reference.encode(*inputs))
 
-    conv = type(model.convs[0])(16, deepcopy(model.convs[0].conv), heads=4, norm="graph_norm").eval()
+    conv = model.convs[0]
+    model.convs[0] = type(conv)(16, deepcopy(conv.conv), heads=4, norm="graph_norm").eval()
     with torch.no_grad():
-        x, edges = model.node_emb(batch.x), model.edge_emb(batch.edge_attr)
-        args = (x, batch.edge_index, batch.batch)
-        torch.testing.assert_close(conv(*args, layout=batch.gps_layout, edge_attr=edges), conv(*args, edge_attr=edges))
+        torch.testing.assert_close(module._forward("gps", model, batch), model(*inputs))

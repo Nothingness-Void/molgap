@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
-from torch_geometric.nn import GINEConv, GPSConv
 
 
 def gps_attention_layout(ptr):
@@ -16,30 +15,28 @@ def gps_attention_layout(ptr):
     return position * graphs + graph, torch.arange(width) >= counts[:, None]
 
 
-class _PackedGPSConv(GPSConv):
+def _packed_gps_forward(block, x, edge_index, edge_attr, batch, layout):
     """GINE/multihead GPS block with a precomputed batch layout."""
+    if layout is None or block.conv is None or not isinstance(block.attn, nn.MultiheadAttention):
+        return block(x, edge_index, batch, edge_attr=edge_attr)
 
-    def _norm(self, norm, x, batch):
+    def normalize(norm, value):
         if norm is None:
-            return x
-        return norm(x, batch=batch) if self.norm_with_batch else norm(x)
+            return value
+        return norm(value, batch=batch) if block.norm_with_batch else norm(value)
 
-    def forward(self, x, edge_index, batch=None, *, layout=None, **kwargs):
-        if layout is None or self.conv is None or not isinstance(self.attn, nn.MultiheadAttention):
-            return super().forward(x, edge_index, batch, **kwargs)
-
-        index, padding = layout
-        local = self.conv(x, edge_index, **kwargs)
-        local = self._norm(self.norm1, nn.functional.dropout(local, self.dropout, self.training) + x, batch)
-        graphs, width = padding.shape
-        dense = x.new_zeros(graphs * width, x.size(-1))
-        dense.index_copy_(0, index, x)
-        dense = dense.view(width, graphs, x.size(-1)).transpose(0, 1)
-        attended, _ = self.attn(dense, dense, dense, key_padding_mask=padding, need_weights=False)
-        attended = attended.transpose(0, 1).flatten(0, 1).index_select(0, index)
-        attended = self._norm(self.norm2, nn.functional.dropout(attended, self.dropout, self.training) + x, batch)
-        out = local + attended
-        return self._norm(self.norm3, out + self.mlp(out), batch)
+    index, padding = layout
+    local = block.conv(x, edge_index, edge_attr=edge_attr)
+    local = normalize(block.norm1, nn.functional.dropout(local, block.dropout, block.training) + x)
+    graphs, width = padding.shape
+    dense = x.new_zeros(graphs * width, x.size(-1))
+    dense.index_copy_(0, index, x)
+    dense = dense.view(width, graphs, x.size(-1)).transpose(0, 1)
+    attended, _ = block.attn(dense, dense, dense, key_padding_mask=padding, need_weights=False)
+    attended = attended.transpose(0, 1).flatten(0, 1).index_select(0, index)
+    attended = normalize(block.norm2, nn.functional.dropout(attended, block.dropout, block.training) + x)
+    out = local + attended
+    return normalize(block.norm3, out + block.mlp(out))
 
 
 class GPSWrapper(nn.Module):
@@ -53,6 +50,7 @@ class GPSWrapper(nn.Module):
                  num_layers=6, num_heads=8, dropout=0.1, n_targets=3,
                  pooling="mean"):
         super().__init__()
+        from torch_geometric.nn import GINEConv, GPSConv
 
         if pooling not in {"mean", "mean_max"}:
             raise ValueError(f"Unsupported GPS pooling: {pooling}")
@@ -71,7 +69,7 @@ class GPSWrapper(nn.Module):
                 ),
                 edge_dim=hidden_channels,
             )
-            gps = _PackedGPSConv(
+            gps = GPSConv(
                 channels=hidden_channels,
                 conv=gin,
                 heads=num_heads,
@@ -126,7 +124,7 @@ class GPSWrapper(nn.Module):
         e = self._embed_edges(edge_attr)
 
         for conv in self.convs:
-            h = conv(h, edge_index, batch, edge_attr=e, layout=layout)
+            h = _packed_gps_forward(conv, h, edge_index, e, batch, layout)
 
         return self._pool(h, batch, size=None if layout is None else layout[1].size(0))
 
