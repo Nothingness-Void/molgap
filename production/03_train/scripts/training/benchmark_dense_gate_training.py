@@ -35,11 +35,22 @@ def main():
     parser.add_argument("--router", action="store_true")
     args = parser.parse_args()
     if args.source is None:
-        from molgap.constants import REPO_ROOT
+        args.source = next(
+            (root / "src" for root in Path(__file__).resolve().parents
+             if (root / "pyproject.toml").is_file() and (root / "src/molgap/constants.py").is_file()),
+            None,
+        )
+        if args.source is None:
+            parser.error("Could not locate this checkout; pass --source explicitly")
+    source = args.source.resolve()
+    sys.path.insert(0, str(source))
+    import molgap
+    from molgap.constants import REPO_ROOT
 
-        args.source = REPO_ROOT / "src"
-    else:
-        sys.path.insert(0, str(args.source.resolve()))
+    module_path = Path(molgap.__file__).resolve()
+    if module_path != source / "molgap/__init__.py":
+        parser.error(f"Expected molgap from {source}, but imported {module_path}")
+    args.source = REPO_ROOT / "src"
     from molgap.multi2d_router_fusion import GateTrainingConfig, fit_dense_soft_gate, fit_predispatch_router
 
     torch.set_num_threads(args.threads)
@@ -76,7 +87,7 @@ def main():
         state_hash.update(tensor.detach().numpy().tobytes())
     report_hash = sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()
     print(json.dumps({
-        **vars(args), "torch": torch.__version__, "batch_size": config.batch_size,
+        **vars(args), "molgap_file": module_path, "torch": torch.__version__, "batch_size": config.batch_size,
         "median_seconds": round(median(times[1:]), 3),
         "repeat_seconds": [round(value, 3) for value in times[1:]],
         "best_validation_loss": report["best_validation_utility_loss" if args.router else "best_validation_mae_eV"],
