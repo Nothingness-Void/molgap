@@ -1,0 +1,17 @@
+{
+  "arms": [
+    {
+      "arm_id": "pair_update_norm",
+      "device": 0,
+      "initial_state": "D:\\molgap-artifacts\\initializations\\structural-bias-norm-100k\\gptrans.pt",
+      "recipe": "experiments/pcqm_h1_heldout_budget/recipe.json"
+    }
+  ],
+  "format": "molgap-family-training-preparation-v1",
+  "source_files": [
+    "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "src/molgap/local_training.py",
+    "platforms/local/train.py"
+  ],
+  "spec_identity": "f414e8755d367dd346207ba89f5b2c5624c6317e1accd6d67a53c88eec27caeb"
+}
