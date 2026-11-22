@@ -1,0 +1,476 @@
+{
+  "analysis_ref": "experiments/pcqm_residual_spread_fit/results.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Stage wall times; feature-worker CPU time and exclusive device-hours were not measured.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "cache_build",
+      "cost_event_id": "cost-sf-feature",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.06916559719444194
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "inference",
+      "cost_event_id": "cost-sf-inference",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.1091796875
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.05882121983333491
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "audit",
+      "cost_event_id": "cost-sf-analysis",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.7074609375
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.3143408381388953
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    }
+  ],
+  "evidence_id": "pcqm-residual-spread-fit-20261123",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "close_posthoc_2d_corrector_line",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "FAIL",
+    "transfer_status": "not_evaluated"
+  },
+  "role_counts": {
+    "beyond_score_block": 50000,
+    "dev_replay_128": 128,
+    "far_score_block_reused": 50000,
+    "interior_score_block": 50000,
+    "scalar_selection_120k": 15976,
+    "scalar_selection_30k": 3952,
+    "spread_fit_120k": 120000,
+    "spread_fit_30k": 30155
+  },
+  "role_use": {
+    "beyond_score_block": "consumed",
+    "common": "untouched",
+    "dev_replay_128": "consumed",
+    "far_score_block_reused": "consumed",
+    "interior_score_block": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "scalar_selection_120k": "consumed",
+    "scalar_selection_30k": "consumed",
+    "spread_fit_120k": "consumed",
+    "spread_fit_30k": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_120k-training_membership",
+      "role_name": "spread_fit_120k",
+      "row_manifest_hash": "cd3f4cabfeaee0763e71b30c4628f431402b0491668b460701418a4458e9197c",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_120k-labels_read",
+      "role_name": "spread_fit_120k",
+      "row_manifest_hash": "cd3f4cabfeaee0763e71b30c4628f431402b0491668b460701418a4458e9197c",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_120k-prediction_input",
+      "role_name": "spread_fit_120k",
+      "row_manifest_hash": "cd3f4cabfeaee0763e71b30c4628f431402b0491668b460701418a4458e9197c",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-scalar_selection_120k-metric_computed",
+      "role_name": "scalar_selection_120k",
+      "row_manifest_hash": "db6b1a234202cb9517d274aaf3e1167e37472475ff4888c8cf2bef5318cf2b48",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-scalar_selection_120k-selection_used",
+      "role_name": "scalar_selection_120k",
+      "row_manifest_hash": "db6b1a234202cb9517d274aaf3e1167e37472475ff4888c8cf2bef5318cf2b48",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_30k-training_membership",
+      "role_name": "spread_fit_30k",
+      "row_manifest_hash": "67e7fa83605753318b06b259123a51e11365fb905c1d6d9d9227edfbd33b55be",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_30k-labels_read",
+      "role_name": "spread_fit_30k",
+      "row_manifest_hash": "67e7fa83605753318b06b259123a51e11365fb905c1d6d9d9227edfbd33b55be",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-spread_fit_30k-prediction_input",
+      "role_name": "spread_fit_30k",
+      "row_manifest_hash": "67e7fa83605753318b06b259123a51e11365fb905c1d6d9d9227edfbd33b55be",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-scalar_selection_30k-metric_computed",
+      "role_name": "scalar_selection_30k",
+      "row_manifest_hash": "5e4ab6cf8ab1d64baafa090596cca2ce6ec7335c3cf2d1e1c78d1af739619d75",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-scalar_selection_30k-selection_used",
+      "role_name": "scalar_selection_30k",
+      "row_manifest_hash": "5e4ab6cf8ab1d64baafa090596cca2ce6ec7335c3cf2d1e1c78d1af739619d75",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-dev_replay_128-prediction_input",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-dev_replay_128-metric_computed",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-interior_score_block-prediction_input",
+      "role_name": "interior_score_block",
+      "row_manifest_hash": "77c2e1fd2d12ea5cbc018964204a39413248ea6396eca8f0f0acc47f15d14b83",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-interior_score_block-labels_read",
+      "role_name": "interior_score_block",
+      "row_manifest_hash": "77c2e1fd2d12ea5cbc018964204a39413248ea6396eca8f0f0acc47f15d14b83",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-interior_score_block-metric_computed",
+      "role_name": "interior_score_block",
+      "row_manifest_hash": "77c2e1fd2d12ea5cbc018964204a39413248ea6396eca8f0f0acc47f15d14b83",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-interior_score_block-selection_used",
+      "role_name": "interior_score_block",
+      "row_manifest_hash": "77c2e1fd2d12ea5cbc018964204a39413248ea6396eca8f0f0acc47f15d14b83",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-beyond_score_block-prediction_input",
+      "role_name": "beyond_score_block",
+      "row_manifest_hash": "7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-beyond_score_block-labels_read",
+      "role_name": "beyond_score_block",
+      "row_manifest_hash": "7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-beyond_score_block-metric_computed",
+      "role_name": "beyond_score_block",
+      "row_manifest_hash": "7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-beyond_score_block-selection_used",
+      "role_name": "beyond_score_block",
+      "row_manifest_hash": "7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-far_score_block_reused-prediction_input",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-far_score_block_reused-labels_read",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-far_score_block_reused-metric_computed",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+      "role_event_id": "role-sf-far_score_block_reused-selection_used",
+      "role_name": "far_score_block_reused",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-spread-fit-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-spread-fit"
+    }
+  ],
+  "run_id": "pcqm-residual-spread-fit-score",
+  "scope": "Saved-weight forward passes and spread-row residual-corrector fits (120K and 30,155 rows) of the P0 500K pair scored on interior, beyond and reused far 50K blocks; no backbone training and no protected role.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_residual_spread_fit/decision.md",
+    "facts": {
+      "ci_meV": [
+        -0.933549997960186,
+        -0.5322346252405542
+      ],
+      "effect_meV": -0.7278103393815332,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "spread fit",
+        "residual corrector",
+        "posthoc",
+        "descriptor",
+        "unseen scaffold",
+        "pairnorm 500k"
+      ],
+      "source": "experiments/pcqm_residual_spread_fit/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Closed for post-hoc 2D descriptor residual trees on these backbones; only a genuinely different mechanism under a new protocol reopens residual work."
+    ]
+  }
+}

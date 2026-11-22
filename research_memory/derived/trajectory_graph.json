@@ -941,6 +941,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-residual-spread-fit:A001",
+      "target": "experiments/pcqm_residual_spread_fit/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1633,6 +1638,11 @@
     {
       "source": "TB-pcqm-pairnorm-residual-2d-p0",
       "target": "TB-pcqm-h1-heldout-budget",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-residual-block-transfer",
+      "target": "TB-pcqm-residual-spread-fit",
       "type": "parent_trajectory"
     },
     {
@@ -3511,6 +3521,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-residual-spread-fit",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-residual-block-transfer-20261123",
+      "target": "TB-pcqm-residual-spread-fit",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-attribution-no-train",
       "target": "TB-pcqm-scale-transfer-diagnostic",
       "type": "prior_evidence"
@@ -4717,6 +4737,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-residual-spread-fit-20261123",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-route-b-four-encoder-specialist",
       "type": "evidence"
     },
@@ -5534,6 +5558,10 @@
     },
     {
       "id": "TB-pcqm-residual-block-transfer",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-residual-spread-fit",
       "type": "trajectory"
     },
     {
