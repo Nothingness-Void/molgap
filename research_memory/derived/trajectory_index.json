@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "602b005b3c863364e5627b7a1e5ce1fcf465a907ea5f9aebeb9e9cec51baf279",
+  "source_digest": "78145864e30a627a3ebcec68d16228c69ac7d5af7b46d9cfd0a4631247d8833b",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -3086,6 +3086,42 @@
       ],
       "track": "B",
       "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_h1_heldout_budget/decision.md",
+      "family_id": "pcqm-h1-heldout-budget",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-pcqm-pairnorm-residual-2d-p0"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_h1_heldout_budget/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-h1-heldout-budget-100k-20261122"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-h1-heldout-budget"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_h1_heldout_budget/decision.md",
+      "family_id": "pcqm-h1-heldout-budget",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-pcqm-h1-heldout-budget"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-TB-pcqm-h1-heldout-budget-94k"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
     },
     {
       "completeness_status": "complete",

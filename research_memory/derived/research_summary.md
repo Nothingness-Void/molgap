@@ -1,15 +1,15 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 190
+- Validated V5 evidence: 192
 - Evidence without trajectory: 0
 
 ## Trajectories
 - ACTIVE: 7
-- CLOSED: 37
+- CLOSED: 38
 - INCONCLUSIVE: 23
 - INFRASTRUCTURE_ONLY: 10
-- NEGATIVE_UNDER_CONTRACT: 63
+- NEGATIVE_UNDER_CONTRACT: 64
 - NO_TRAIN: 58
 - POSITIVE_UNDER_CONTRACT: 10
 
@@ -19,9 +19,9 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 708
-- Coarse historical role records: 887
-- Repeatedly selected role identities: 30
+- Explicit role events: 731
+- Coarse historical role records: 904
+- Repeatedly selected role identities: 33
 
 ## Cost
 - A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -156,6 +156,14 @@
 - RTX 5060 FP32 and CPU graph loading device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - RTX 5060 FP32 and CPU graph loading queue_hours: not applicable (1 records); measurement_missing=0
 - RTX 5060 FP32 and CPU graph loading wall_hours: measured=0.010671 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- RTX 5060 and CPU cpu_hours: measured=0.046233 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- RTX 5060 and CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- RTX 5060 and CPU queue_hours: not applicable (1 records); measurement_missing=0
+- RTX 5060 and CPU wall_hours: measured=0.026571 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- RTX 5060 and desktop CPU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- RTX 5060 and desktop CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- RTX 5060 and desktop CPU queue_hours: not applicable (2 records); measurement_missing=0
+- RTX 5060 and desktop CPU wall_hours: measured=unknown (0 measured records), estimated=2.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - RTX5060 cpu_hours: measured=0.096849 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - RTX5060 device_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
 - RTX5060 queue_hours: not applicable (2 records); measurement_missing=0
@@ -284,6 +292,10 @@
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU wall_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- desktop CPU cpu_hours: measured=0.061684 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- desktop CPU device_hours: not applicable (2 records); measurement_missing=0
+- desktop CPU queue_hours: not applicable (2 records); measurement_missing=0
+- desktop CPU wall_hours: measured=0.032903 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - desktop CPU; synthetic-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - desktop CPU; synthetic-only device_hours: not applicable (2 records); measurement_missing=0
 - desktop CPU; synthetic-only queue_hours: not applicable (2 records); measurement_missing=0
@@ -296,26 +308,26 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
-- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
-- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
-- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=16, not_applicable=0
 - unknown-before-authorized-device-query cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 426
-- Cost-event coverage: 197/208 trajectories; incomplete native measurement=165
+- Measurement-missing cost events: 431
+- Cost-event coverage: 199/210 trajectories; incomplete native measurement=166
 
 ## Screening Backtest
 - Status: available
 - Eligible traces: 64
-- Excluded traces: 38
+- Excluded traces: 39
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 106
+- [INFO] trace_unavailable_for_backtest: 107
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 165
+- [WARN] incomplete_native_cost_measurement: 166
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 53
 - [WARN] trajectory_without_v5_evidence: 18

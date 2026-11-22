@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "inference",
+  "cost_event_id": "cost-h1-inference",
+  "evidence_ref": "experiments/pcqm_h1_heldout_budget/measurements.json",
+  "hardware": "RTX 5060 and CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.046232638888888886
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.026570791361110523
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-h1-heldout-budget-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-h1-heldout-budget"
+}

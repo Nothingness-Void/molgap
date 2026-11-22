@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 208,
-    "with_complete_native_measurement": 32,
-    "with_cost_event": 197,
-    "with_incomplete_native_measurement": 165,
+    "trajectories_total": 210,
+    "with_complete_native_measurement": 33,
+    "with_cost_event": 199,
+    "with_incomplete_native_measurement": 166,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 106,
+      "count": 107,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -108,6 +108,7 @@
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-h1-heldout-budget",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -155,7 +156,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 165,
+      "count": 166,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -303,6 +304,7 @@
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+        "TB-pcqm-h1-heldout-budget-94k",
         "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
         "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
         "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",

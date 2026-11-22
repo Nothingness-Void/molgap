@@ -1493,6 +1493,25 @@
       "comparison_status": "NOT_EVALUATED",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "role_use": {
         "development": "used",
@@ -2806,6 +2825,37 @@
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic"
       ]
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "cross_run_same_init_paired_rows",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_use": {
+        "alignment_100k": "consumed",
+        "alignment_500k": "consumed",
+        "calibration_6k": "consumed",
+        "common": "untouched",
+        "development_100k_saved_verification": "consumed",
+        "development_500k_saved_verification": "consumed",
+        "h1_n4_score": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "scalar_internal_selection": "consumed",
+        "source_cache_preparation": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "H1 fixed-label pilot and N4 independent-row replication",
+      "source_envelope": "experiments/pcqm_h1_heldout_budget/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [

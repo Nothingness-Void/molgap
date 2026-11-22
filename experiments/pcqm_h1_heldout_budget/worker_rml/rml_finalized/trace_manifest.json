@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_44040",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 44040,
+    "sample_presentations": 5637120
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+  "reference_id": null,
+  "run_id": "local-pcqm-h1-94k-s42:pair_update_norm:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/trace.json",
+  "trace_artifact_sha256": "9cae2c3a55d4e80f45d8741013e92921947cc9036f229c71639b87b1232c4774",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-pcqm-h1-heldout-budget-94k",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "optimizer_steps"
+}

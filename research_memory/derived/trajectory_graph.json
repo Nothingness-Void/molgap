@@ -866,6 +866,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-h1-heldout-budget-94k:A001",
+      "target": "experiments/pcqm_h1_heldout_budget/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget:A001",
+      "target": "experiments/pcqm_h1_heldout_budget/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long:A001",
       "target": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/training_recipe_bn_long.json",
       "type": "action_produced_evidence"
@@ -1603,6 +1613,16 @@
     {
       "source": "TB-pcqm-geometry-reliability-screen-20260928",
       "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget",
+      "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-pairnorm-residual-2d-p0",
+      "target": "TB-pcqm-h1-heldout-budget",
       "type": "parent_trajectory"
     },
     {
@@ -3461,6 +3481,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-h1-heldout-budget",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-attribution-no-train",
       "target": "TB-pcqm-scale-transfer-diagnostic",
       "type": "prior_evidence"
@@ -4211,6 +4241,10 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "type": "evidence"
     },
@@ -4452,6 +4486,10 @@
     },
     {
       "id": "pcqm-gptrans-t-500k-bridge",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-h1-heldout-budget-100k-20261122",
       "type": "evidence"
     },
     {
@@ -5408,6 +5446,14 @@
     },
     {
       "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-h1-heldout-budget",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-h1-heldout-budget-94k",
       "type": "trajectory"
     },
     {

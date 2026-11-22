@@ -104273,6 +104273,22 @@
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "local-pcqm-h1-94k-s42:pair_update_norm:downstream",
+      "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
         "missing_comparability_identity:lr_schedule_identity",
         "missing_comparability_identity:optimizer_identity",
         "missing_comparability_identity:precision_identity",
@@ -104377,5 +104393,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "64d9402042e8a0c55e35e90caa2fda02f0fafe988aa941eafd154e62fc8053a2"
+  "source_digest": "9791417cd8f98ebf273e15c9d5b275a0c8fbd8a8cd551a3a6ea79653f4f8ca5d"
 }

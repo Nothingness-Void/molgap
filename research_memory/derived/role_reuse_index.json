@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 887,
+  "ambiguous_historical_role_record_count": 904,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2039,6 +2039,27 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "role_identity": null,
       "role_name": "development",
@@ -4007,6 +4028,104 @@
     },
     {
       "evidence_id": "pcqm-gptrans-t-500k-bridge",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "alignment_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "alignment_500k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "calibration_6k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "development_100k_saved_verification",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "development_500k_saved_verification",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "h1_n4_score",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "scalar_internal_selection",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "source_cache_preparation",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6211,7 +6330,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 708,
+  "explicit_role_event_count": 731,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -9463,6 +9582,45 @@
         "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
       }
     ],
+    "a03e0186916317a37b4d2d7afcaba85b3d5b32f8209cac838032779ef0153f3c:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      }
+    ],
+    "a03e0186916317a37b4d2d7afcaba85b3d5b32f8209cac838032779ef0153f3c:a69c39571dcc8c42a9d74f909bb1f8188d924c55edf609c6f321965881af1931:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      }
+    ],
     "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_50k": [
       {
         "access_kind": "metric_computed",
@@ -11332,6 +11490,148 @@
         "semantics": "explicit",
         "trajectory_id": "TB-matched-500k-v4-three-arm"
       }
+    ],
+    "pcqm4mv2-ogb-official-train:256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316:h1_n4_score": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-h1_n4_score-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-h1_n4_score-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-h1_n4_score-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-h1-h1_n4_score-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:2af65c28ef57a0ec878a3148355ee455b535a99f5703f418875c1f91ade7d8b9:alignment_100k": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-alignment_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-alignment_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_100k_saved_verification": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-development_100k_saved_verification-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-development_100k_saved_verification-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:4036e6cc6c211ec489056d650c3910da2ab28f8788f9fd98bc7d11fb60cfaaea:calibration_6k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-calibration_6k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-calibration_6k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-h1-calibration_6k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:development_500k_saved_verification": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-development_500k_saved_verification-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-development_500k_saved_verification-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:91429acb076e790b2eb5c752c44f90c6653ad178fbfa80017475fd71d56241fb:source_cache_preparation": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-source_cache_preparation-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:d69d6d9bd8c6ebed0a30235c0d3590286cce47e0af70b6765541c3ffe360f5da:scalar_internal_selection": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-scalar_internal_selection-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-h1-scalar_internal_selection-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb:alignment_500k": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-alignment_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-alignment_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
     ]
   },
   "protected_roles_reported_untouched": {
@@ -11409,6 +11709,7 @@
       "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
       "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
       "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+      "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
@@ -11469,6 +11770,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-h1-heldout-budget-100k-20261122",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
@@ -11600,6 +11902,7 @@
       "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
       "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
       "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+      "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
@@ -11660,6 +11963,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-h1-heldout-budget-100k-20261122",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
@@ -14021,6 +14325,36 @@
         "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
       }
     ],
+    "a03e0186916317a37b4d2d7afcaba85b3d5b32f8209cac838032779ef0153f3c:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-local-pcqm-h1-94k-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+      }
+    ],
     "pcqm-fixed100k-v4:0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1:fixed50k_development": [
       {
         "access_kind": "labels_read",
@@ -15109,6 +15443,52 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316:h1_n4_score": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-h1-h1_n4_score-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-h1_n4_score-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-h1-h1_n4_score-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-h1-h1_n4_score-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:d69d6d9bd8c6ebed0a30235c0d3590286cce47e0af70b6765541c3ffe360f5da:scalar_internal_selection": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-h1-scalar_internal_selection-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-h1-scalar_internal_selection-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-h1-heldout-budget"
       }
     ]
   },
