@@ -1,0 +1,427 @@
+{
+  "analysis_ref": "experiments/pcqm_pairnorm_residual_2d_p0/analysis.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Stage wall times excluding startup, planning, parent recheck and closure; total CPU time across feature workers and exclusive GPU time not measured.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "cost_event_id": "cost-p0-20261122-cpu",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "hardware": "Desktop CPU; four RDKit workers or four OpenMP threads",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.10434909850000015
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "inference",
+      "cost_event_id": "cost-p0-20261122-replay",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "hardware": "RTX 5060 FP32 and CPU graph loading",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.017144097222222224
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.010671058527776849
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    }
+  ],
+  "evidence_id": "pcqm-pairnorm-residual-2d-p0-20261122",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "close_diagnostic_no_new_training",
+    "comparison_status": "same_development_rows_context_only",
+    "execution_status": "complete_local_residual_fits_and_frozen_forward",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN_P0_PASS_train_fit_regresses",
+    "transfer_status": "not_evaluated"
+  },
+  "parent_acceptance": {
+    "arms": {
+      "init_s43": {
+        "blockers": [],
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "init_s44": {
+        "blockers": [],
+        "status": "MECHANICALLY_VERIFIED"
+      }
+    },
+    "attempt_id": "v1",
+    "blockers": [],
+    "closure_complete": true,
+    "executed": false,
+    "replay_readiness": "VERIFIED",
+    "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+    "scientific_outcome": "NOT_EVALUATED",
+    "spec_identity": "4f92f3bbc27fa493bc1d4ef6c4aca0634f6bfc9da7ce5596519d347e09fc7c39",
+    "status": "MECHANICALLY_VERIFIED",
+    "strict_mode": "CANONICAL_READ_ONLY",
+    "strict_validation": {
+      "arms": {
+        "init_s43": {
+          "blockers": [],
+          "comparison": {
+            "reason": "accepted_reference_arm",
+            "status": "NOT_APPLICABLE"
+          },
+          "native_qualification": {
+            "blockers": [],
+            "missing": [],
+            "status": "VERIFIED"
+          },
+          "replay": {
+            "exclusions": [],
+            "status": "VERIFIED"
+          }
+        },
+        "init_s44": {
+          "blockers": [],
+          "comparison": {
+            "blockers": [],
+            "comparison_class": "STRICT_CAUSAL",
+            "environment_difference": null,
+            "status": "VERIFIED"
+          },
+          "native_qualification": {
+            "blockers": [],
+            "missing": [],
+            "status": "VERIFIED"
+          },
+          "replay": {
+            "exclusions": [],
+            "status": "VERIFIED"
+          }
+        }
+      },
+      "blockers": [],
+      "closure_ready": true,
+      "ready_for_desktop": "NOT_EVALUATED",
+      "status": "VERIFIED"
+    }
+  },
+  "role_counts": {
+    "backbone_train_corrector_fit": 30155,
+    "backbone_unseen_corrector_fit": 30155,
+    "dev_replay_128": 128,
+    "dev_scalar_control_selection": 4245,
+    "internal_development": 50000,
+    "scaffold_dev_score": 19845,
+    "train_scalar_control_selection": 4215,
+    "train_window": 100000
+  },
+  "role_use": {
+    "backbone_train_corrector_fit": "consumed",
+    "backbone_unseen_corrector_fit": "consumed",
+    "common": "untouched",
+    "dev_replay_128": "consumed",
+    "dev_scalar_control_selection": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "scaffold_dev_score": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_scalar_control_selection": "consumed",
+    "train_window": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-train_window-labels_read",
+      "role_name": "train_window",
+      "row_manifest_hash": "71ff36858679d5872e01695c9ecfaca477f2504776bcad8594e39c09e10db8e6",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-train_window-prediction_input",
+      "role_name": "train_window",
+      "row_manifest_hash": "71ff36858679d5872e01695c9ecfaca477f2504776bcad8594e39c09e10db8e6",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_train_corrector_fit-labels_read",
+      "role_name": "backbone_train_corrector_fit",
+      "row_manifest_hash": "f6bdde9f6a987eafb96d64c82f3d08bcbe33745d31b4fc7641e32f3de528ca8f",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_train_corrector_fit-prediction_input",
+      "role_name": "backbone_train_corrector_fit",
+      "row_manifest_hash": "f6bdde9f6a987eafb96d64c82f3d08bcbe33745d31b4fc7641e32f3de528ca8f",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_train_corrector_fit-training_membership",
+      "role_name": "backbone_train_corrector_fit",
+      "row_manifest_hash": "f6bdde9f6a987eafb96d64c82f3d08bcbe33745d31b4fc7641e32f3de528ca8f",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_unseen_corrector_fit-labels_read",
+      "role_name": "backbone_unseen_corrector_fit",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_unseen_corrector_fit-prediction_input",
+      "role_name": "backbone_unseen_corrector_fit",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-backbone_unseen_corrector_fit-training_membership",
+      "role_name": "backbone_unseen_corrector_fit",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-train_scalar_control_selection-metric_computed",
+      "role_name": "train_scalar_control_selection",
+      "row_manifest_hash": "e774ab5b210bdd372c1c63dbee43b86ef0552620bb05106fdf97c56c8db7abb4",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-train_scalar_control_selection-selection_used",
+      "role_name": "train_scalar_control_selection",
+      "row_manifest_hash": "e774ab5b210bdd372c1c63dbee43b86ef0552620bb05106fdf97c56c8db7abb4",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-dev_scalar_control_selection-metric_computed",
+      "role_name": "dev_scalar_control_selection",
+      "row_manifest_hash": "091f104f9b97f7f91a53be56e77631155d8fd40aa520cf970525cc76735eedee",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-dev_scalar_control_selection-selection_used",
+      "role_name": "dev_scalar_control_selection",
+      "row_manifest_hash": "091f104f9b97f7f91a53be56e77631155d8fd40aa520cf970525cc76735eedee",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-scaffold_dev_score-metric_computed",
+      "role_name": "scaffold_dev_score",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-scaffold_dev_score-selection_used",
+      "role_name": "scaffold_dev_score",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-dev_replay_128-prediction_input",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/acceptance.json",
+      "role_event_id": "role-p0-dev_replay_128-metric_computed",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
+    }
+  ],
+  "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+  "scope": "Four frozen postprocessor outputs before scoring; two local selected-checkpoint FP32 replays. Training-membership events here refer to fitting the correctors only. Raw train-window labels were decoded; only the selected train subset was used for residual fits.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_pairnorm_residual_2d_p0/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "New prospective independent holdout design and explicit authority; no automatic H1 or protected-role access."
+    ]
+  }
+}

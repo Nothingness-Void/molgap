@@ -438,7 +438,9 @@
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-pairnorm-residual-2d-p0"
+      ]
     },
     {
       "artifact_availability": [
@@ -457,7 +459,9 @@
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-pairnorm-residual-2d-p0"
+      ]
     },
     {
       "artifact_availability": [
@@ -3872,6 +3876,37 @@
       },
       "scientific_scope": "pcqm-pairnorm-prediction-router-500k",
       "source_envelope": "experiments/pcqm_pairnorm_prediction_router_500k/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "same_development_rows_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "role_use": {
+        "backbone_train_corrector_fit": "consumed",
+        "backbone_unseen_corrector_fit": "consumed",
+        "common": "untouched",
+        "dev_replay_128": "consumed",
+        "dev_scalar_control_selection": "consumed",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "scaffold_dev_score": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_scalar_control_selection": "consumed",
+        "train_window": "consumed"
+      },
+      "scientific_scope": "pcqm-pairnorm-residual-2d-p0",
+      "source_envelope": "experiments/pcqm_pairnorm_residual_2d_p0/rml/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
       "used_by_trajectory_ids": []
