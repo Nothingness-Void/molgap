@@ -41,3 +41,5 @@ the paired bootstrap upper bound < 0 is checked after retrieval. Tail scores
 ## d500 resubmit (2026-11-23)
 
 Job 2111727 finished c100, d100 (dev 0.13549 vs c100 0.13919, delta -3.70 meV, gate passed) and c500 (dev 0.10038), then skipped d500 for time: it needed about 22,000 s and 11,458 s were left. Run `gptdft-d500-20261123` runs d500 alone (s44 init, seed 42, budget 22,000 s) with a 24 h walltime, the adapter maximum. No gate: it passed in the first job. Specs: `serial_spec_d500.json`, `run_spec_d500.json`. Retrieval and decision rules are unchanged; compare with c500 from job 2111727.
+
+Submitted 2026-11-23 from commit a828c35d9: job 2134319.ccpbs1, run gptdft-d500-20261123, queue H, 1 A100, 16 cores, 24 h. Payload: D:/molgap-artifacts/ims_payloads/gptdft-d500-20261123. Opus pre-submit review: SUBMIT, no blockers. Old run gptdft-chain-20261121 is closed for training: do not resume it (d500 moved here). Retrieval still needs the paired bootstrap upper bound < 0 on d100 vs c100.
