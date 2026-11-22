@@ -1,0 +1,150 @@
+{
+  "acceptance_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_h1_heldout_budget/prepare.py": "93b19e734b7109b3bd0f47bba629282cbf81563fc7aa04b078176678ad6700df",
+    "experiments/pcqm_pairnorm_residual_2d_p0/chemistry.py": "9a4f71e6f6d7eab372ecaf4ef64f5c723a0cec6c8c3ae8e280904e341d66f16e",
+    "experiments/pcqm_pairnorm_residual_2d_p0/probe.py": "24aa8e1e8ae3c340ad6562e040e75351bff6d23ca133f6b883f1c3dd0271e59f",
+    "experiments/pcqm_residual_block_transfer/acceptance.json": "9500fc040477255cc828d17babc628089e0c34c914368b3306133ed26d8e0f0f",
+    "experiments/pcqm_residual_block_transfer/decision.md": "81fa57d739cf5953b00a211089c3d3ea31caeaa5deb9ba74f2cd4123cc518796",
+    "experiments/pcqm_residual_block_transfer/protocol.md": "c5f656356ac123e745aa116884176443058998a4f9ffd76c8817334f82a73f3a",
+    "experiments/pcqm_residual_block_transfer/results.json": "f48bbd7f1784866622e346ce0e9a72ef4ba1656aaccbb7f3ab1130aac6f9c82f",
+    "experiments/pcqm_residual_block_transfer/transfer.py": "f8f720544a7c8744d6b53f32d3ed8284e38ed2ccad5600ee8c9ed108af839a77",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/features.json": "b7674c238e5a9acd215278b59af9a8549d0b1d45627b2422e5b4784a88f036a5",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/features.npz": "5f454e378131ecf00d5b8ca893bcfa28cbe951d46199f59c222145f61c5d2b15",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/predict.json": "09902f7858643b27abf6fea9212583070a957b5f00c62c1696255eb48b33a882",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/predict.npz": "3a76b7dbb6f1e7d3c07f3e93a4fc587b24c0402aa2891fd0954b21dfe0eb5a9d",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/features.json": "534c571574f4d4468fd282ff330413619df3e7c426e4fb49725285ab2fab08b1",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/features.npz": "92d668e08e701fd3a2465ed17209574f9b205c5bc3b4ef8c852ec28014a21590",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/replay.json": "f473afb98db0922663bedaba6face297f102938ce49e3c5a8bd25dfe12c4106f",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/replay.npz": "8da939f47729d1b64142794a46163f42bfe5269735eafe4cd5972d2804dca795",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s43-dev.json": "cbf234cf0133cce2f3e78b118640a6a264eddc39aac1d7999ebf4abc5c3861c8",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s43-dev.npz": "d24ba5e13e188d8c1f72f4d67aa300f0a3ad6211ebf332a9cf366a60899a6923",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s44-dev.json": "37f67494ba7c7c86a1bc49e04353c3bb5d47bde62e4c755e9a37a564a72e616a",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s44-dev.npz": "9fc7f5320c7f2ab33525d1aac3faa8f20dafd3e28db8652804b79c060beba6cf",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.json": "be99d724f5eb20b64a620ca6bd792a97889c7b854f69ee7310a7e250a0453442",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.npz": "880fd4dd6df58c888e518660007c209036dcfbe2db9b2242acde2ff722da5fe5",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.json": "ead95bea74324fe8cba2d2dd756604899c7395438b49b61dc11eaa32baec46df",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.npz": "0d577144176c9629c5a8b27f0c0b71bb842731e8cd2be6aa1849a54bf3bc30d3",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.json": "4d6740cc3b3e7022af406f93cf9cdf776b31bcc21dbade50003fa18360d91d5a",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.npz": "ce58a07c05f95bce135ed945f1c5784570abb93e7d46582dee380b894fd21f68"
+  },
+  "finalized_at": "2026-11-22T15:48:14.162420+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-bt-feature.json",
+        "sha256": "b016a5c695ea53553bc2a928924d77728fecbe4fe91e73dafc3e2ef3a3fa5adf"
+      },
+      {
+        "ref": "costs/cost-bt-inference.json",
+        "sha256": "629444c17c517132cc2c50e88daa90687f251f4230209b5da4b04adf1fcb550e"
+      },
+      {
+        "ref": "costs/cost-bt-analysis.json",
+        "sha256": "253dd7f87172c4064090adfee3569c9e7a46b6ae828b37b651b3365121b3fb57"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "b32bd390e0bd35d66e63b1e0ac12c24ceaf15a396799c2ec4210cad67a316985"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "ee463adebdd4e71bc3333aae2f0246e910fcdb8d1f0f06b3175623106b954438"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-bt-p0_fit_rows_reused-training_membership.json",
+        "sha256": "153a08c7875d148abbf115a582f81b7c052d1b7c3c74e2543411374f727fae40"
+      },
+      {
+        "ref": "roles/role-bt-p0_fit_rows_reused-labels_read.json",
+        "sha256": "ac2708a888124a6a0da8f242799b32da55f33f51c40eb91b551aa6403536f5e4"
+      },
+      {
+        "ref": "roles/role-bt-p0_fit_rows_reused-prediction_input.json",
+        "sha256": "00e2160481c0023f273c5462366da07e02e5ccfb9e33989232a3cfe8127825a0"
+      },
+      {
+        "ref": "roles/role-bt-scalar_selection_30k-metric_computed.json",
+        "sha256": "1796698a7f4bf8e8e9b39e1d4a9c370cee0f9bb9d0f59d7d2150d0a0357408cb"
+      },
+      {
+        "ref": "roles/role-bt-scalar_selection_30k-selection_used.json",
+        "sha256": "4f422ae5dc9c16faad1a1395bd4e5c55758a2e436c2c26c6cabaafd94e57e293"
+      },
+      {
+        "ref": "roles/role-bt-small_fit_6k-training_membership.json",
+        "sha256": "c5e23c156616116df8197a7d06cb157f2ce615f4a4d63c77839e9433be1538e3"
+      },
+      {
+        "ref": "roles/role-bt-small_fit_6k-labels_read.json",
+        "sha256": "4a67a671bc96d960b373f0003db5e019510b96d051309a2498805fd0ea281173"
+      },
+      {
+        "ref": "roles/role-bt-small_fit_6k-prediction_input.json",
+        "sha256": "99148484b0915cfcd906fa6cd28aabf5ffee8aa4e18ecc8a020ca21ff21dab64"
+      },
+      {
+        "ref": "roles/role-bt-scalar_selection_6k-metric_computed.json",
+        "sha256": "310e6a92816bf45d80d6611eedd418ce70342c75b354da319427f9c180299dd3"
+      },
+      {
+        "ref": "roles/role-bt-scalar_selection_6k-selection_used.json",
+        "sha256": "72602b88843e4c41bb47a09003f06e6eec53e323675baab1d9b495b36d71a307"
+      },
+      {
+        "ref": "roles/role-bt-p0_score_rows_reproduction-prediction_input.json",
+        "sha256": "96feaebb843b9d4d4d78bbc207ad45b4859e70f916ed24feb044fc77784dadf5"
+      },
+      {
+        "ref": "roles/role-bt-dev_replay_128-prediction_input.json",
+        "sha256": "f834e161d0fe232113c17a1dd2eb6c0aaa2f34a22105ca0513a9a75133738098"
+      },
+      {
+        "ref": "roles/role-bt-dev_replay_128-metric_computed.json",
+        "sha256": "af028dfa98d4097acd1c0c78258bd9887ec83c6c0841dd62bc42709d8b2638d9"
+      },
+      {
+        "ref": "roles/role-bt-near_score_block-prediction_input.json",
+        "sha256": "fbd333de75d1581571ca0ba667e6808074a32f24826756dc2e829d1257fd387c"
+      },
+      {
+        "ref": "roles/role-bt-near_score_block-labels_read.json",
+        "sha256": "8c0ac0a06cf998ab5efc8ebae4b505681156ae7cf74f67467df2c67a748eb41d"
+      },
+      {
+        "ref": "roles/role-bt-near_score_block-metric_computed.json",
+        "sha256": "bddded1c57cc0ee2f17467cd39a26bec9ed0c85fc48e4f5f3a2a025295d85b44"
+      },
+      {
+        "ref": "roles/role-bt-near_score_block-selection_used.json",
+        "sha256": "5b95ebaace34f237559572137654acd88408570291d936f4dc6fb20417bc71ae"
+      },
+      {
+        "ref": "roles/role-bt-far_score_block-prediction_input.json",
+        "sha256": "faba070327e6c7511ff4d10b7d5ac8fa2e70b5ffc842feec618707fa365f0fbf"
+      },
+      {
+        "ref": "roles/role-bt-far_score_block-labels_read.json",
+        "sha256": "f28c726526ad33619cdd4274cae68ec0e015fe4cae272974c472e96cd8f5e8df"
+      },
+      {
+        "ref": "roles/role-bt-far_score_block-metric_computed.json",
+        "sha256": "7c787c2b9870b50b1881bd72e3fc93051cf1ef07e95971fe080b7de260342cb4"
+      },
+      {
+        "ref": "roles/role-bt-far_score_block-selection_used.json",
+        "sha256": "15bfc348821c0130e90772a7fb5745653bb6ec08d0830855b3b54640d3daa583"
+      }
+    ]
+  },
+  "run_id": "pcqm-residual-block-transfer-score",
+  "trajectory_id": "TB-pcqm-residual-block-transfer"
+}

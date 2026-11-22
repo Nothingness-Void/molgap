@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 210,
-    "with_complete_native_measurement": 33,
-    "with_cost_event": 199,
+    "trajectories_total": 211,
+    "with_complete_native_measurement": 34,
+    "with_cost_event": 200,
     "with_incomplete_native_measurement": 166,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 107,
+      "count": 108,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -114,6 +114,7 @@
         "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-pairnorm-prediction-router-500k-20261027",
         "TB-pcqm-pairnorm-residual-2d-p0",
+        "TB-pcqm-residual-block-transfer",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",

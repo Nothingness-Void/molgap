@@ -1,0 +1,212 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_residual_block_transfer/protocol.md",
+      "name": "protocol.md",
+      "sha256": "c5f656356ac123e745aa116884176443058998a4f9ffd76c8817334f82a73f3a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_residual_block_transfer/transfer.py",
+      "name": "transfer.py",
+      "sha256": "f8f720544a7c8744d6b53f32d3ed8284e38ed2ccad5600ee8c9ed108af839a77"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_residual_block_transfer/decision.md",
+      "name": "decision.md",
+      "sha256": "81fa57d739cf5953b00a211089c3d3ea31caeaa5deb9ba74f2cd4123cc518796"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_residual_block_transfer/results.json",
+      "name": "results.json",
+      "sha256": "f48bbd7f1784866622e346ce0e9a72ef4ba1656aaccbb7f3ab1130aac6f9c82f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "9500fc040477255cc828d17babc628089e0c34c914368b3306133ed26d8e0f0f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_residual_2d_p0/chemistry.py",
+      "name": "chemistry.py",
+      "sha256": "9a4f71e6f6d7eab372ecaf4ef64f5c723a0cec6c8c3ae8e280904e341d66f16e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_residual_2d_p0/probe.py",
+      "name": "probe.py",
+      "sha256": "24aa8e1e8ae3c340ad6562e040e75351bff6d23ca133f6b883f1c3dd0271e59f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_h1_heldout_budget/prepare.py",
+      "name": "prepare.py",
+      "sha256": "93b19e734b7109b3bd0f47bba629282cbf81563fc7aa04b078176678ad6700df"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.npz",
+      "name": "features.npz",
+      "sha256": "0d577144176c9629c5a8b27f0c0b71bb842731e8cd2be6aa1849a54bf3bc30d3"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.json",
+      "name": "features.json",
+      "sha256": "ead95bea74324fe8cba2d2dd756604899c7395438b49b61dc11eaa32baec46df"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.npz",
+      "name": "predict.npz",
+      "sha256": "ce58a07c05f95bce135ed945f1c5784570abb93e7d46582dee380b894fd21f68"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.json",
+      "name": "predict.json",
+      "sha256": "4d6740cc3b3e7022af406f93cf9cdf776b31bcc21dbade50003fa18360d91d5a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.npz",
+      "name": "correct.npz",
+      "sha256": "880fd4dd6df58c888e518660007c209036dcfbe2db9b2242acde2ff722da5fe5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.json",
+      "name": "correct.json",
+      "sha256": "be99d724f5eb20b64a620ca6bd792a97889c7b854f69ee7310a7e250a0453442"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/features.npz",
+      "name": "features.npz",
+      "sha256": "5f454e378131ecf00d5b8ca893bcfa28cbe951d46199f59c222145f61c5d2b15"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/features.json",
+      "name": "features.json",
+      "sha256": "b7674c238e5a9acd215278b59af9a8549d0b1d45627b2422e5b4784a88f036a5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/predict.npz",
+      "name": "predict.npz",
+      "sha256": "3a76b7dbb6f1e7d3c07f3e93a4fc587b24c0402aa2891fd0954b21dfe0eb5a9d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/predict.json",
+      "name": "predict.json",
+      "sha256": "09902f7858643b27abf6fea9212583070a957b5f00c62c1696255eb48b33a882"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/features.npz",
+      "name": "features.npz",
+      "sha256": "92d668e08e701fd3a2465ed17209574f9b205c5bc3b4ef8c852ec28014a21590"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/features.json",
+      "name": "features.json",
+      "sha256": "534c571574f4d4468fd282ff330413619df3e7c426e4fb49725285ab2fab08b1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/replay.npz",
+      "name": "replay.npz",
+      "sha256": "8da939f47729d1b64142794a46163f42bfe5269735eafe4cd5972d2804dca795"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/replay.json",
+      "name": "replay.json",
+      "sha256": "f473afb98db0922663bedaba6face297f102938ce49e3c5a8bd25dfe12c4106f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s43-dev.npz",
+      "name": "s43-dev.npz",
+      "sha256": "d24ba5e13e188d8c1f72f4d67aa300f0a3ad6211ebf332a9cf366a60899a6923"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s43-dev.json",
+      "name": "s43-dev.json",
+      "sha256": "cbf234cf0133cce2f3e78b118640a6a264eddc39aac1d7999ebf4abc5c3861c8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s44-dev.npz",
+      "name": "s44-dev.npz",
+      "sha256": "9fc7f5320c7f2ab33525d1aac3faa8f20dafd3e28db8652804b79c060beba6cf"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-pairnorm-residual-2d-p0/s44-dev.json",
+      "name": "s44-dev.json",
+      "sha256": "37f67494ba7c7c86a1bc49e04353c3bb5d47bde62e4c755e9a37a564a72e616a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_residual_block_transfer/protocol.md",
+      "experiments/pcqm_residual_block_transfer/results.json",
+      "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "experiments/pcqm_residual_block_transfer/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-residual-block-transfer-20261123",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-residual-block-transfer-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-22",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure of a completed local study; no new execution in closure."
+  },
+  "observed_execution": {
+    "backbone_training": false,
+    "execution_ref": "experiments/pcqm_residual_block_transfer/results.json",
+    "inference_executed": true,
+    "postprocessor_fit": true
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "close_single_block_corrector_line",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "FAIL",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_replay_128": "consumed",
+    "far_score_block": "consumed",
+    "near_score_block": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "p0_fit_rows_reused": "consumed",
+    "p0_score_rows_reproduction": "consumed",
+    "scalar_selection_30k": "consumed",
+    "scalar_selection_6k": "consumed",
+    "small_fit_6k": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-residual-block-transfer",
+  "track": "B"
+}

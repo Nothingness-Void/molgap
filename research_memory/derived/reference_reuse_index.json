@@ -3984,6 +3984,37 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-residual-block-transfer-20261123",
+      "role_use": {
+        "common": "untouched",
+        "dev_replay_128": "consumed",
+        "far_score_block": "consumed",
+        "near_score_block": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "p0_fit_rows_reused": "consumed",
+        "p0_score_rows_reproduction": "consumed",
+        "scalar_selection_30k": "consumed",
+        "scalar_selection_6k": "consumed",
+        "small_fit_6k": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-residual-block-transfer",
+      "source_envelope": "experiments/pcqm_residual_block_transfer/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_acceptance",
         "committed_contract",
         "committed_metadata"

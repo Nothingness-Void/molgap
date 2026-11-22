@@ -936,6 +936,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-residual-block-transfer:A001",
+      "target": "experiments/pcqm_residual_block_transfer/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1618,6 +1623,11 @@
     {
       "source": "TB-pcqm-h1-heldout-budget",
       "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget",
+      "target": "TB-pcqm-residual-block-transfer",
       "type": "parent_trajectory"
     },
     {
@@ -2876,6 +2886,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-h1-heldout-budget-100k-20261122",
+      "target": "TB-pcqm-residual-block-transfer",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-input-pipeline-local-20261013",
       "target": "TB-family-checkpoint-efficiency-20261013",
       "type": "prior_evidence"
@@ -3488,6 +3503,11 @@
     {
       "source": "pcqm-pairnorm-residual-2d-p0-20261122",
       "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-residual-block-transfer",
       "type": "prior_evidence"
     },
     {
@@ -4693,6 +4713,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-residual-block-transfer-20261123",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-route-b-four-encoder-specialist",
       "type": "evidence"
     },
@@ -5506,6 +5530,10 @@
     },
     {
       "id": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-residual-block-transfer",
       "type": "trajectory"
     },
     {
