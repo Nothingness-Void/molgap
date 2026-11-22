@@ -87,9 +87,17 @@ Evidence level: one endpoint, one split, no refit. Most causes cannot be told ap
   sweep exists, so this is open.
 - **Not supported:** the 6K data cost does not explain the failure. It is +1.62
   meV, and chemistry lost by 4.21 meV against its own backbone.
-- **Cheapest falsifier (not released):** refit the same corrector on 6K rows
-  drawn at random across the 100K range instead of one contiguous block. It needs
-  new authority and a new preregistration.
+- **Compatible, not shown (guess, added 2026-11-22):** the fit block
+  `[94000, 100000)` and the scoring block `[550000, 600000)` are far apart, and
+  the scoring block is harder for every model here. P0 fitted and scored inside
+  one 50K block. Part of P0's gain may be local to that block and may not carry
+  to distant rows.
+- **Cheapest falsifier (corrected 2026-11-22):** the first version of this file
+  proposed refitting on 6K rows drawn at random from the 100K range. That was
+  wrong: the 94K backbone trained on most of those rows, so it would repeat P0's
+  train-fit arm, which already lost. The cheapest valid check needs no training:
+  fit P0's corrector on the 500K pair's unseen development rows and score it on a
+  distant block those models never saw. See `../pcqm_residual_block_transfer/`.
 
 ## Execution and limits
 

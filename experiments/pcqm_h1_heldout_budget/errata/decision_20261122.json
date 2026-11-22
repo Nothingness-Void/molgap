@@ -1,0 +1,13 @@
+{
+  "format": "molgap-erratum-v1",
+  "target_locator": "experiments/pcqm_h1_heldout_budget/decision.md",
+  "artifact_class": "narrative",
+  "effect": "narrative_only",
+  "recorded_sha256": "620042b21bc8508503ac6fc069c3969c58ba6bfc98041b59b40507bf2679fa56",
+  "observed_sha256": "89adaa42d837094b6b6cb4235e73c7b8957442a461a04f8cf22f1f3b74f332b8",
+  "what_is_known": "The attribution's cheapest falsifier was invalid: random 6K rows from the 100K range are mostly rows the 94K backbone trained on. The bullet is replaced and a block-shift explanation is added. Verdict, numbers, roles and costs are unchanged.",
+  "what_is_not_known": "Whether block shift, fit size or model scale explains the H1 failure.",
+  "author": "Devin (lead review)",
+  "date": "2026-11-22",
+  "note": "Narrative correction after closure; the bound digest is the original text, kept in Git at 86cc7be5e."
+}
