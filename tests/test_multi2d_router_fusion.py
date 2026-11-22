@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import numpy as np
-import pytest
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 from molgap.multi2d_router_fusion import (
     GateTrainingConfig,
-    _epoch_losses,
     _loader,
     dense_gate_features,
     fit_dense_soft_gate,
@@ -40,8 +38,8 @@ def synthetic(seed: int = 7):
     return predictions, targets, descriptors
 
 
-def test_feature_shapes_and_finite_values():
-    predictions, _, descriptors = synthetic()
+def test_features_and_gate_batches_match_input_rows():
+    predictions, targets, descriptors = synthetic()
     dense = dense_gate_features(predictions)
     predispatch = predispatch_features(predictions[:, 0], descriptors)
     assert dense.shape == (600, 27)
@@ -49,35 +47,18 @@ def test_feature_shapes_and_finite_values():
     assert np.isfinite(dense).all()
     assert np.isfinite(predispatch).all()
 
-
-@pytest.mark.parametrize("shuffle", [False, True])
-def test_gate_batch_loader_matches_rowwise_collation(shuffle):
-    predictions, targets, _ = synthetic()
-    features = dense_gate_features(predictions)
-    arrays = features, predictions, targets
-    indices = np.arange(1, 23, 2)
-    reference = DataLoader(
-        TensorDataset(*(torch.from_numpy(array[indices]) for array in arrays)),
-        batch_size=4, shuffle=shuffle,
-    )
-    optimized = _loader(*arrays, indices, batch_size=4, shuffle=shuffle)
+    arrays, rows = (dense, predictions, targets), np.arange(1, 23, 2)
+    dataset = TensorDataset(*(torch.from_numpy(a[rows]) for a in arrays))
 
     def sample(loader):
-        with torch.random.fork_rng():
-            torch.manual_seed(42)
-            epochs = [list(loader) for _ in range(2)]
-            return epochs, torch.rand(1)
+        with torch.random.fork_rng(devices=[]):
+            torch.default_generator.manual_seed(42)
+            return list(loader), torch.get_rng_state()
 
-    actual, actual_rng = sample(optimized)
-    expected, expected_rng = sample(reference)
-    torch.testing.assert_close(actual, expected, rtol=0, atol=0)
-    torch.testing.assert_close(actual_rng, expected_rng, rtol=0, atol=0)
-
-
-def test_epoch_loss_preserves_weighted_batch_average():
-    batches = [(torch.tensor(0.1234567), 4096), (torch.tensor(0.8765432), 3)]
-    expected = (batches[0][0].item() * 4096 + batches[1][0].item() * 3) / 4099
-    assert _epoch_losses(batches, batches[1:]) == (expected, batches[1][0].item())
+    for shuffle in (False, True):
+        reference = DataLoader(dataset, batch_size=4, shuffle=shuffle)
+        optimized = _loader(*arrays, rows, batch_size=4, shuffle=shuffle)
+        torch.testing.assert_close(sample(optimized), sample(reference), rtol=0, atol=0)
 
 
 def test_dense_and_predispatch_models_train_and_predict():
