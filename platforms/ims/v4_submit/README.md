@@ -27,16 +27,16 @@ dependency. Serial chain mode (below) is the one deliberate exception.
 3. Run:
 
 ```powershell
-.venv\Scripts\python.exe platforms\ims\v4_submit\submit_from_windows.py `
-  --repo D:\path\to\molgap-worktree `
-  --spec D:\path\to\run_spec.json `
-  --payload D:\path\to\new-payload-directory `
-  --key D:\path\to\ccfep2023
+.venv\Scripts\python.exe platforms\ims\v4_submit\submit_from_windows.py --spec D:\path\to\run_spec.json
 ```
 
-The helper uses argument-vector `ssh` and `scp` calls, so PowerShell cannot
-expand remote shell variables. It creates a complete Git archive, records the
-full source commit, archive inventory, and contract hash, uploads only the
+Set `MOLGAP_IMS_SSH_KEY` to the key file once or pass `--key`. The helper finds
+the owning checkout from the spec and keeps the frozen payload in
+`~/molgap-ims-payloads/<run_id>`; set `MOLGAP_IMS_PAYLOAD_ROOT` for another
+location. Explicit `--repo` and `--payload` still work. Existing payloads can
+be addressed with `--payload` alone without accessing the original checkout.
+The helper creates a complete Git archive, records the
+full source commit, archive SHA256, and contract hash, uploads only the
 small source payload, and asks
 the remote launcher to stage and submit both jobs. Dataset payloads remain in
 the accepted fixed store.
@@ -52,8 +52,11 @@ launcher never recursively deletes remote content.
 `submission.json` retains `preflight_submitting` or `training_submitting` before
 each scheduler request. A lost or unparseable response records the corresponding
 `*_unknown` status and preserves any known preflight job ID. These states require
-authoritative scheduler reconciliation; the immutable run still blocks another
-submission. Do not change the run ID to bypass an uncertain outcome.
+authoritative scheduler reconciliation. With the same `--spec` or `--payload`,
+add `--status` to read the exact durable submission and stage records. Consult
+the scheduler for live state. Repeating submit on an already bound run returns
+the journal without asking the scheduler to queue more jobs. Do not change the
+run ID to bypass an uncertain outcome.
 
 The guard (code is the rule; this text was corrected to match it) refuses a
 submission when `now` is inside the 24 hours before 09:00 JST on the first
@@ -74,14 +77,22 @@ A frozen family recipe (CutlassGT, GRIT-SPSE) runs through
 `family_recipe_run.py`: the family kernel, loaders and session with an atomic
 `last_checkpoint.pt`. The stage args carry `--wall-s` (train walltime minus
 30 minutes); the driver pauses itself there or on SIGTERM and exits 2. The
-launcher records exit 2 as `paused`, not `error`. To continue a paused run, run
-the same `submit_from_windows.py` command again: it reuses the payload of the
-same run (unchanged archive, even if HEAD moved), and the launcher submits `train.pbs` alone (no preflight
-dependency) only for an unchanged source whose preflight is complete and whose
-training is `paused`. A run left `running` or `error` is never resubmitted
-automatically; reconcile it with the scheduler first (`jobinfo -c`, per REMOTE_HANDOFF) before any resume. The helper uploads
+launcher records exit 2 as `paused`. Reconcile the previous job with the
+scheduler (`jobinfo -c`, per REMOTE_HANDOFF), then add `--resume` to the same
+command. It uploads only the frozen spec and launcher. The staged source,
+scientific contract and full spec must match. The launcher submits `train.pbs`
+alone for a paused run with a bound journal and a complete preflight where
+applicable. The helper uploads
 `launcher.py` with the payload and runs that copy, so no separate remote install
 is needed.
+
+For a completed V4 run, add `--retrieve-to DIR` to the original spec or payload
+command. The worker hashes each spec-declared `required_outputs` file on
+completion. Retrieval verifies those hashes before publishing the directory and
+`retrieval.json`. Repeat against the same directory to verify the retained copy.
+Files outside `required_outputs` and legacy stages without worker digests still
+use the experiment's retrieval path. Use that experiment's acceptance entry to
+interpret or close the result.
 
 ## Serial chain: several recipes in one job
 

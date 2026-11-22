@@ -709,7 +709,7 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
     continuation = resume_prepared is not None
     version = 2 if continuation else 1
     prepared = Path(resume_prepared) if continuation else run / "prepared"
-    output = prepared.parent / "operations" if continuation else run / "operations"
+    output = prepared.with_name(prepared.name + "-operations") if continuation else run / "operations"
     platform = json.loads((case.repo / case.value["platform_ref"]).read_bytes())
     account = platform["kaggle"]["account"]
     credentials = tmp_path / "outside-key.json"
@@ -778,20 +778,15 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
     import json as json_module
     monkeypatch.setattr("requests.post", post)
 
-    def run():
+    def run(*, reuse_authority=False):
         from contextlib import redirect_stdout
         from io import StringIO
         captured = StringIO()
         with redirect_stdout(captured):
             if continuation:
-                from molgap.training_reproducibility import sha256_file
-                args = ["--prepared", str(prepared), "--output", str(output),
-                    "--authority", case.value["authority_ref"],
-                    "--recovery-authority", str(recovery_authority),
-                    "--recovery-authority-sha256", sha256_file(recovery_authority),
-                    "--source-version", str(version), "--kernel-version", str(version)]
-                for path in case.value["monitor_paths"]:
-                    args.extend(["--monitor-path", path])
+                args = ["--prepared", str(prepared)]
+                if not reuse_authority:
+                    args += ["--recovery-authority", str(recovery_authority)]
             else:
                 args = ["--experiment", str(case.path)]
             code = entry.main([*args, "--repo-root", str(case.repo),
@@ -828,7 +823,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     from molgap.experiment_family_workflow import RunContext
     from molgap.experiment_package import read_packaged_text
     from molgap.experiment_retention import seal_execution_retention
-    from molgap.experiment_run import accept_run_workflow, build_run_resume, prepare_run_resume
+    from molgap.experiment_run import accept_run_workflow, prepare_run_resume
     from molgap.experiment_resume import restore_resume_bundle
     from molgap.family_training_data import load_training_data
     from molgap.family_training_kernel import FamilyKernel
@@ -850,7 +845,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     remote = paths.artifact_root / "offline-worker-v2"
     origin.mkdir()
     remote.mkdir()
-    contexts, decisions, downloads, inputs, prefixes, bundles = {}, {}, [], {}, {}, {}
+    contexts, decisions, downloads, inputs, prefixes = {}, {}, [], {}, {}
     prospective = {binding["arm_id"]: (case.repo / binding["output"] / "trajectory.json").read_bytes()
                    for binding in spec.to_dict()["prospective"]["arms"]}
     for job in launch["jobs"]:
@@ -884,12 +879,6 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             prefixes[arm_id] = json.loads((output.root / "canonical_trace.json").read_bytes())["observations"]
         finally:
             session.close()
-        bundle = paths.artifact_root / "continuation" / "bundles" / arm_id
-        exported = build_run_resume(case.value["machine_profile"], case.repo, run_id, attempt,
-            arm_id=arm_id, source_output=origin / arm_id, output=bundle)
-        assert exported["status"] == "RESUME_VERIFIED", exported
-        assert exported["prospective_published"] is exported["submitted"] is False
-        bundles[arm_id] = str(bundle)
         inputs[arm_id] = (context, contract, record, recipe, data, initial, trajectory)
 
     resumed_prepared = paths.artifact_root / "continuation" / "prepared"
@@ -898,9 +887,8 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             pytest.fail("Checkpoint continuation must reuse the original prospective publication")
         preparation.setattr("molgap.experiment_workflow.plan_prospective", no_new_question)
         resumed = prepare_run_resume(case.value["machine_profile"], case.repo, run_id, attempt,
-            plan={"format": "molgap-workflow-resume-v1", "spec_identity": spec.identity, "arms": bundles,
-                  "allocation_wall_limit_seconds": 120, "cleanup_reserve_seconds": 5,
-                  "pause_after_step": recipe.optimizer_steps}, output=resumed_prepared)
+            paused_root=origin, pause_after_step=recipe.optimizer_steps, allocation_wall_limit_seconds=120,
+            cleanup_reserve_seconds=5, output=resumed_prepared)
     assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
     assert resumed["prospective_published"] is False
     authority = paths.artifact_root / "continuation" / "authority.md"
@@ -910,14 +898,23 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     with monkeypatch.context() as transport:
         continued = _packaged_release(NS(repo=case.repo, path=case.input_path, value=case.value),
             transport_tmp, transport, resume_prepared=resumed_prepared, recovery_authority=authority)
-        code, submitted = continued.run()
+        continued.lose_next_post()
+        code, lost = continued.run()
+        assert code == 1 and lost["status"] == "RECONCILIATION_REQUIRED", lost
+        code, submitted = continued.run(reuse_authority=True)
         assert code == 0 and submitted["status"] == "SUBMISSION_BOUND", submitted
         continued_receipt = continued.output / "launch_receipt.json"
         retained_receipt = continued_receipt.read_bytes()
-        code, repeated = continued.run()
+        code, repeated = continued.run(reuse_authority=True)
         assert code == 0 and repeated["status"] == "SUBMISSION_BOUND", repeated
         assert continued_receipt.read_bytes() == retained_receipt
         assert continued.transport().api.created == continued.transport().api.pushed == 1
+        captured = StringIO()
+        with redirect_stdout(captured):
+            code = _module(transport).main(["--all-arms", "--strict", "--resume-prepared", str(resumed_prepared),
+                "--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
+                "--run-id", run_id, "--attempt-id", attempt])
+        assert code == 0 and json.loads(captured.getvalue())["version"] == "2", captured.getvalue()
 
     resumed_launch = json.loads((resumed_prepared / "source_dataset/experiment_launch.json").read_bytes())
     for arm_id, (context, contract, record, recipe, data, initial, trajectory) in inputs.items():
@@ -1008,13 +1005,13 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     from molgap import experiment_cli
     captured = StringIO()
     with redirect_stdout(captured):
-        code = experiment_cli.main(["draft-role-audit", "--profile", case.value["machine_profile"],
+        code = experiment_cli.main(["draft-closure", "--profile", case.value["machine_profile"],
             "--repo-root", str(case.repo), "--run-id", run_id, "--attempt-id", attempt,
-            "--continuation-receipt", str(continued_receipt), "--output-dir", str(case.repo / "audits"),
+            "--resume-prepared", str(resumed_prepared), "--output-dir", str(case.repo / "audits"),
             *[value for role in ("official_validation", "test_dev", "test_challenge")
               for value in ("--protected-role-use", role + "=untouched")]])
     assert code == 0, captured.getvalue()
-    audits = json.loads(captured.getvalue())
+    audits = json.loads(captured.getvalue())["roles"]
     assert json.loads((case.repo / "audits/audit_map.json").read_bytes()) == audits
     assert set(audits) == set(contexts)
     for arm_id, ref in audits.items():
@@ -1024,7 +1021,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     options = dict(
         diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
         decision_ref=decisions, role_audit=audits, execution_root=remote,
-        continuation_receipt=continued_receipt, resume_prepared=resumed_prepared, resume_authority=authority)
+        resume_prepared=resumed_prepared)
     result = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt, **options)
     assert result["status"] == "COMPLETE", result
     assert result["diagnosis"]["status"] == "DIAGNOSED", result["diagnosis"]

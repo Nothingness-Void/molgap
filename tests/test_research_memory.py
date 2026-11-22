@@ -887,8 +887,11 @@ def test_lookup_and_gaps_are_read_only_views():
 
     cards = [card("a-100k", "NEGATIVE_UNDER_CONTRACT", 1.0), card("b-100k", "NEGATIVE_UNDER_CONTRACT"),
              card("b-500k", "POSITIVE_UNDER_CONTRACT")]
+    cards[1]["decision_ref"] = "experiments/b/terminal_decision.md"
     found = lookup(cards, mechanism="norm")
     assert [u["family_id"] for u in found["unfalsified"]] == ["b-100k", "b-500k"]
+    assert [u["negative_without_effect"] for u in found["unfalsified"]] == [
+        [{"trajectory_id": "b-100k", "decision_ref": cards[1]["decision_ref"]}], []]
     assert lookup(cards, family="a-")["matches"] == cards[:1]
     assert lookup(cards, mechanism="B-5")["matches"] == cards[2:]  # also the family id, case-insensitive
     assert lookup(cards, mechanism="NOR")["matches"] == cards  # case-insensitive substring
@@ -914,9 +917,8 @@ def test_lookup_and_gaps_are_read_only_views():
     assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
     assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
     from molgap.research_memory.cards import compact_line, levers
-    cards[1]["decision_ref"] = "experiments/b/terminal_decision.md"
     assert compact_line(cards[0]) == "a-100k | NEGATIVE_UNDER_CONTRACT | a-100k | norm | +1.00 | below_gate"
-    assert compact_line(cards[1]).endswith("| null | -")
+    assert compact_line(cards[1]).endswith("| null (see experiments/b/terminal_decision.md) | -")
     assert levers(cards, "b-100k")[1:] == [
         "b-100k | b-100k | NEGATIVE_UNDER_CONTRACT | null (see experiments/b/terminal_decision.md) | - | norm"]
     assert [row.split(" | ")[0] for row in levers(cards, "*-100k")[1:]] == ["a-100k", "b-100k"]

@@ -59,17 +59,17 @@ to continue directly through the original journaled submitter when authorized.
 
 ## Platform operation
 
-For an authorized continuation, pass the `prepare-resume` directory to this adapter;
-retain original `--authority` and add `--recovery-authority $retainedAuthorization
---recovery-authority-sha256 $sha256 --source-version 2 --kernel-version 2`.
-Each version must immediately follow its observed predecessor. The predecessor
-must be terminal error/failed/cancelled or complete with a validated incomplete
-checkpoint. Completed training outputs remain ineligible for resume.
+For an authorized continuation, use `--prepared DIR --recovery-authority FILE --execute`.
+The adapter reuses the original journal's authority and monitor paths, binds the
+explicit recovery decision by SHA, and defaults to the first source successor and
+the kernel receipt's next version. Rerun with `--prepared DIR --execute` once the
+operation owner exists. Legacy preparations without an original journal owner
+use explicit flags. The adapter checks actual predecessor versions and termination.
 For planned segments, set `platform.kaggle.pause_after_step` in the experiment
 input (or `authority.pause_after_step` when deriving the platform). This is an
 absolute cumulative optimizer step, shared by all arms, within the frozen horizon.
-Each resume plan sets its top-level `pause_after_step` beyond every retained cursor;
-the final boundary equals the original horizon. Keep the full scientific recipe.
+Set the next `--pause-after-step` beyond every retained cursor, up to the original
+horizon. Set `--allocation-wall-limit-seconds` if the prior cap exceeds remaining authority.
 The allocation ends normally; `pair_state.json` records `paused` until training completes.
 The same dataset, Spec/package/context, journal, quota and receipt owners are reused.
 Unknown requests never trigger another mutation; BOUND re-entry is local.

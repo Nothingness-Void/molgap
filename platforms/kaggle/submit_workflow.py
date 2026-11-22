@@ -22,10 +22,8 @@ def main(argv=None):
     parser.add_argument("--recovery-authority", type=Path,
                         help="Explicit retained authorization for this checkpoint continuation")
     parser.add_argument("--recovery-authority-sha256")
-    parser.add_argument("--source-version", type=int, default=1,
-                        help="Exact source successor version; continuation requires predecessor version minus one")
-    parser.add_argument("--kernel-version", type=int, default=1,
-                        help="Exact kernel successor version; continuation requires predecessor version minus one")
+    parser.add_argument("--source-version", type=int, help="Expected source successor version")
+    parser.add_argument("--kernel-version", type=int, help="Expected kernel successor version")
     parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--verbose", action="store_true", help="Print the full owner report")
@@ -35,7 +33,7 @@ def main(argv=None):
         if args.recover_prepared and not args.prepared:
             raise ValueError("--recover-prepared requires --prepared")
         if args.experiment and (args.recovery_authority is not None or args.recovery_authority_sha256 is not None
-                                or args.source_version != 1 or args.kernel_version != 1):
+                                or args.source_version not in {None, 1} or args.kernel_version not in {None, 1}):
             raise ValueError("Continuation requires an existing --prepared resume workflow")
         if args.execute and not args.credentials:
             raise ValueError("--execute requires explicit credentials before preparation")
@@ -68,6 +66,35 @@ def main(argv=None):
                     return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
                 args.prepared=Path(prepared["prepared"]);args.output=Path(prepared["operations"])
                 args.authority=prepared["authority_ref"];args.monitor_path=prepared["monitor_paths"]
+            elif args.prepared:
+                from molgap.experiment_family_workflow import _json
+                from molgap.experiment_launch import _safe_local
+                from molgap.kaggle_submission import prepared_submission_owner
+                report_path = args.prepared.absolute() / "workflow_report.json"
+                _safe_local(report_path)
+                report = _json(report_path)
+                if report.get("format") == "molgap-workflow-recovery-preparation-v1":
+                    original = Path(report["original_receipt"])
+                    _safe_local(original)
+                    original_operations, origin_binding = prepared_submission_owner(report["original_prepared"])
+                    if original_operations != original.parent.resolve():
+                        if not (args.output and args.authority and args.monitor_path
+                                and args.source_version is not None and args.kernel_version is not None):
+                            raise ValueError("Legacy resume needs explicit platform arguments")
+                    else:
+                        operations, binding = prepared_submission_owner(args.prepared)
+                        args.output = args.output or operations or args.prepared.with_name(args.prepared.name + "-operations")
+                        args.authority = args.authority or origin_binding["authority_ref"]
+                        args.monitor_path = args.monitor_path or origin_binding["monitor_paths"]
+                        previous = (binding or {}).get("continuation", {})
+                        # Reentry takes its version from the bound journal, including after a lost response.
+                        args.source_version = args.source_version if args.source_version is not None else previous.get("source_version", 2)
+                        kernel_version = int(_json(original)["platform_version"]["value"]) + 1
+                        args.kernel_version = args.kernel_version if args.kernel_version is not None else previous.get("kernel_version", kernel_version)
+                        if args.recovery_authority is None and previous:
+                            args.recovery_authority = Path(previous["authority_path"])
+                        if args.recovery_authority_sha256 is None:
+                            args.recovery_authority_sha256 = previous.get("authority_sha256")
             if not args.credentials or not args.output or not args.authority or not args.monitor_path:
                 raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
             stage="platform_operations"
@@ -75,7 +102,8 @@ def main(argv=None):
                 authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute,
                 recovery_authority=args.recovery_authority,
                 recovery_authority_sha256=args.recovery_authority_sha256,
-                source_version=args.source_version, kernel_version=args.kernel_version,
+                source_version=1 if args.source_version is None else args.source_version,
+                kernel_version=1 if args.kernel_version is None else args.kernel_version,
                 _verification=verification)
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.

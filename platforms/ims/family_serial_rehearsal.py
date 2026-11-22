@@ -259,8 +259,6 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     with tarfile.open(inbox / "source.tar.gz", "w:gz") as tar:
         for rel, src in code_files.items():
             tar.add(src, arcname=rel)
-    (inbox / "source_files.json").write_text(json.dumps({"format": "molgap-source-files-v1",
-        "files": [{"path": rel, "sha256": sha(src)} for rel, src in code_files.items()]}), encoding="utf-8")
     train_args = ["--spec", "{code_root}/contract/serial_spec.json", "--code-root", "{code_root}", "--input-root", "{dataset_root}", "--output-root", "{training_output}",
                   "--source-commit", "{source_commit}", "--cpus", "8", "--training-workers", "0", "--wall-s", "{train_wall_s}", "--memory-limit-bytes", "{mem_bytes}", "--reserve-s", "60"]
     spec = {"format": "molgap-ims-v4-run-v1", "mode": "serial_chain", "run_id": "rehearsal-chain-20261120", "model_id": "serial-chain",
@@ -357,8 +355,8 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     record("worker -> driver -> child end to end: paused exits 2, stage status paused, item PAUSED", worker_exit == 2 and status == "paused" and summary == "PAUSED",
            worker_exit=worker_exit, stage_status=status, item=summary)
     calls.clear()
-    resumed = launcher.submit_run(inbox, infra)
-    record("same command after a pause resubmits train.pbs only (one jsub, no depend)", len(calls) == 1 and "-W" not in calls[0] and calls[0][-1].endswith("train.pbs") and resumed["status"] == "submitted",
+    resumed = launcher.submit_run(inbox, infra, resume=True)
+    record("explicit resume resubmits train.pbs only (one jsub, no depend)", len(calls) == 1 and "-W" not in calls[0] and calls[0][-1].endswith("train.pbs") and resumed["status"] == "submitted",
            jsub=calls[0] if calls else None)
     single = json.loads(json.dumps(spec))
     single.pop("mode"), single.pop("dataset_ids")
@@ -370,14 +368,13 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     try:
         launcher.submit_run(inbox, infra)
         conflict = False
-    except RuntimeError as error:
-        conflict = "mode" in str(error)
+    except ValueError as error:
+        conflict = "differs from the staged run" in str(error)
     record("a single-recipe spec reusing a chain run id is refused, not turned into a resume", conflict and not calls)
     # 5. single-recipe mode is unchanged: two jsub calls, the second held by afterok on the first.
     inbox2 = infra / "inbox" / "rehearsal-single-20261120"
     inbox2.mkdir(parents=True)
-    for name in ("source.tar.gz", "source_files.json"):
-        shutil.copy2(inbox / name, inbox2 / name)
+    shutil.copy2(inbox / "source.tar.gz", inbox2 / "source.tar.gz")
     alone = json.loads(json.dumps(spec))
     alone.pop("mode"), alone.pop("dataset_ids")
     alone.update(run_id="rehearsal-single-20261120", dataset_id="ogb-train-100k")

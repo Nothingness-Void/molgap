@@ -110,7 +110,7 @@ The following commands can use these same four options instead of `--spec`:
 | `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
 | `accept-workflow` | `--retrieved-root` or retained retrieval maps; optional `--outputs`/`--locations` overrides; mechanically inspect without a terminal package |
 | `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
-| `prepare-resume` | `--resume-plan`, `--output`; prepare local continuation inputs only |
+| `prepare-resume` | `--paused-root` from all-arm paused retrieval or `--resume-plan`, plus `--output` |
 
 Run lookup resolves the original package, identity, receipt and preparation;
 do not override them with explicit package/receipt arguments. Output paths and
@@ -122,8 +122,8 @@ source, configuration, prospective records and producer context; it does not
 register a new attempt or produce a fresh-release submission. The owning
 continuation adapter must bind the physical successor identity. The
 [Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation)
-accepts these inputs only with explicit recovery authorization/SHA and exact
-successor versions; fresh-release defaults reject them before authentication.
+requires explicit recovery authorization on first submission and derives the
+SHA and successor versions for owner-bound releases.
 
 The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
 can reuse the original journal when separately authorized to execute. Its flags
@@ -191,7 +191,7 @@ options, and the acceptance owner still validates every value. The closure file 
 from the repository root.
 `draft-closure` (the same flags as `draft-role-audit`: `--profile`, `--repo-root`,
 `--run-id`, `--attempt-id`, `--output-dir`, optional `--retrieved-root`,
-`--continuation-receipt`, `--protected-role-use`) returns `DRAFT` and writes into
+`--resume-prepared` or `--continuation-receipt`, `--protected-role-use`) returns `DRAFT` and writes into
 the repository-local `--output-dir`: `roles_<arm>.json`, `audit_map.json`,
 `measured_<run>.json` (paired development MAE from saved predictions; `delta`
 is candidate minus reference in meV), `closure_facts_<arm>.json` (measured
@@ -210,7 +210,7 @@ analysis. The original mechanical reports are reused inside the invocation.
 Already finalized runs need no hand-written locations or repeated outcome/role
 inputs: `accept_run.py --strict --execute --profile <profile> --run-id <run>
 --attempt-id <attempt>` discovers their canonical tips and verified retrieval
-maps. A continuation still selects its exact `--continuation-receipt`. Accepted
+maps. For a bound continuation use `--resume-prepared`. Accepted
 artifact locators/hashes and observations must match the retrieved run. Tips with
 bound comparisons are read-only even with `--execute`, including blocked comparisons;
 mechanical-only tips reuse accepted facts for qualification. Explicit `--diagnose`
@@ -284,8 +284,8 @@ allocation fields retain or lower the original ceiling. Physical publication use
 the existing platform submitter's explicit continuation arguments described in
 [Kaggle submission](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation).
 
-For a successor, supply `--continuation-receipt`, `--resume-prepared` (the existing
-`prepare-resume` directory), and `--resume-authority` with terminal staging.
+For a successor, use `--resume-prepared` with `draft-closure` or terminal staging.
+The bound journal resolves the receipt and authority. Older custody accepts explicit pins.
 The entry derives each arm's original receipt, bundle/checkpoint, trace prefix,
 native proof directory and any pinned recovery repair; it builds and binds the
 existing continuation record without editing the prospective plan. The default
@@ -306,8 +306,8 @@ accepts explicit hash-bound records for multiple jobs or failed attempts, counte
 once per physical job/version. The two options are alternatives; physical cost
 summary does not by itself make cumulative RML costs complete.
 
-`platforms/kaggle/retrieve_family_outputs.py` accepts the same continued receipt
-and `--strict --resume-prepared`. It retains a separate version-specific output
+`platforms/kaggle/retrieve_family_outputs.py` accepts `--strict --resume-prepared`.
+It retains a separate version-specific output
 mapping and selectively downloads only manifest/native-certificate dependencies.
 Download verifies exact-version bytes, not tensor semantics; strict acceptance
 performs native qualification. No all-output or all-checkpoint download occurs.

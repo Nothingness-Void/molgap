@@ -40,7 +40,7 @@ def main(argv: list[str] | None = None) -> None:
     lookup = commands.add_parser("lookup")
     lookup.add_argument("--mechanism", nargs="+", metavar="WORD",
                         help="one or more case-insensitive substrings; each must occur in the card's "
-                             "mechanism, family id or failure_mode (e.g. --mechanism init noise)")
+                             "trajectory id, mechanism, family id or failure mode (e.g. --mechanism init noise)")
     lookup.add_argument("--term", nargs="+", metavar="WORD", help=lookup_term_help)
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
@@ -216,7 +216,9 @@ def main(argv: list[str] | None = None) -> None:
             result["historical_pointer"] = pointer
         if args.command == "lookup" and args.compact:
             print("\n".join([*map(_cards.compact_line, result["matches"]),
-                             f"# unfalsified families: {len(result['unfalsified'])}; "
+                             f"# families without a measured negative effect: {len(result['unfalsified'])} "
+                             f"({sum(bool(u['negative_without_effect']) for u in result['unfalsified'])} with a "
+                             "NEGATIVE_UNDER_CONTRACT arm, effect not recorded); "
                              f"search_terms: {' '.join(result['search_terms'])}", *filter(None, [pointer])]))
             return
         print(json.dumps(result, ensure_ascii=False, indent=2))

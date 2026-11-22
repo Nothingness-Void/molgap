@@ -85,6 +85,7 @@ def _parser() -> argparse.ArgumentParser:
     closure.add_argument("--attempt-id",required=True)
     closure.add_argument("--retrieved-root",type=_local)
     closure.add_argument("--continuation-receipt",type=_local)
+    closure.add_argument("--resume-prepared",type=_local,help="Resolve the bound successor receipt")
     closure.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
     diagnose=commands.add_parser("diagnose")
     diagnose.add_argument("--control",type=_local)
@@ -134,7 +135,12 @@ def _parser() -> argparse.ArgumentParser:
                 command.add_argument("--recovery-repair", type=_local,
                     help="Pinned repair declaration (commit/files), retaining the original package")
             else:
-                command.add_argument("--resume-plan", required=True, type=_local)
+                source = command.add_mutually_exclusive_group(required=True)
+                source.add_argument("--resume-plan", type=_local)
+                source.add_argument("--paused-root", type=_local, help="Retrieved version directory containing every paused arm")
+                command.add_argument("--pause-after-step", type=int)
+                command.add_argument("--allocation-wall-limit-seconds", type=int)
+                command.add_argument("--cleanup-reserve-seconds", type=int)
         elif name in {"prepare-release", "check-preparation"}:
             command.add_argument("--workflow", required=True, type=_local)
         elif name == "build-terminal":
@@ -287,7 +293,7 @@ def _dispatch(args) -> tuple[dict, int]:
         return draft_closure(args.profile, args.repo_root, args.run_id, args.attempt_id,
             retrieved_root=args.retrieved_root, output_dir=args.output_dir,
             protected_role_use=_bindings(args.protected_role_use),
-            continuation_receipt=args.continuation_receipt), 0
+            continuation_receipt=args.continuation_receipt, resume_prepared=args.resume_prepared), 0
     if args.command == "catalog":
         from dataclasses import asdict
         from .experiment_execution import TRAINING_ADAPTERS, shared_training_adapters
@@ -435,7 +441,11 @@ def _dispatch(args) -> tuple[dict, int]:
                     return build_run_resume(*original, arm_id=args.arm,
                         source_output=args.source_output, output=args.output,
                         recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
-                result = prepare_run_resume(*original, plan=_json(args.resume_plan), output=args.output)
+                result = prepare_run_resume(*original, output=args.output,
+                    plan=_json(args.resume_plan) if args.resume_plan is not None else None,
+                    paused_root=args.paused_root, pause_after_step=args.pause_after_step,
+                    allocation_wall_limit_seconds=args.allocation_wall_limit_seconds,
+                    cleanup_reserve_seconds=args.cleanup_reserve_seconds)
                 return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
             except RunReconciliationRequired as exc:
                 return {"status": "RECONCILIATION_REQUIRED", "reason": str(exc),
@@ -483,7 +493,11 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.command == "build-resume":
             return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output,
                 recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
-        result = prepare_resumed_workflow(**options, plan=_json(args.resume_plan))
+        result = prepare_resumed_workflow(**options,
+            plan=_json(args.resume_plan) if args.resume_plan is not None else None,
+            paused_root=args.paused_root, pause_after_step=args.pause_after_step,
+            allocation_wall_limit_seconds=args.allocation_wall_limit_seconds,
+            cleanup_reserve_seconds=args.cleanup_reserve_seconds)
         return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
     if args.command == "prepare-family-training":
         from .experiment_workflow import prepare_family_training

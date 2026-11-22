@@ -74,9 +74,9 @@ Use it to scan prior work by outcome or by a word, for example
 `trajectory_id | outcome | family_id | mechanism slug | effect_meV | failure_mode`.
 The mechanism slug is the mechanism itself when it is already a slug
 (`[a-z0-9_-]+`), else the first 6 lowercase alphanumeric words joined by `-`, else
-`-`. The effect is signed with 2 decimals (`+0.52`) or `null`. A missing failure
-mode prints `-`. Sample, `cards --outcome NEGATIVE_UNDER_CONTRACT --compact`
-(first 3 lines):
+`-`. Effects show two signed decimals (`+0.52`) or `null`. A negative arm with
+a decision pointer and no measured effect shows `null (see <decision_ref>)`.
+Missing failure modes show `-`. Example: `cards --outcome NEGATIVE_UNDER_CONTRACT --compact`.
 
 ```text
 T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-bondlocal-pairnorm-lr-500k | peak-learning-rate | +0.52 | early_gain_fades
@@ -87,12 +87,12 @@ T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k
 #### `lookup [--mechanism M...] [--failure-mode F] [--family F] [--term T...] [--compact] [--ref REV]`
 
 All filters are optional and combine with AND. `--mechanism` takes one or more
-words, each a case-insensitive substring (not whole-word) of the card's `mechanism`,
-`family_id` and `failure_mode` joined by spaces (nulls dropped); every word must match
-(`--mechanism init noise`). So `--mechanism lr` also matches
-`pcqm-gptrans-bondlocal-pairnorm-lr-500k` through the family id, and `--mechanism readout`
-matches a family id even when the mechanism sentence lacks that word. Free-text
-mechanisms are matched as written, so synonyms are missed; try other words, or `--term`.
+words, each a case-insensitive substring of the card's `trajectory_id`, `mechanism`,
+`family_id` and `failure_mode` joined by spaces. Every word must match.
+For example, `--mechanism gptrans noisy` finds `TB-gptrans-noisy-nodes-500k-s42`
+through its trajectory ID. Likewise, `--mechanism lr` finds
+`pcqm-gptrans-bondlocal-pairnorm-lr-500k` through the family ID. Try alternative words
+or `--term` to search the remaining card fields.
 `--failure-mode` is an exact match (an unknown one matches nothing). `--family` is a
 case-insensitive substring of `family_id`. `--term` takes one or more whole words as in
 `cards`, all of which must occur in the card. Exit 0.
@@ -101,10 +101,10 @@ Output is one JSON object:
 
 - `query`: the four filters as given.
 - `matches`: full cards.
-- `unfalsified`: one entry per matched family that has **no**
-  `NEGATIVE_UNDER_CONTRACT` card with a measured effect, with `family_id`,
-  `reason`, the first card's `falsifier` and `reopen_conditions`. Read it as "not
-  falsified by a measured effect". It does not mean promising.
+- `unfalsified`: one entry per family with no matched `NEGATIVE_UNDER_CONTRACT` arm
+  carrying a measured effect. It includes `family_id`, `reason`, the first card's
+  `falsifier` and `reopen_conditions`, and `negative_without_effect` with the
+  `trajectory_id` and `decision_ref` of each such arm closed under its own contract.
 - `search_terms`: the matches' card `search_terms`, then the 12 most frequent
   keywords, without duplicates (see [search terms](#how-search_terms-are-derived)).
 
@@ -117,17 +117,17 @@ lookup --mechanism readout
   search_terms: ["zero", "init", "max", "min", "std", "branch", "added", "pooled", "gptrans", "readout", ...]
 ```
 
-`--compact` prints the matches as `cards --compact` lines, then one footer line
-`# unfalsified families: N; search_terms: <space-separated terms>`. It omits the
-`unfalsified` details; drop `--compact` to see them. Sample,
-`lookup --mechanism readout --compact` (mechanism slugs shortened here with `...`):
+`--compact` prints `cards --compact` lines and a footer counting families without
+a measured negative effect, including how many have a negative arm with an
+unrecorded effect. Omit `--compact` for the full JSON. Example:
+`lookup --mechanism gptrans noisy --compact`.
 
 ```text
-T-pcqm-k1-extremal-readout-100k-s42-baseline | CLOSED | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-...-embedding | null | -
-T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-...-embedding | +3.33 | -
-TB-gptrans-500k-frozen-readout-attribution | INCONCLUSIVE | gptrans-500k-readout-attribution | no-encoder-change-compare-frozen-feature | null | -
-TB-k1-slot-readout-diagnostic-20261002 | NO_TRAIN | k1-slot-readout-diagnostic | no-change-observational-hooks-and-exact | null | discriminator_missing
-# unfalsified families: 2; search_terms: zero init max min std branch added pooled gptrans readout attribution discriminator_missing slot diagnostic embedding extremal
+TB-gptrans-noisy-nodes-100k-s42 | POSITIVE_UNDER_CONTRACT | gptrans-t | auxiliary-node-embedding-gaussian-perturbation-std | null | -
+TB-gptrans-noisy-nodes-500k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-t | auxiliary-node-embedding-gaussian-perturbation-std | null (see experiments/pcqm_gptrans_noisy_nodes_500k/decision.md) | -
+TB-gptrans-noisy-pair-norm-100k-s42 | POSITIVE_UNDER_CONTRACT | gptrans-t | orthogonal-combination-of-node-embedding-gaussian | null | -
+TB-gptrans-noisy-pair-norm-500k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-t | joint-node-embedding-gaussian-perturbation-std | null (see experiments/pcqm_gptrans_noisy_pair_norm_500k/decision.md) | -
+# families without a measured negative effect: 1 (1 with a NEGATIVE_UNDER_CONTRACT arm, effect not recorded); search_terms: gptrans alpha embedding gaussian node perturbation std atomic auxiliary final layer linear
 ```
 
 #### How `search_terms` are derived

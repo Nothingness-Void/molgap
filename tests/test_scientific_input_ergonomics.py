@@ -7,7 +7,7 @@ from types import SimpleNamespace
 import pytest
 
 from molgap.experiment_execution import build_addon_declaration
-from molgap.experiment_input import freeze_experiment_input, resolve_experiment_input
+from molgap.experiment_input import _derived_kaggle, freeze_experiment_input, resolve_experiment_input
 from molgap.family_training_runner import read_recipe
 from test_experiment_workflow import _git, _pointer, _write_json
 from test_scientific_input import scientific
@@ -95,7 +95,10 @@ def test_inline_forms_do_not_waive_existing_validation_or_publish_early(compact,
     if fault == "both_authority": case.value["authority_ref"] = "experiments/question/authority.json"
     elif fault == "both_platform": case.value["platform_ref"] = "experiments/question/platform.json"
     elif fault == "missing_authority": del case.value["authority"]
-    elif fault == "derived_platform_non_fixed_mount": del case.value["platform"]
+    elif fault == "derived_platform_non_fixed_mount":
+        fixed = _derived_kaggle(case.value, {"account": "owner"}, {"pcqm_fixed_500k_v1/manifest.json"})
+        assert fixed["datasets"][-1] == "owner/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+        del case.value["platform"]
     elif fault == "invalid_authority": case.value["authority"]["user_authorized"] = False
     elif fault == "invalid_platform": del case.value["platform"]["kaggle"]["account"]
     elif fault == "missing_role": case.value["role_ref"] = "experiments/no-role.json"

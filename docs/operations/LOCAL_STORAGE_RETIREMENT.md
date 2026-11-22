@@ -144,9 +144,9 @@ If this lookup has no match, inspect the relevant owner's custody manifest and
 the journal, rather than infer loss from a missing old filename. An endpoint
 extraction with a different SHA cannot restore the original optimizer/RNG state
 or native proof. A cache can be regenerated only within its applicable authority.
-An exact cold copy may be read directly by an existing explicit-path consumer;
-restore only the required files to their declared paths when that consumer
-requires them. Neither method changes frozen evidence or qualifies a new pair.
+For strict replay, archive the union of output-manifest files, native certificate
+dependencies, execution retention and terminal bindings. Preserve original paths
+and byte SHA256 in the custody index. Restore bound files at their exact paths.
 
 The2026-10-25 follow-up to the retained hop-fusion diagnostic classified the
 existing portable failure:103 entries cover93 distinct paths.53 entries match

@@ -109,6 +109,40 @@ def _bind_operation_directory(prepared, output, binding, *, publish=False):
         publish_immutable_bytes(pointer, payload)
 
 
+def prepared_submission_owner(prepared):
+    """Read the operation location selected by the first submission."""
+    prepared = Path(prepared).absolute()
+    pointer = prepared.with_name(prepared.name + ".submission_owner.json")
+    _safe_local(pointer)
+    if not pointer.exists():
+        return None, None
+    owner = _json(pointer)
+    operations, binding = Path(owner["operations"]), owner["binding"]
+    _safe_local(operations)
+    _bind_operation_directory(prepared, operations, binding)
+    return operations, binding
+
+
+def bound_resume_submission(prepared, spec, options):
+    """Return the exact successor receipt and retained authority of a prepared resume."""
+    prepared = Path(prepared).absolute()
+    operations, binding = prepared_submission_owner(prepared)
+    if binding is None or "continuation" not in binding:
+        raise ValueError("Resume preparation has no bound submission journal")
+    continuation = binding["continuation"]
+    authority = Path(continuation["authority_path"])
+    _safe_local(authority)
+    if (sha256_file(options["receipt_path"]) != continuation["original_receipt_sha256"]
+            or sha256_file(authority) != continuation["authority_sha256"]):
+        raise ValueError("Original receipt or recovery authority changed")
+    identity = options["expected_package_identity"]
+    if binding["package_identity"] != identity or _bound_submission_status(
+            operations, spec, options["package_dir"], identity, binding,
+            _verification=options.get("_verification")) is None:
+        raise ValueError("Resume submission requires the original package and a BOUND successor journal")
+    return operations / "launch_receipt.json", authority
+
+
 # A new source dataset is usually ready within a minute; its status endpoint can
 # answer 403/404 for a short time after creation. Poll inside the one submit call.
 # Journal phase machine; the key order is the timing order. A move not listed here, and not to an
@@ -264,15 +298,12 @@ def _bound_submission_status(output, spec, package, package_identity, binding, *
     from .experiment_launch import read_launch_receipt
     receipt = read_launch_receipt(output / "launch_receipt.json", spec, package,
                                   expected_package_identity=package_identity, _verification=_verification)
-    expected = build_launch_receipt(spec, package,
-                                   expected_package_identity=package_identity, _verification=_verification)
     fact = lambda value: {"value": value, "missing_reason": None}
     arms = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
     expected_runs = fact([{"arm_ids": arms, "canonical_reference": response["kernel"],
         "platform_version": fact(str(response["version_number"])),
         "run_identity": f"kernel{response['kernel_id']}/version{response['version_number']}"}])
     if (receipt["submission_state"] != "ACCEPTED"
-            or receipt["binding"] != expected["binding"]
             or receipt["canonical_platform_reference"] != fact(response["kernel"])
             or receipt["platform_version"] != fact(str(response["version_number"]))
             or receipt["physical_runs"] != expected_runs):
@@ -326,14 +357,17 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     report = _json(report_path)
     continuation = report.get("format") == "molgap-workflow-recovery-preparation-v1"
     if continuation:
-        if (recovery_authority is None or recovery_authority_sha256 is None
+        if (recovery_authority is None
                 or type(source_version) is not int or source_version < 2
                 or type(kernel_version) is not int or kernel_version < 2):
-            raise ValueError("Continuation requires explicit recovery authority/SHA and successor source/kernel versions")
+            raise ValueError("Continuation requires explicit recovery authority and successor source/kernel versions")
         recovery_authority = Path(recovery_authority).absolute()
         _safe_local(recovery_authority)
-        if sha256_file(recovery_authority) != recovery_authority_sha256:
+        authority_bytes = recovery_authority.read_bytes()
+        observed_sha256 = hashlib.sha256(authority_bytes).hexdigest()
+        if recovery_authority_sha256 is not None and observed_sha256 != recovery_authority_sha256:
             raise ValueError("Recovery authority bytes differ from the explicit SHA256")
+        recovery_authority_sha256 = observed_sha256
     elif (recovery_authority is not None or recovery_authority_sha256 is not None
           or source_version != 1 or kernel_version != 1):
         raise ValueError("Continuation arguments require a prepared resume workflow")
@@ -637,7 +671,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             dispatch_started = False
             def before_post():
                 nonlocal dispatch_started
-                if continuation and sha256_file(recovery_authority) != recovery_authority_sha256:
+                if continuation and recovery_authority.read_bytes() != authority_bytes:
                     raise ValueError("Recovery authority changed before POST")
                 if continuation and report.get("recovery_repair") is not None:
                     validate_recovery_repair(remote_root,

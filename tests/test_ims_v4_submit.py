@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 import subprocess
+import sys
 import tarfile
 from datetime import datetime
 from pathlib import Path
@@ -110,39 +111,6 @@ def test_expand_args_rejects_unknown_placeholder():
         launcher.expand_args(["{unknown}"], {})
 
 
-def test_source_inventory_is_checked(tmp_path):
-    archive = tmp_path / "source.tar.gz"
-    payload = b"frozen source\n"
-    with tarfile.open(archive, "w:gz") as handle:
-        member = tarfile.TarInfo("src/model.py")
-        member.size = len(payload)
-        handle.addfile(member, io.BytesIO(payload))
-    inventory = tmp_path / "source_files.json"
-    inventory.write_text(
-        json.dumps(
-            {
-                "format": "molgap-source-files-v1",
-                "files": [
-                    {"path": "src/model.py", "sha256": hashlib.sha256(payload).hexdigest()}
-                ],
-            }
-        ),
-        encoding="utf-8",
-    )
-    launcher.validate_source_inventory(archive, inventory)
-    inventory.write_text(
-        json.dumps(
-            {
-                "format": "molgap-source-files-v1",
-                "files": [{"path": "src/model.py", "sha256": "0" * 64}],
-            }
-        ),
-        encoding="utf-8",
-    )
-    with pytest.raises(RuntimeError):
-        launcher.validate_source_inventory(archive, inventory)
-
-
 def test_safe_extract_rejects_path_escape(tmp_path):
     archive = tmp_path / "source.tar.gz"
     with tarfile.open(archive, "w:gz") as handle:
@@ -156,7 +124,7 @@ def test_safe_extract_rejects_path_escape(tmp_path):
 @pytest.mark.parametrize("lost_stage,failure", [(None, None), ("preflight", "timeout"),
     ("training", "timeout"), ("preflight", "parse"), ("training", "parse")],
     ids=["observed", "preflight-unknown", "training-unknown", "preflight-unparseable", "training-unparseable"])
-def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch, lost_stage, failure):
+def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch, capsys, lost_stage, failure):
     repo = tmp_path / "repo"
     repo.mkdir()
     (repo / "experiments/model").mkdir(parents=True)
@@ -184,8 +152,13 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch
     assert packaged["contract"]["sha256"] == hashlib.sha256(
         contract.read_bytes()
     ).hexdigest()
-    assert (output / "source_files.json").is_file()
-    # Extend the same committed payload through the real registry, inventory,
+    assert submit.reusable(None, output) == packaged
+    changed = json.loads(template.read_text(encoding="utf-8"))
+    changed["resources"]["train_walltime"] = "00:42:00"
+    template.write_text(json.dumps(changed), encoding="utf-8")
+    with pytest.raises(ValueError, match="frozen payload"):
+        submit.reusable(template, output)
+    # Extend the same committed payload through the real registry, archive,
     # extraction, contract and PBS owners. Only scheduler/clock/platform paths
     # are substituted; no worker, data or accelerator is invoked.
     fixed = boundary / "fixed"
@@ -199,7 +172,7 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch
         "acceptance": {"path": "acceptance.json", "sha256": launcher.sha256_file(acceptance)},
         "datasets": {"ogb-train-100k": {"manifest": "manifest.json", "manifest_sha256": launcher.sha256_file(manifest)}}})
     launcher.atomic_json(infrastructure / "runtime_registry.json", {"runtimes": {
-        "ims-a100-torch271-v1": {"queue": "H", "python": "synthetic-python"}}})
+        "ims-a100-torch271-v1": {"queue": "H", "python": "synthetic-python", "pythonpath": []}}})
     monkeypatch.setattr(launcher, "BOUNDARY", boundary)
     guard = launcher.maintenance_guard
     monkeypatch.setattr(launcher, "maintenance_guard", lambda seconds: guard(seconds,
@@ -210,6 +183,10 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch
     def scheduler(command, **kwargs):
         stage = "preflight" if command[-1].endswith("preflight.pbs") else "training"
         state = launcher.load_json(journal)
+        if state["status"] == "resume_submitting":
+            calls.append("resume")
+            launcher.atomic_json(run_root / "output/train/stage_status.json", {"status": "complete"})
+            return subprocess.CompletedProcess(command, 0, stdout="102.ccpbs1", stderr="")
         assert state["status"] == stage + "_submitting"
         assert command[0] == "jsub" and kwargs == dict(check=True, capture_output=True, text=True)
         calls.append(stage)
@@ -242,12 +219,62 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch
         assert state["dependency"] == "afterok:100.ccpbs1"
     retained = journal.read_bytes()
     previous_calls = list(calls)
-    with pytest.raises(FileExistsError, match="Run identity already exists"):
-        launcher.submit_run(output, infrastructure)
+    if lost_stage:
+        with pytest.raises(FileExistsError, match="requires reconciliation"):
+            launcher.submit_run(output, infrastructure)
+    else:
+        assert launcher.submit_run(output, infrastructure) == state
     assert calls == previous_calls
     assert journal.read_bytes() == retained
     assert (run_root / "source.tar.gz").read_bytes() == (output / "source.tar.gz").read_bytes()
     assert launcher.load_json(run_root / "staging_manifest.json")["status"] == "complete"
+    launcher.atomic_json(run_root / "output/preflight/stage_status.json", {"status": "complete"})
+    launcher.atomic_json(run_root / "output/train/stage_status.json", {"status": "paused"})
+    if lost_stage:
+        with pytest.raises(RuntimeError, match="bound submission"):
+            launcher.submit_run(output, infrastructure, resume=True)
+        assert calls == previous_calls
+    else:
+        assert launcher.submit_run(output, infrastructure) == state
+        assert calls == previous_calls
+        assert launcher.submit_run(output, infrastructure, resume=True)["resume_jobs"] == ["102.ccpbs1"]
+        assert launcher.inspect_run(run_root, packaged)["stages"]["train"]["status"] == "complete"
+        with pytest.raises(RuntimeError, match="exact paused run"):
+            launcher.submit_run(output, infrastructure, resume=True)
+        assert calls == previous_calls + ["resume"]
+        monkeypatch.setattr(launcher, "INFRA_ROOT", infrastructure)
+        monkeypatch.setattr(sys, "argv", ["submit", "--payload", str(output), "--key", "unused"])
+
+        def transport(command, **kwargs):
+            assert command[0] == "ssh" and kwargs["input"] == SUBMIT_PATH.with_name("launcher.py").read_bytes()
+            monkeypatch.setattr(sys, "argv", ["launcher", *command[-1].split(" - ", 1)[1].split()])
+            launcher.main()
+            observed = capsys.readouterr().out.encode()
+            return subprocess.CompletedProcess(command, 0, stdout=observed)
+
+        monkeypatch.setattr(submit.subprocess, "run", transport)
+        submit.main()
+        assert json.loads(capsys.readouterr().out)["resume_jobs"] == ["102.ccpbs1"]
+        destination = tmp_path / "retrieved"
+        with pytest.raises(ValueError, match="worker digest"):
+            submit.retrieve_declared(packaged, launcher.inspect_run(run_root, packaged), ["scp"], "ims", destination)
+        monkeypatch.setattr(launcher.subprocess, "run", lambda command, **kwargs: subprocess.CompletedProcess(command, 0))
+        for stage in launcher.stage_names(packaged):
+            launcher.atomic_json(run_root / "output" / stage / "complete.json", {"stage": stage})
+            launcher.worker(run_root, stage)
+        observed = launcher.inspect_run(run_root, packaged)
+        def copy_output(command):
+            relative = command[-2].split("/output/", 1)[1]
+            Path(command[-1]).write_bytes((run_root / "output" / relative).read_bytes())
+        monkeypatch.setattr(submit, "run", lambda command: Path(command[-1]).write_bytes(b"wrong"))
+        with pytest.raises(ValueError, match="differs from worker hash"):
+            submit.retrieve_declared(packaged, observed, ["scp"], "ims", destination)
+        assert not destination.exists()
+        monkeypatch.setattr(submit, "run", copy_output)
+        submit.retrieve_declared(packaged, observed, ["scp"], "ims", destination)
+        monkeypatch.setattr(submit, "run", lambda command: pytest.fail("Retrieval must reuse verified bytes"))
+        submit.retrieve_declared(packaged, observed, ["scp"], "ims", destination)
+        assert json.loads((destination / "retrieval.json").read_bytes())["observation"] == observed
 
 
 @pytest.mark.parametrize("assigned,index,selected", [("4,7", 1, "7"), ("GPU-fixture", 0, "GPU-fixture")])

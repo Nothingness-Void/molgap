@@ -192,19 +192,14 @@ Retrieve its pause files, which records digests at download only:
 & $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --paused --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --execute
 ```
 
-The output is `PAUSED_RETRIEVED`, with files under
-`D:/molgap-artifacts/retrieved/<run>/<attempt>/version<N>/<arm>`. This is not an
-acceptance. Continuing needs new explicit user authorization for the extra quota
-(a human decision). Then use `build-resume` per arm with that directory as
-`--source-output`, `prepare-resume`, and the submitter's continuation arguments
-(`--prepared`, `--recovery-authority`, `--recovery-authority-sha256`,
-`--source-version N+1`, `--kernel-version N+1`), as described in the
+The output is `PAUSED_RETRIEVED` with a `paused_root`. After explicit user
+authorization for the extra quota, pass it to `prepare-resume --paused-root`.
+Submit with `--prepared` and `--recovery-authority` as described in the
 [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) and the
 [submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation). The
-original wall limit cannot increase. Run the continuation from the run's original
-experiment worktree; other checkouts fail the frozen release check. After the successor finishes, pass the
-successor `--continuation-receipt` and `--resume-prepared` to retrieval and
-`draft-closure`, and add `--resume-authority` at acceptance.
+original wall limit cannot increase. Use the original experiment worktree.
+For a bound successor pass that same directory as `--resume-prepared` to
+retrieval, `draft-closure` and acceptance.
 
 ## Freeze and commit order
 
@@ -346,8 +341,8 @@ or other-recipe question must supply those fields explicitly. The compiler
 derives the rest from the experiment directory: `monitor_paths` (`STATUS.md`),
 `role_ref` (`protocol.md`), `decision_ref` (`decision.md`), the Kaggle block
 (kernel `<account>/molgap-<stem>-s42`, title and source dataset from the authority
-`account` and the experiment ID, plus the fixed read-only
-`<account>/pcqm4mv2-ogb-fixed-100k-v1` mount) and, when `policy_id` is not
+`account` and the experiment ID, plus the recipe's standard fixed 100K or 500K
+read-only mount) and, when `policy_id` is not
 registered and equals the experiment ID with dashes, a candidate
 `research_memory/policies/<policy_id>.1.json` whose source digest is the
 `protocol.md` digest. Any of these fields written explicitly in the input wins.
@@ -364,7 +359,7 @@ K1 reference/composed supports `optimizer: "k1-muon-adamw-fp32-v1"`, `"k1-muon-b
 All use hidden matrices and native AdamW remainder; batched Muon is not bit-exact with original Muon; SOAP first initializes preconditioning only.
 Omit optimizer for unchanged AdamW; use `purpose: "optimizer_comparison"` for a pair.
 Retained `reference_ref` takes `bundle_ref` plus `comparison_plan`. Default platform:
-Kaggle T4x2, seed 42, fixed 100K mount; other mounts need explicit `platform`.
+Kaggle T4x2, seed 42, one standard fixed 100K or 500K mount; other mounts need explicit `platform`.
 
 ## Preparation details
 

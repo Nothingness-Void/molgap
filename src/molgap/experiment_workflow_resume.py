@@ -7,7 +7,7 @@ import ast
 import subprocess
 import re
 import os
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
 import shutil
 from tempfile import TemporaryDirectory
@@ -338,13 +338,35 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
 
 
 def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_package_identity,
-                             receipt_path, output, *, plan, _verification=None):
+                             receipt_path, output, *, plan=None, paused_root=None, pause_after_step=None,
+                             allocation_wall_limit_seconds=None, cleanup_reserve_seconds=None, _verification=None):
     """Stage all incomplete arms using the original source and prospective bytes."""
     verification = _verification or _PackageVerification()
+    output = Path(output).absolute()
+    _safe_local(output)
+    if output.exists():
+        raise ValueError("Resume preparation requires a fresh output directory")
+    overrides = {key: value for key, value in (
+        ("pause_after_step", pause_after_step), ("allocation_wall_limit_seconds", allocation_wall_limit_seconds),
+        ("cleanup_reserve_seconds", cleanup_reserve_seconds)) if value is not None}
+    if (plan is None) == (paused_root is None) or (paused_root is None and overrides):
+        raise ValueError("Supply a resume plan or the retrieved paused root with an optional pause boundary")
+    if paused_root is not None:
+        paused_root = _path(Path(repo_root), str(paused_root))
+        output.parent.mkdir(parents=True, exist_ok=True)
     with _original(spec, repo_root, prepared, package_dir,
                    expected_package_identity, receipt_path, _verification=verification,
-                   recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original:
+                   recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original, (
+        TemporaryDirectory(prefix=".resume-inputs-", dir=output.parent) if paused_root is not None else nullcontext()
+    ) as scratch:
         manifest, release, launch, contexts, trajectories = original
+        if paused_root is not None:
+            exports = {}
+            for arm, context in contexts.items():
+                bundle = Path(scratch) / arm
+                create_resume_bundle(paused_root / arm, context, trajectories[arm], bundle)
+                exports[arm] = str(bundle)
+            plan = {"format": RESUME_PLAN_FORMAT, "spec_identity": spec.identity, "arms": exports, **overrides}
         if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
                 or type(plan["arms"]) is not dict or set(plan["arms"]) != set(contexts)):
@@ -353,10 +375,6 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         for arm_id, path in plan["arms"].items():
             checked[arm_id] = validate_resume_bundle(_path(Path(repo_root), path), spec,
                 arm_id=arm_id, context=contexts[arm_id], trajectory=trajectories[arm_id])
-        output = Path(output).absolute()
-        _safe_local(output)
-        if output.exists():
-            raise ValueError("Resume preparation requires a fresh output directory")
         backend = _platform_adapter(spec.to_dict()["platform"]["name"])
         frozen_inputs = _json(Path(prepared) / "release_report.json")["inputs"]
         metadata = _json(Path(release["inputs"]["kernel_metadata"]))
@@ -427,7 +445,10 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 for relative in {RESUME_BUNDLE_FILE, *(p["path"] for p in pointers)}:
                     target = destination / relative
                     target.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copyfile(item["root"] / relative, target)
+                    if scratch is None:
+                        shutil.copyfile(item["root"] / relative, target)
+                    else:
+                        (item["root"] / relative).replace(target)
                 stage["launch"]["resume"][arm_id] = {
                     "manifest": f"resume/{arm_id}/{RESUME_BUNDLE_FILE}",
                     "sha256": hashlib.sha256((destination / RESUME_BUNDLE_FILE).read_bytes()).hexdigest()}

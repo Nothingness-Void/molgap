@@ -314,14 +314,18 @@ def _retrieve_all_arms(argv, *, status_only=False):
         if args.paused and (args.strict or args.resume_prepared is not None):
             raise ValueError("A paused run has no strict evidence; retrieve it unstrict")
         _path(args.remote_root)
-        if args.resume_prepared is not None and (not args.strict or args.continuation_receipt is None):
-            raise ValueError("Resume retrieval needs strict mode and its receipt")
+        if args.resume_prepared is not None and not (args.strict or status_only):
+            raise ValueError("Resume retrieval needs strict mode")
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             stage = "original_run"
             verification = _PackageVerification()
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
             spec, options, prepared = _original_run(args.profile, args.repo_root,
                 args.run_id, args.attempt_id, _verification=verification)
+            if args.resume_prepared is not None and args.continuation_receipt is None:
+                from molgap.kaggle_submission import bound_resume_submission
+                args.continuation_receipt, _ = bound_resume_submission(
+                    args.repo_root / args.resume_prepared, spec, options)
             options = _continuation_options(spec, options, args.continuation_receipt, args.repo_root, verification)
             contexts = {arm["arm_id"]: RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
                 expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
@@ -359,7 +363,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
                         raise CredentialBindingError("Credential owner differs from receipt account " + context.account)
                     paused = {arm: retrieve_paused_arm(api, context=contexts[arm], remote_root=args.remote_root,
                         extra_files=arm_extras.get(arm, ()), destination=destination / arm) for arm in contexts}
-                    result = {"status": "PAUSED_RETRIEVED", "version": version, "scientific_acceptance": False,
+                    result = {"status": "PAUSED_RETRIEVED", "version": version, "paused_root": str(destination), "scientific_acceptance": False,
                               "arms": {arm: {"digest_basis": item["digest_basis"], "files": item["files_observed"]}
                                        for arm, item in paused.items()}}
             else:
@@ -400,6 +404,10 @@ def _retrieve_all_arms(argv, *, status_only=False):
             command = ["--all-arms", "--profile", str(args.profile),
                 "--repo-root", str(args.repo_root), "--run-id", args.run_id, "--attempt-id", args.attempt_id,
                 "--remote-root", args.remote_root, "--execute"]
+            if args.resume_prepared is not None:
+                command += ["--resume-prepared", str(args.resume_prepared)]
+            elif args.continuation_receipt is not None:
+                command += ["--continuation-receipt", str(args.continuation_receipt)]
             if args.strict:
                 command.insert(1, "--strict")
             print(canonical_json({"status": "READY_FOR_RETRIEVAL", "version": version,
