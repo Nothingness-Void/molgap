@@ -1,0 +1,57 @@
+{
+  "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
+  "measurement_ref": "experiments/pcqm_h1_heldout_budget/measurements.json",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_automatic_scale_up",
+    "comparison_status": "cross_run_same_init_paired_rows",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "FAIL",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "alignment_100k": "consumed",
+    "alignment_500k": "consumed",
+    "calibration_6k": "consumed",
+    "common": "untouched",
+    "development_100k_saved_verification": "consumed",
+    "development_500k_saved_verification": "consumed",
+    "h1_n4_score": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "scalar_internal_selection": "consumed",
+    "source_cache_preparation": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-h1-heldout-budget-score",
+  "scientific_comparison": "bounded diagnostic; not strict replay",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_h1_heldout_budget/decision.md",
+    "facts": {
+      "ci_meV": [
+        4.832349828688841,
+        6.7882628613306
+      ],
+      "effect_meV": 5.829273089446068,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "fixed budget",
+        "heldout residual",
+        "pairnorm",
+        "single bond",
+        "N4"
+      ],
+      "source": "experiments/pcqm_h1_heldout_budget/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "New preregistered design with explicit authority, for example a randomly drawn fit block; no automatic scale-up, no protected-role access, no promotion from this 100K pilot."
+    ]
+  },
+  "worker_trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+}

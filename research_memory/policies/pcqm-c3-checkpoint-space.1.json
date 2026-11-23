@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_C3_CHECKPOINT_PROBE",
+    "field": "frozen_pair_and_checkpoints_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-c3-checkpoint-space-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "e625ed89ea6fc5a100db4e562c7166cccfde287c9a0dc384caf09ca0d81c7fdb",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-c3-checkpoint-space",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "frozen_pair_and_checkpoints_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

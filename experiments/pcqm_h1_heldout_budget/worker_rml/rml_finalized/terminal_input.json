@@ -1,0 +1,123 @@
+{
+  "acceptance_ref": "experiments/pcqm_h1_heldout_budget/worker_rml/terminal_staging/v1/91ca140ca5906b45/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_h1_heldout_budget/decision.md": "620042b21bc8508503ac6fc069c3969c58ba6bfc98041b59b40507bf2679fa56",
+    "experiments/pcqm_h1_heldout_budget/worker_audit/roles_pair_update_norm.json": "e471bccba7804464b441c02264f4ef083752e3c0237cd862f6fcf137c9dc253f",
+    "experiments/pcqm_h1_heldout_budget/worker_rml/terminal_staging/v1/91ca140ca5906b45/acceptance.json": "d98bf20d1c2448befb6125eb010f7b4b967d84357d385efd445bc88b40998606",
+    "experiments/pcqm_h1_heldout_budget/worker_rml/terminal_staging/v1/91ca140ca5906b45/observed.json": "8deccd9af44e27bdcb3aac16e1724ccf3e3748032169fc55fdd506b08e3371e3",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/canonical_trace.json": "9cae2c3a55d4e80f45d8741013e92921947cc9036f229c71639b87b1232c4774",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/canonical_trace.json.context.json": "6b9756a7e12126ff6d9174de4341b1065029b94544fa81f697a69c32c3d2e2a8",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/data_open_provenance.json": "9f111336e5ac6c2c774839c4190fc7ee24c2e13d6967637871d4cc7439c17a9e",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/development_predictions.pt": "d56522d1bda2e5a2c2f277a6043d3872f6db3009f75c13fa0fbccb3530c73dcb",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/development_predictions_ema0.9999.pt": "4d2014062a3418630a4c457fbb74449a8c02e82e1aac3d4bccab3a08fa12c2fe",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/last_checkpoint.pt": "3aa579da1a80c262586fa41a5e24b9eb26d485ae4e6682e555522968e8a6cf2b",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/output_manifest.json": "2f4a053e26fd15df17e0a890faaa0c4f9825aade95bdc4b436cca715957abed7",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/selected_model.pt": "f93ff4b28dc4fb463333c92048af804dcd677c48d9056fb99e613ae60cbad46f",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/selected_model_ema0.9999.pt": "e705289ac71a82b6f7ebe4e06eadb82ede9eea9c909f74011ff233711912496e",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/training_contract.json": "ef307acbfc07abbb323b43aca8c165f0c47ed9abea42d3cc04ba9cb5da261871"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-22T08:08:30.330425+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "726e35887b31d499930cec95f5354aa681f225585d0af84a168113eeab9da84c"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "1b517f3dedaf21e2933b7e3886f6a84d4fcc169603dc5eef18b108084396396d"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-local-pcqm-h1-94k-s42-pair_update_norm-train-training_membership.json",
+        "sha256": "e0ba18c5332a24b84c2f13245d86d14bf326d27efe4f2cc656030e51b55e88d8"
+      },
+      {
+        "ref": "roles/role-local-pcqm-h1-94k-s42-pair_update_norm-development-prediction_input.json",
+        "sha256": "dc4f127bfb6ddd12a6b5dbab3420a8d68c53fde4d129dbc682037202f45907d9"
+      },
+      {
+        "ref": "roles/role-local-pcqm-h1-94k-s42-pair_update_norm-development-labels_read.json",
+        "sha256": "183167bff5cd58a392e56f584abeb0f4538805199791dab796ff7f419aa0f6bf"
+      },
+      {
+        "ref": "roles/role-local-pcqm-h1-94k-s42-pair_update_norm-development-metric_computed.json",
+        "sha256": "5fb8b9391e99cc034d010a3febc53bce468f8b8da5e29432b32c98f7d8073671"
+      },
+      {
+        "ref": "roles/role-local-pcqm-h1-94k-s42-pair_update_norm-development-selection_used.json",
+        "sha256": "d1f04f75c988b5e04cbb1eb06d751a96b2c41fd53a7cf37bb723bcaf773e756d"
+      }
+    ]
+  },
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "local-pcqm-h1-94k-s42:pair_update_norm:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "experiments/pcqm_h1_heldout_budget/protocol.md",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_44040",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 44040,
+      "sample_presentations": 5637120
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "reference_id": null,
+    "run_id": "local-pcqm-h1-94k-s42:pair_update_norm:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_h1_heldout_budget/worker_rml/terminal_staging/v1/91ca140ca5906b45/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/diagnostics/pcqm-h1-heldout-budget/output/pair_update_norm/canonical_trace.json",
+    "trace_artifact_sha256": "9cae2c3a55d4e80f45d8741013e92921947cc9036f229c71639b87b1232c4774",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-pcqm-h1-heldout-budget-94k",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+}

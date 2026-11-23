@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_SPREAD_FIT_STUDY",
+    "field": "frozen_pair_and_fit_rows_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-residual-spread-fit-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "d650e4ae44478386cae80030e571b207977144e91b01f20a5ae289491f91eb39",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-residual-spread-fit",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "frozen_pair_and_fit_rows_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

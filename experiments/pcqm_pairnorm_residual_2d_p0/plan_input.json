@@ -1,0 +1,145 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "pcqm-pairnorm-residual-2d-p0",
+    "question": "Can 2D chemistry correct selected GPT-T 500K predictions beyond yhat-only on scaffold-disjoint dev rows in both inits, and does the signal survive fitting on backbone-training residuals?",
+    "hypothesis": {
+      "hypothesis_id": "H-pcqm-pairnorm-residual-2d-p0",
+      "observed_deficiency": "Conditional K1 descriptor gain on out-of-sample fit residuals, not established for PairNorm or in-sample fit.",
+      "supporting_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+        "pcqm-pairnorm-prediction-router-500k-20261027"
+      ],
+      "alternative_explanations": [
+        "Prediction-only recalibration",
+        "Residual distribution shifts from in-sample fitting",
+        "Already selection-used dev distribution"
+      ],
+      "changed_mechanism": "Single fixed 2D chemistry residual corrector with two matched fitting roles; raw-error N4 description only",
+      "cheapest_falsifier": "Saved development predictions, scaffold-disjoint fit/score, frozen local forward for equal-sized in-sample control.",
+      "decision_changed_if_positive": "Consider only an independently authorized held-out calibration question, no scale-up.",
+      "decision_changed_if_negative": "No H1 recommendation from this probe.",
+      "expected_native_cost_ref": "cost-pcqm-pairnorm-residual-2d-p0-expected",
+      "related_closed_family_ids": [
+        "pcqm-pairnorm-prediction-router-500k",
+        "gptrans-500k-readout-attribution"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "094f1b57ed92f870e66a425eeed3b6d405df4510",
+      "source_config_identity": "5f34ae10e3e0872d5c2d73fa12bc8b1194358f028a86a5c7fbff0a7ee0701b87",
+      "contract_refs": [
+        "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+        "experiments/pcqm_pairnorm_residual_2d_p0/probe.py",
+        "experiments/pcqm_pairnorm_residual_2d_p0/chemistry.py"
+      ],
+      "reference_ids": [
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+      ],
+      "parent_trajectory_ids": [
+        "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+        "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+      ],
+      "prior_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+        "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+        "pcqm-pairnorm-prediction-router-500k-20261027"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_saved_predictions_paired_fit_role_diagnostic",
+        "run_ids": [
+          "local-pcqm-pairnorm-residual-2d-p0"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "094f1b57ed92f870e66a425eeed3b6d405df4510",
+        "evidence_refs": [
+          "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+        ],
+        "cost_event_ids": [
+          "cost-pcqm-pairnorm-residual-2d-p0-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+      "next_allowed_actions": [
+        "Frozen local S1-P0 and report-only N4; no new backbone training"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+    "comparison_blockers": [
+      "Selection-used development cohort; no independent deployable evaluation",
+      "Only initial weights varied"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-pcqm-pairnorm-residual-2d-p0-expected",
+      "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0",
+      "action_id": "A001",
+      "run_id": "local-pcqm-pairnorm-residual-2d-p0",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "Desktop CPU and one RTX 5060 for frozen inference only",
+      "category": "audit",
+      "evidence_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "status": "estimated",
+          "value": 1.0
+        },
+        "cpu_hours": {
+          "status": "estimated",
+          "value": 2.0
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 0.25
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-pairnorm-residual-2d-p0",
+    "policy_version": "1",
+    "state_timestamp": "2026-11-22T05:06:37.994159+00:00",
+    "source_commit": "094f1b57ed92f870e66a425eeed3b6d405df4510",
+    "budget_snapshot_ref": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md"
+    ]
+  }
+}

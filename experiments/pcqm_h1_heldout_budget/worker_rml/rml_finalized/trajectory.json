@@ -1,0 +1,108 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pair_update_norm-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-h1-heldout-budget-94k-expected",
+        "cost-finalize-985055ba42e034e008438a5e"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_h1_heldout_budget/protocol.md"
+      ],
+      "run_ids": [
+        "local-pcqm-h1-94k-s42:pair_update_norm:downstream"
+      ],
+      "source_commit": "ef709854d4bd708f6b938482feb1ba63e9d2d55b",
+      "type": "RUN_LOCAL_94K"
+    }
+  ],
+  "comparison_blockers": [
+    "Reused local anchor is mechanically verified, not a same-job pair."
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_h1_heldout_budget/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_LOCAL_94K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "chosen_action": "RUN_LOCAL_94K",
+    "policy_id": "pcqm-h1-heldout-budget",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_h1_heldout_budget/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_h1_heldout_budget/rml_decision_snapshots/c842ba19db41e1feb45403313dd92e734dae6fc915ff26dd3e2e59da83336f1c.json",
+    "snapshot_sha256": "c842ba19db41e1feb45403313dd92e734dae6fc915ff26dd3e2e59da83336f1c",
+    "state_timestamp": "2026-11-22T05:37:01.951046+00:00"
+  },
+  "family_id": "pcqm-h1-heldout-budget",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Recalibration alone",
+      "Data loss outweighs correction",
+      "The single-bond error excess is a cohort mix effect"
+    ],
+    "changed_mechanism": "Reserve six percent of a fixed label budget for a residual stack.",
+    "cheapest_falsifier": "Train one 94K model; reuse the same-init 100K model on the same out-of-fit rows.",
+    "decision_changed_if_negative": "No scale-up under this pilot.",
+    "decision_changed_if_positive": "Consider a separately specified larger scale; no automatic launch.",
+    "expected_native_cost_ref": "cost-TB-pcqm-h1-heldout-budget-94k-expected",
+    "hypothesis_id": "H-TB-pcqm-h1-heldout-budget-94k",
+    "observed_deficiency": "P0 did not charge lost backbone data.",
+    "related_closed_family_ids": [
+      "pcqm-pairnorm-residual-2d-p0"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-pairnorm-residual-2d-p0-20261122"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does 94K plus 6K correction beat the same-init 100K backbone on new rows?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-TB-pcqm-h1-heldout-budget-94k"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_h1_heldout_budget/protocol.md",
+      "experiments/pcqm_h1_heldout_budget/prepare.py",
+      "experiments/pcqm_h1_heldout_budget/recipe.json"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-h1-heldout-budget"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-pairnorm-residual-2d-p0-20261122"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_h1_heldout_budget/protocol.md"
+    ],
+    "source_commit": "ef709854d4bd708f6b938482feb1ba63e9d2d55b",
+    "source_config_identity": "c301ccd7ed320fbf5cbb66ad3c5009f61d05565b89ef338f2a9ade9ae74ebfc0"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-h1-heldout-budget-94k"
+}

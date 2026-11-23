@@ -1,0 +1,81 @@
+{
+  "acceptance_ref": "experiments/pcqm_c3_checkpoint_space/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_c3_checkpoint_space/acceptance.json": "a9ded3c9d8e16b75ebf73ecbf8303eb79a4a19e3662f8e802e3048e3f1ed486e",
+    "experiments/pcqm_c3_checkpoint_space/decision.md": "4053786334e4574de697fb4b4bffd97b4fd1199fc3e40a7184bfeed3c44c60dc",
+    "experiments/pcqm_c3_checkpoint_space/probe_c3.py": "1bbcfa8b92d43adacb4b2505d2ead61cef5bd6662da3159adb50742df3a31c81",
+    "experiments/pcqm_c3_checkpoint_space/protocol.md": "e625ed89ea6fc5a100db4e562c7166cccfde287c9a0dc384caf09ca0d81c7fdb",
+    "experiments/pcqm_c3_checkpoint_space/results.json": "a1ac24f2757909835f5a0a4fb1f6892e89bd857befdab44ebd39c057f94949de",
+    "experiments/pcqm_h1_heldout_budget/prepare.py": "93b19e734b7109b3bd0f47bba629282cbf81563fc7aa04b078176678ad6700df",
+    "experiments/pcqm_pairnorm_residual_2d_p0/probe.py": "24aa8e1e8ae3c340ad6562e040e75351bff6d23ca133f6b883f1c3dd0271e59f",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-checkpoint-space/predict.json": "80a90b011e55b5ba669766634357e34301dcd20f38795048d309c41c45b25714",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-checkpoint-space/predict.npz": "016b7fe75e98d173e883730714dcedad063cf0b32c257ebdd4d27701f62438bb"
+  },
+  "finalized_at": "2026-11-22T17:08:51.837281+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-c3-inference.json",
+        "sha256": "18b968fe134b92c00c1bb6afbd291685aaa37e010feecea1670431e70a974627"
+      },
+      {
+        "ref": "costs/cost-c3-analysis.json",
+        "sha256": "16eeac19751c9b628b62c9c2ca46eae8969e556b97b8811f8d3010c47ae04933"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "0408a6e706727ed783c5e29545994bd9702e17b33ac7642f06e1159647bc3a94"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "748d6d9d1740475d49576ea44cae15b28722058518923bfe806e63a3170f68c1"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-c3-dev_replay_128-prediction_input.json",
+        "sha256": "51a9321ea709eb451ced6af38d7df998e5376dd7945230f8f57e5db53d200f98"
+      },
+      {
+        "ref": "roles/role-c3-dev_replay_128-metric_computed.json",
+        "sha256": "4aaa3d343b74e1af9db51a28c7822a75870e058d13e317f25dc17a91094ad94d"
+      },
+      {
+        "ref": "roles/role-c3-dev_50k_primary-prediction_input.json",
+        "sha256": "fc869ec7f54fc360de553215c5fa3f3f6ba1cf8c80ce98261b250cad8ce9a449"
+      },
+      {
+        "ref": "roles/role-c3-dev_50k_primary-labels_read.json",
+        "sha256": "811910f27c01be828210d0b8f78f07b0ea097c471418c9d2d83769996991ae17"
+      },
+      {
+        "ref": "roles/role-c3-dev_50k_primary-metric_computed.json",
+        "sha256": "48acd94336ea80395a1baf5aedc2da69a7926a48240ed44f129fede0f14cbbf7"
+      },
+      {
+        "ref": "roles/role-c3-dev_50k_primary-selection_used.json",
+        "sha256": "f3e150778843c9f0ff0272149db6d2d263a56e55c3d406a2f8a82e81429ce3a2"
+      },
+      {
+        "ref": "roles/role-c3-unseen_50k_secondary-prediction_input.json",
+        "sha256": "9fa9dc072572e22cf5c649c90b1889a1421551f858219074488d3479cee2a9f6"
+      },
+      {
+        "ref": "roles/role-c3-unseen_50k_secondary-labels_read.json",
+        "sha256": "6b3ca3e8bf2a98b6bf28f7fed42312c5a62b44498d8114cfd8301c21b3480d3d"
+      },
+      {
+        "ref": "roles/role-c3-unseen_50k_secondary-metric_computed.json",
+        "sha256": "4e6824fa72657e7fd3fcb51c003d8f0294a66cb12f8770aa42d3298b980f4672"
+      }
+    ]
+  },
+  "run_id": "pcqm-c3-checkpoint-space-score",
+  "trajectory_id": "TB-pcqm-c3-checkpoint-space"
+}

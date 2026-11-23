@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "inference",
+  "cost_event_id": "cost-sf-inference",
+  "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+  "hardware": "RTX 5060 and CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.1091796875
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.05882121983333491
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-residual-spread-fit-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-residual-spread-fit"
+}

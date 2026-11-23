@@ -846,6 +846,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-c2-xtb-diagnostic:A001",
+      "target": "experiments/pcqm_c2_xtb_diagnostic/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-c3-checkpoint-space:A001",
+      "target": "experiments/pcqm_c3_checkpoint_space/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
       "type": "action_produced_evidence"
@@ -863,6 +873,16 @@
     {
       "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_resistance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget-94k:A001",
+      "target": "experiments/pcqm_h1_heldout_budget/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget:A001",
+      "target": "experiments/pcqm_h1_heldout_budget/protocol.md",
       "type": "action_produced_evidence"
     },
     {
@@ -918,6 +938,21 @@
     {
       "source": "TB-pcqm-pairnorm-prediction-router-500k-20261027:A001",
       "target": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-pairnorm-residual-2d-p0:A001",
+      "target": "experiments/pcqm_pairnorm_residual_2d_p0/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-residual-block-transfer:A001",
+      "target": "experiments/pcqm_residual_block_transfer/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-residual-spread-fit:A001",
+      "target": "experiments/pcqm_residual_spread_fit/protocol.md",
       "type": "action_produced_evidence"
     },
     {
@@ -1024,6 +1059,16 @@
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/sources/joint_finalization_receipt.json",
       "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "parent_trajectory"
     },
     {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
@@ -1566,6 +1611,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-c3-checkpoint-space",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-geometry-component-attribution-20260928",
       "target": "TB-pcqm-geometry-reliability-screen-20260928",
       "type": "parent_trajectory"
@@ -1588,6 +1638,31 @@
     {
       "source": "TB-pcqm-geometry-reliability-screen-20260928",
       "target": "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget",
+      "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-h1-heldout-budget",
+      "target": "TB-pcqm-residual-block-transfer",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-pairnorm-residual-2d-p0",
+      "target": "TB-pcqm-h1-heldout-budget",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-residual-block-transfer",
+      "target": "TB-pcqm-residual-spread-fit",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-residual-spread-fit",
+      "target": "TB-pcqm-c3-checkpoint-space",
       "type": "parent_trajectory"
     },
     {
@@ -1861,6 +1936,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "type": "prior_evidence"
@@ -1868,6 +1948,11 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
       "type": "prior_evidence"
     },
     {
@@ -2338,6 +2423,11 @@
     {
       "source": "k1-saved-bn-rows-20261008-evidence",
       "target": "TB-k1-clean-fit-generalization-500k-20261009",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-c3-checkpoint-space-20261123",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
       "type": "prior_evidence"
     },
     {
@@ -2828,6 +2918,11 @@
     {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-h1-heldout-budget-100k-20261122",
+      "target": "TB-pcqm-residual-block-transfer",
       "type": "prior_evidence"
     },
     {
@@ -3431,6 +3526,51 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-pairnorm-prediction-router-500k-20261027",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-h1-heldout-budget",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-h1-heldout-budget-94k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-residual-block-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "target": "TB-pcqm-residual-spread-fit",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-residual-block-transfer-20261123",
+      "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-residual-block-transfer-20261123",
+      "target": "TB-pcqm-residual-spread-fit",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-residual-spread-fit-20261123",
+      "target": "TB-pcqm-c3-checkpoint-space",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-scale-transfer-attribution-no-train",
       "target": "TB-pcqm-scale-transfer-diagnostic",
       "type": "prior_evidence"
@@ -3483,6 +3623,16 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "TB-pcqm-pairnorm-residual-2d-p0",
       "type": "reference_used"
     },
     {
@@ -4171,6 +4321,10 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "type": "evidence"
     },
@@ -4208,6 +4362,14 @@
     },
     {
       "id": "k1-saved-trace-pair-20261008-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-c2-xtb-diagnostic-20261123",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-c3-checkpoint-space-20261123",
       "type": "evidence"
     },
     {
@@ -4415,6 +4577,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-h1-heldout-budget-100k-20261122",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-input-pipeline-local-20261013",
       "type": "evidence"
     },
@@ -4607,7 +4773,19 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-recurrent-graph-state-100k-seed42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-residual-block-transfer-20261123",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-residual-spread-fit-20261123",
       "type": "evidence"
     },
     {
@@ -5339,6 +5517,14 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-c3-checkpoint-space",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-pcqm-expert-oracle-feasibility-20260930",
       "type": "trajectory"
     },
@@ -5364,6 +5550,14 @@
     },
     {
       "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-h1-heldout-budget",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-h1-heldout-budget-94k",
       "type": "trajectory"
     },
     {
@@ -5412,6 +5606,18 @@
     },
     {
       "id": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-pairnorm-residual-2d-p0",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-residual-block-transfer",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-residual-spread-fit",
       "type": "trajectory"
     },
     {

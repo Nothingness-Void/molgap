@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "audit",
+  "cost_event_id": "cost-c2-analysis",
+  "evidence_ref": "experiments/pcqm_c2_xtb_diagnostic/acceptance.json",
+  "hardware": "desktop CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.3257074652777778
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.045340503250004584
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-c2-xtb-diagnostic-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-c2-xtb-diagnostic"
+}

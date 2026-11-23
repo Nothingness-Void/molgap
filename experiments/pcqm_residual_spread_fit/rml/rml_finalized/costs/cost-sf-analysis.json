@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "audit",
+  "cost_event_id": "cost-sf-analysis",
+  "evidence_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+  "hardware": "desktop CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.7074609375
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.3143408381388953
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-residual-spread-fit-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-residual-spread-fit"
+}

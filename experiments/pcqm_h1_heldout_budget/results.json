@@ -1,0 +1,196 @@
+{
+  "h1_verdict": "FAIL",
+  "invalid_score": 0,
+  "mae_meV": {
+    "chemistry": 171.90401992242764,
+    "full100": 166.0747468329816,
+    "reduced": 167.69692448959415,
+    "s43": 116.92580549601158,
+    "s44": 118.7129475903041,
+    "scalar": 167.69692448959415
+  },
+  "n4": {
+    "comiss_all": 0.20248,
+    "comiss_group": 0.2999639899171768,
+    "enrichment": 1.4814499699584,
+    "matched_cells": 13,
+    "matched_coverage": 0.9591285559956788,
+    "matched_rows": 5327,
+    "members": {
+      "s43": {
+        "mae_meV": 153.59146240314553,
+        "ratio": 1.3135805372611664,
+        "share": 0.14591252607897037
+      },
+      "s44": {
+        "mae_meV": 159.5930943416234,
+        "ratio": 1.344361315097682,
+        "share": 0.14933165488105052
+      }
+    },
+    "replicates": false,
+    "rows": 5554,
+    "standardized_excess_meV": [
+      14.279732246420345,
+      15.608818945619197
+    ]
+  },
+  "paired_meV": {
+    "cost": {
+      "ci95": [
+        0.6716343102738154,
+        2.5460737145312122
+      ],
+      "delta": 1.6221776566125747,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0,
+      "seed": 20261122
+    },
+    "features": {
+      "ci95": [
+        3.84349568242312,
+        4.584607107113606
+      ],
+      "delta": 4.207095432833492,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0,
+      "seed": 20261122
+    },
+    "net": {
+      "ci95": [
+        4.832349828688841,
+        6.7882628613306
+      ],
+      "delta": 5.829273089446068,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0,
+      "seed": 20261122
+    },
+    "rescue": {
+      "ci95": [
+        3.84349568242312,
+        4.584607107113606
+      ],
+      "delta": 4.207095432833492,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0,
+      "seed": 20261122
+    }
+  },
+  "parent_cpu_seconds": 8.515625,
+  "prospective_sha256": "3a84a45945c9678a731c81501f2ff6d9f0db3726b9fd8ef240fdfca5c4e6b90a",
+  "receipts": {
+    "correct": {
+      "control": "identity",
+      "fit_validation_mae_eV": {
+        "affine": 0.17342307883546473,
+        "gbm": 0.17429520620406586,
+        "identity": 0.17336054030621809,
+        "isotonic": 0.17790227636292644,
+        "median": 0.17344007866616137
+      },
+      "inner_rows": 735,
+      "model_sha256": "dc0d833bbedd4e84742247114c52bc2a1f73d6afcf4d6e62995368443c5cf8b8",
+      "parent_cpu_seconds": 213.546875,
+      "prospective_sha256": "3a84a45945c9678a731c81501f2ff6d9f0db3726b9fd8ef240fdfca5c4e6b90a",
+      "score_labels_used": false,
+      "sha256": "fc4da9c8b197947309ac8fa3542d475727903c5dc8cefb4c80b1075810fb8b4c",
+      "source_sha256": "676c14e4a5561d95ae5c733fe3619587a53f56a7caf932dfb585807a5de709da",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 30.365683299998636
+    },
+    "features": {
+      "parent_cpu_seconds": 1.59375,
+      "prospective_sha256": "3a84a45945c9678a731c81501f2ff6d9f0db3726b9fd8ef240fdfca5c4e6b90a",
+      "rows": 56000,
+      "score_labels_used": false,
+      "sha256": "5f454e378131ecf00d5b8ca893bcfa28cbe951d46199f59c222145f61c5d2b15",
+      "source_archive": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+      "source_sha256": "676c14e4a5561d95ae5c733fe3619587a53f56a7caf932dfb585807a5de709da",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 79.35499719998916
+    },
+    "predict": {
+      "bindings": {
+        "full100": {
+          "contract": "049444189990cd938799e07582f34e57d644de902c1106f7e77d3c12cab4e059",
+          "init": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+          "manifest": "bd0ebc8d6c15639abf7627b94dea89709c4c12a58ff206a51277b7d27b3ca007",
+          "predictions": "08a8ec2fe33c4caafaa4ee9556f225b70a2d91a5e06a398e1ddf6a5b38d1bd34",
+          "selected_model": "7274295a676f1bee5f1a2b02886523d7363f4e8897838330d19f13dbec7ac80e"
+        },
+        "reduced": {
+          "contract": "ef307acbfc07abbb323b43aca8c165f0c47ed9abea42d3cc04ba9cb5da261871",
+          "init": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+          "manifest": "2f4a053e26fd15df17e0a890faaa0c4f9825aade95bdc4b436cca715957abed7",
+          "predictions": "d56522d1bda2e5a2c2f277a6043d3872f6db3009f75c13fa0fbccb3530c73dcb",
+          "selected_model": "f93ff4b28dc4fb463333c92048af804dcd677c48d9056fb99e613ae60cbad46f"
+        },
+        "s43": {
+          "contract": "471ad2fb6785a1af128fbb5cccbb9a81c56c0b1c90064b692d82a098285bbc28",
+          "init": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c",
+          "manifest": "9f5131f307df7ee373e066c36afa96f17c84767c8712ead844b8073ce77457ac",
+          "predictions": "818b0b041919f53e31667c201ad926d56bf7d8e59c352056c912a2d63e6f6a62",
+          "selected_model": "13369b0ac07b71177f8d4a7a4c29f98c4ad9b892ac65fbb6e93b97a1a24a06ba"
+        },
+        "s44": {
+          "contract": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1",
+          "init": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573",
+          "manifest": "2a439ae42a10179897ebf51d11a8a6db03d45029647c15781ec84af86e7a0f0a",
+          "predictions": "fc5a9f5e11c303a8c5c1d1603f75b8ba853c23755db8e48538c52593e193a29e",
+          "selected_model": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb"
+        }
+      },
+      "device": "NVIDIA GeForce RTX 5060",
+      "parent_cpu_seconds": 166.4375,
+      "prospective_sha256": "3a84a45945c9678a731c81501f2ff6d9f0db3726b9fd8ef240fdfca5c4e6b90a",
+      "replay_max_abs_eV": {
+        "full100": 7.389427327808562e-07,
+        "reduced": 9.401260605557127e-07,
+        "s43": 7.576248375329442e-07,
+        "s44": 6.543748582998887e-07
+      },
+      "score_labels_used": false,
+      "sha256": "3a76b7dbb6f1e7d3c07f3e93a4fc587b24c0402aa2891fd0954b21dfe0eb5a9d",
+      "source_sha256": "676c14e4a5561d95ae5c733fe3619587a53f56a7caf932dfb585807a5de709da",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 95.65484889999789
+    }
+  },
+  "rows": 50000,
+  "rows_with_fit_canonical": 0,
+  "source_sha256": "676c14e4a5561d95ae5c733fe3619587a53f56a7caf932dfb585807a5de709da",
+  "unseen_fit_scaffolds": {
+    "mae_meV": {
+      "chemistry": 179.86643560809512,
+      "full100": 173.40193185395177,
+      "reduced": 174.77087528760728,
+      "s43": 104.98620262045401,
+      "s44": 104.89527268174244,
+      "scalar": 174.77087528760728
+    },
+    "rows": 24366
+  },
+  "versions": {
+    "numpy": "1.26.4",
+    "rdkit": "2025.3.5",
+    "scikit-learn": "1.7.2",
+    "torch": "2.7.1+cu128"
+  },
+  "wall_seconds": 8.72989570000209
+}

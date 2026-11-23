@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "audit",
+  "cost_event_id": "cost-TB-pcqm-h1-heldout-budget-expected",
+  "evidence_ref": "experiments/pcqm_h1_heldout_budget/protocol.md",
+  "hardware": "RTX 5060 and desktop CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-h1-heldout-budget-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-h1-heldout-budget"
+}

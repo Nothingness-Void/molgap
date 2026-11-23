@@ -1,0 +1,75 @@
+{
+  "derived_topology": [
+    {
+      "bytes": 156440693,
+      "file": "topology_0.pt",
+      "role": "train",
+      "rows": 50000,
+      "sha256": "f6641c543efa6bf2b909bd5a2abada38ee35d2ca3679ee1fc3cce8b81269da47",
+      "source_idx_max": 49999,
+      "source_idx_min": 0
+    },
+    {
+      "bytes": 138757237,
+      "file": "topology_1.pt",
+      "role": "train",
+      "rows": 44000,
+      "sha256": "0f11f3b2181ac8395385590b82dbafc990b153a4b6076252ae4c7f346986a871",
+      "source_idx_max": 93999,
+      "source_idx_min": 50000
+    },
+    {
+      "bytes": 156981237,
+      "file": "topology_2.pt",
+      "role": "development",
+      "rows": 50000,
+      "sha256": "1201f4f0366a8799cf8a0bc8448bd768c2818fa979b3a25a4614bff71862f498",
+      "source_idx_max": 149999,
+      "source_idx_min": 100000
+    }
+  ],
+  "membership": "a69c39571dcc8c42a9d74f909bb1f8188d924c55edf609c6f321965881af1931",
+  "parent": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "parent_shards": [
+    {
+      "bytes": 202363317,
+      "file": "train/train_shard_0000.pt",
+      "role": "train",
+      "rows": 50000,
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+      "source_idx_max": 49999,
+      "source_idx_min": 0
+    },
+    {
+      "bytes": 202787061,
+      "file": "train/train_shard_0001.pt",
+      "role": "train",
+      "rows": 50000,
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+      "source_idx_max": 99999,
+      "source_idx_min": 50000
+    },
+    {
+      "bytes": 203498165,
+      "file": "train/train_shard_0002.pt",
+      "role": "development",
+      "rows": 50000,
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+      "source_idx_max": 149999,
+      "source_idx_min": 100000
+    }
+  ],
+  "role_bounds": {
+    "development": {
+      "rows": 50000,
+      "source_idx_start": 100000,
+      "source_idx_stop": 150000
+    },
+    "train": {
+      "rows": 94000,
+      "source_idx_start": 0,
+      "source_idx_stop": 94000
+    }
+  },
+  "worker_manifest": "a03e0186916317a37b4d2d7afcaba85b3d5b32f8209cac838032779ef0153f3c"
+}

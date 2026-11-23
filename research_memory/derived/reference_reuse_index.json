@@ -438,7 +438,9 @@
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-pairnorm-residual-2d-p0"
+      ]
     },
     {
       "artifact_availability": [
@@ -457,7 +459,9 @@
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-pairnorm-residual-2d-p0"
+      ]
     },
     {
       "artifact_availability": [
@@ -1489,6 +1493,25 @@
       "comparison_status": "NOT_EVALUATED",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-h1-heldout-budget-94k",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_h1_heldout_budget/worker_rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "role_use": {
         "development": "used",
@@ -1694,6 +1717,59 @@
       "source_envelope": "experiments/pcqm_k1_consistency_stage_analysis/rml/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-c2-xtb-diagnostic-20261123",
+      "role_use": {
+        "common": "untouched",
+        "far_score_block_reused": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "p0_dev_score_scaffold": "consumed",
+        "p0_fit_rows_reused": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "xtb_pilot_2k": "consumed"
+      },
+      "scientific_scope": "pcqm-c2-xtb-diagnostic",
+      "source_envelope": "experiments/pcqm_c2_xtb_diagnostic/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "failed_on_far_block_plus2p5_meV",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-c3-checkpoint-space-20261123",
+      "role_use": {
+        "common": "untouched",
+        "dev_50k_primary": "consumed",
+        "dev_replay_128": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "unseen_50k_secondary": "consumed"
+      },
+      "scientific_scope": "pcqm-c3-checkpoint-space",
+      "source_envelope": "experiments/pcqm_c3_checkpoint_space/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "verified_on_500k_unseen_block_full_scale_not_evaluated",
       "used_by_trajectory_ids": []
     },
     {
@@ -2805,6 +2881,37 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "cross_run_same_init_paired_rows",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-h1-heldout-budget-100k-20261122",
+      "role_use": {
+        "alignment_100k": "consumed",
+        "alignment_500k": "consumed",
+        "calibration_6k": "consumed",
+        "common": "untouched",
+        "development_100k_saved_verification": "consumed",
+        "development_500k_saved_verification": "consumed",
+        "h1_n4_score": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "scalar_internal_selection": "consumed",
+        "source_cache_preparation": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "H1 fixed-label pilot and N4 independent-row replication",
+      "source_envelope": "experiments/pcqm_h1_heldout_budget/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "locally_retained_hash_verified"
       ],
       "comparison_status": "matched_membership_scratch_execution",
@@ -3878,6 +3985,37 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "same_development_rows_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pairnorm-residual-2d-p0-20261122",
+      "role_use": {
+        "backbone_train_corrector_fit": "consumed",
+        "backbone_unseen_corrector_fit": "consumed",
+        "common": "untouched",
+        "dev_replay_128": "consumed",
+        "dev_scalar_control_selection": "consumed",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "scaffold_dev_score": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_scalar_control_selection": "consumed",
+        "train_window": "consumed"
+      },
+      "scientific_scope": "pcqm-pairnorm-residual-2d-p0",
+      "source_envelope": "experiments/pcqm_pairnorm_residual_2d_p0/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "archive_commit_pointer",
         "committed_launch_record"
       ],
@@ -3895,6 +4033,68 @@
       "source_envelope": "experiments/pcqm_gap_architecture/v5_evidence.json",
       "track": "B",
       "transfer_status": "closed_no_promotion",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-residual-block-transfer-20261123",
+      "role_use": {
+        "common": "untouched",
+        "dev_replay_128": "consumed",
+        "far_score_block": "consumed",
+        "near_score_block": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "p0_fit_rows_reused": "consumed",
+        "p0_score_rows_reproduction": "consumed",
+        "scalar_selection_30k": "consumed",
+        "scalar_selection_6k": "consumed",
+        "small_fit_6k": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-residual-block-transfer",
+      "source_envelope": "experiments/pcqm_residual_block_transfer/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-residual-spread-fit-20261123",
+      "role_use": {
+        "beyond_score_block": "consumed",
+        "common": "untouched",
+        "dev_replay_128": "consumed",
+        "far_score_block_reused": "consumed",
+        "interior_score_block": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "scalar_selection_120k": "consumed",
+        "scalar_selection_30k": "consumed",
+        "spread_fit_120k": "consumed",
+        "spread_fit_30k": "consumed",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-residual-spread-fit",
+      "source_envelope": "experiments/pcqm_residual_spread_fit/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
       "used_by_trajectory_ids": []
     },
     {

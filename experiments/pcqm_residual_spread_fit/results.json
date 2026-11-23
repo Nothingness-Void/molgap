@@ -1,0 +1,649 @@
+{
+  "blocks": {
+    "beyond": {
+      "invalid_rows": 0,
+      "rows": 50000,
+      "s43-120k": {
+        "features": {
+          "ci95": [
+            -0.9193032749915522,
+            -0.5205963235776453
+          ],
+          "delta": -0.7162953310408717,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 97.97878053183182,
+          "raw": 98.70659087121336,
+          "scalar": 98.6950758628727
+        },
+        "rescue": {
+          "ci95": [
+            -0.933549997960186,
+            -0.5322346252405542
+          ],
+          "delta": -0.7278103393815332,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 253,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 110.71333127991417,
+            "raw": 110.60773793322207,
+            "scalar": 110.60821917996358
+          },
+          "rows": 10095
+        }
+      },
+      "s43-30k": {
+        "features": {
+          "ci95": [
+            0.9712176022918455,
+            1.4147695877038702
+          ],
+          "delta": 1.1932098000044842,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 99.9027050242164,
+          "raw": 98.70659087121336,
+          "scalar": 98.70949522421192
+        },
+        "rescue": {
+          "ci95": [
+            0.9743281832994906,
+            1.4187278008707602
+          ],
+          "delta": 1.1961141530030504,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 62,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 107.31346785506987,
+            "raw": 105.55600198521425,
+            "scalar": 105.56037035335986
+          },
+          "rows": 13422
+        }
+      },
+      "s44-120k": {
+        "features": {
+          "ci95": [
+            -0.450710985109705,
+            -0.056500128435339796
+          ],
+          "delta": -0.24810723382010788,
+          "n_bootstrap": 2000,
+          "probability_better": 0.9975,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 96.80314523071094,
+          "raw": 97.05125246453103,
+          "scalar": 97.05125246453103
+        },
+        "rescue": {
+          "ci95": [
+            -0.450710985109705,
+            -0.056500128435339796
+          ],
+          "delta": -0.24810723382010788,
+          "n_bootstrap": 2000,
+          "probability_better": 0.9975,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 253,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 108.50891339099864,
+            "raw": 108.19910562156151,
+            "scalar": 108.19910562156151
+          },
+          "rows": 10095
+        }
+      },
+      "s44-30k": {
+        "features": {
+          "ci95": [
+            1.0570927046070673,
+            1.4492182151180872
+          ],
+          "delta": 1.2619108399629595,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 98.31316330449401,
+          "raw": 97.05125246453103,
+          "scalar": 97.05125246453103
+        },
+        "rescue": {
+          "ci95": [
+            1.0570927046070673,
+            1.4492182151180872
+          ],
+          "delta": 1.2619108399629595,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 62,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 104.59322887950026,
+            "raw": 102.98211973464645,
+            "scalar": 102.98211973464645
+          },
+          "rows": 13422
+        }
+      }
+    },
+    "far": {
+      "invalid_rows": 1,
+      "rows": 50000,
+      "s43-120k": {
+        "features": {
+          "ci95": [
+            -0.4018759663873346,
+            -0.07590480243688526
+          ],
+          "delta": -0.24594484747160547,
+          "n_bootstrap": 2000,
+          "probability_better": 0.999,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 102.40279955271764,
+          "raw": 102.68817013716267,
+          "scalar": 102.64874440018924
+        },
+        "rescue": {
+          "ci95": [
+            -0.44036376961027646,
+            -0.11696293005383938
+          ],
+          "delta": -0.285370584445026,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 218,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 111.89836755853368,
+            "raw": 111.6794033337672,
+            "scalar": 111.64517734451667
+          },
+          "rows": 10525
+        }
+      },
+      "s43-30k": {
+        "features": {
+          "ci95": [
+            0.8065569738291624,
+            1.1931769335336213
+          ],
+          "delta": 0.9991793208798123,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 103.6701903130159,
+          "raw": 102.68817013716267,
+          "scalar": 102.67101099213608
+        },
+        "minus_single_block_fit": {
+          "ci95": [
+            -1.5711019024557518,
+            -0.9893613721205036
+          ],
+          "delta": -1.28606018896256,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rescue": {
+          "ci95": [
+            0.7905566220338882,
+            1.1770341382578584
+          ],
+          "delta": 0.9820201758532229,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 52,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 107.66278761241475,
+            "raw": 106.48484682252403,
+            "scalar": 106.46478058521825
+          },
+          "rows": 13583
+        }
+      },
+      "s44-120k": {
+        "features": {
+          "ci95": [
+            -0.16714322878260715,
+            0.14795696315292955
+          ],
+          "delta": -0.010325443138811447,
+          "n_bootstrap": 2000,
+          "probability_better": 0.565,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 101.5410684468315,
+          "raw": 101.55139388997033,
+          "scalar": 101.55139388997033
+        },
+        "rescue": {
+          "ci95": [
+            -0.16714322878260715,
+            0.14795696315292955
+          ],
+          "delta": -0.010325443138811447,
+          "n_bootstrap": 2000,
+          "probability_better": 0.565,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 218,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 110.83900208715669,
+            "raw": 110.16889476735919,
+            "scalar": 110.16889476735919
+          },
+          "rows": 10525
+        }
+      },
+      "s44-30k": {
+        "features": {
+          "ci95": [
+            1.254431552823635,
+            1.628414101378031
+          ],
+          "delta": 1.4404174012892004,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 102.99181129125952,
+          "raw": 101.55139388997033,
+          "scalar": 101.55139388997033
+        },
+        "minus_single_block_fit": {
+          "ci95": [
+            -1.2963733614649282,
+            -0.760896298337534
+          ],
+          "delta": -1.025016949312564,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rescue": {
+          "ci95": [
+            1.254431552823635,
+            1.628414101378031
+          ],
+          "delta": 1.4404174012892004,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 52,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 106.81353084038527,
+            "raw": 105.17701881936127,
+            "scalar": 105.17701881936127
+          },
+          "rows": 13583
+        }
+      }
+    },
+    "interior": {
+      "invalid_rows": 0,
+      "rows": 50000,
+      "s43-120k": {
+        "features": {
+          "ci95": [
+            -1.8688054318558902,
+            -1.4609336580770875
+          ],
+          "delta": -1.6585828190886087,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 126.02787916601633,
+          "raw": 127.77497779351067,
+          "scalar": 127.68646198510496
+        },
+        "rescue": {
+          "ci95": [
+            -1.956747064000743,
+            -1.546330698421777
+          ],
+          "delta": -1.7470986274943436,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 97,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 136.6494818290448,
+            "raw": 136.3624450980959,
+            "scalar": 136.36858306208504
+          },
+          "rows": 8564
+        }
+      },
+      "s43-30k": {
+        "features": {
+          "ci95": [
+            -0.5463864947921399,
+            -0.07053480563718795
+          ],
+          "delta": -0.30246567014588566,
+          "n_bootstrap": 2000,
+          "probability_better": 0.993,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 127.45690213852077,
+          "raw": 127.77497779351067,
+          "scalar": 127.75936780866668
+        },
+        "rescue": {
+          "ci95": [
+            -0.561859004099697,
+            -0.08519756623804592
+          ],
+          "delta": -0.3180756549898996,
+          "n_bootstrap": 2000,
+          "probability_better": 0.9955,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 22,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 130.4050508700226,
+            "raw": 128.8876936538118,
+            "scalar": 128.89770919407292
+          },
+          "rows": 10842
+        }
+      },
+      "s44-120k": {
+        "features": {
+          "ci95": [
+            -1.2669600184020697,
+            -0.8430541817325926
+          ],
+          "delta": -1.0557645764202193,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 123.60905618389593,
+          "raw": 124.66482076031616,
+          "scalar": 124.66482076031616
+        },
+        "rescue": {
+          "ci95": [
+            -1.2669600184020697,
+            -0.8430541817325926
+          ],
+          "delta": -1.0557645764202193,
+          "n_bootstrap": 2000,
+          "probability_better": 1.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 97,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 134.49066107772114,
+            "raw": 134.37091196533575,
+            "scalar": 134.37091196533575
+          },
+          "rows": 8564
+        }
+      },
+      "s44-30k": {
+        "features": {
+          "ci95": [
+            0.18503624898003285,
+            0.6242777203896605
+          ],
+          "delta": 0.40604841326909435,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "mae_meV": {
+          "chemistry": 125.07086917358524,
+          "raw": 124.66482076031616,
+          "scalar": 124.66482076031616
+        },
+        "rescue": {
+          "ci95": [
+            0.18503624898003285,
+            0.6242777203896605
+          ],
+          "delta": 0.40604841326909435,
+          "n_bootstrap": 2000,
+          "probability_better": 0.0,
+          "seed": 20261122
+        },
+        "rows_with_fit_canonical": 22,
+        "unseen_fit_scaffolds": {
+          "mae_meV": {
+            "chemistry": 128.18978824479098,
+            "raw": 127.18301390289326,
+            "scalar": 127.18301390289326
+          },
+          "rows": 10842
+        }
+      }
+    }
+  },
+  "parent_cpu_seconds": 21.765625,
+  "prospective_sha256": "463f8234c28aa189ccb7da92734d1855a07b75cf98fa907c55e828719537096a",
+  "receipts": {
+    "correct": {
+      "fits": {
+        "s43-120k": {
+          "control": "affine",
+          "fit_rows": 120000,
+          "fit_validation_mae_eV": {
+            "affine": 0.09792432992202521,
+            "gbm": 0.09803841359553084,
+            "identity": 0.09793742323894816,
+            "isotonic": 0.09894459886316109,
+            "median": 0.0979288516306501
+          },
+          "inner_rows": 15976
+        },
+        "s43-30k": {
+          "control": "median",
+          "fit_rows": 30155,
+          "fit_validation_mae_eV": {
+            "affine": 0.09629344516147777,
+            "gbm": 0.0968503431556357,
+            "identity": 0.09629653477697685,
+            "isotonic": 0.0981386357815164,
+            "median": 0.09629063232084205
+          },
+          "inner_rows": 3952
+        },
+        "s44-120k": {
+          "control": "identity",
+          "fit_rows": 120000,
+          "fit_validation_mae_eV": {
+            "affine": 0.09763509763860566,
+            "gbm": 0.09778777362650377,
+            "identity": 0.09762800873308008,
+            "isotonic": 0.09873652155393423,
+            "median": 0.09764454288853491
+          },
+          "inner_rows": 15976
+        },
+        "s44-30k": {
+          "control": "identity",
+          "fit_rows": 30155,
+          "fit_validation_mae_eV": {
+            "affine": 0.0968984452456173,
+            "gbm": 0.09729379494437557,
+            "identity": 0.09689046712858103,
+            "isotonic": 0.0986783556874109,
+            "median": 0.09689885251028012
+          },
+          "inner_rows": 3952
+        }
+      },
+      "parent_cpu_seconds": 2525.09375,
+      "prospective_sha256": "463f8234c28aa189ccb7da92734d1855a07b75cf98fa907c55e828719537096a",
+      "score_labels_used": false,
+      "sha256": "98a4ccbefd5682b4b1848a27062221a882a4e9ab0127f4805efa09b898dfd7d8",
+      "source_sha256": "3651943b9c6d4f5df6b30f7c09e38b4df30268da3489fea0d77d248ba5a79087",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 1107.9163813000196
+    },
+    "features": {
+      "invalid_rows": 0,
+      "parent_cpu_seconds": 5.734375,
+      "prospective_sha256": "463f8234c28aa189ccb7da92734d1855a07b75cf98fa907c55e828719537096a",
+      "rows": 220000,
+      "score_labels_used": false,
+      "sha256": "ea6eb617be1c8bf39f7a31817f4b30edc1f48240038c621ef663dd014683a6fc",
+      "source_archive": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+      "source_sha256": "3651943b9c6d4f5df6b30f7c09e38b4df30268da3489fea0d77d248ba5a79087",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 248.996149899991
+    },
+    "predict": {
+      "bindings": {
+        "s43": {
+          "contract": "471ad2fb6785a1af128fbb5cccbb9a81c56c0b1c90064b692d82a098285bbc28",
+          "init": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c",
+          "predictions": "818b0b041919f53e31667c201ad926d56bf7d8e59c352056c912a2d63e6f6a62",
+          "selected_model": "13369b0ac07b71177f8d4a7a4c29f98c4ad9b892ac65fbb6e93b97a1a24a06ba"
+        },
+        "s44": {
+          "contract": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1",
+          "init": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573",
+          "predictions": "fc5a9f5e11c303a8c5c1d1603f75b8ba853c23755db8e48538c52593e193a29e",
+          "selected_model": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb"
+        }
+      },
+      "device": "NVIDIA GeForce RTX 5060",
+      "parent_cpu_seconds": 393.046875,
+      "prospective_sha256": "463f8234c28aa189ccb7da92734d1855a07b75cf98fa907c55e828719537096a",
+      "replay_max_abs_eV": {
+        "s43": 7.576248375329442e-07,
+        "s44": 6.543748582998887e-07
+      },
+      "score_labels_used": false,
+      "sha256": "051ac0e8140776c38b38fe82c168a0fb59cdf09d1ae96d6adc39cf106ce59af7",
+      "shards": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "source_sha256": "3651943b9c6d4f5df6b30f7c09e38b4df30268da3489fea0d77d248ba5a79087",
+      "versions": {
+        "numpy": "1.26.4",
+        "rdkit": "2025.3.5",
+        "scikit-learn": "1.7.2",
+        "torch": "2.7.1+cu128"
+      },
+      "wall_seconds": 211.75639140000567
+    }
+  },
+  "source_sha256": "3651943b9c6d4f5df6b30f7c09e38b4df30268da3489fea0d77d248ba5a79087",
+  "verdict": "FAIL",
+  "versions": {
+    "numpy": "1.26.4",
+    "rdkit": "2025.3.5",
+    "scikit-learn": "1.7.2",
+    "torch": "2.7.1+cu128"
+  },
+  "wall_seconds": 23.710636000003433
+}

@@ -1,0 +1,131 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "score-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-residual-block-transfer-expected",
+        "cost-bt-analysis",
+        "cost-bt-feature",
+        "cost-bt-inference"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_residual_block_transfer/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-residual-block-transfer-score"
+      ],
+      "source_commit": "e7ed7067bcc09736fa2837a767091e6eb8591b34",
+      "type": "RUN_BLOCK_TRANSFER_STUDY"
+    }
+  ],
+  "comparison_blockers": [
+    "Post-hoc corrector on frozen checkpoints; paired rows, not a same-job training pair."
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_residual_block_transfer/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_residual_block_transfer/decision.md",
+    "facts": {
+      "ci_meV": [
+        2.0520925834910604,
+        2.4837809349446016
+      ],
+      "effect_meV": 2.268080364815783,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "block transfer",
+        "residual corrector",
+        "posthoc",
+        "descriptor",
+        "distant rows",
+        "pairnorm 500k"
+      ],
+      "source": "experiments/pcqm_residual_block_transfer/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "New prospective record and explicit authority for fit rows spread over the index range; no automatic launch."
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_BLOCK_TRANSFER_STUDY",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_residual_block_transfer/protocol.md",
+    "chosen_action": "RUN_BLOCK_TRANSFER_STUDY",
+    "policy_id": "pcqm-residual-block-transfer",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_residual_block_transfer/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_residual_block_transfer/rml_decision_snapshots/05c4e86779edf0d8610e822ed13f8bcb08c354204d1f81244f0c198b66bc33fa.json",
+    "snapshot_sha256": "05c4e86779edf0d8610e822ed13f8bcb08c354204d1f81244f0c198b66bc33fa",
+    "state_timestamp": "2026-11-22T15:36:54.011349+00:00"
+  },
+  "family_id": "pcqm-residual-block-transfer",
+  "hypothesis": {
+    "alternative_explanations": [
+      "P0's gain is local to its row block",
+      "H1 failed from its 6K fit size",
+      "H1 failed from its smaller backbone"
+    ],
+    "changed_mechanism": "No model change: keep P0's backbones, fit rows and corrector; move only the score rows to a distant block.",
+    "cheapest_falsifier": "Refit P0's corrector on its 30,155 unseen development rows and score once on fresh rows [3200000,3250000).",
+    "decision_changed_if_negative": "Close the single-block post-hoc corrector line.",
+    "decision_changed_if_positive": "A larger held-out corrector design may be proposed for separate authority; no automatic launch.",
+    "expected_native_cost_ref": "cost-TB-pcqm-residual-block-transfer-expected",
+    "hypothesis_id": "H-TB-pcqm-residual-block-transfer",
+    "observed_deficiency": "P0 fitted and scored inside one 50K block; H1 lost on a distant block with fit size, distance and backbone scale all changed.",
+    "related_closed_family_ids": [
+      "pcqm-pairnorm-residual-2d-p0",
+      "pcqm-h1-heldout-budget"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-pairnorm-residual-2d-p0-20261122",
+      "pcqm-h1-heldout-budget-100k-20261122"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does P0's residual corrector still help the 500K pair on a distant row block?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-residual-block-transfer-20261123"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_residual_block_transfer/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_residual_block_transfer/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_residual_block_transfer/protocol.md",
+      "experiments/pcqm_residual_block_transfer/transfer.py"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-h1-heldout-budget"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-pairnorm-residual-2d-p0-20261122",
+      "pcqm-h1-heldout-budget-100k-20261122"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_residual_block_transfer/protocol.md"
+    ],
+    "source_commit": "e7ed7067bcc09736fa2837a767091e6eb8591b34",
+    "source_config_identity": "c5f656356ac123e745aa116884176443058998a4f9ffd76c8817334f82a73f3a"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-residual-block-transfer"
+}

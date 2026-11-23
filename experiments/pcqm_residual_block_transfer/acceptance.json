@@ -1,0 +1,437 @@
+{
+  "analysis_ref": "experiments/pcqm_residual_block_transfer/results.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Stage wall times; feature-worker CPU time and exclusive device-hours were not measured.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "cache_build",
+      "cost_event_id": "cost-bt-feature",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.016988991916667955
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "inference",
+      "cost_event_id": "cost-bt-inference",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.026115451388888888
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.019537761388888207
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "audit",
+      "cost_event_id": "cost-bt-analysis",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.35430555555555554
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.06575061844443553
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    }
+  ],
+  "evidence_id": "pcqm-residual-block-transfer-20261123",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "close_single_block_corrector_line",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "FAIL",
+    "transfer_status": "not_evaluated"
+  },
+  "role_counts": {
+    "dev_replay_128": 128,
+    "far_score_block": 50000,
+    "near_score_block": 50000,
+    "p0_fit_rows_reused": 30155,
+    "p0_score_rows_reproduction": 19845,
+    "scalar_selection_30k": 4245,
+    "scalar_selection_6k": 803,
+    "small_fit_6k": 6000
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_replay_128": "consumed",
+    "far_score_block": "consumed",
+    "near_score_block": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "p0_fit_rows_reused": "consumed",
+    "p0_score_rows_reproduction": "consumed",
+    "scalar_selection_30k": "consumed",
+    "scalar_selection_6k": "consumed",
+    "small_fit_6k": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-p0_fit_rows_reused-training_membership",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-p0_fit_rows_reused-labels_read",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-p0_fit_rows_reused-prediction_input",
+      "role_name": "p0_fit_rows_reused",
+      "row_manifest_hash": "60d0822bfcaabfe301d735e92509fec7c1cfb2d244a8f28116263a9434b655af",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-scalar_selection_30k-metric_computed",
+      "role_name": "scalar_selection_30k",
+      "row_manifest_hash": "091f104f9b97f7f91a53be56e77631155d8fd40aa520cf970525cc76735eedee",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-scalar_selection_30k-selection_used",
+      "role_name": "scalar_selection_30k",
+      "row_manifest_hash": "091f104f9b97f7f91a53be56e77631155d8fd40aa520cf970525cc76735eedee",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-small_fit_6k-training_membership",
+      "role_name": "small_fit_6k",
+      "row_manifest_hash": "42edaa4bc3530a5d572d630cc753706809b8d33a2417250b8e8ed2e9379a7f47",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-small_fit_6k-labels_read",
+      "role_name": "small_fit_6k",
+      "row_manifest_hash": "42edaa4bc3530a5d572d630cc753706809b8d33a2417250b8e8ed2e9379a7f47",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-small_fit_6k-prediction_input",
+      "role_name": "small_fit_6k",
+      "row_manifest_hash": "42edaa4bc3530a5d572d630cc753706809b8d33a2417250b8e8ed2e9379a7f47",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-scalar_selection_6k-metric_computed",
+      "role_name": "scalar_selection_6k",
+      "row_manifest_hash": "6a155c61c895aa3be936c3a38f22f642b5c5837d4d080452367d55c328647ced",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-scalar_selection_6k-selection_used",
+      "role_name": "scalar_selection_6k",
+      "row_manifest_hash": "6a155c61c895aa3be936c3a38f22f642b5c5837d4d080452367d55c328647ced",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-p0_score_rows_reproduction-prediction_input",
+      "role_name": "p0_score_rows_reproduction",
+      "row_manifest_hash": "1223ea179b6e8635fbe5ea9ee5f9eab8467cd4be3e1ce70cd2ec63bd4c565132",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-dev_replay_128-prediction_input",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-dev_replay_128-metric_computed",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-near_score_block-prediction_input",
+      "role_name": "near_score_block",
+      "row_manifest_hash": "256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-near_score_block-labels_read",
+      "role_name": "near_score_block",
+      "row_manifest_hash": "256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-near_score_block-metric_computed",
+      "role_name": "near_score_block",
+      "row_manifest_hash": "256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-near_score_block-selection_used",
+      "role_name": "near_score_block",
+      "row_manifest_hash": "256d9eb950d17654d91dcf6dadf29422ceaf0da94907601b0a082454a0f29316",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-far_score_block-prediction_input",
+      "role_name": "far_score_block",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-far_score_block-labels_read",
+      "role_name": "far_score_block",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-far_score_block-metric_computed",
+      "role_name": "far_score_block",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_residual_block_transfer/acceptance.json",
+      "role_event_id": "role-bt-far_score_block-selection_used",
+      "role_name": "far_score_block",
+      "row_manifest_hash": "9cb0bf822a48e6369f08825fd9923d3ce320a62e780c7e0225f188321a824565",
+      "run_id": "pcqm-residual-block-transfer-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-residual-block-transfer"
+    }
+  ],
+  "run_id": "pcqm-residual-block-transfer-score",
+  "scope": "Saved-weight forward passes and residual-corrector refits of the P0 500K pair scored on a near and a distant 50K block; no backbone training and no protected role.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_residual_block_transfer/decision.md",
+    "facts": {
+      "ci_meV": [
+        2.0520925834910604,
+        2.4837809349446016
+      ],
+      "effect_meV": 2.268080364815783,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "block transfer",
+        "residual corrector",
+        "posthoc",
+        "descriptor",
+        "distant rows",
+        "pairnorm 500k"
+      ],
+      "source": "experiments/pcqm_residual_block_transfer/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "New prospective record and explicit authority for fit rows spread over the index range; no automatic launch."
+    ]
+  }
+}

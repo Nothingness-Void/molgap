@@ -1,0 +1,156 @@
+{
+  "acceptance_ref": "experiments/pcqm_residual_spread_fit/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_h1_heldout_budget/prepare.py": "93b19e734b7109b3bd0f47bba629282cbf81563fc7aa04b078176678ad6700df",
+    "experiments/pcqm_pairnorm_residual_2d_p0/chemistry.py": "9a4f71e6f6d7eab372ecaf4ef64f5c723a0cec6c8c3ae8e280904e341d66f16e",
+    "experiments/pcqm_pairnorm_residual_2d_p0/probe.py": "24aa8e1e8ae3c340ad6562e040e75351bff6d23ca133f6b883f1c3dd0271e59f",
+    "experiments/pcqm_residual_spread_fit/acceptance.json": "d4f23916c118c0dded8210ccd74b5c985de4c5ba0f12a22aaeade31ae18fec87",
+    "experiments/pcqm_residual_spread_fit/decision.md": "a94952ff4de090c8d69f6435ceeeed0e971a1a3213b65accacfb8c742dc568cd",
+    "experiments/pcqm_residual_spread_fit/protocol.md": "d650e4ae44478386cae80030e571b207977144e91b01f20a5ae289491f91eb39",
+    "experiments/pcqm_residual_spread_fit/results.json": "6de8de8cb2d0dc8c1185750447feac5237b834c6671c32e99fb353a8548399f1",
+    "experiments/pcqm_residual_spread_fit/spread.py": "3651943b9c6d4f5df6b30f7c09e38b4df30268da3489fea0d77d248ba5a79087",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.json": "be99d724f5eb20b64a620ca6bd792a97889c7b854f69ee7310a7e250a0453442",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/correct.npz": "880fd4dd6df58c888e518660007c209036dcfbe2db9b2242acde2ff722da5fe5",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.json": "ead95bea74324fe8cba2d2dd756604899c7395438b49b61dc11eaa32baec46df",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/features.npz": "0d577144176c9629c5a8b27f0c0b71bb842731e8cd2be6aa1849a54bf3bc30d3",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.json": "4d6740cc3b3e7022af406f93cf9cdf776b31bcc21dbade50003fa18360d91d5a",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-block-transfer/predict.npz": "ce58a07c05f95bce135ed945f1c5784570abb93e7d46582dee380b894fd21f68",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/correct.json": "72ffe58614f811c1fa102ae0157e42109c6078463b7001ea2783968de6b2f1bd",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/correct.npz": "98a4ccbefd5682b4b1848a27062221a882a4e9ab0127f4805efa09b898dfd7d8",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/features.json": "314fbe1211fb15d489992ae4956681f72fbd98aa93a79f4d388010ad1d1debbd",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/features.npz": "ea6eb617be1c8bf39f7a31817f4b30edc1f48240038c621ef663dd014683a6fc",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/predict.json": "4604dab32a89409227af62ba76be66989224a18f049e9e2f895bf737718140fe",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-residual-spread-fit/predict.npz": "051ac0e8140776c38b38fe82c168a0fb59cdf09d1ae96d6adc39cf106ce59af7"
+  },
+  "finalized_at": "2026-11-22T16:28:11.710326+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-sf-feature.json",
+        "sha256": "fafa04a800a8520282cf736cb787a870912736f0a4eb99f9e811c69be13843c6"
+      },
+      {
+        "ref": "costs/cost-sf-inference.json",
+        "sha256": "b4dd43ce36ff963a9384ff67924ee4958819c054c03f5680eb52e3763911cfa4"
+      },
+      {
+        "ref": "costs/cost-sf-analysis.json",
+        "sha256": "f83cbcfc2b71f1088fa71363831b1ee419d7b0d516f4b43ab5f1ce26148c7549"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "317bf30a813207c67514dda337269b5fc591a3ff93b100edb6efc0d2f901508c"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "88a3c2295c539fd801e2ba27c2ade0bd00d445c89595d70ec464bd708b0e9d5e"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-sf-spread_fit_120k-training_membership.json",
+        "sha256": "a1c82754866ddbacde53f8444ba3cdddbe1f96425dbc87274f11e768a17030de"
+      },
+      {
+        "ref": "roles/role-sf-spread_fit_120k-labels_read.json",
+        "sha256": "bb1bfc11f1f41e28f31106b1d74d6e454e3d1928c1bc6ebb63d68cac5140b2da"
+      },
+      {
+        "ref": "roles/role-sf-spread_fit_120k-prediction_input.json",
+        "sha256": "1a844d910ac1572da813b913c4f1d9a7a71b607988de26466e358dff2a6e2a0b"
+      },
+      {
+        "ref": "roles/role-sf-scalar_selection_120k-metric_computed.json",
+        "sha256": "774402606a7ce3b9f9a145b7728c24fd8850ca0308d9ad9f4665685a0de1cf1c"
+      },
+      {
+        "ref": "roles/role-sf-scalar_selection_120k-selection_used.json",
+        "sha256": "4874b30f623062215183519459a2cfe40d03486518ba4e6df02cd2e82d448887"
+      },
+      {
+        "ref": "roles/role-sf-spread_fit_30k-training_membership.json",
+        "sha256": "17dd592349a971372c7d73f8035f9c78ecce8a18eee54f1ae494b63161e8d79a"
+      },
+      {
+        "ref": "roles/role-sf-spread_fit_30k-labels_read.json",
+        "sha256": "2d0f2da3c06bf02af1cbc45612979ea27d46e34e5a843c43b007683e7a6cc52f"
+      },
+      {
+        "ref": "roles/role-sf-spread_fit_30k-prediction_input.json",
+        "sha256": "c68f192a10dc034be7af1972e626fbe75133f7a5ff1b4b6132348ceec1e335d0"
+      },
+      {
+        "ref": "roles/role-sf-scalar_selection_30k-metric_computed.json",
+        "sha256": "3b0148afc06d81bae0d381fc21e20dcc395d066d96e58237bc10634340f999d2"
+      },
+      {
+        "ref": "roles/role-sf-scalar_selection_30k-selection_used.json",
+        "sha256": "2fbb64470b159dcdf228fa475c22b36cd0ad4569745dc1690074bb6895ea888a"
+      },
+      {
+        "ref": "roles/role-sf-dev_replay_128-prediction_input.json",
+        "sha256": "f317570117ba06daab5e171d5803a17461005114d7616ac00736c20ff5207f96"
+      },
+      {
+        "ref": "roles/role-sf-dev_replay_128-metric_computed.json",
+        "sha256": "a42a4431258ef6673f5aa6b834fc2898e05249ddf5b6bf34567683fa5a146195"
+      },
+      {
+        "ref": "roles/role-sf-interior_score_block-prediction_input.json",
+        "sha256": "d4154411adbf81231a5d566d9b0f0de74c6d322edf2ba8c304739b13b594b57c"
+      },
+      {
+        "ref": "roles/role-sf-interior_score_block-labels_read.json",
+        "sha256": "5210cb90f00a385f098184371894c0f30e2b8be497c01607d3bb4c45345bcbba"
+      },
+      {
+        "ref": "roles/role-sf-interior_score_block-metric_computed.json",
+        "sha256": "b63bc39e215cbdb08a934ce97fdf51a60055e4a10e7b771c34338d1a955433eb"
+      },
+      {
+        "ref": "roles/role-sf-interior_score_block-selection_used.json",
+        "sha256": "117a72cc285afc84a6dff2fb1e32ed7b52a698ff690481321c63c328c348b650"
+      },
+      {
+        "ref": "roles/role-sf-beyond_score_block-prediction_input.json",
+        "sha256": "44b6552dfbc4662f38249ae0c4af57a20d82e826b878b64d888395be95ac8afc"
+      },
+      {
+        "ref": "roles/role-sf-beyond_score_block-labels_read.json",
+        "sha256": "bad36f9910add027e73b6ceff59509c94e577c095161e547106a207cffbf7802"
+      },
+      {
+        "ref": "roles/role-sf-beyond_score_block-metric_computed.json",
+        "sha256": "26a57fc290b94b9cabcbf3bedb6c6b6b5c27cda63b5759e6a6825d1c09cf4790"
+      },
+      {
+        "ref": "roles/role-sf-beyond_score_block-selection_used.json",
+        "sha256": "cbf671f874b074324913f18a771e2c38d47f1c5d42deecf02ea5ab46446f74da"
+      },
+      {
+        "ref": "roles/role-sf-far_score_block_reused-prediction_input.json",
+        "sha256": "ae965cdd01214707794560641fb05c665ca68a8e574d65c86070707718cdf5f6"
+      },
+      {
+        "ref": "roles/role-sf-far_score_block_reused-labels_read.json",
+        "sha256": "2f6088cafd3381e8e666e69d7e727d10a6b4f4e8b51acf0ce3031dd21e6208e9"
+      },
+      {
+        "ref": "roles/role-sf-far_score_block_reused-metric_computed.json",
+        "sha256": "431104cfe9a480971ec099cbff9cb71a0e40166bf497f12a00b64dee71f08e08"
+      },
+      {
+        "ref": "roles/role-sf-far_score_block_reused-selection_used.json",
+        "sha256": "a74790fb03b232e5b79e559a486de3f6f5193bd7b98ee48afd4427cd504de4fe"
+      }
+    ]
+  },
+  "run_id": "pcqm-residual-spread-fit-score",
+  "trajectory_id": "TB-pcqm-residual-spread-fit"
+}
