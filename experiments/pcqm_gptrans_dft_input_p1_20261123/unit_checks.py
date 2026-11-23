@@ -136,6 +136,8 @@ def main(argv=None):
     parser.add_argument("--skip-train", action="store_true")
     args = parser.parse_args(argv)
     args.work.mkdir(parents=True, exist_ok=True)
+    from molgap.training_reproducibility import configure_fp32_determinism
+    configure_fp32_determinism(0)
     check_draws()
     check_inputs_identity(args.fixed_root, args.work, args.dev_sidecar)
     if not args.skip_train:

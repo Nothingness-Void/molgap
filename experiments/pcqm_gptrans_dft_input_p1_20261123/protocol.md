@@ -211,3 +211,39 @@ Read after retrieval, in this order:
 - Dev geometry comes from the same third-party mirror archive as C1 (identity
   proven by topology match, not by an official hash).
 - 3D-only mode keeps topology through degree encoders and BondLocal (above).
+
+## Build and local rehearsal record (2026-11-23; constants above unchanged)
+
+No job was submitted and nothing was uploaded to IMS. Facts, all local:
+
+- **Code.** One addon module `src/molgap/gptrans_dft_input_p1.py` (modes P1 and zeros; two
+  catalog entries). It reuses the C1 sidecar loader and distance head. Hooks: output of the SPD and
+  bond encoders (mask), pre-hook of block 0 (add distance), last block (capture for the head). With
+  no distance state every hook returns its input, so evaluation and scoring run the control's
+  forward. `infra_budget.py`: the new file makes `src_py_files` 282 of 281; the branch already
+  inherited `format_version_strings` 254 of 252 from C1. An approved infrastructure change (budget
+  or merging this module into the C1 one) is needed before any infrastructure commit; it does
+  not gate an experiment.
+- **How 2D identity holds.** The zero-initialised branch adds exactly zero at step 0. A 2D-mode
+  sample gets a branch output that is masked to zero before the add (pair + 0), and at inference
+  no state exists, so no hook acts. Checked: with P(2D) forced to 1, 20 real steps leave every
+  control weight (live and EMA) bit-equal to the control for P1 and for zeros; two control runs
+  are bit-equal too (`unit_checks_record.json`).
+- **Dev sidecar.** Rows 500,000..549,999, same builder and archive as C1 (builder with a new
+  in-process `--workers 1` path, no spawn pool). Topology match 50,000 of 50,000 (identity 3, isomorphism
+  49,997, invalid 0; requirement 99.9%). One row has a bond outside 0.75-1.25 x covalent radii; 0 rows fail the
+  bond-order length gate (long C=C, report only: 851). Parse and align 24.1 s, archive hash 1.3 s, CPU.
+  Manifest sha256 `744efb8ec2b87947f68ed53e1702a9d765f042fd69626cefeea3a7a1ebbabcc9`, kept
+  at `D:/molgap-artifacts/dft_dev_sidecar_500k_550k_20261123` (local only).
+- **Unit checks** (`unit_checks.py`, `unit_checks_record.json`): all pass. At init, 2D forward equals
+  the control; with the sidecar folders hidden, 2D scoring is unchanged; draws repeat and follow
+  the 0.40/0.20/0.40 split; P1 paused at step 10 and resumed equals an uninterrupted 20-step run.
+- **Step time, local RTX 5060** (`step_time_record.json`, advisory): control 0.0785 s/step,
+  P1 0.0810 (1.031 x), zeros 0.0792 (1.009 x). Peak process memory in the 20-step rehearsal: 2.10 GB
+  control, 2.25 GB P1.
+- **Chain rehearsal** from `git archive HEAD` (`local_rehearsal_record.json`: all six items took 20 real
+  steps; one-pass chain with kill and resume; `local_rehearsal_p1resume_record.json`: kill and resume with
+  a P1 item as the victim). All checks pass.
+- **Scorer** (`score_p1.py`) ran end to end on 20-step checkpoints and 512 dev rows
+  (`score_smoke_record.json`; plumbing only, the numbers mean nothing).
+- Pair 42 control repeats the C1 c500 recipe except the readout; optional determinism check only.

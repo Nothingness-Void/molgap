@@ -103,7 +103,9 @@ def main(argv=None):
     parser.add_argument("--limit", type=int, default=50_000)
     parser.add_argument("--items")
     args = parser.parse_args(argv)
+    from molgap.training_reproducibility import configure_fp32_determinism
     from pcqm_tail_holdout_eval import gptrans_scorer
+    configure_fp32_determinism(0)  # as in training: deterministic kernels, no TF32
     match = check_dev_sidecar(args.dev_sidecar)
     device = torch.device("cuda")
     graphs = shard_graphs(args.fixed_root, DEV_SHARD)[:args.limit]
