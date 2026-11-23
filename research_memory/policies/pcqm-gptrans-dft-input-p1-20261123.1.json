@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-gptrans-dft-input-p1-20261123",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "dev_sidecar_topology_match_passed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-gptrans-dft-input-p1-20261123"
+  },
+  "action_rule": {
+    "action": "RUN_P1_500K_IMS_CHAIN",
+    "field": "dev_sidecar_topology_match_passed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "8d28c0993c162460e8c41299bdc7a2ebcddd90d237027e381700f8e32040f719"
+}
