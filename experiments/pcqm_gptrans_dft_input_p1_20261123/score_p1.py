@@ -85,8 +85,13 @@ def step_time(path):
     rows = [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
     pairs = [(a, b) for a, b in zip(rows, rows[1:]) if b["elapsed_s"] > a["elapsed_s"] and b["step"] > a["step"]]
     per_step = [(b["elapsed_s"] - a["elapsed_s"]) / (b["step"] - a["step"]) for a, b in pairs]
-    return {"median_s_per_step": float(np.median(per_step)) if per_step else None, "passes_logged": len(rows),
-            "wall_s_sum_of_intervals": float(sum(b["elapsed_s"] - a["elapsed_s"] for a, b in pairs))}
+    if not per_step:
+        return {"median_s_per_step": None, "passes_logged": len(rows)}
+    median = float(np.median(per_step))
+    # A resume row spans a process restart (start-up plus a partial pass); a 3x outlier is dropped and counted, not hidden.
+    kept = [(p, s) for p, s in zip(pairs, per_step) if s <= 3 * median]
+    return {"median_s_per_step": median, "passes_logged": len(rows), "intervals_dropped_as_restart": len(pairs) - len(kept),
+            "wall_s_sum_of_intervals": float(sum(b["elapsed_s"] - a["elapsed_s"] for (a, b), _ in kept))}
 
 
 def main(argv=None):
@@ -122,6 +127,9 @@ def main(argv=None):
             print(name, mode, entry["mae_eV"][mode], flush=True)
         log = Path(args.retrieved) / "training" / name / "train_log.jsonl"
         entry["step_time"] = step_time(log) if log.is_file() else "evidence missing: no train_log.jsonl"
+        summary = Path(args.retrieved) / "training" / "serial_summary.json"
+        attempts = json.loads(summary.read_text(encoding="utf-8"))["items"][name]["attempts"] if summary.is_file() else None
+        entry["wall_s_all_attempts"] = sum(x["wall_s"] for x in attempts) if attempts else "evidence missing: no serial_summary.json"
         result["items"][name] = entry
         del model
         torch.cuda.empty_cache()

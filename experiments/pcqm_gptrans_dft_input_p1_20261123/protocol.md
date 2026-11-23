@@ -158,7 +158,8 @@ Deltas are meV, dev MAE, final EMA. "Both pairs" means pair 42 and pair 43 each.
   median, over consecutive `train_log.jsonl` rows of one process, of (elapsed
   seconds / optimizer steps between the rows); one row per pass, 3,906 steps per
   pass. A row after a resume restarts the clock and is skipped. Wall clock = the
-  sum of those intervals over the item. Sidecar build time is CPU time booked
+  item's `wall_s` summed over its attempts in `serial_summary.json`. A resume row
+  (3x the median) is dropped from the median and counted. Sidecar build time is CPU time booked
   separately.
 - All of (i)-(iv) must pass to release a full-scale run. The full-scale gate is
   a single-init tail delta <= -1.5 meV against s42/s43, with one more init
