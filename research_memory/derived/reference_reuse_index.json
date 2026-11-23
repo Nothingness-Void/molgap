@@ -2163,6 +2163,31 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_dev_rows_3d_supervised_separate_contract",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_use": {
+        "common": "untouched",
+        "dev_100k": "consumed",
+        "dev_500k": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "tail_holdout_v1": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-gptrans-dft-distance-aux",
+      "source_envelope": "experiments/pcqm_gptrans_dft_distance_aux_20261121/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "100k_gain_not_retained_at_500k",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "paired_endpoint_only_not_strict",

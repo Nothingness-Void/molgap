@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "bc5352c95e0cd46b03a4a9b2aa42140605af9430de884b562ff7f69dc9f49a98",
+  "source_digest": "a977488af7f2d0daeb99880065e144bde0cc917fe2c8182f3a5ffd9b31131637",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -52,15 +52,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/decision.md",
       "family_id": "pcqm-gptrans-dft-distance-aux-20261121",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_dft_distance_aux_20261121/prospective/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_dft_distance_aux_20261121/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-dft-distance-aux-20261123"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
     },

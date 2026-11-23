@@ -47,3 +47,7 @@ Submitted 2026-11-23 from commit a828c35d9: job 2134319.ccpbs1, run gptdft-d500-
 ## Correction (2026-11-23)
 
 The d500-only resubmit above was the wrong action. The paused run was resumed instead: `submit_from_windows.py --payload ... --resume` gave resume job 2134349.ccpbs1 for run gptdft-chain-20261121 (same source, spec, 16 h walltime; c100, d100, c500 are COMPLETE and are not redone; d500 runs with its in-job gate, which passed at -3.70 meV). Job 2134319 (run gptdft-d500-20261123) was cancelled in the queue before it started. The files `serial_spec_d500.json` and `run_spec_d500.json` are unused. Ignore the sentence "do not resume it" in the section above. When the run ends COMPLETE, the standard `--retrieve-to` works for the whole run.
+
+## Closure (2026-11-23)
+
+Run COMPLETE (job 2134349 resumed 2111727). Retrieved with `retrieve_legacy_outputs.py` (no worker digests). Verdict in `decision.md`: 100K positive, 500K INCONCLUSIVE, no tail score. Payload kept.
