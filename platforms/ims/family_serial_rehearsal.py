@@ -259,8 +259,6 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     with tarfile.open(inbox / "source.tar.gz", "w:gz") as tar:
         for rel, src in code_files.items():
             tar.add(src, arcname=rel)
-    (inbox / "source_files.json").write_text(json.dumps({"format": "molgap-source-files-v1",
-        "files": [{"path": rel, "sha256": sha(src)} for rel, src in code_files.items()]}), encoding="utf-8")
     train_args = ["--spec", "{code_root}/contract/serial_spec.json", "--code-root", "{code_root}", "--input-root", "{dataset_root}", "--output-root", "{training_output}",
                   "--source-commit", "{source_commit}", "--cpus", "8", "--training-workers", "0", "--wall-s", "{train_wall_s}", "--memory-limit-bytes", "{mem_bytes}", "--reserve-s", "60"]
     spec = {"format": "molgap-ims-v4-run-v1", "mode": "serial_chain", "run_id": "rehearsal-chain-20261120", "model_id": "serial-chain",
@@ -357,8 +355,8 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     record("worker -> driver -> child end to end: paused exits 2, stage status paused, item PAUSED", worker_exit == 2 and status == "paused" and summary == "PAUSED",
            worker_exit=worker_exit, stage_status=status, item=summary)
     calls.clear()
-    resumed = launcher.submit_run(inbox, infra)
-    record("same command after a pause resubmits train.pbs only (one jsub, no depend)", len(calls) == 1 and "-W" not in calls[0] and calls[0][-1].endswith("train.pbs") and resumed["status"] == "submitted",
+    resumed = launcher.submit_run(inbox, infra, resume=True)
+    record("explicit resume resubmits train.pbs only (one jsub, no depend)", len(calls) == 1 and "-W" not in calls[0] and calls[0][-1].endswith("train.pbs") and resumed["status"] == "submitted",
            jsub=calls[0] if calls else None)
     single = json.loads(json.dumps(spec))
     single.pop("mode"), single.pop("dataset_ids")
@@ -370,14 +368,13 @@ def rehearse_launcher(work, files, fixed, repl, env) -> None:
     try:
         launcher.submit_run(inbox, infra)
         conflict = False
-    except RuntimeError as error:
-        conflict = "mode" in str(error)
+    except ValueError as error:
+        conflict = "differs from the staged run" in str(error)
     record("a single-recipe spec reusing a chain run id is refused, not turned into a resume", conflict and not calls)
     # 5. single-recipe mode is unchanged: two jsub calls, the second held by afterok on the first.
     inbox2 = infra / "inbox" / "rehearsal-single-20261120"
     inbox2.mkdir(parents=True)
-    for name in ("source.tar.gz", "source_files.json"):
-        shutil.copy2(inbox / name, inbox2 / name)
+    shutil.copy2(inbox / "source.tar.gz", inbox2 / "source.tar.gz")
     alone = json.loads(json.dumps(spec))
     alone.pop("mode"), alone.pop("dataset_ids")
     alone.update(run_id="rehearsal-single-20261120", dataset_id="ogb-train-100k")
@@ -448,7 +445,169 @@ def rehearse_hardening(work, files, fixed, repl, env) -> None:
            refused={k: v for k, v in seen.items()})
 
 
+def load_module(name: str, path: Path):
+    mod_spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(mod_spec)
+    mod_spec.loader.exec_module(module)
+    return module
+
+
+def write_code(code: Path, repo: Path, serial: dict, contract: str, max_steps: int | None, force: bool) -> None:
+    """Scratch code root with the spec's recipes and initial states at their real relative paths, plus the serial spec at the contract path.
+    max_steps set: recipes keep every byte, items get --max-steps and lose their gates (a gate needs a COMPLETE input).
+    max_steps None: the one-pass schedule of prepare(); gates stay, relaxed when force (rehearsal copy only)."""
+    items = json.loads(json.dumps(serial["items"]))
+    for it in items:
+        for key in ("recipe", "initial_state"):
+            if it.get(key):
+                (code / it[key]).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(repo / it[key], code / it[key])
+        if max_steps:
+            it.pop("gate", None)
+            it["extra_args"] = [*it.get("extra_args", []), "--max-steps", str(max_steps)]
+            continue
+        target = code / it["recipe"]
+        r = json.loads(target.read_text(encoding="utf-8"))
+        steps = r["train_rows"] // r["batch_size"]
+        r.update(optimizer_steps=steps, checkpoint_every=min(r["checkpoint_every"], 128))
+        r["schedule"].update(reference_epochs=2, total_units=2, warmup_units=1)
+        r["acceptance_requirements"].update(optimizer_steps=steps, completed_passes=1, sample_presentations=steps * r["batch_size"], next_batch=0)
+        target.write_text(json.dumps(r, indent=1), encoding="utf-8")
+        it["recipe_sha256"] = sha(target)
+        for rule in (it.get("gate") or {}).values() if force else ():
+            rule.update({"max_delta_meV": 1e6} if "a" in rule else {"max_fraction": 1e6})
+    (code / contract).parent.mkdir(parents=True, exist_ok=True)
+    (code / contract).write_text(json.dumps({**serial, "items": items}, indent=1), encoding="utf-8")
+
+
+def rehearse_spec(a) -> int:
+    """The experiment's committed run spec and serial spec, run locally: validation, every rehearsable item N real steps, a shrunk
+    one-pass chain with kill and resume, and the start-of-job check on the unshrunk spec."""
+    checkout, work, fixed = a.repo.resolve(), a.work.resolve(), a.fixed_root.resolve()
+    # What IMS gets is `git archive HEAD`, so everything below runs from that archive: ignored or uncommitted files are then missing here too.
+    experiment = Path(a.run_spec).parent.as_posix()
+    dirty = [ln for ln in subprocess.run(["git", "-C", str(checkout), "status", "--porcelain", "--", experiment], capture_output=True, text=True).stdout.splitlines() if not ln.startswith("??")]
+    record("no modified tracked files under the experiment directory", not dirty, modified=dirty[:5])
+    repo = work / "archive"
+    shutil.rmtree(repo, ignore_errors=True)
+    repo.mkdir(parents=True)
+    with subprocess.Popen(["git", "-C", str(checkout), "archive", "--format=tar", "HEAD"], stdout=subprocess.PIPE) as proc, tarfile.open(fileobj=proc.stdout, mode="r|") as tar:
+        tar.extractall(repo)
+    record("code root built from git archive HEAD of --repo", proc.returncode == 0 and (repo / a.run_spec).is_file(), head=subprocess.run(["git", "-C", str(checkout), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip())
+    global DRIVER
+    DRIVER = repo / "platforms/ims/family_serial_run.py"
+    sys.path.insert(0, str(repo / "src"))
+    env = dict(os.environ, PYTHONPATH=str(repo / "src"), CUDA_VISIBLE_DEVICES="0", PYTHONUNBUFFERED="1")
+    launcher = load_module("launcher_spec", repo / "platforms/ims/v4_submit/launcher.py")
+    fsr = load_module("family_serial_run_spec", DRIVER)
+    run = json.loads((repo / a.run_spec).read_text(encoding="utf-8"))
+    contract = repo / run["contract"]["path"]
+    serial = json.loads(contract.read_text(encoding="utf-8"))
+    registry = repo / "platforms/ims/v4_submit"
+    datasets, runtimes = (json.loads((registry / n).read_text(encoding="utf-8")) for n in ("dataset_registry.json", "runtime_registry.json"))
+    datasets["fixed_root"] = str(fixed)  # the lustre acceptance file does not exist here: validate_registries is not called
+    filled = {**run, "source": {"commit": "0" * 40, "archive_sha256": "0" * 64}, "contract": {**run["contract"], "sha256": sha(contract)}}
+    try:
+        launcher.validate_spec(filled, datasets, runtimes)
+        record("run spec validates against the repo's dataset and runtime registries", True, run_id=run["run_id"], items=[i["name"] for i in serial["items"]])
+    except RuntimeError as error:
+        record("run spec validates against the repo's dataset and runtime registries", False, error=str(error))
+        return finish(work)
+    res = run["resources"]
+    wall = launcher.walltime_seconds(res["train_walltime"]) - launcher.WALL_MARGIN_S
+    context = {"dataset_root": str(fixed), "source_commit": "0" * 40, "train_wall_s": str(wall), "mem_bytes": str(res["ncpus"] * launcher.MEM_PER_CORE_BYTES)}
+    problems = fsr.validate_spec(serial, wall, 1800.0)
+    record("serial spec passes the driver's own validation (wall from the run spec)", not problems, problems=problems)
+    # which items can run here? Each is checked alone against the local fixed root.
+    wanted = set(a.items.split(",")) if a.items else {i["name"] for i in serial["items"]}
+    usable, missing = [], {}
+    for it in serial["items"]:
+        found = fsr.check_inputs({"format": fsr.FORMAT, "items": [it]}, repo, fixed, None, None)
+        if found:
+            missing[it["name"]] = found
+        if it["name"] in wanted and not found:
+            usable.append(it["name"])
+        elif it["name"] in wanted:
+            record(f"not rehearsable locally: {it['name']}", True, reason=found[:2])
+    full = fsr.check_inputs(serial, repo, fixed, None, None)
+    unexplained = [p for p in full if not any(p.startswith(n + ":") for n in missing)]
+    record("start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
+           not unexplained, problems=full, unexplained=unexplained)
+    serial["items"] = [i for i in serial["items"] if i["name"] in usable]
+    for it in serial["items"]:  # a gate on an item outside this rehearsal cannot be evaluated
+        if any(ref and ref not in usable for rule in (it.get("gate") or {}).values() for ref in (rule.get("a"), rule.get("b"), rule.get("from"))):
+            it.pop("gate")
+            record(f"gate dropped, its input item is not rehearsed: {it['name']}", True)
+    if not usable:
+        return finish(work)
+
+    def args_for(code: Path, out: Path) -> list[str]:
+        argv = launcher.expand_args(run["stages"]["train"]["args"], {**context, "code_root": str(code), "training_output": str(out)})
+        for flag in ("--accelerator", "--ogb-zip"):  # A100 and the remote OGB zip exist on IMS only
+            if flag in argv:
+                del argv[argv.index(flag):argv.index(flag) + 2]
+        argv[argv.index("--cpus") + 1] = str(min(res["ncpus"], os.cpu_count() or 1))
+        return argv + ["--training-workers", "0"]
+
+    def fresh(name: str, max_steps: int | None) -> tuple[Path, Path]:
+        code, out = work / f"code_{name}", work / f"out_{name}"
+        shutil.rmtree(code, ignore_errors=True), shutil.rmtree(out, ignore_errors=True)
+        write_code(code, repo, serial, run["contract"]["path"], max_steps, a.force_gates)
+        return code, out
+
+    # 1. every item starts, loads its data, sidecar and state, and takes N real steps
+    code, out = fresh("steps", a.max_steps)
+    r1 = run_driver(args_for(code, out) + ["--continue-after-pause"], work / "steps.log", env)
+    items = summary_of(out)["items"] if (out / "serial_summary.json").is_file() else {}
+    got = {n: json.loads((out / n / "pause_receipt.json").read_text(encoding="utf-8")).get("optimizer_steps") for n in items if (out / n / "pause_receipt.json").is_file()}
+    record(f"every rehearsable item took {a.max_steps} real steps (real recipe bytes + --max-steps)",
+           bool(items) and all(t["status"] == "PAUSED" for t in items.values()) and set(got.values()) == {a.max_steps} and r1["exit"] == 2 and not r1["guard_tripped"],
+           exit=r1["exit"], states={n: t["status"] for n, t in items.items()}, steps=got, peak_handles=r1["peak_handles"], peak_ws_gib=r1["peak_ws_gib"])
+    # 2. shrunk one-pass chain: kill after a checkpoint, rerun, resume
+    code, out = fresh("full", None)
+    victim = next(i["name"] for i in serial["items"] if not i.get("gate"))
+    argv = args_for(code, out)
+    ra = run_driver(argv, work / "full_a.log", env, watch_summary=out / "serial_summary.json",
+                    kill_when=lambda: (out / victim / "last_checkpoint.pt").is_file() and not (out / victim / "completion_manifest.json").is_file())
+    before = {n.name: (n / "completion_manifest.json").stat().st_mtime_ns for n in out.iterdir() if (n / "completion_manifest.json").is_file()}
+    record("kill while an item is RUNNING with a checkpoint on disk", ra["killed"] and victim not in before, victim=victim, done_before_kill=sorted(before))
+    rb = run_driver(argv, work / "full_b.log", env, watch_summary=out / "serial_summary.json")
+    final = {n: t["status"] for n, t in summary_of(out)["items"].items()}
+    log = (work / "full_b.log").read_text(encoding="utf-8", errors="replace")
+    resumed = [ln for ln in log.splitlines() if ln.startswith("resumed at step")]
+    record("rerun resumes the killed item from its checkpoint; finished items are not redone",
+           bool(resumed) and int(resumed[0].split()[-1]) > 0 and all((out / n / "completion_manifest.json").stat().st_mtime_ns == t for n, t in before.items())
+           and not any(f"[driver] {n} start" in log for n in before), resumed=resumed[:1])
+    record("shrunk chain ends with every item COMPLETE or gate-skipped" + (" (gate thresholds rewritten, rehearsal copy only)" if a.force_gates else " (real gate thresholds)"),
+           rb["exit"] == 0 and set(final.values()) <= {"COMPLETE", "SKIPPED_BY_GATE"} and not (ra["guard_tripped"] or rb["guard_tripped"]),
+           exit=rb["exit"], states=final, force_gates=a.force_gates)
+    return finish(work)
+
+
+def finish(work: Path) -> int:
+    (work / "spec_rehearsal_record.json").write_text(json.dumps({"date": time.strftime("%Y-%m-%d"), "results": results}, indent=1, default=str) + "\n", encoding="utf-8")
+    failed = [r["check"] for r in results if not r["passed"]]
+    print("[rehearsal] FAILED:" if failed else "[rehearsal] all passed", failed)
+    return 1 if failed else 0
+
+
+def spec_main(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser(prog="family_serial_rehearsal.py spec")
+    ap.add_argument("--repo", type=Path, required=True, help="experiment checkout (recipes, run spec, src, platforms)")
+    ap.add_argument("--run-spec", type=Path, required=True, help="repo-relative run_spec.json")
+    ap.add_argument("--fixed-root", type=Path, required=True, help="read only")
+    ap.add_argument("--work", type=Path, required=True)
+    ap.add_argument("--max-steps", type=int, default=20)
+    ap.add_argument("--force-gates", action="store_true", help="rehearsal copy only: relax gate thresholds so gated items run")
+    ap.add_argument("--items", help="comma list of item names to rehearse (default all)")
+    a = ap.parse_args(argv)
+    a.work.mkdir(parents=True, exist_ok=True)
+    return rehearse_spec(a)
+
+
 def main() -> int:
+    if sys.argv[1:2] == ["spec"]:
+        return spec_main(sys.argv[2:])
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", type=Path, default=Path("D:/molgap-artifacts/ims_serial_rehearsal_20261120"))
     ap.add_argument("--repl", type=Path, default=Path("D:/molgap-worktrees/demol-cin-ims-replication-20261120"))
