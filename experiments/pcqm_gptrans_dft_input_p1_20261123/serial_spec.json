@@ -1,0 +1,53 @@
+{
+ "format": "molgap-ims-family-serial-v1",
+ "items": [
+  {
+   "name": "ctl-500k-s42",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/ctl_s42/recipe.json",
+   "recipe_sha256": "0d7e53e61c6983f1ec28a972ff686e711a82c81b27b9e1adb23e851b10739283",
+   "budget_s": 30000,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573"
+  },
+  {
+   "name": "p1-500k-s42",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/p1_s42/recipe.json",
+   "recipe_sha256": "7d32c6d45a71741ad56403d173eec43cea20bd5d45adf520b9eb8daf4e8aad1c",
+   "budget_s": 32500,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573"
+  },
+  {
+   "name": "zer-500k-s42",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/zer_s42/recipe.json",
+   "recipe_sha256": "38e7a72342ca952a3b63937c112d20c34ad7668239985708f28cbcf46155a5af",
+   "budget_s": 31800,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573"
+  },
+  {
+   "name": "ctl-500k-s43",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/ctl_s43/recipe.json",
+   "recipe_sha256": "dca790327e064b2221f07a51e869389e9674f7a2216ed1875a8d12260dfcab78",
+   "budget_s": 30000,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s43.pt",
+   "initial_state_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c"
+  },
+  {
+   "name": "p1-500k-s43",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/p1_s43/recipe.json",
+   "recipe_sha256": "500ff44caf395e47cedb64989e85dd644016ff7131c07b282d128b3ba91febce",
+   "budget_s": 32500,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s43.pt",
+   "initial_state_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c"
+  },
+  {
+   "name": "zer-500k-s43",
+   "recipe": "experiments/pcqm_gptrans_dft_input_p1_20261123/zer_s43/recipe.json",
+   "recipe_sha256": "5d183ca336077de210b95f202200d4e1811e06eda9d394d4beecd1de3bcedc8d",
+   "budget_s": 31800,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s43.pt",
+   "initial_state_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c"
+  }
+ ]
+}

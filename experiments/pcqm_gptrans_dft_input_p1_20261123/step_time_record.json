@@ -1,0 +1,28 @@
+{
+ "date": "2026-11-23",
+ "device": "RTX 5060 FP32, loader workers 0",
+ "short_steps": 50,
+ "long_steps": 350,
+ "s_per_step_by_round": {
+  "ctl": [
+   0.07707775200001682,
+   0.07996776366666988
+  ],
+  "p1": [
+   0.0807709619999999,
+   0.08117640733333246
+  ],
+  "zer": [
+   0.07931237300001764,
+   0.07909949799999595
+  ]
+ },
+ "median_s_per_step": {
+  "ctl": 0.07852275783334335,
+  "p1": 0.08097368466666618,
+  "zer": 0.07920593550000679
+ },
+ "ratio_p1_over_control": 1.0312129489711082,
+ "ratio_zeros_over_control": 1.0087003778969839,
+ "note": "advisory; gate (iv) is read from the A100 train_log.jsonl"
+}

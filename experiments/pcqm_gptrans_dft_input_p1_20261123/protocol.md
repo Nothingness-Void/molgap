@@ -154,10 +154,11 @@ Deltas are meV, dev MAE, final EMA. "Both pairs" means pair 42 and pair 43 each.
   both pairs.
 - (iii) P1(2D) - zeros(2D) <= -1.0, both pairs.
 - (iv) Measured **median step time** of P1 and of zeros <= 1.5 x control, and total
-  accelerator wall clock <= 2.0 x control. Median step time = the median, over the
-  trace's checkpoint intervals, of (wall seconds in the interval / optimizer steps
-  in the interval) from `canonical_trace.json`. Wall clock = the sum of those
-  intervals (resumed runs add up). Sidecar build time is CPU time booked
+  accelerator wall clock <= 2.0 x control, in both pairs. Median step time = the
+  median, over consecutive `train_log.jsonl` rows of one process, of (elapsed
+  seconds / optimizer steps between the rows); one row per pass, 3,906 steps per
+  pass. A row after a resume restarts the clock and is skipped. Wall clock = the
+  sum of those intervals over the item. Sidecar build time is CPU time booked
   separately.
 - All of (i)-(iv) must pass to release a full-scale run. The full-scale gate is
   a single-init tail delta <= -1.5 meV against s42/s43, with one more init
@@ -168,14 +169,20 @@ delta. It measures row noise only. It is not init or seed variance.
 
 ## Budget and cost
 
-Measured on A100 (C1 record): a 500K control run took 29,984 s (8.33 h);
-the C1 head run took 31,043 s (1.035 x). P1 and zeros hours are **not measured**.
-Per-item `budget_s` in the serial spec is an estimate for time skips: 30,000 s
-for a control and 30,000 x the local step-time ratio (rounded up, plus 5%) for
-P1 and zeros. A job walltime is at most 24 h, so the chain needs about three
-jobs, resumed with exit code 2. A skipped-for-time item is resumed, not redone.
-Local step-time ratios on the RTX 5060 are advisory: gate (iv) is read from the
-A100 trace.
+Measured on A100 (C1 record): a 500K control run took 29,984 s (8.33 h), with
+an in-job development pass each epoch; the C1 head run took 31,043 s (1.035 x).
+**A100 hours of P1 and zeros are not measured.** Local RTX 5060 marginal step
+time (`step_time_record.json`, 2 rounds, 300-step difference): P1 1.031 x and
+zeros 1.009 x the control. Per-item `budget_s` in the serial spec are estimates
+used only for time skips, not limits: 30,000 s for a control, and
+30,000 x local ratio x 1.05 rounded up to 100 s for P1 (32,500) and zeros
+(31,800). Estimated A100 time per run, from the C1 control and the local
+ratio, is about 8.3 h (control), 8.6 h (P1) and 8.4 h (zeros): about 51 h for the
+chain, an estimate only. A job walltime is at most 24 h, so the chain needs three
+jobs resumed with exit code 2 (job 1: pair-42 control and P1, zeros skipped for
+time; job 2: zeros and pair-43 control; job 3: pair-43 P1 and zeros). A
+skipped-for-time item is resumed, not redone. Gate (iv) is read from the A100
+`train_log.jsonl`, not from the local ratio.
 
 ## Attribution plan (before another module in this family)
 

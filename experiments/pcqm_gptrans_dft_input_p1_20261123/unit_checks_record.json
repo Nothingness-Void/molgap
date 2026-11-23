@@ -1,0 +1,51 @@
+{
+ "date": "2026-11-23",
+ "results": [
+  {
+   "check": "(c) draws repeat for equal inputs, change with seed or rows, split ~0.40/0.20/0.40, invalid rows are 2D",
+   "passed": true,
+   "fractions": {
+    "2d": 0.39863281250000004,
+    "3d_only": 0.201640625,
+    "2d3d": 0.3997265625
+   }
+  },
+  {
+   "check": "(a) at init, 2D forward of P1 and zeros equals the control (torch.equal, 256 dev rows)",
+   "passed": true
+  },
+  {
+   "check": "(a) at init the zero-initialised branch adds nothing: 2D+3D equals 2D; 3D-only differs (SPD and bond masked)",
+   "passed": true
+  },
+  {
+   "check": "(b) 2D scoring needs no coordinates and no sidecar: identical output with every sidecar folder hidden",
+   "passed": true
+  },
+  {
+   "check": "(a) determinism baseline: two control runs of 20 steps are bit-equal (live and EMA)",
+   "passed": true
+  },
+  {
+   "check": "(a) p1 with P(2D)=1: all shared weights bit-equal to the control after 20 steps (live and EMA)",
+   "passed": true,
+   "differing_live": [],
+   "extra_keys": 10
+  },
+  {
+   "check": "(a) zer with P(2D)=1: all shared weights bit-equal to the control after 20 steps (live and EMA)",
+   "passed": true,
+   "differing_live": [],
+   "extra_keys": 4
+  },
+  {
+   "check": "(c) P1 paused at step 10 and resumed to 20 equals the uninterrupted run (all keys, live and EMA)",
+   "passed": true
+  },
+  {
+   "check": "sanity: with the real mode schedule P1 differs from the control (the branch is live)",
+   "passed": true,
+   "differing_keys": 337
+  }
+ ]
+}
