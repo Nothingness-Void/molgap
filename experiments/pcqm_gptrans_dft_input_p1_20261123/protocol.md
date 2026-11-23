@@ -278,3 +278,7 @@ Dev sidecar build (local only, CPU): `platforms/local/pcqm_dft_geometry_sidecar.
 --start 500000 --stop 550000 --workers 1 --output-dir D:/molgap-artifacts/dft_dev_sidecar_500k_550k_20261123
 --provenance-note "dev rows 500000..549999 for P1 gate (i) scoring input only; same archive as C1 v3"`.
 Log: `D:/molgap-artifacts/dft_dev_sidecar_build_20261123.log`.
+
+## Early-stop rule (added 2026-11-24 before submission, after Opus pre-submit review)
+Gate (i) needs both pairs. After job 1 pauses (exit 2) with p1-s42 complete, fetch p1-s42 with `retrieve_legacy_outputs.py` and score it offline on the dev rows. If P1 3D-mode MAE minus P1 2D-mode MAE is above -10 meV, gate (i) cannot pass for both pairs: do not resume, close the family as NEGATIVE_UNDER_CONTRACT, and book the A100 hours not spent. This rule is written before any run starts; it only stops work, it never changes a gate. Items finished by then (ctl-s42, p1-s42, zer-s42) are still scored under gates (ii)-(iv) as descriptive pair-42 evidence.
+Retrieval note: after exit 2 the standard retrieve command refuses by design; use the legacy retrieval. Gate (iv) is read by hand from `score_p1.py` step times against 1.5x per step and 2.0x wall clock, and also reported against the 2x training-time condition from the user.
