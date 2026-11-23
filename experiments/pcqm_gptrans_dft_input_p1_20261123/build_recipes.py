@@ -57,6 +57,9 @@ def main():
     run["contract"]["path"] = spec.relative_to(HERE.parents[1]).as_posix()
     run["resources"]["train_walltime"] = "24:00:00"
     run["stages"]["train"]["args"][1] = "{code_root}/" + run["contract"]["path"]
+    # The scorer needs each item's final EMA and pass log. The launcher hashes these only when the whole chain ends with exit 0.
+    run["stages"]["train"]["required_outputs"] = ["training/serial_summary.json"] + [
+        f"training/{item['name']}/{name}" for item in items for name in ("selected_model.pt", "train_log.jsonl")]
     (HERE / "run_spec.json").write_text(json.dumps(run, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(items, indent=1))
 

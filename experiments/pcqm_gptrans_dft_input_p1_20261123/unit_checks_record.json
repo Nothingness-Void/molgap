@@ -23,6 +23,35 @@
    "passed": true
   },
   {
+   "check": "start-of-job check on the real spec with the v3 sidecar absent: exit 3, early_exit.json names exactly the four P1 and zeros items, no item started",
+   "passed": true,
+   "exit": 3,
+   "named": [
+    "p1-500k-s42",
+    "p1-500k-s43",
+    "zer-500k-s42",
+    "zer-500k-s43"
+   ]
+  },
+  {
+   "check": "real spec with --wall-s 10: exit 3, budget_s named, no item started",
+   "passed": true,
+   "exit": 3
+  },
+  {
+   "check": "same six items with 9 s budgets and --wall-s 10: exit 2, every item SKIPPED_FOR_TIME, no child started",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "ctl-500k-s42": "SKIPPED_FOR_TIME",
+    "p1-500k-s42": "SKIPPED_FOR_TIME",
+    "zer-500k-s42": "SKIPPED_FOR_TIME",
+    "ctl-500k-s43": "SKIPPED_FOR_TIME",
+    "p1-500k-s43": "SKIPPED_FOR_TIME",
+    "zer-500k-s43": "SKIPPED_FOR_TIME"
+   }
+  },
+  {
    "check": "(a) determinism baseline: two control runs of 20 steps are bit-equal (live and EMA)",
    "passed": true
   },
@@ -41,6 +70,11 @@
   {
    "check": "(c) P1 paused at step 10 and resumed to 20 equals the uninterrupted run (all keys, live and EMA)",
    "passed": true
+  },
+  {
+   "check": "(b) trained P1 branch (last MLP layer non-zero): 2D scoring with every sidecar hidden equals scoring with them present and equals a control-architecture model holding only P1's shared weights",
+   "passed": true,
+   "last_layer_nonzero": true
   },
   {
    "check": "sanity: with the real mode schedule P1 differs from the control (the branch is live)",

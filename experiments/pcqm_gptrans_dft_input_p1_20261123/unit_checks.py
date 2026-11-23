@@ -3,15 +3,19 @@
 (a) identity of the 2D path: with P(2D) forced to 1 the P1 and zeros models train 20 steps and every control weight (live and
     EMA) is bit-equal to the control's; also control vs control (the determinism baseline). At step 0 the zero-initialised
     branch leaves 2D+3D outputs equal to the control, and evaluation hooks are inert.
-(b) inference takes no coordinates: scoring with no coordinate field, and with the sidecar folders hidden, gives equal output.
+(b) inference takes no coordinates: scoring with no coordinate field, and with the sidecar folders hidden, gives equal output,
+    also for a trained P1 checkpoint (non-zero branch) against a control-architecture model holding only its shared weights.
+(d) early exits on the real serial spec: a missing sidecar and a tiny wall exit 3; fitting budgets with no room skip for time.
 (c) train-time draws repeat for equal inputs, honour the 0.40/0.20/0.40 split and the invalid-row rule; a run paused at step
     10 and resumed to 20 equals an uninterrupted 20-step run (the draws need no checkpoint state).
 
 Usage: unit_checks.py --work DIR --fixed-root DIR --dev-sidecar DIR [--steps 20]. Single process, loader workers 0.
 """
 import argparse
+import contextlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -127,6 +131,89 @@ def check_inputs_identity(fixed_root, work, dev_sidecar):
     return built, graphs3d, device, (mean, std)
 
 
+@contextlib.contextmanager
+def hidden_sidecars(fixed_root, dev_sidecar):
+    """Rename every sidecar folder away for the duration (restored in finally)."""
+    moved = []
+    try:
+        for path in (Path(fixed_root) / "sidecars", Path(dev_sidecar)):
+            target = path.with_name(path.name + "_hidden")
+            path.rename(target)
+            moved.append((path, target))
+        yield len(moved)
+    finally:
+        for path, target in moved:
+            target.rename(path)
+
+
+def check_trained_inference(checkpoint_dir, fixed_root, dev_sidecar):
+    """(b) on a TRAINED branch: load and score a 20-step P1 checkpoint with every sidecar hidden."""
+    from molgap.family_training_kernel import load_family_model
+    from molgap.family_training_runner import read_recipe
+    sys.path.insert(0, str(REPO / "platforms" / "local"))
+    sys.path.insert(0, str(C1))
+    sys.path.insert(0, str(HERE))
+    from pcqm_tail_holdout_eval import gptrans_scorer
+    from score_dev_and_distance import shard_graphs
+    import score_p1
+    device = torch.device("cuda")
+    path = Path(checkpoint_dir) / "last_checkpoint.pt"
+    state = torch.load(path, map_location="cpu", weights_only=True)["model"]
+    trained = bool(state["_molgap_addons.dft_input.mlp.2.weight"].abs().sum() > 0)
+    graphs = shard_graphs(fixed_root, 10)[:256]
+    with hidden_sidecars(fixed_root, dev_sidecar) as hidden:
+        load, _, recipe = gptrans_scorer(HERE / "p1_s42" / "recipe.json", C1 / "init" / "s44.pt", "model")
+        model = load(path, device)
+        absent = score_p1.predict(model, graphs, recipe.target_mean_eV, recipe.target_std_eV, device, "2d")
+    present = score_p1.predict(model, graphs, recipe.target_mean_eV, recipe.target_std_eV, device, "2d")
+    _, control_recipe = read_recipe(HERE / "ctl_s42" / "recipe.json")
+    control = load_family_model(control_recipe, C1 / "init" / "s44.pt")[0]
+    control.load_state_dict({k: v for k, v in state.items() if k in control.state_dict()}, strict=True)
+    reference = score_p1.predict(control.to(device).eval(), graphs, recipe.target_mean_eV, recipe.target_std_eV, device, "2d")
+    record("(b) trained P1 branch (last MLP layer non-zero): 2D scoring with every sidecar hidden equals scoring with them present "
+           "and equals a control-architecture model holding only P1's shared weights",
+           trained and hidden == 2 and torch.equal(absent, present) and torch.equal(absent, reference), last_layer_nonzero=trained)
+
+
+def early_exit_checks(work, fixed_root):
+    """The real serial spec: a missing sidecar and a tiny wall exit 3 before any child; fitting budgets that cannot run skip."""
+    spec = HERE / "serial_spec.json"
+    env = {**os.environ, "PYTHONPATH": str(REPO / "src"), "CUDA_VISIBLE_DEVICES": "0"}
+
+    def driver(spec_path, name, wall_s, reserve_s):
+        out = work / name
+        shutil.rmtree(out, ignore_errors=True)
+        command = [sys.executable, "-u", str(REPO / "platforms" / "ims" / "family_serial_run.py"), "--spec", str(spec_path), "--code-root", str(REPO),
+                   "--input-root", str(fixed_root), "--output-root", str(out), "--source-commit", "0" * 40, "--cpus", "4",
+                   "--training-workers", "0", "--wall-s", str(wall_s), "--reserve-s", str(reserve_s), "--memory-limit-bytes", str(2**40)]
+        return subprocess.run(command, cwd=REPO, env=env, capture_output=True, text=True).returncode, out
+
+    sidecars = Path(fixed_root) / "sidecars"
+    sidecars.rename(sidecars.with_name("sidecars_hidden"))
+    try:
+        code, out = driver(spec, "early_no_sidecar", 86_280, 1800)
+    finally:
+        sidecars.with_name("sidecars_hidden").rename(sidecars)
+    problems = json.loads((out / "early_exit.json").read_text(encoding="utf-8"))["problems"] if (out / "early_exit.json").is_file() else []
+    named = sorted({p.split(":")[0] for p in problems})
+    record("start-of-job check on the real spec with the v3 sidecar absent: exit 3, early_exit.json names exactly the four P1 and zeros items, "
+           "no item started", code == 3 and named == ["p1-500k-s42", "p1-500k-s43", "zer-500k-s42", "zer-500k-s43"]
+           and not any((out / n).exists() for n in ("ctl-500k-s42", "p1-500k-s42")), exit=code, named=named)
+    code, out = driver(spec, "early_tiny_wall", 10, 0)
+    record("real spec with --wall-s 10: exit 3, budget_s named, no item started", code == 3 and "budget_s" in (out / "early_exit.json").read_text(encoding="utf-8")
+           and not (out / "ctl-500k-s42").exists(), exit=code)
+    tiny = work / "serial_spec_budget9.json"  # rehearsal copy only: budgets that fit the wall but leave no room to run
+    document = json.loads(spec.read_text(encoding="utf-8"))
+    for item in document["items"]:
+        item["budget_s"] = 9
+    tiny.write_text(json.dumps(document), encoding="utf-8")
+    code, out = driver(tiny, "early_skip", 10, 0)
+    states_ = {k: v["status"] for k, v in json.loads((out / "serial_summary.json").read_text(encoding="utf-8"))["items"].items()}
+    record("same six items with 9 s budgets and --wall-s 10: exit 2, every item SKIPPED_FOR_TIME, no child started",
+           code == 2 and set(states_.values()) == {"SKIPPED_FOR_TIME"} and len(states_) == 6 and not any((out / n).exists() for n in states_),
+           exit=code, states=states_)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--work", type=Path, required=True)
@@ -140,6 +227,7 @@ def main(argv=None):
     configure_fp32_determinism(0)
     check_draws()
     check_inputs_identity(args.fixed_root, args.work, args.dev_sidecar)
+    early_exit_checks(args.work, args.fixed_root)
     if not args.skip_train:
         n = args.steps
         ctl_a, ctl_b = train(args.work, "ctl", 42, n, args.fixed_root, tag="ctl_a"), train(args.work, "ctl", 42, n, args.fixed_root, tag="ctl_b")
@@ -158,6 +246,7 @@ def main(argv=None):
         (wm, we, _), (hm, he, hstep) = states(whole), states(half)
         record(f"(c) P1 paused at step {n // 2} and resumed to {n} equals the uninterrupted run (all keys, live and EMA)",
                hstep == n and shared_equal(wm, hm) == [] and shared_equal(we, he) == [] and set(wm) == set(hm))
+        check_trained_inference(whole, args.fixed_root, args.dev_sidecar)
         differs = shared_equal(cm, wm)
         record("sanity: with the real mode schedule P1 differs from the control (the branch is live)", len(differs) > 0, differing_keys=len(differs))
     path = HERE / "unit_checks_record.json"

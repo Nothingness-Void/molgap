@@ -52,7 +52,19 @@
     "{mem_bytes}"
    ],
    "required_outputs": [
-    "training/serial_summary.json"
+    "training/serial_summary.json",
+    "training/ctl-500k-s42/selected_model.pt",
+    "training/ctl-500k-s42/train_log.jsonl",
+    "training/p1-500k-s42/selected_model.pt",
+    "training/p1-500k-s42/train_log.jsonl",
+    "training/zer-500k-s42/selected_model.pt",
+    "training/zer-500k-s42/train_log.jsonl",
+    "training/ctl-500k-s43/selected_model.pt",
+    "training/ctl-500k-s43/train_log.jsonl",
+    "training/p1-500k-s43/selected_model.pt",
+    "training/p1-500k-s43/train_log.jsonl",
+    "training/zer-500k-s43/selected_model.pt",
+    "training/zer-500k-s43/train_log.jsonl"
    ]
   }
  },

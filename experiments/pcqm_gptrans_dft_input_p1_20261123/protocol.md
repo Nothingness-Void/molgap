@@ -247,3 +247,34 @@ No job was submitted and nothing was uploaded to IMS. Facts, all local:
 - **Scorer** (`score_p1.py`) ran end to end on 20-step checkpoints and 512 dev rows
   (`score_smoke_record.json`; plumbing only, the numbers mean nothing).
 - Pair 42 control repeats the C1 c500 recipe except the readout; optional determinism check only.
+
+## Deviations and additions (dated 2026-11-23, before any A100 run; no job submitted)
+
+Constants, arms, gates (i)-(iii) and the readout did not change. Edits made after the first freeze:
+
+1. **Gate (iv) source.** First text read per-pass time from a canonical trace. A `final-ema` run
+   without in-job dev writes `train_log.jsonl` (one row per pass: step, `elapsed_s`), so (iv) now
+   reads that file. Wall clock is the item's `wall_s` summed over its attempts in
+   `serial_summary.json`; a resume interval (above 3x the median) is dropped and counted. Reason:
+   the local rehearsal showed which file exists. The 1.5x and 2.0x limits are unchanged.
+2. **Budget section** filled in from the measured C1 wall and the local step-time ratios.
+3. **Required outputs.** The run spec lists each item's `selected_model.pt` and `train_log.jsonl`
+   as well as `serial_summary.json` (12 files). The launcher hashes them only when the whole chain
+   exits 0. If the 24 h chain ends paused (exit 2), resume it; retrieval of a paused run is not
+   assumed to include them. After the last item completes, the chain exits 0 and all 12 are hashed.
+4. **Scorer pins** the dev sidecar manifest sha256 (`744efb8e...`) and uses deterministic FP32
+   kernels, as training does.
+5. **Added checks** to `unit_checks.py`: (b) on a trained P1 checkpoint (last MLP layer non-zero)
+   with sidecars hidden; early exits on the real serial spec (exit 3 for a missing v3 sidecar, exit
+   3 for a tiny wall, exit 2 with every item skipped for time). Records in `unit_checks_record.json`.
+
+Rehearsal source was commit `bef83a8cd`. Since then only the scorer, protocol, records and
+`unit_checks.py` changed; no file under `src/`, `platforms/`, or any recipe or spec changed except
+`run_spec.json` (item 3, required outputs only) and `build_recipes.py` (same).
+
+Dev sidecar build (local only, CPU): `platforms/local/pcqm_dft_geometry_sidecar.py --archive
+<pcqm4m-v2-train.sdf.tar.gz> --expected-archive-sha256
+8690db7b573405e3dbd617482fe10092e18be2b86e4d8500c3892d301dd5817c --topology-root <fixed root>
+--start 500000 --stop 550000 --workers 1 --output-dir D:/molgap-artifacts/dft_dev_sidecar_500k_550k_20261123
+--provenance-note "dev rows 500000..549999 for P1 gate (i) scoring input only; same archive as C1 v3"`.
+Log: `D:/molgap-artifacts/dft_dev_sidecar_build_20261123.log`.

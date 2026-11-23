@@ -27,9 +27,12 @@ from score_dev_and_distance import bootstrap, sha256_file, shard_graphs  # noqa:
 INITS = {42: C1 / "init" / "s44.pt", 43: C1 / "init" / "s43.pt"}
 ITEMS = {f"{arm}-500k-s{seed}": (f"{arm}_s{seed}", seed, arm) for seed in (42, 43) for arm in ("ctl", "p1", "zer")}
 DEV_SHARD, BATCH = 10, 256
+DEV_SIDECAR_MANIFEST_SHA256 = "744efb8ec2b87947f68ed53e1702a9d765f042fd69626cefeea3a7a1ebbabcc9"  # the built-once local sidecar
 
 
 def check_dev_sidecar(directory):
+    if sha256_file(Path(directory) / "manifest.json") != DEV_SIDECAR_MANIFEST_SHA256:
+        raise SystemExit("STOP: dev sidecar manifest differs from the pinned build; rebuild must be recorded and re-pinned")
     manifest = json.loads((Path(directory) / "manifest.json").read_text(encoding="utf-8"))
     rows, alignment = manifest["rows"], manifest["alignment"]
     match = (alignment["identity_order"] + alignment["isomorphism_mapped"]) / rows["rows"]
