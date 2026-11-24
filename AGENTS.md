@@ -298,4 +298,5 @@ Basic install/inference: [README](README.md); shipping: [production](production/
 Remote routing: [platforms](platforms/README.md); closed evidence: [experiments](experiments/README.md).
 Detailed research checklists: [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md).
 Historical branch audits: [Branch History](docs/operations/BRANCH_HISTORY.md).
+Platform skills live outside the repository, in the user's `~/.agents/skills/` (linked from `~/.claude/skills/` and `~/.codex/skills/`): `kaggle-molgap-workloads/SKILL.md`, `ims-molgap-workloads/SKILL.md`, `scnet-bw-dcu-molgap/SKILL.md`. Read the one for the platform before submit, retrieve or close.
 Obtain the minimum new evidence needed for the next justified decision, not busy GPUs.
