@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-query-readout-ad-100k-20261105-s42\\v1\\version1\\full12\\development_predictions.pt",
+      "sha256": "10a63d9b14cd62f115544771cd647a739c559f01fb11dad64fe8f09d8c439e3f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-query-readout-ad-100k-20261105-s42\\v1\\version1\\full8_query4\\development_predictions.pt",
+      "sha256": "0422fc8881384931c50ea92545ea75ec91ef1f6eb7c4f354c0f1e4ce06ea8532"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.4934224462508894,
+    "ensemble_gain_meV": 6.3783834314345995,
+    "ensemble_mae_meV": 133.80851987063886,
+    "fit": null,
+    "m_meV": 1.4934224462509156,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "full8_query4",
+        "ci95": [
+          0.5336329115629197,
+          2.4091568353176114
+        ],
+        "delta": 1.4934224462509156,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0005,
+        "reference": "full12",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "full12": 139.44019207894803,
+      "full8_query4": 140.93361452519892
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

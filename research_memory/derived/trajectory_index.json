@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "a94366785b6bc913264bea343656262de83db85f4d57fabc18ade8d23a980f53",
+  "source_digest": "5f1b0c2df30f755495dba53553d8104a088cdeb5616206b609757cd1f2a8b96b",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -321,6 +321,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/decision.md",
+      "family_id": "pcqm-gptrans-query-readout-ad-100k-20261105",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full12/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/decision.md",
+      "family_id": "pcqm-gptrans-query-readout-ad-100k-20261105",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full8_query4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
     },
     {
       "completeness_status": "complete",
