@@ -132,6 +132,8 @@ def test_platform_script_uses_selected_checkout_and_cannot_escape(tmp_path,capfd
     entry.write_text("from molgap import MARKER\nprint(MARKER)\n")
     assert launch_local(root,None,script="platforms/local/probe.py")==0
     assert capfd.readouterr().out.strip()=="selected-platform-checkout"
+    (root/"experiments/e1").mkdir(parents=True);(root/"experiments/e1/probe.py").write_text("print(1)")
+    assert launch_local(root,None,script="experiments/e1/probe.py")==0
     for script in ("../escape.py","src/molgap/__init__.py","platforms/local/probe.py/.."):
         with pytest.raises(ValueError):launch_local(root,None,script=script)
     with pytest.raises(ValueError):launch_local(root,"molgap.probe",script="platforms/local/probe.py")

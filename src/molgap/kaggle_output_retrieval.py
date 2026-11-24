@@ -150,7 +150,7 @@ def _list_selected_urls(api, context, required: Mapping[str, tuple[str, str]]) -
             request.page_size, request.page_token = 100, token
             response = client.kernels.kernels_api_client.list_kernel_session_output(request)
             for item in response.files:
-                if item.file_name in required:
+                if required is None or item.file_name in required:
                     if item.file_name in urls:
                         raise ValueError("Duplicate remote output path")
                     urls[item.file_name] = item.url
@@ -162,7 +162,7 @@ def _list_selected_urls(api, context, required: Mapping[str, tuple[str, str]]) -
             seen_tokens.add(token)
         else:
             raise ValueError("Unbounded output listing")
-    if set(urls) != set(required):
+    if required is not None and set(urls) != set(required):
         raise ValueError("Required remote output files are missing; no bulk fallback")
     return urls
 
