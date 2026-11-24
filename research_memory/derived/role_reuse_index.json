@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 957,
+  "ambiguous_historical_role_record_count": 965,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -3321,6 +3321,62 @@
     },
     {
       "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "dev_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "dev_500k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6701,7 +6757,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 806,
+  "explicit_role_event_count": 814,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -12270,6 +12326,36 @@
         "trajectory_id": "TB-pcqm-residual-block-transfer"
       }
     ],
+    "pcqm4mv2-ogb-official-train:6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191:dev_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-gptdft-dev_100k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptdft-dev_100k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-gptdft-dev_100k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-gptdft-dev_100k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604:beyond_score_block": [
       {
         "access_kind": "labels_read",
@@ -12450,6 +12536,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-spread-fit"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565:dev_500k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-gptdft-dev_500k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptdft-dev_500k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-gptdft-dev_500k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-gptdft-dev_500k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
       }
     ],
     "pcqm4mv2-ogb-official-train:cd3f4cabfeaee0763e71b30c4628f431402b0491668b460701418a4458e9197c:spread_fit_120k": [
@@ -12679,6 +12795,7 @@
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "pcqm-gptrans-dft-distance-aux-20261123",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -12878,6 +12995,7 @@
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "pcqm-gptrans-dft-distance-aux-20261123",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -16705,6 +16823,36 @@
         "trajectory_id": "TB-pcqm-residual-block-transfer"
       }
     ],
+    "pcqm4mv2-ogb-official-train:6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191:dev_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-gptdft-dev_100k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptdft-dev_100k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-gptdft-dev_100k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-gptdft-dev_100k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:7583469a6d671dda97cde0492d8f7d2b80442dbd7b900bcb361b23e87ed31604:beyond_score_block": [
       {
         "access_kind": "labels_read",
@@ -16844,6 +16992,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-spread-fit"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565:dev_500k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-gptdft-dev_500k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-gptdft-dev_500k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-gptdft-dev_500k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-gptdft-dev_500k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
       }
     ],
     "pcqm4mv2-ogb-official-train:cd3f4cabfeaee0763e71b30c4628f431402b0491668b460701418a4458e9197c:spread_fit_120k": [

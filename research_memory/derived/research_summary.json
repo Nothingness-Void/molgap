@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 216,
+      "trajectories_total": 217,
       "with_complete_native_measurement": 37,
-      "with_cost_event": 205,
-      "with_incomplete_native_measurement": 168,
+      "with_cost_event": 206,
+      "with_incomplete_native_measurement": 169,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1161,6 +1161,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 1
+        }
+      },
+      "NVIDIA A100 FP32": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 11.6
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 20.898444444444443
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 11.6
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 20.898444444444443
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
         }
       },
       "NVIDIA A100-SXM4-40GB": {
@@ -3513,6 +3563,56 @@
           "unknown_records": 2
         }
       },
+      "local CPU": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.3
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.3
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "local Windows CPU, four intra-op threads": {
         "cpu_hours": {
           "estimated": {
@@ -3714,17 +3814,17 @@
         }
       }
     },
-    "unknown_events": 446
+    "unknown_events": 448
   },
   "evidence": {
-    "validated": 198,
+    "validated": 199,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 111,
+      "count": 112,
       "severity": "INFO"
     },
     {
@@ -3734,7 +3834,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 168,
+      "count": 169,
       "severity": "WARN"
     },
     {
@@ -3754,17 +3854,17 @@
     }
   ],
   "roles": {
-    "coarse_historical": 957,
-    "explicit_events": 806,
-    "repeatedly_selected": 48
+    "coarse_historical": 965,
+    "explicit_events": 814,
+    "repeatedly_selected": 50
   },
-  "source_digest": "40173aec5190c985f96d0da35ca4547d46dca56ed9257976ddf5e15ad455517d",
+  "source_digest": "6a96b5432195a1d724c88f7e71c47f4b93377164c641c3a4299b043ad69ec4be",
   "trajectories": {
-    "count": 216,
+    "count": 217,
     "outcomes": {
       "ACTIVE": 7,
       "CLOSED": 39,
-      "INCONCLUSIVE": 23,
+      "INCONCLUSIVE": 24,
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 68,
       "NO_TRAIN": 59,

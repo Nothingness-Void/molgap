@@ -1,0 +1,71 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/acceptance.json",
+  "action_id": "A002",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/acceptance.json": "71dc254e780fca4d0ec09057818c994c0d5d66e8895acd53b75cb53b09ca6f7f",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/decision.md": "a5d6210fe107278684c401c1ed3c12649a0d50e2b29b06d76a161aa941629842",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md": "0ac5f1015346c7cad52ba9dab19bee038799160321778b39d72a5e04c3477b6e",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/results.json": "c6a6bde2f19240c9322a09bb217781b167e7b49544e09be4ac819101eea842de",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/retrieve_legacy_outputs.py": "a6501351c645362794d575aa76566985fca41e90d178277e60228e3062ca3dab",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/score_dev_and_distance.py": "a673158ae757290002032cc299425b9e6f2076a621cb1dcff917e5bbf3ed37f0",
+    "external:///D:/molgap-artifacts/retrieved/gptdft-chain-20261121/analysis/final/dev_analysis.json": "7921f354180ea5b06e6f381a08f535881bef56a69a5ff27d7959966cd0caa2d4"
+  },
+  "finalized_at": "2026-11-23T12:00:00+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-gptdft-chain-training.json",
+        "sha256": "fe71791c5b358860341d7be429566880a97c6c66c6bb2cb4c17eb1ea9294510e"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "4b3d96797d459752a5d972485f054422aa88c12f94fd57a20b95ff44759e57c2"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "e9a2c34179da782f58e26067f21f2926fd1c1c8e81698ea6b353a6471fb19141"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-gptdft-dev_100k-prediction_input.json",
+        "sha256": "741e9d7f3830990e67761c5323c8dc5ab786c83ea2f4c41785e819632d78d895"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_100k-labels_read.json",
+        "sha256": "500e3ecb07bc790f74d40f74b83c56b9e41e3eef3817fb0d2dca0a9819a88a15"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_100k-metric_computed.json",
+        "sha256": "76206a3f98fc5f7be950bf08df1ed709e8852ab5cc0d0953a4211db15b0523d3"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_100k-selection_used.json",
+        "sha256": "014a918f66b46de8ba987a0993192589d981104615876f03f6d8250c001a9ee1"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_500k-prediction_input.json",
+        "sha256": "1beec67ba3b285e6a740bedc6523666e7a59c547963bab1b12eaf1c23e9a0e0d"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_500k-labels_read.json",
+        "sha256": "84da27ca7abb588e2f4d27e9e83f4ce9a0e9fa12e2e90b8fc0a69d200722782b"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_500k-metric_computed.json",
+        "sha256": "ef2b734dfdfda2f727b317ebd5e092e181d63bcc5407d33fcf9af65b79bf30b0"
+      },
+      {
+        "ref": "roles/role-gptdft-dev_500k-selection_used.json",
+        "sha256": "7fef37bfe0e975eba4087665fd5fa6ce1d948925de682e43118113fc47fb0ea6"
+      }
+    ]
+  },
+  "run_id": "gptdft-chain-20261121",
+  "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+}

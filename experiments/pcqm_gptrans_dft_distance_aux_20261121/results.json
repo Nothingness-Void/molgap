@@ -1,0 +1,114 @@
+{
+  "format": "molgap-gptdft-dev-analysis-v1",
+  "dev_rows": {
+    "100k": [
+      100000,
+      150000
+    ],
+    "500k": [
+      500000,
+      550000
+    ]
+  },
+  "protected_roles_read": {
+    "tail_holdout_v1": false,
+    "official_validation": false,
+    "test": false
+  },
+  "items": {
+    "c100-gptt-100k-s43": {
+      "dev_mae_eV": 0.13918550770609348,
+      "recorded_dev_mae_eV": 0.13918505609035492,
+      "checkpoint_sha256": "3840b378426762786676ca9d685881f785434a35e0765d1009ca8faf1985bccb"
+    },
+    "d100-dft-100k-s43": {
+      "dev_mae_eV": 0.13548539507470653,
+      "recorded_dev_mae_eV": 0.13548575341701508,
+      "checkpoint_sha256": "a01bbc36eb149e2d0d613ac6052804fd54e8a5ac42d7145dcb1380be067cb905"
+    },
+    "c500-gptt-500k-s44": {
+      "dev_mae_eV": 0.10037641387822463,
+      "recorded_dev_mae_eV": 0.10037636756896973,
+      "checkpoint_sha256": "ab1c7f38f224da02317cdb0aba0595a4d8663d4e5d914025ed7995803d1b421f"
+    },
+    "d500-dft-500k-s44": {
+      "dev_mae_eV": 0.1002359441839236,
+      "recorded_dev_mae_eV": 0.10023592412471771,
+      "checkpoint_sha256": "0eadb3f8e9ee28ce83162ecb6459e2a774aee269720f9e6129e80cafd8b1e0a0"
+    }
+  },
+  "bootstrap": {
+    "d100_minus_c100": {
+      "delta_mev": -3.7001126313869572,
+      "ci95_mev": [
+        -4.600026630202486,
+        -2.7720639519717114
+      ],
+      "draws": 2000,
+      "seed": 20261123,
+      "rows": 50000
+    },
+    "d500_minus_c500": {
+      "delta_mev": -0.14046969430104553,
+      "ci95_mev": [
+        -0.6868361154194452,
+        0.38387559112186975
+      ],
+      "draws": 2000,
+      "seed": 20261123,
+      "rows": 50000
+    }
+  },
+  "distance_head": {
+    "d100-dft-100k-s43": {
+      "train_rows_0_to_50k": {
+        "mae_angstrom": 0.22922168959716469,
+        "pairs": 4650987,
+        "rows": 50000,
+        "invalid_rows_skipped": 0
+      },
+      "heldout_rows_150k_to_200k": {
+        "mae_angstrom": 0.24233631407313216,
+        "pairs": 4843610,
+        "rows": 50000,
+        "invalid_rows_skipped": 0
+      }
+    },
+    "d500-dft-500k-s44": {
+      "train_rows_0_to_50k": {
+        "mae_angstrom": 0.20502534099056302,
+        "pairs": 4650987,
+        "rows": 50000,
+        "invalid_rows_skipped": 0
+      },
+      "heldout": "evidence missing: the sidecar ends at row 499,999, the whole d500 train role"
+    }
+  },
+  "verdict": {
+    "100k": "POSITIVE_UNDER_CONTRACT",
+    "500k": "INCONCLUSIVE",
+    "tail_scoring": "not released",
+    "c1_a_aux_delta_500k_meV": -0.14046969430104553,
+    "c1_a_needs_meV": -1.0
+  },
+  "attribution": {
+    "retention_500k_over_100k": 0.037963626595980564,
+    "wall_s": {
+      "c100-gptt-100k-s43": 6887.6,
+      "d100-dft-100k-s43": 7319.1,
+      "c500-gptt-500k-s44": 29984.3,
+      "d500-dft-500k-s44": 31043.4
+    },
+    "wall_ratio_d_over_c": {
+      "100k": 1.0626488181659794,
+      "500k": 1.0353218184183057
+    },
+    "total_item_wall_s": 75234.4,
+    "determinism_c100_vs_j2_2097505": {
+      "selected_model_sha256": "3840b378426762786676ca9d685881f785434a35e0765d1009ca8faf1985bccb",
+      "equal_to_c100": true,
+      "dev_mae_eV_equal": 0.13918505609035492
+    },
+    "determinism_c500_vs_j5": "not comparable: j5 of job 2097505 is paused (step 124992, dev 0.10276388376951218)"
+  }
+}

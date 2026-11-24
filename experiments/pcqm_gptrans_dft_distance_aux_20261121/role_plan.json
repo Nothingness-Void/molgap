@@ -1,0 +1,12 @@
+{
+  "development": "100K rows 100000..149999 and 500K rows 500000..549999, used for selection and the job gate (primary EMA dev MAE)",
+  "auxiliary_labels": "DFT heavy-atom coordinates for train rows 0..499999 only; development rows get none",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "held_out": "tail_holdout_v1 untouched by training; SDF rows at or above 3250000 are never parsed",
+  "roles": [
+    {"role": "train", "rows": "0..99999 (100K) and 0..499999 (500K)"},
+    {"role": "development", "rows": "100000..149999 (100K) and 500000..549999 (500K)"}
+  ]
+}

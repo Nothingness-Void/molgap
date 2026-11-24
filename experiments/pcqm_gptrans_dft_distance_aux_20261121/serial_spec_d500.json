@@ -1,0 +1,13 @@
+{
+ "format": "molgap-ims-family-serial-v1",
+ "items": [
+  {
+   "name": "d500-dft-500k-s44",
+   "recipe": "experiments/pcqm_gptrans_dft_distance_aux_20261121/d500_dft_s44/recipe.json",
+   "recipe_sha256": "e6cbe17257daea30b4e5305f59ed9575bb93decd890107ac63096f577c66dea0",
+   "budget_s": 22000,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573"
+  }
+ ]
+}

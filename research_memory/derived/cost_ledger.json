@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 150,
-  "event_count": 493,
+  "estimated_event_count": 152,
+  "event_count": 496,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 446,
-  "not_applicable_event_count": 125,
+  "measurement_missing_event_count": 448,
+  "not_applicable_event_count": 126,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -1024,6 +1024,54 @@
         "measured": {
           "known_records": 3,
           "known_total": 0.10819764388888467
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local CPU:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local CPU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -3386,6 +3434,54 @@
         "measured": {
           "known_records": 1,
           "known_total": 12.13586895375228
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -6175,6 +6271,56 @@
         "unknown_records": 1
       }
     },
+    "NVIDIA A100 FP32": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "NVIDIA A100-SXM4-40GB": {
       "cpu_hours": {
         "estimated": {
@@ -8525,6 +8671,56 @@
         "unknown_records": 2
       }
     },
+    "local CPU": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "local Windows CPU, four intra-op threads": {
       "cpu_hours": {
         "estimated": {
@@ -9208,6 +9404,104 @@
         "estimated": {
           "known_records": 1,
           "known_total": 3.1
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-gptrans-dft-distance-aux-20261121": {
+      "NVIDIA A100 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 11.6
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 20.898444444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local CPU:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local CPU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3
         },
         "measured": {
           "known_records": 0,

@@ -1,0 +1,139 @@
+{
+ "costs": [
+  {
+   "action_id": "A001",
+   "attempt_id": "dft-sidecar-alignment-local-v1",
+   "category": "cache_build",
+   "cost_event_id": "cost-T-pcqm-gptrans-dft-distance-aux-20261121-alignment-planned",
+   "evidence_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+   "hardware": "local CPU",
+   "platform": "local",
+   "run_id": "dft-sidecar-alignment-local-v1",
+   "measurement": {
+    "cpu_hours": {"status": "estimated", "value": 0.3},
+    "device_hours": {"status": "not_applicable", "value": null},
+    "queue_hours": {"status": "not_applicable", "value": null},
+    "wall_hours": {"status": "estimated", "value": 0.3}
+   },
+   "schema": "molgap-cost-event-v1",
+   "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+  },
+  {
+   "action_id": "A002",
+   "attempt_id": "gptdft-chain-20261121-v1",
+   "category": "training",
+   "cost_event_id": "cost-T-pcqm-gptrans-dft-distance-aux-20261121-chain-planned",
+   "evidence_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+   "hardware": "NVIDIA A100 FP32",
+   "platform": "ims",
+   "run_id": "gptdft-chain-20261121",
+   "measurement": {
+    "cpu_hours": {"status": "measurement_missing", "value": null},
+    "device_hours": {"status": "estimated", "value": 11.6},
+    "queue_hours": {"status": "measurement_missing", "value": null},
+    "wall_hours": {"status": "estimated", "value": 11.6}
+   },
+   "schema": "molgap-cost-event-v1",
+   "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+  }
+ ],
+ "decision_state": {
+  "active_reference_ids": [],
+  "available_actions": ["CPU_ALIGNMENT_DIAGNOSTIC", "RUN_100K_500K_IMS_CHAIN", "NO_TRAIN"],
+  "budget_snapshot_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+  "chosen_action": "CPU_ALIGNMENT_DIAGNOSTIC",
+  "known_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"],
+  "known_trajectory_ids": [
+   "TB-gptrans-noisy-nodes-100k-s42",
+   "TB-gptrans-noisy-nodes-500k-s42",
+   "TB-gptrans-geometry-distance-100k-s42-a2",
+   "TB-gptrans-geometry-distance-angle-100k-s42-a2",
+   "TB-geometry-transfer-500k-context"
+  ],
+  "policy_id": "pcqm-gptrans-dft-distance-aux-20261121",
+  "policy_version": "1",
+  "role_snapshot_refs": ["experiments/pcqm_gptrans_dft_distance_aux_20261121/role_plan.json"],
+  "source_commit": "fb47463ab3c26c7ce555f8364a29beedd5b09c78",
+  "state_timestamp": "2026-11-21T17:00:00+09:00"
+ },
+ "trajectory": {
+  "actions": [
+   {
+    "action_id": "A001",
+    "attempt_ids": ["dft-sidecar-alignment-local-v1"],
+    "cost_event_ids": ["cost-T-pcqm-gptrans-dft-distance-aux-20261121-alignment-planned"],
+    "evidence_refs": ["experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md"],
+    "run_ids": ["dft-sidecar-alignment-local-v1"],
+    "source_commit": "fb47463ab3c26c7ce555f8364a29beedd5b09c78",
+    "type": "diagnostic"
+   },
+   {
+    "action_id": "A002",
+    "attempt_ids": ["gptdft-chain-20261121-v1"],
+    "cost_event_ids": ["cost-T-pcqm-gptrans-dft-distance-aux-20261121-chain-planned"],
+    "evidence_refs": ["experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md"],
+    "run_ids": ["gptdft-chain-20261121"],
+    "source_commit": "fb47463ab3c26c7ce555f8364a29beedd5b09c78",
+    "type": "training"
+   }
+  ],
+  "decision": {
+   "decision_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+   "next_allowed_actions": [
+    "CPU alignment diagnostic; NO_TRAIN if it fails",
+    "one IMS serial-chain job (c100, d100, gated d500 and c500) only after the diagnostic passes and an Opus pre-submit review finds no blocker"
+   ],
+   "outcome": "ACTIVE",
+   "reopen_conditions": ["terminal evidence"]
+  },
+  "family_id": "pcqm-gptrans-dft-distance-aux-20261121",
+  "hypothesis": {
+   "alternative_explanations": [
+    "Generic extra-gradient regularization, as Noisy Nodes gave at 100K and lost at 500K",
+    "Gradient clip-norm interaction with the added head",
+    "Seed noise about 1-2 meV at 100K"
+   ],
+   "changed_mechanism": "train-only-pair-state-head-regressing-dft-heavy-atom-distances-pure-2d-inference",
+   "cheapest_falsifier": "CPU: SDF heavy atoms must map one-to-one onto the fixed-store graphs for >=99% of rows with bonded distances in 0.9-2.0 A, and the 500K sidecar must build in about 7 minutes; else NO_TRAIN. Training: d100-c100 > -3.0 meV skips 500K.",
+   "decision_changed_if_negative": "Close the train-time DFT distance auxiliary under this contract; no scale-up.",
+   "decision_changed_if_positive": "500K d500-c500 <= -3.0 meV with bootstrap upper < 0 nominates one tail score per checkpoint in the separate 3D-supervised ledger; nothing adopted.",
+   "expected_native_cost_ref": "cost-T-pcqm-gptrans-dft-distance-aux-20261121-chain-planned",
+   "historical_unknowns": [
+    "Official SDF host unreachable on 2026-11-21; mirror identity proven by topology match only",
+    "This is a 3D-supervised contract; not comparable as strict pure-2D evidence"
+   ],
+   "hypothesis_id": "H-T-pcqm-gptrans-dft-distance-aux-20261121",
+   "observed_deficiency": "GPT-T sees topology only and receives no training signal about real DFT geometry.",
+   "related_closed_family_ids": [
+    "gptrans-t-geometry-distance_only",
+    "gptrans-t-geometry-distance_angle",
+    "gptrans-feature-denoising"
+   ],
+   "supporting_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"]
+  },
+  "owner": "desktop",
+  "question": "Does a train-only head that regresses DFT interatomic distances from GPT-T's pair state lower development Gap MAE at 100K and at 500K, with pure-2D inference?",
+  "record_mode": "prospective",
+  "result": {"evidence_ids": [], "evidence_refs": []},
+  "state_at_start": {
+   "budget_snapshot_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+   "contract_refs": [
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/c100_gptrans_pun_s43/recipe.json",
+    "experiments/pcqm_gptrans_dft_distance_aux_20261121/c500_gptrans_pun_s44/recipe.json"
+   ],
+   "parent_trajectory_ids": [],
+   "prior_evidence_ids": ["ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"],
+   "prior_trajectory_ids": [
+    "TB-gptrans-noisy-nodes-100k-s42",
+    "TB-gptrans-noisy-nodes-500k-s42"
+   ],
+   "reference_ids": [],
+   "role_snapshot_refs": ["experiments/pcqm_gptrans_dft_distance_aux_20261121/role_plan.json"],
+   "source_commit": "fb47463ab3c26c7ce555f8364a29beedd5b09c78",
+   "source_config_identity": "472588fa7ef9df00aab11d8ead599bd46512e96dd7599bef3d797f551018bf3d"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+ }
+}

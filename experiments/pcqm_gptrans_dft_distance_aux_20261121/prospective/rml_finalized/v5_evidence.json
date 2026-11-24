@@ -1,0 +1,92 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+      "name": "protocol.md",
+      "sha256": "0ac5f1015346c7cad52ba9dab19bee038799160321778b39d72a5e04c3477b6e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/decision.md",
+      "name": "decision.md",
+      "sha256": "a5d6210fe107278684c401c1ed3c12649a0d50e2b29b06d76a161aa941629842"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/results.json",
+      "name": "results.json",
+      "sha256": "c6a6bde2f19240c9322a09bb217781b167e7b49544e09be4ac819101eea842de"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/retrieve_legacy_outputs.py",
+      "name": "retrieve_legacy_outputs.py",
+      "sha256": "a6501351c645362794d575aa76566985fca41e90d178277e60228e3062ca3dab"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/score_dev_and_distance.py",
+      "name": "score_dev_and_distance.py",
+      "sha256": "a673158ae757290002032cc299425b9e6f2076a621cb1dcff917e5bbf3ed37f0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_gptrans_dft_distance_aux_20261121/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "71dc254e780fca4d0ec09057818c994c0d5d66e8895acd53b75cb53b09ca6f7f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/gptdft-chain-20261121/analysis/final/dev_analysis.json",
+      "name": "dev_analysis.json",
+      "sha256": "7921f354180ea5b06e6f381a08f535881bef56a69a5ff27d7959966cd0caa2d4"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_dft_distance_aux_20261121/protocol.md",
+      "experiments/pcqm_gptrans_dft_distance_aux_20261121/results.json",
+      "experiments/pcqm_gptrans_dft_distance_aux_20261121/acceptance.json",
+      "experiments/pcqm_gptrans_dft_distance_aux_20261121/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-dft-distance-aux-20261123",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-gptrans-dft-distance-aux-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure; the executions are recorded under observed_execution."
+  },
+  "observed_execution": {
+    "backbone_training": true,
+    "execution_ref": "experiments/pcqm_gptrans_dft_distance_aux_20261121/results.json",
+    "inference_executed": true,
+    "postprocessor_fit": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_tail_no_adoption",
+    "comparison_status": "paired_dev_rows_3d_supervised_separate_contract",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE_AT_500K_100K_GAIN_NOT_RETAINED",
+    "transfer_status": "100k_gain_not_retained_at_500k"
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_100k": "consumed",
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-gptrans-dft-distance-aux",
+  "track": "B"
+}

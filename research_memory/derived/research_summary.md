@@ -1,13 +1,13 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 198
+- Validated V5 evidence: 199
 - Evidence without trajectory: 0
 
 ## Trajectories
 - ACTIVE: 7
 - CLOSED: 39
-- INCONCLUSIVE: 23
+- INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
 - NEGATIVE_UNDER_CONTRACT: 68
 - NO_TRAIN: 59
@@ -19,9 +19,9 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 806
-- Coarse historical role records: 957
-- Repeatedly selected role identities: 48
+- Explicit role events: 814
+- Coarse historical role records: 965
+- Repeatedly selected role identities: 50
 
 ## Cost
 - A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -116,6 +116,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
+- NVIDIA A100 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA A100 FP32 device_hours: measured=20.898444 (1 measured record), estimated=11.600000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA A100 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA A100 FP32 wall_hours: measured=20.898444 (1 measured record), estimated=11.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA A100-SXM4-40GB cpu_hours: measured=0.064568 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
@@ -304,6 +308,10 @@
 - desktop CPU; synthetic-only device_hours: not applicable (2 records); measurement_missing=0
 - desktop CPU; synthetic-only queue_hours: not applicable (2 records); measurement_missing=0
 - desktop CPU; synthetic-only wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- local CPU cpu_hours: measured=unknown (0 measured records), estimated=0.300000 (1 estimated record), measurement_missing=0, not_applicable=0
+- local CPU device_hours: not applicable (1 records); measurement_missing=0
+- local CPU queue_hours: not applicable (1 records); measurement_missing=0
+- local CPU wall_hours: measured=unknown (0 measured records), estimated=0.300000 (1 estimated record), measurement_missing=0, not_applicable=0
 - local Windows CPU, four intra-op threads cpu_hours: measured=unknown (0 measured records), estimated=1.333333 (1 estimated record), measurement_missing=0, not_applicable=0
 - local Windows CPU, four intra-op threads device_hours: not applicable (1 records); measurement_missing=0
 - local Windows CPU, four intra-op threads queue_hours: not applicable (1 records); measurement_missing=0
@@ -320,8 +328,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 446
-- Cost-event coverage: 205/216 trajectories; incomplete native measurement=168
+- Measurement-missing cost events: 448
+- Cost-event coverage: 206/217 trajectories; incomplete native measurement=169
 
 ## Screening Backtest
 - Status: available
@@ -329,9 +337,9 @@
 - Excluded traces: 41
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 111
+- [INFO] trace_unavailable_for_backtest: 112
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 168
+- [WARN] incomplete_native_cost_measurement: 169
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 53
 - [WARN] trajectory_without_v5_evidence: 18
