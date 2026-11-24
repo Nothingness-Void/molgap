@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1061,
+  "ambiguous_historical_role_record_count": 1067,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1200,6 +1200,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -7429,7 +7471,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 960,
+  "explicit_role_event_count": 970,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -8778,6 +8820,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
       },
       {
         "access_kind": "labels_read",
@@ -10308,6 +10406,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
       },
       {
         "access_kind": "training_membership",
@@ -14431,6 +14543,8 @@
       "ev-terminal-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop",
       "ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm",
       "ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread",
+      "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+      "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
@@ -14661,6 +14775,8 @@
       "ev-terminal-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop",
       "ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm",
       "ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread",
+      "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+      "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
@@ -16146,6 +16262,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
       },
       {
         "access_kind": "labels_read",
@@ -20927,6 +21099,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -22408,6 +22636,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
       },
       {
         "access_kind": "training_membership",

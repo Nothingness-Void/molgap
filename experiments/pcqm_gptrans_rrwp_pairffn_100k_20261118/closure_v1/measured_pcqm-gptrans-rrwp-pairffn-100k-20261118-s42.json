@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-rrwp-pairffn-100k-20261118-s42\\v1\\version1\\pair_update_norm\\development_predictions.pt",
+      "sha256": "6854daf02d096f8ed9f250489da88a8398a4a73511bfae72148422cba0716ba3"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-rrwp-pairffn-100k-20261118-s42\\v1\\version1\\rrwp_pairffn\\development_predictions.pt",
+      "sha256": "9805156fe6e7785abd7c932339a6afc3985a085b04acd3a9bda5d3510626ccb9"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 0.6385296487808034,
+    "ensemble_gain_meV": 6.48149464130401,
+    "ensemble_mae_meV": 133.27796226203444,
+    "fit": null,
+    "m_meV": 0.6385296487808227,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "rrwp_pairffn",
+        "ci95": [
+          -0.2651474483013153,
+          1.5694990364313124
+        ],
+        "delta": 0.6385296487808227,
+        "n_bootstrap": 2000,
+        "probability_better": 0.083,
+        "reference": "pair_update_norm",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "pair_update_norm": 139.44019207894803,
+      "rrwp_pairffn": 140.07872172772883
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}
