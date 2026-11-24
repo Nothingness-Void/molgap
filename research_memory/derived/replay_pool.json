@@ -123572,6 +123572,38 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream",
+      "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:pair_update_norm:downstream",
+      "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
     },
@@ -123999,5 +124031,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "9874ebed24b601bca695a891ff8081c65244d00bef811fec3ec476bc2dbabb2c"
+  "source_digest": "3dee59afa4251ae5739c19f29194fee5a1d371b98e6c4637183e12be5edbd349"
 }
