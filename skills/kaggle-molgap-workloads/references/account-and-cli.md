@@ -14,7 +14,7 @@ Use the selected account's exact dataset pins. Mirrors grant no new data-role
 or full-scale authority.
 
 On this desktop the credential inventory is `D:/下载/Key`; the default Kaggle
-configuration may be a junction. Pass the selected file explicitly rather than
+configuration may be a junction. Kaggle1 uses `D:/下载/Key/.kaggle1_cli/kaggle.json`. Pass the selected file explicitly rather than
 changing global login or printing its contents. To answer a quota question:
 
 ```powershell

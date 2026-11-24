@@ -488,13 +488,13 @@ def _retrieve_kernel(argv):
         if args.destination is not None:
             version = meta.current_version_number
             if result["scheduler_status"] in {"QUEUED", "RUNNING"}:
-                raise ValueError("Kernel is still queued or running")
+                raise ValueError("kernel is " + result["scheduler_status"] + ", not finished")
             if args.destination.exists() and next(args.destination.iterdir(), None) is not None:
-                raise ValueError("Destination must be new or empty")
+                raise ValueError("destination is not empty: " + str(args.destination))
             context = SimpleNamespace(account=owner, run_reference=args.kernel, platform_version=version)
             names = _list_selected_urls(api, context, None)
             if names.keys() & {"_kernel_retrieval.json", "_kernel_log.json"}:
-                raise ValueError("Remote output uses a reserved file name")
+                raise ValueError("remote output already has reserved file name(s): " + ", ".join(sorted(names.keys() & {"_kernel_retrieval.json", "_kernel_log.json"})))
             from kagglesdk.kernels.types.kernels_api_service import ApiListKernelSessionOutputRequest
             request = ApiListKernelSessionOutputRequest()
             request.user_name, request.kernel_slug, request.page_size = owner, args.kernel.split("/")[1], 1
@@ -510,7 +510,7 @@ def _retrieve_kernel(argv):
             result.update(version=version, files=files, destination=str(args.destination))
             atomic_write(args.destination / "_kernel_retrieval.json", json.dumps(result, indent=1, sort_keys=True).encode())
     except Exception as error:
-        print(json.dumps({"status": "BLOCKED", "error": type(error).__name__}))
+        print(json.dumps({"status": "BLOCKED", "error": type(error).__name__, **({"reason": str(error)} if isinstance(error, ValueError) else {})}))
         return 2
     print(json.dumps(result, sort_keys=True))
     return 0
