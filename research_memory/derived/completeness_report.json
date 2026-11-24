@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 271,
+    "trajectories_total": 273,
     "with_complete_native_measurement": 38,
-    "with_cost_event": 260,
-    "with_incomplete_native_measurement": 222,
+    "with_cost_event": 262,
+    "with_incomplete_native_measurement": 224,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -172,7 +172,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 222,
+      "count": 224,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
@@ -275,6 +275,8 @@
         "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2",
         "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
         "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2",
+        "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn",
+        "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa",
         "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
         "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",

@@ -1,0 +1,42 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8586cba3beac476669af771edbab2fff131e5379aa9325f46b900b1ce7d8be31",
+  "finalized_at": "2026-11-18T04:09:19.803240+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_nb_topa_500k_20261118/closure_v1/roles_muon_bn.json": "dbb72e07fedb3bd40bf4628eb2b77462ee0eff9b725a0ff20157f6c2cadb1814",
+    "experiments/pcqm_k1_nb_topa_500k_20261118/decision.md": "512de142e73dd2ec4d8695981ac8f0bfa01933797293fda9cf22c6216704ec62",
+    "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_bn/recipe.json": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8",
+    "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/stop_for_cost/acceptance.json": "065309b621ea5e2bfd190ced850f20570919fe275d0505812fab959d0db370a6",
+    "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/stop_for_cost/observed.json": "5c2562bbfaf2f36210ecc824340f5dbbe6a23c05cc1b65f93ffef8f259fb9b7b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_bn/allocation_ledger.json": "6b7ae5a9fd4fc371e85427b897be72a43512c44266d002e6c6f8ee25dabaa84a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_bn/canonical_trace.json": "c6828ae1cefe52d8c362b85e4e8802d1061235e394e17b4aab5c484dd2ecf8d6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_bn/data_open_provenance.json": "54ca4b36cc53b24494a1bd22a17730c8434abba1e61cc20f6a1baca4ac3266cd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_bn/invocation_cost_state.json": "a569a912f10c37b9144748cadc850ab5cf254c0dba575aa0d24dd508717f3133",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_bn/pause_receipt.json": "783d3dd2e1149b3c4ad1920aaa77fbe5efaffc0977a736214985f827d40e6149"
+  },
+  "outcome": "STOP_FOR_COST",
+  "prospective_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+  "prospective_sha256": "9dc3d7a69c6af67d7a290d25eb0c2ac248e690755e736071267bf6310df5e5ec",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-0.json": "97f85335011ff45cd3aa42b8cfa8bb2d2608899e8bc00cb25dad382df4fbf05b",
+    "roles/role-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-development-labels_read.json": "224a9bebb25ba8a421e131019f2441165b286094e8b955ab4b10769263446bdd",
+    "roles/role-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-development-metric_computed.json": "630fbc6d36f852c11b64b5ca1e292a14fed9a2358bdf0597f1aae95bdcc276c5",
+    "roles/role-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-development-prediction_input.json": "29a229203a15a0ee593e62ebf1fb1f2d4d3e97693594e72f4c526c69d8a7a001",
+    "roles/role-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-development-selection_used.json": "14b628cd01727fc3733d4417d2250986b42c4130d2716494c836d87c23eae0da",
+    "roles/role-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn-train-training_membership.json": "66bb03888869409a53f4e4ff59b3da5c25968d4209d141678e32ea01e8e642bf",
+    "terminal_input.json": "329a1c985e15e7c8fa0bb1846464e348311f3b8bd4e84f2959027f7d097cc04d",
+    "trace.json": "c6828ae1cefe52d8c362b85e4e8802d1061235e394e17b4aab5c484dd2ecf8d6",
+    "trace_manifest.json": "2ec0331beefce96084b2d2e1a02c8c6261a67e4dba8ecfb0e9f322547eb230fa",
+    "trajectory.json": "c2346a0a6a4f06fec149f2ee705bf9d4626c70becb85b5fc93a4aa3cc8c361be",
+    "v5_evidence.json": "897d15e9abd32eb03a4eaa4fbac6985da98b9c27f2718d6f348c4f9cf4d78d1b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_bn/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "8586cba3beac476669af771edbab2fff131e5379aa9325f46b900b1ce7d8be31",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn"
+}

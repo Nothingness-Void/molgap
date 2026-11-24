@@ -179578,6 +179578,36 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_bn:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_nb_topa:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
         "missing_comparability_identity:ema_semantics",
@@ -180015,5 +180045,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "c49ea1ca84006c4388a316fdbf1a1c3372cae4aacca58fb3ddfeb73cdd874f0d"
+  "source_digest": "b4deae571a0db11f467e3e5c5f3f78354bb9faf68d77b1ab14b5276db8420998"
 }

@@ -1,0 +1,110 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_nb_topa_500k_20261118",
+  "logical_run_id": "pcqm-k1-nb-topa-500k-20261118-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-18T01:20:00+09:00",
+  "authority_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/authority.json",
+  "role_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_k1_nb_topa_500k_20261118/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-k1-nb-topa-500k-20261118",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does adding O(|E|) non-backtracking directed bond flow and lightweight 8x8 zero-diagonal cross-head Top-A transport to 18-BN K1 reduce 500K 60-pass development MAE under batched FP32 Muon?",
+    "deficiency": "Standard K1 edge updates lack directed non-backtracking path flow, and GINE local aggregation lacks edge-conditioned cross-head transport.",
+    "changed_mechanism": "wrap-edge-updates-with-o-e-non-backtracking-flow-and-local-blocks-with-8x8-zero-diag-topa-transport",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "K1's 500K ceiling is not relieved by non-backtracking bond flow or cross-head local transport",
+      "Added local/edge capacity improves early passes without passing the 3 meV terminal gate"
+    ],
+    "closed_families": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "positive_decision": "NOMINATE if muon_nb_topa-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "negative_decision": "Close NB+TopA K1 rescue if it fails the material gate.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device, single forward",
+    "estimated_device_hours": 24,
+    "estimated_wall_hours": 12,
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing 18-BN K1 against NB+TopA K1 from identical k1.pt initialization."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "muon_bn"
+    },
+    {
+      "arm_id": "muon_nb_topa",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_nb_topa"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon_bn",
+    "target_manifest_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-k1-nb-topa-500k-20261118-s42",
+      "title": "MolGap K1 NB TopA 500K 20261118 S42",
+      "datasets": [
+        "kaseichou/k1-nb-topa-500k-20261118-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "kaseichou/k1-nb-topa-500k-20261118-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 156240
+    }
+  }
+}

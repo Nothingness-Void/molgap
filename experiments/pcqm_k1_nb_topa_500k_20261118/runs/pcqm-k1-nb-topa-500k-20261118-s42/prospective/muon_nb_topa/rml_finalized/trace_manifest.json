@@ -1,0 +1,54 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "paused_stop_for_cost"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_144065",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_nb_topa/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 144065,
+    "sample_presentations": 18440320
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_nb_topa/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn",
+  "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_nb_topa:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_nb_topa/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_nb_topa/rml_finalized/trace.json",
+  "trace_artifact_sha256": "cfd048e7673e7f8a7b8c69fcf878e19807d5571ef3ba3c6695d28a564c65e9b1",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa",
+  "weight_semantics": "live_only",
+  "x_axis": "optimizer_steps"
+}

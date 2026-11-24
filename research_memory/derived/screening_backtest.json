@@ -84,6 +84,36 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_bn:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_nb_topa:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
         "missing_comparability_identity:ema_semantics",
@@ -1200,5 +1230,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 149
+  "trace_count": 151
 }

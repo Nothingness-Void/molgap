@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 203,
-  "event_count": 642,
+  "estimated_event_count": 205,
+  "event_count": 646,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 593,
+  "measurement_missing_event_count": 597,
   "not_applicable_event_count": 132,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -4072,7 +4072,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 133
+        "unknown_records": 135
       },
       "Tesla T4:device_hours": {
         "estimated": {
@@ -4084,7 +4084,7 @@
           "known_total": 63.731421407513054
         },
         "not_applicable_records": 0,
-        "unknown_records": 104
+        "unknown_records": 106
       },
       "Tesla T4:queue_hours": {
         "estimated": {
@@ -4096,7 +4096,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 133
+        "unknown_records": 135
       },
       "Tesla T4:wall_hours": {
         "estimated": {
@@ -4104,8 +4104,8 @@
           "known_total": 55.0
         },
         "measured": {
-          "known_records": 109,
-          "known_total": 487.75489496590376
+          "known_records": 111,
+          "known_total": 503.3457341497912
         },
         "not_applicable_records": 0,
         "unknown_records": 16
@@ -5032,12 +5032,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 8
+        "unknown_records": 10
       },
       "Tesla T4x2 FP32/noTF32, one arm per device, single forward:device_hours": {
         "estimated": {
-          "known_records": 8,
-          "known_total": 172.0
+          "known_records": 10,
+          "known_total": 220.0
         },
         "measured": {
           "known_records": 0,
@@ -5056,12 +5056,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 8
+        "unknown_records": 10
       },
       "Tesla T4x2 FP32/noTF32, one arm per device, single forward:wall_hours": {
         "estimated": {
-          "known_records": 8,
-          "known_total": 90.0
+          "known_records": 10,
+          "known_total": 114.0
         },
         "measured": {
           "known_records": 0,
@@ -7370,7 +7370,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 237
+        "unknown_records": 239
       },
       "device_hours": {
         "estimated": {
@@ -7382,7 +7382,7 @@
           "known_total": 433.8090819596194
         },
         "not_applicable_records": 0,
-        "unknown_records": 110
+        "unknown_records": 112
       },
       "queue_hours": {
         "estimated": {
@@ -7394,7 +7394,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 237
+        "unknown_records": 239
       },
       "wall_hours": {
         "estimated": {
@@ -7402,8 +7402,8 @@
           "known_total": 55.0
         },
         "measured": {
-          "known_records": 113,
-          "known_total": 506.40741454902656
+          "known_records": 115,
+          "known_total": 521.998253732914
         },
         "not_applicable_records": 0,
         "unknown_records": 116
@@ -8720,12 +8720,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 8
+        "unknown_records": 10
       },
       "device_hours": {
         "estimated": {
-          "known_records": 8,
-          "known_total": 172.0
+          "known_records": 10,
+          "known_total": 220.0
         },
         "measured": {
           "known_records": 0,
@@ -8744,12 +8744,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 8
+        "unknown_records": 10
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 8,
-          "known_total": 90.0
+          "known_records": 10,
+          "known_total": 114.0
         },
         "measured": {
           "known_records": 0,
@@ -18776,6 +18776,202 @@
         "estimated": {
           "known_records": 1,
           "known_total": 11.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn": {
+      "Tesla T4:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 6.717909821166667
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 24.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 12.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa": {
+      "Tesla T4:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.872929362720834
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 24.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32/noTF32, one arm per device, single forward:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 12.0
         },
         "measured": {
           "known_records": 0,
