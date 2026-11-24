@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c3fed1b0fcfb1bc335510b2cc384a389d20821e5d2912fa838f54ecf9deefa2a",
+  "source_digest": "9c5b648718cb409df3782b2001472469cabe19a2b56bf6e4d934e12b07849761",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1049,6 +1049,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_history_read_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-history-read-100k-20261106",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/current_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-current_read"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-current_read"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_history_read_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-history-read-100k-20261106",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/history_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-history_read"
     },
     {
       "completeness_status": "complete",
