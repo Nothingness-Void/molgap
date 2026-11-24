@@ -1,0 +1,99 @@
+{
+  "context": {
+    "experiment_id": "pcqm_tb_eigengnn_100k_20261118",
+    "logical_run_id": "pcqm-tb-eigengnn-100k-20261118-s42",
+    "arm_id": "tb_eigengnn",
+    "arm_identity": "90c03bd9294e09af7d6a1e4ae39724f946aa2ca2ae585e5788200aff6a010533",
+    "spec_identity": "e8e40294d82bdfbf01bff879de5bc381f73cfd6dcbf5ed1c8b08f166c267b26f",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "1d4ea7db47d85def2af7c61b3088e61965c40d34",
+    "source_archive_sha256": "8dd8c321330fc9ed717d65205481cc3f5e84e3d8e58b71bf57ad9b083d37456e",
+    "package_identity": "7780cb1f625dd2b41a2d06bedf3315772eacdee3724e4cceaf626e3fbfaf8bfd",
+    "training_recipe_sha256": "5a1a6672c4a5cf727fd3bf9656b7ede4cefa517f98cf02a575327d6e147ea7e8",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-tb-eigengnn-100k-20261118-s42",
+    "platform_version": "1"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-train-training_membership",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+      "action_id": "A001",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-prediction_input",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+      "action_id": "A001",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-labels_read",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+      "action_id": "A001",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-metric_computed",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+      "action_id": "A001",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-selection_used",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+      "action_id": "A001",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json"
+    }
+  ],
+  "protected_role_evidence": {
+    "status": "untouched",
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "7acae294f493c02f2392b03d09a587aa3c478f5048fbde675f04ab79211e41c1"
+    },
+    "text": "Hash-bound record data_open_provenance.json (sha256 7acae294f493c02f2392b03d09a587aa3c478f5048fbde675f04ab79211e41c1, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  }
+}

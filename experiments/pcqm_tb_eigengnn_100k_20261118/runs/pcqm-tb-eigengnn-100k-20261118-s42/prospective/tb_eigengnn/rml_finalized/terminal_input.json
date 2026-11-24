@@ -1,0 +1,79 @@
+{
+  "acceptance_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/tb_eigengnn/terminal_staging/v1/dc4a916a0e5c9d04/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_tb_eigengnn.json": "fc1d3aca5361479b1344ac4e35b73169555c67f5d5480aee93f32c4ceb2a172a",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md": "e5b3918e94891c5c6962958be317b05f4daa58c6387a85a6e470e3f6b0462c5c",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/authority.json": "f56e2dfd1d8f9fd878aa15bf91b9b73946f27b2c1b7ab307faa93d0015a07d7a",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/tb_eigengnn/recipe.json": "5a1a6672c4a5cf727fd3bf9656b7ede4cefa517f98cf02a575327d6e147ea7e8",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/tb_eigengnn/terminal_staging/v1/dc4a916a0e5c9d04/acceptance.json": "cb41fa4c44c8ad7bf3df893e2c5ecc276d211b8e848a6f71ec49007b9572344f",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/tb_eigengnn/terminal_staging/v1/dc4a916a0e5c9d04/observed.json": "73275d29f8e811a75c4be3c6572bf005e4ce8833851fcbdd75e8efcf7c4622ec",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/tb_eigengnn/canonical_trace.json": "ddbe0f67ce423e8b499d4f09a9b8c30cd7ca7848ef1b3efbb10128f93972b4c8",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/tb_eigengnn/canonical_trace.json.context.json": "abbabaee7dd7856e9a7aab2731cbbe58164a96ffb2d19c2b28274683f06b2813",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/tb_eigengnn/data_open_provenance.json": "7acae294f493c02f2392b03d09a587aa3c478f5048fbde675f04ab79211e41c1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/tb_eigengnn/training_contract.json": "5a1a6672c4a5cf727fd3bf9656b7ede4cefa517f98cf02a575327d6e147ea7e8"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-18T13:10:39.995787+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-0.json",
+        "sha256": "ef899f7b89723267690f4fdf2bb1a5f9863fad052316b975588dd2ef7e434278"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "4d33f155e53e5ba710321730bdf7784eabef1cca4cf6ae263e8886c83495f290"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "ecdccbd219110a814d71ca4fca4eb6cfb22fbd2b3158e21f7ea647b8f21cdd93"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-train-training_membership.json",
+        "sha256": "9a57546a486047d3fda848ee6423b1f3ddfbd0663b60ef2732bd7b894a48fb5f"
+      },
+      {
+        "ref": "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-prediction_input.json",
+        "sha256": "1767a0a069bc91026866c8ca6a2a6488a50564251b0cea7a5ee5da09ccec94d1"
+      },
+      {
+        "ref": "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-labels_read.json",
+        "sha256": "9f83dbe402dc17c6264dada3adf36e5827502a8e6847dc9687b2a2fc5ee3096d"
+      },
+      {
+        "ref": "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-metric_computed.json",
+        "sha256": "7ea5660b95ebec9c4ab4e7b91c0097acb4277091a8553de3308acfc261f72139"
+      },
+      {
+        "ref": "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-development-selection_used.json",
+        "sha256": "d50c400467f93247bc685bde73fb758f95d418927765fc98ab1767c1b80b21a6"
+      }
+    ]
+  },
+  "requested_outcome": "STOP_FOR_COST",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-tb-eigengnn-100k-20261118-s42-v1",
+    "logical_run_id": "pcqm-tb-eigengnn-100k-20261118-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-tb-eigengnn-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "1d4ea7db47d85def2af7c61b3088e61965c40d34",
+    "source_package_sha256": "8dd8c321330fc9ed717d65205481cc3f5e84e3d8e58b71bf57ad9b083d37456e",
+    "spec_identity": "e8e40294d82bdfbf01bff879de5bc381f73cfd6dcbf5ed1c8b08f166c267b26f"
+  },
+  "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn"
+}

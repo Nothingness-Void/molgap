@@ -1,0 +1,40 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8154698e343c5ac9af986cdfc46f65d3d684facac2615669cb31d4cf995b11ef",
+  "finalized_at": "2026-11-18T13:10:39.868471+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json": "4f15282e88c5d2eb801c0abe4e8747a90bdd924c0fb26b1f29aa8364b158c903",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md": "e5b3918e94891c5c6962958be317b05f4daa58c6387a85a6e470e3f6b0462c5c",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/authority.json": "f56e2dfd1d8f9fd878aa15bf91b9b73946f27b2c1b7ab307faa93d0015a07d7a",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/pair_update_norm/recipe.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/acceptance.json": "34ff3103b8011a9a218e57957611c2df8412b6f290f834221501828e149eb685",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/observed.json": "41bc5fa119c500695df53a8bd1696daee06e1aa2cf06fcc4f40ba4d5201cbdb1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json": "1bf165318c68f619f6aef04d2d93376c86f2e06138f508699ca7b38f76a708c1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json": "61687873c421f4f86d3baeb23284769b37325fb4e4db37c10b5b97f4df967500",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json": "872e43ff61393ce125033c1ce406bcb91ed9f7bbde44753a24ae1e444790e99f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+  },
+  "outcome": "STOP_FOR_COST",
+  "prospective_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+  "prospective_sha256": "4b82d16a24180d831043c9d3b224bc1ef96221b148fb1b462fe3b0d9fb7b52b3",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-0.json": "b9581f8f8d1e284d851109614bd339080b08dcf50334e0a96f52e8637d37ab3a",
+    "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-labels_read.json": "03181576c9970bf3f37f076534b538d8355276250d2d0d5907e5e50029827d63",
+    "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-metric_computed.json": "be82c0a5c6db7f99aeea7ce38c8b512d3e0f1d838367cf146a9fe4f9d367ca90",
+    "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-prediction_input.json": "4ab0a0b8859b8526c48e4da81d4e80de1d62af92891827241a74e54f27935a60",
+    "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-selection_used.json": "c6ee1330ec6e83fb099f0a2c603505a271c95fcadef4cca14c605176d19eb913",
+    "roles/role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-train-training_membership.json": "6b06612360fc4a8ad216a6267a3c4dbaa73a9c11ffd4c6e98b1ac9a4dfed0a70",
+    "terminal_input.json": "6d921612863ea927ec7ef1cd41a98d9c42916bf73a6796221a91c0ac62e7ef69",
+    "trajectory.json": "5029234f800a1e9f545f48318d05ba07581acd7810d8f05ee5729b11a83f95d5",
+    "v5_evidence.json": "fbfef417fa3d724e6099af4e9429cb246067506aba67980999c97f5b11a2dbc2"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "8154698e343c5ac9af986cdfc46f65d3d684facac2615669cb31d4cf995b11ef",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+}

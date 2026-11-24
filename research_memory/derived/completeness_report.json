@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 283,
+    "trajectories_total": 285,
     "with_complete_native_measurement": 39,
-    "with_cost_event": 272,
-    "with_incomplete_native_measurement": 233,
+    "with_cost_event": 274,
+    "with_incomplete_native_measurement": 235,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 124,
+      "count": 126,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-dft-distance-aux-20261121",
@@ -33,6 +33,8 @@
         "T-pcqm-grit-spse-100k-20261118-s42-pair_update_norm",
         "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
         "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+        "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -173,7 +175,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 233,
+      "count": 235,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
@@ -303,6 +305,8 @@
         "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44",
         "T-pcqm-single-model-total-budget-500k-s42-a_12x384",
         "T-pcqm-single-model-total-budget-500k-s42-b_16x256",
+        "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
