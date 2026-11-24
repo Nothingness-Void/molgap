@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1082,
+  "ambiguous_historical_role_record_count": 1088,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1505,6 +1505,48 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "training_membership"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
@@ -7576,7 +7618,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 995,
+  "explicit_role_event_count": 1005,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -9180,6 +9222,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -10658,6 +10756,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "training_membership",
@@ -14836,6 +14948,8 @@
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
       "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
@@ -15073,6 +15187,8 @@
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
       "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
@@ -16804,6 +16920,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "labels_read",
@@ -21781,6 +21953,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -23213,6 +23441,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "training_membership",
