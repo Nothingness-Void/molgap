@@ -9,6 +9,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .cards import families_pages
 from .backtest import build_screening_backtest
 from .backtest import build_policy_backtests
 from .policy import load_policy_registry
@@ -35,6 +36,7 @@ DERIVED_FILENAMES = (
     "completeness_report.json",
     "research_summary.json",
     "research_summary.md",
+    "families.md",
 )
 
 
@@ -312,6 +314,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
     payloads.update({
         "research_summary.md": render_summary_markdown(summary).encode("utf-8"),
     })
+    payloads.update(families_pages(root, trajectory_index))
     return payloads
 
 
@@ -319,10 +322,13 @@ def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
     payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = repo_local_path(root, "research_memory/derived")
-    output_root.mkdir(parents=True, exist_ok=True)
+    (output_root / "families").mkdir(parents=True, exist_ok=True)
+    for stale in (output_root / "families").glob("*.md"):
+        if f"families/{stale.name}" not in payloads:
+            stale.unlink()
     for name, payload in sorted(payloads.items()):
         target = repo_local_path(root, output_root / name)
-        with tempfile.NamedTemporaryFile(dir=output_root, delete=False) as handle:
+        with tempfile.NamedTemporaryFile(dir=target.parent, delete=False) as handle:
             temporary = Path(handle.name)
             handle.write(payload)
         temporary.replace(target)
@@ -336,8 +342,9 @@ def frozen_differences(repo_root: str | Path) -> list[str]:
     payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = root / "research_memory" / "derived"
     differences = []
-    for name in DERIVED_FILENAMES:
+    stray = {f"families/{p.name}" for p in (output_root / "families").glob("*.md")} - set(payloads)
+    for name in [*DERIVED_FILENAMES, *sorted(payloads.keys() - set(DERIVED_FILENAMES)), *sorted(stray)]:
         path = output_root / name
-        if not path.is_file() or path.read_bytes() != payloads[name]:
+        if not path.is_file() or path.read_bytes() != payloads.get(name):
             differences.append(name)
     return differences

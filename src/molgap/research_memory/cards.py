@@ -97,14 +97,14 @@ def _git(root, *args) -> str:
     return done.stdout
 
 
-def build_cards(repo_root, ref=None, *, source=None) -> list[dict]:
+def build_cards(repo_root, ref=None, *, source=None, index=None) -> list[dict]:
     """ref: read that revision's committed files, not the working tree. source: label of a 'source' field."""
     root = Path(repo_root).resolve()
     rev = _git(root, "rev-parse", "--verify", f"{ref}^{{commit}}").strip() if ref else "HEAD"
     batch = ref and subprocess.Popen(["git", "-C", str(root), "cat-file", "--batch"],
                                      stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     tree = _GitTree(batch, rev) if ref else root
-    index = json.loads((tree / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))
+    index = index or json.loads((tree / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))
     outcomes = {e: row["outcome"] for row in index["trajectories"] for e in row.get("result_evidence_ids") or []}
     last = {}  # Newest commit touching each path at rev, from one history walk.
     for line in _git(root, "log", "--format=>%h %cs", "--name-only", rev).splitlines() if source else []:
@@ -301,3 +301,47 @@ def gaps(cards) -> dict:
                       for arm, cs in sorted(by_arm.items())
                       for a in cs for b in cs if _scale(a) < _scale(b) and a["outcome"] != b["outcome"]]
     return {"sparse": sparse, "contradictions": contradictions}
+
+
+def families_pages(repo_root, index) -> dict[str, bytes]:
+    """families.md (one line per family) plus families/<name>.md, from research_memory/families.json patterns.
+
+    Open = ACTIVE, the only non-terminal outcome; every other outcome is terminal. Recent = newest YYYYMMDD
+    token in the ids, else id order (git history would make the pages change after each commit).
+    """
+    from fnmatch import fnmatchcase
+    root = Path(repo_root)
+    fams = json.loads((root / "research_memory/families.json").read_text(encoding="utf-8"))["families"]
+    hit = lambda text, pats: any(fnmatchcase(text.lower(), p.lower()) for p in pats)  # noqa: E731
+    cards, taken, pages, rows = build_cards(root, index=index), set(), {}, []
+    src = sorted(p.relative_to(root / "src/molgap").as_posix() for p in (root / "src/molgap").rglob("*.py"))
+    recent = lambda c: (max(re.findall(r"20\d{6}", f"{c['trajectory_id']} {c['decision_ref']}") or ["0"]), c["trajectory_id"])  # noqa: E731
+    for f in fams:
+        mine = [c for c in cards if c["trajectory_id"] not in taken and hit(c["family_id"], f["family_id"])]
+        taken |= {c["trajectory_id"] for c in mine}
+        open_ = [c for c in mine if c["outcome"] == "ACTIVE"]
+        closed = sorted((c for c in mine if c["outcome"] not in {"ACTIVE", "CLOSED"}), key=recent)  # CLOSED = reference arms
+        reopen = list(dict.fromkeys(r for c in closed for r in c["reopen_conditions"] or []))
+        nxt = list(dict.fromkeys(str(c["next_candidates"]) for c in mine if c.get("next_candidates")))
+        mods = [f"src/molgap/{p}" for p in src if hit(p, f["src"])]
+        dirs = sorted(d.name for d in (root / "experiments").iterdir() if d.is_dir() and hit(d.name, f["experiments"]))
+        more = lambda xs, n: ", ".join(xs[:n]) + (f", +{len(xs) - n} more" if len(xs) > n else "") or "-"  # noqa: E731
+        out = [f"# {f['name']} ({', '.join(f['aliases'])})", "", "## Quick answer", f"Recent closed (of {len(closed)}):",
+               *map(compact_line, closed[-3:][::-1]), f"Open (ACTIVE) {len(open_)}: " + more([c["trajectory_id"] for c in open_], 3),
+               "Reopen: " + (" / ".join(r[:100] for r in reopen[:3]) or "none recorded"),
+               *([f"Next candidates: {' / '.join(nxt[:3])}"] if nxt else []),
+               "src (src/molgap/): " + more([m.removeprefix("src/molgap/") for m in mods], 10), "Experiments: " + more(dirs, 10), "", f"## Closed ({len(closed)})",
+               *map(compact_line, closed[::-1]), "", f"## Open ({len(open_)})", *map(compact_line, open_), "",
+               "## Levers (first 10)", *levers(mine, "*")[:11], "", "## Reopen conditions", *reopen,
+               *(["", "## Next candidates", *nxt] if nxt else []), "", "## src", *mods, "", "## Experiments"]
+        for d in dirs:
+            base = root / "experiments" / d
+            scripts = sorted(p.name for p in base.glob("*.py"))
+            traces = sorted(p.relative_to(root).as_posix() for p in base.rglob("trace.json"))
+            out += [f"- experiments/{d}: scripts {', '.join(scripts) or '-'}", *[f"  - trace {t}" for t in traces]]
+        pages[f"families/{f['name']}.md"] = "\n".join([*out, ""]).encode("utf-8")
+        rows.append(f"- [{f['name']}](families/{f['name']}.md) ({', '.join(f['aliases'])}): closed {len(closed)}, open {len(open_)}")
+    rest = sorted({c["family_id"] for c in cards if c["trajectory_id"] not in taken})
+    pages["families.md"] = "\n".join(["# Model families", "", "Generated by `research_memory rebuild` from families.json; do not edit.",
+                                      "", *rows, "", f"Unassigned family ids: {', '.join(rest) or 'none'}", ""]).encode("utf-8")
+    return pages
