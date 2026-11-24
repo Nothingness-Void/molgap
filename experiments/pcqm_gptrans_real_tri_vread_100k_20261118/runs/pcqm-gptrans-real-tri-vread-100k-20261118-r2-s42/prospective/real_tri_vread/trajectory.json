@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/generated/b9c199d1d76c7391193e80da74641112ae7382dfc0723b74105f5f0707922381/real_tri_vread/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42:real_tri_vread:downstream"
+      ],
+      "source_commit": "a7d89a45bbe27462852e6cea8d3e5f615261d858",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/generated/b9c199d1d76c7391193e80da74641112ae7382dfc0723b74105f5f0707922381/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-real-tri-vread-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/runs/pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42/prospective/rml_decision_snapshots/3693624b6cb14c046c933ba2ffbcafac619ff38cbb321d574a0e7a9d826135d1.json",
+    "snapshot_sha256": "3693624b6cb14c046c933ba2ffbcafac619ff38cbb321d574a0e7a9d826135d1",
+    "state_timestamp": "2026-11-18T13:00:00+09:00"
+  },
+  "family_id": "pcqm-gptrans-real-tri-vread-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Virtual node attention in layer 12 already extracts all useful real-atom pair information",
+      "Direct virtual-query pair pooling adds capacity without improving generalization",
+      "Combined effect remains below the 3 meV material gate"
+    ],
+    "changed_mechanism": "gptrans-real-atom-triangle-pair-plus-l12-virtual-pair-readout",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealTriVRead from identical gptrans.pt initialization.",
+    "decision_changed_if_negative": "Close this virtual-query pair readout intervention without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread",
+    "observed_deficiency": "Real-atom triangle multiplicative updates at layers 2, 4, 6, 8, and 10 improved 100K development MAE by -1.667 meV but fell short of the -3.0 meV gate because final readout relies only on virtual-node projections without directly pooling refined real-atom pair states into the virtual-virtual pair readout entry.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does adding an L12 virtual-query attention pooling readout over real-atom pair states into pair[:,:,0,0] on top of the layers 2,4,6,8,10 real-atom triangle pair update clear the -3.0 meV 100K development MAE gate against BondLocal+PairNorm GPTrans-T?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/generated/b9c199d1d76c7391193e80da74641112ae7382dfc0723b74105f5f0707922381/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/generated/b9c199d1d76c7391193e80da74641112ae7382dfc0723b74105f5f0707922381/real_tri_vread/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "real_tri_vread",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_real_tri_vread_100k_20261118/runs/pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "afa8cf9c76cc04cf8dbe8d539bb21a26734ffb648ac082e6b7e5cbce82a52049"
+    },
+    "source_commit": "a7d89a45bbe27462852e6cea8d3e5f615261d858",
+    "source_config_identity": "9503235884daa578c497ba306a03f70e0c7a6098f7e291de7cd7fa3217b8eb0e"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+}
