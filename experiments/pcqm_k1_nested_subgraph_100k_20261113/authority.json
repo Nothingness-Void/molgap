@@ -1,0 +1,18 @@
+{
+  "arms": [
+    "nested_subgraph"
+  ],
+  "authorized_at": "2026-11-13T19:00:00+09:00",
+  "automatic_retry": false,
+  "development_role_label_use": true,
+  "format": "molgap-execution-authority-v1",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "platform": "local",
+  "protected_roles_authorized": [],
+  "protocol_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/protocol.md",
+  "scope": "one local RTX 5060 40-pass 100K candidate screen of k1_nested_subgraph/1 under K1-Muon; offline comparison against retained ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon; no retry, no 500K, no full training or protected roles",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}

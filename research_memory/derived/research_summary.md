@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 249
+- Validated V5 evidence: 250
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - CLOSED: 61
 - INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
-- NEGATIVE_UNDER_CONTRACT: 79
+- NEGATIVE_UNDER_CONTRACT: 80
 - NO_TRAIN: 61
 - POSITIVE_BELOW_GATE: 10
 - POSITIVE_UNDER_CONTRACT: 11
@@ -21,8 +21,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 1057
-- Coarse historical role records: 1126
+- Explicit role events: 1062
+- Coarse historical role records: 1129
 - Repeatedly selected role identities: 50
 
 ## Cost
@@ -134,10 +134,10 @@
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
 - NVIDIA A100-SXM4-40GB wall_hours: measured=0.079196 (5 measured records), estimated=0.666667 (2 estimated records), measurement_missing=2, not_applicable=0
-- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.145885 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=11, not_applicable=0
-- NVIDIA GeForce RTX 5060 device_hours: measured=0.126423 (7 measured records), estimated=1.161111 (3 estimated records), measurement_missing=7, not_applicable=0
-- NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=11
-- NVIDIA GeForce RTX 5060 wall_hours: measured=1.195033 (10 measured records), estimated=1.161111 (3 estimated records), measurement_missing=4, not_applicable=0
+- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.145885 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- NVIDIA GeForce RTX 5060 device_hours: measured=0.126423 (7 measured records), estimated=1.161111 (3 estimated records), measurement_missing=9, not_applicable=0
+- NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=11
+- NVIDIA GeForce RTX 5060 wall_hours: measured=2.419806 (11 measured records), estimated=1.161111 (3 estimated records), measurement_missing=5, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution device_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -354,18 +354,18 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 597
-- Cost-event coverage: 262/273 trajectories; incomplete native measurement=224
+- Measurement-missing cost events: 599
+- Cost-event coverage: 263/274 trajectories; incomplete native measurement=225
 
 ## Screening Backtest
 - Status: available
 - Eligible traces: 104
-- Excluded traces: 46
+- Excluded traces: 47
 
 ## Memory Gaps
 - [INFO] trace_unavailable_for_backtest: 123
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 224
+- [WARN] incomplete_native_cost_measurement: 225
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 59
 - [WARN] trajectory_without_v5_evidence: 24

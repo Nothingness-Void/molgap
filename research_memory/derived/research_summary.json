@@ -1,15 +1,15 @@
 {
   "backtest": {
     "eligible": 104,
-    "excluded": 46,
+    "excluded": 47,
     "status": "available"
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 273,
+      "trajectories_total": 274,
       "with_complete_native_measurement": 38,
-      "with_cost_event": 262,
-      "with_incomplete_native_measurement": 224,
+      "with_cost_event": 263,
+      "with_incomplete_native_measurement": 225,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1374,7 +1374,7 @@
             "known_total": 0.14588541666666668
           },
           "not_applicable_records": 0,
-          "unknown_records": 11
+          "unknown_records": 13
         },
         "device_hours": {
           "estimated": {
@@ -1386,7 +1386,7 @@
             "known_total": 0.1264233322500013
           },
           "not_applicable_records": 0,
-          "unknown_records": 7
+          "unknown_records": 9
         },
         "queue_hours": {
           "estimated": {
@@ -1398,7 +1398,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 6
+          "unknown_records": 8
         },
         "wall_hours": {
           "estimated": {
@@ -1406,11 +1406,11 @@
             "known_total": 1.161111111111111
           },
           "measured": {
-            "known_records": 10,
-            "known_total": 1.1950334771111129
+            "known_records": 11,
+            "known_total": 2.4198057256944456
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 5
         }
       },
       "NVIDIA GeForce RTX 5060; local desktop execution": {
@@ -4114,10 +4114,10 @@
         }
       }
     },
-    "unknown_events": 597
+    "unknown_events": 599
   },
   "evidence": {
-    "validated": 249,
+    "validated": 250,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -4134,7 +4134,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 224,
+      "count": 225,
       "severity": "WARN"
     },
     {
@@ -4154,19 +4154,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 1126,
-    "explicit_events": 1057,
+    "coarse_historical": 1129,
+    "explicit_events": 1062,
     "repeatedly_selected": 50
   },
-  "source_digest": "d1edffd7b01bf548d7ba9a70d2ea7b04c9247dc03cfec1f7f7b6b1e9e5b0f2cd",
+  "source_digest": "ff873511172146691b5c1efe350313bbdc0fa0361d013dcb96cc8507b3cebf35",
   "trajectories": {
-    "count": 273,
+    "count": 274,
     "outcomes": {
       "ACTIVE": 13,
       "CLOSED": 61,
       "INCONCLUSIVE": 24,
       "INFRASTRUCTURE_ONLY": 10,
-      "NEGATIVE_UNDER_CONTRACT": 79,
+      "NEGATIVE_UNDER_CONTRACT": 80,
       "NO_TRAIN": 61,
       "POSITIVE_BELOW_GATE": 10,
       "POSITIVE_UNDER_CONTRACT": 11,

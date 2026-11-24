@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 205,
-  "event_count": 646,
+  "event_count": 648,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 597,
+  "measurement_missing_event_count": 599,
   "not_applicable_event_count": 132,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -3592,7 +3592,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "NVIDIA GeForce RTX 5060:device_hours": {
         "estimated": {
@@ -3604,7 +3604,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "NVIDIA GeForce RTX 5060:queue_hours": {
         "estimated": {
@@ -3616,7 +3616,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "NVIDIA GeForce RTX 5060:wall_hours": {
         "estimated": {
@@ -3624,11 +3624,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 1.0164312607222221
+          "known_records": 3,
+          "known_total": 2.241203509305555
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 5
       },
       "NVIDIA GeForce RTX 5060; local desktop execution:cpu_hours": {
         "estimated": {
@@ -6770,7 +6770,7 @@
           "known_total": 0.14588541666666668
         },
         "not_applicable_records": 0,
-        "unknown_records": 11
+        "unknown_records": 13
       },
       "device_hours": {
         "estimated": {
@@ -6782,7 +6782,7 @@
           "known_total": 0.1264233322500013
         },
         "not_applicable_records": 0,
-        "unknown_records": 7
+        "unknown_records": 9
       },
       "queue_hours": {
         "estimated": {
@@ -6794,7 +6794,7 @@
           "known_total": null
         },
         "not_applicable_records": 11,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "wall_hours": {
         "estimated": {
@@ -6802,11 +6802,11 @@
           "known_total": 1.161111111111111
         },
         "measured": {
-          "known_records": 10,
-          "known_total": 1.1950334771111129
+          "known_records": 11,
+          "known_total": 2.4198057256944456
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 5
       }
     },
     "NVIDIA GeForce RTX 5060; local desktop execution": {
@@ -18979,6 +18979,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      }
+    },
+    "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph": {
+      "NVIDIA GeForce RTX 5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA GeForce RTX 5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA GeForce RTX 5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA GeForce RTX 5060:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 1.224772248583333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
       }
     },
     "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read": {
