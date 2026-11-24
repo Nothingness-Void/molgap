@@ -22,7 +22,6 @@ here (the documentation navigation test above checks it; it runs in the `accept`
   the [quickstart](EXPERIMENT_QUICKSTART.md), then the [reuse map](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation).
 
 ## Commands
-
 `rml` means `platforms/local/run.py --module molgap.research_memory -- --repo-root .`;
 `cli` means `platforms/local/run.py -- ` (runs `molgap.experiment_cli`).
 Who: M = machine does it, H = a person (or the reviewing agent) decides.
@@ -39,6 +38,7 @@ Who: M = machine does it, H = a person (or the reviewing agent) decides.
 | Propose | `platforms/kaggle/check_quota.py` | M | Kaggle accounts | stdout (quota) | the submitter |
 | Propose | `platforms/kaggle/submit_workflow.py` | M | frozen inputs, `pre_submit_review.json` | package, journal, prospective record | `retrieve_family_outputs.py` |
 | Propose | `platforms/ims/v4_submit/submit_from_windows.py` | M | run spec, payload | IMS job, payload store | the same script with `--retrieve-to` |
+| Observe | `platforms/ims/check_queue.py --collect` / `--web --snapshot` | M | scheduler and authorized V4 records / sanitized snapshot | atomic snapshot / read-only HTTP | [dashboard](../../platforms/ims/dashboard/README.md) |
 | Accept | `platforms/kaggle/check_logs.py` | M | live kernel log | stdout (progress) | the watcher |
 | Accept | `platforms/kaggle/retrieve_family_outputs.py` | M | receipt, remote outputs | retrieved arm files, `execution_root` | `accept_run.py` |
 | Accept | `rml analyze` | M | saved predictions | analysis files | the decision |

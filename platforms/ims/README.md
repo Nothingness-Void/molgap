@@ -27,3 +27,13 @@ their owning IMS release; the Git-archive uploader does not stage arbitrary bund
 
 Standalone models with a frozen recipe skip that package route and use `family_recipe_run.py`
 (see the [V4 resume notes](v4_submit/README.md#standalone-family-models-and-resume)).
+
+## Live Queue & Run Dashboard
+
+Read-only IMS queue, point-limit, and `chou` V4 training monitor (strictly under `/lustre/home/users/sm2/chou`):
+
+- CLI table: `.venv\Scripts\python.exe -S platforms\ims\check_queue.py` (or `--watch 60`)
+- Agent JSON: `.venv\Scripts\python.exe -S platforms\ims\check_queue.py --json`
+- Local web dashboard (`127.0.0.1` only): double-click `platforms\ims\open_ims_dashboard.bat` or run `.venv\Scripts\python.exe -S platforms\ims\check_queue.py --web --open`
+
+Always-on snapshot deployment, access controls and rollback: [deployment guide](dashboard/README.md).

@@ -1,0 +1,22 @@
+[Unit]
+Description=IMS read-only dashboard snapshot reader
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ims-dashboard-web
+Group=ims-dashboard
+WorkingDirectory=/opt/ims-dashboard/current
+ExecStart=/usr/bin/python3 -S /opt/ims-dashboard/current/check_queue.py --web --snapshot /var/lib/ims-dashboard/status.json --port 8765
+Restart=on-failure
+RestartSec=30
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+UMask=0027
+InaccessiblePaths=/etc/ims-dashboard
+
+[Install]
+WantedBy=multi-user.target

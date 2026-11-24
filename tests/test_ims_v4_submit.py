@@ -303,3 +303,85 @@ def test_family_bridge_rejects_unassigned_device_without_dispatch(monkeypatch, a
     monkeypatch.setattr(experiment_training_worker, "main", lambda argv: pytest.fail("must not dispatch"))
     with pytest.raises(ValueError, match="scheduler"):
         bridge.main(["--device", str(index)])
+
+
+def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
+    """Real parsers, atomic files and HTTP; only SSH is replaced."""
+    import concurrent.futures
+    import threading
+    import time
+    import urllib.request
+    spec = importlib.util.spec_from_file_location("ims_dashboard", ROOT / "platforms/ims/check_queue.py")
+    dashboard = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(dashboard)
+    sections = {
+        "JOBINFO_C": "Job Status at 2026-11-24 12:00:00\nH 123 model Run 16 sm2/ew6 1:00 node-secret",
+        "JOBINFO_M": "Job Status at 2026-11-24 12:00:00\ngpu 123 model Run 16+1 sm2/ew6 100 200",
+        "JOBINFO_W": 'Job Status at 2026-11-24 12:00:00\nH 123 model Run "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/example"',
+        "JOBINFO_S": "Job Status at 2026-11-24 12:00:00\nUser/Group Stat:\nuser(sm2) group(ew6)\nGPUs | 1/0/0/6 | 1/0/0/6",
+        "SHOWLIM_C": "CPU resource information: Group=ew6\nTOTAL 1000 100 50 50",
+        "CHOU_RUNS": '{"runs": []}',
+    }
+    calls = []
+    def ssh(*args, **kwargs):
+        calls.append(kwargs)
+        assert kwargs["timeout"] == 45
+        out = "\n".join(f"===__SEC_{k}__===\n{v}\n===__RC_{k}__0===" for k,v in sections.items())
+        return subprocess.CompletedProcess(args, 0, out.encode(), b"")
+    monkeypatch.setattr(dashboard.subprocess, "run", ssh)
+    conn = dict(host="offline", port=22, user="sm2", key_path=tmp_path / "unused", remote_root=dashboard.REMOTE_BOUNDARY)
+    path = tmp_path / "status.json"
+    reader = dashboard.SnapshotState(path)
+    assert not reader.get()["available"]
+    assert dashboard.collect_once(path, **conn)
+    result = reader.get()
+    assert result["jobs"][0]["job_id"] == "123" and not result["stale"]
+    assert not any(secret in path.read_text() for secret in ["node-secret", "sm2", "ew6", "/lustre", "raw", "workdir"])
+    server = dashboard.ThreadingHTTPServer(("127.0.0.1", 0), dashboard.make_handler(reader))
+    worker = threading.Thread(target=server.serve_forever, daemon=True); worker.start()
+    try:
+        url = f"http://127.0.0.1:{server.server_port}/api/status?refresh=1"
+        before = len(calls)
+        def get(_):
+            with urllib.request.urlopen(url) as response:
+                return json.load(response)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+            assert all(r["jobs"] for r in pool.map(get, range(16)))
+        assert len(calls) == before
+    finally:
+        server.shutdown(); server.server_close(); worker.join()
+    def timeout(*args, **kwargs):
+        raise subprocess.TimeoutExpired("ssh", 45)
+    monkeypatch.setattr(dashboard.subprocess, "run", timeout)
+    assert not dashboard.collect_once(tmp_path / "never.json", **conn)
+    assert not dashboard.SnapshotState(tmp_path / "never.json").get()["available"]
+    assert not dashboard.collect_once(path, **conn)
+    assert reader.get()["stale"] and reader.get()["failure"] == "ssh_timeout"
+    assert reader.get()["jobs"] == result["jobs"]
+    monkeypatch.setattr(dashboard.subprocess, "run", ssh)
+    sections["CHOU_RUNS"] = "bad json"
+    assert not dashboard.collect_once(path, **conn)
+    assert reader.get()["failure"] == "parse"
+    sections["CHOU_RUNS"] = '{"runs": []}'
+    original = ssh
+    def partial(*args, **kwargs):
+        proc = original(*args, **kwargs)
+        proc.stdout = proc.stdout.replace(b"__RC_JOBINFO_M__0", b"__RC_JOBINFO_M__1")
+        return proc
+    monkeypatch.setattr(dashboard.subprocess, "run", partial)
+    assert not dashboard.collect_once(path, **conn)
+    assert reader.get()["failure"] == "partial" and reader.get()["jobs"]
+    monkeypatch.setattr(dashboard.subprocess, "run", ssh)
+    for name in ("JOBINFO_C", "JOBINFO_M", "JOBINFO_W"):
+        sections[name] = "Job Status at 2026-11-24 12:00:00"
+    assert dashboard.collect_once(path, **conn)
+    assert reader.get()["available"] and reader.get()["jobs"] == []
+    envelope = json.loads(path.read_text()); envelope["snapshot"]["fetched_at_epoch"] = time.time() - 300
+    dashboard.atomic_snapshot(path, envelope)
+    assert reader.get()["stale"]
+    path.write_text("broken")
+    assert reader.get()["failure"] == "snapshot_unreadable" and not reader.get()["available"]
+    before = len(calls)
+    with pytest.raises(ValueError):
+        dashboard.fetch_snapshot(**{**conn, "remote_root": dashboard.REMOTE_BOUNDARY + "-other"})
+    assert len(calls) == before

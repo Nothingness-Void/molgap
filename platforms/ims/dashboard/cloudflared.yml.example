@@ -1,0 +1,7 @@
+# Configure and verify Access BEFORE enabling this route or DNS.
+tunnel: REPLACE_TUNNEL_UUID
+credentials-file: /etc/cloudflared/REPLACE_TUNNEL_UUID.json
+ingress:
+  - hostname: REPLACE_HOSTNAME
+    service: http://127.0.0.1:8765
+  - service: http_status:404
