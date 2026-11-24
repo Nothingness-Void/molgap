@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "gpspp_mpnn": {
+      "decision_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/decision.md",
+      "facts_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/closure_facts_gpspp_mpnn.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "pair_update_norm": {
+      "decision_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/decision.md",
+      "facts_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/closure_facts_pair_update_norm.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "D:/molgap-worktrees/gpspp-mpnn-100k-20261124/experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/audit_map.json"
+}

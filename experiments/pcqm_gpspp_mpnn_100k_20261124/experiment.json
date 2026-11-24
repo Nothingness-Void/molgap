@@ -1,0 +1,105 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gpspp_mpnn_100k_20261124",
+  "logical_run_id": "pcqm-gpspp-mpnn-100k-20261124-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-24T12:00:00+09:00",
+  "role_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/protocol.md",
+  "decision_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gpspp_mpnn_100k_20261124/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gpspp-mpnn-100k-20261124",
+    "action": "RUN_PAIRED_100K",
+    "question": "At equal parameters (within 5%), equal exposure and the same recipe, does a pure 2D GPS++-style message-passing network (atom, bond and molecule states, direct bond-molecule paths, in-model RWSE16, no attention) beat BondLocal+PairNorm GPTrans-T on matched 100K development MAE?",
+    "deficiency": "GPTrans-T pays for dense pair tensors and attention; K1 and GPS-style adapters on top of it gave no gain, so it is open whether global attention is needed for this target at 100K.",
+    "changed_mechanism": "standalone-gpspp-mpnn-atom-bond-molecule-states-rwse16",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Attention and the dense pair state are necessary at 100K",
+      "A 100K effect is not stable or does not survive 500K (earlier gains shrank to 0.21-0.37x)",
+      "Any gain comes from in-model RWSE16 instead of the backbone"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "positive_decision": "Nominate only per the frozen bands in protocol.md (effect <= -4.6 meV, paired CI upper < 0); no automatic scale-up.",
+    "negative_decision": "Close this GPS++ MPNN backbone at 100K without hyperparameter grids, retries, ablation or 500K.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7.0,
+    "estimated_wall_hours": 3.5,
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair: BondLocal+PairNorm GPTrans-T (control, from gptrans.pt) against the GPS++ MPNN, same recipe."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "pair_update_norm",
+      "gpspp_mpnn"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pair_update_norm",
+    "allocated_t4_hours_ceiling": 8,
+    "user_notebook_wall_ceiling_seconds": 14400,
+    "allocation_wall_limit_seconds": 14400,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized the GPS++-style pure MPNN 100K screen on 2026-11-24 (plan approved by Opus).",
+    "scope": "One 100K 60-pass T4x2 paired run on nothingnessvoid (s42); train and internal development only; no protected roles; no automatic scale-up or retry."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pair_update_norm"
+    },
+    {
+      "arm_id": "gpspp_mpnn",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gpspp_mpnn"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pair_update_norm",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

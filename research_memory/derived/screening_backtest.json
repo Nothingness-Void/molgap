@@ -15,6 +15,38 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "pcqm-gpspp-mpnn-100k-20261124-s42:gpspp_mpnn:downstream",
+      "trajectory_id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-gpspp-mpnn-100k-20261124-s42:pair_update_norm:downstream",
+      "trajectory_id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
     },
@@ -861,5 +893,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 104
+  "trace_count": 106
 }

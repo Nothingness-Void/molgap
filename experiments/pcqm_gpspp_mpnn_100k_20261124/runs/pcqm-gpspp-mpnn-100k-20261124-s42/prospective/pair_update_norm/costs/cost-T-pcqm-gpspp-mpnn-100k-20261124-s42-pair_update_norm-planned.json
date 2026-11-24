@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gpspp-mpnn-100k-20261124-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm-planned",
+  "evidence_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/generated/3fa78bb972a20d0fd1eb178f59d09e46c31dfbedbee8fcdc9f43e13154480f1c/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 7.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gpspp-mpnn-100k-20261124-s42:pair_update_norm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm"
+}

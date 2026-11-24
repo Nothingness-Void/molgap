@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7b5a4b7cf9d6f1ad55a6ce7911527b0e970584e2ffdc47b89ee9b704e3b35222",
+  "source_digest": "40173aec5190c985f96d0da35ca4547d46dca56ed9257976ddf5e15ad455517d",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/decision.md",
+      "family_id": "pcqm-gpspp-mpnn-100k-20261124",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gpspp_mpnn_100k_20261124/runs/pcqm-gpspp-mpnn-100k-20261124-s42/prospective/gpspp_mpnn/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gpspp_mpnn_100k_20261124/audit_closure/decision.md",
+      "family_id": "pcqm-gpspp-mpnn-100k-20261124",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gpspp_mpnn_100k_20261124/runs/pcqm-gpspp-mpnn-100k-20261124-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm"
     },
     {
       "completeness_status": "complete",

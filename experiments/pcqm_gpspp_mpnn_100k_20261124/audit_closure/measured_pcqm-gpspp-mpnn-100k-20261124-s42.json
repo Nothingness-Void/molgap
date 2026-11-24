@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gpspp-mpnn-100k-20261124-s42\\v1\\version1\\pair_update_norm\\development_predictions.pt",
+      "sha256": "74a74159ae4f36e0eac61cb8f85b18b0b68ec8893e91e3cac95542775c7a5334"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gpspp-mpnn-100k-20261124-s42\\v1\\version1\\gpspp_mpnn\\development_predictions.pt",
+      "sha256": "0aecfee39e59d399ef8e8849486ce66fa0ce76e4e0673d449907c978e2b79cbb"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 3.087055211067195,
+    "ensemble_gain_meV": 8.78156702995301,
+    "ensemble_mae_meV": 132.20215265452862,
+    "fit": null,
+    "m_meV": 3.0870552110671996,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "gpspp_mpnn",
+        "ci95": [
+          1.9984138844013213,
+          4.179759367704391
+        ],
+        "delta": 3.0870552110671996,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "reference": "pair_update_norm",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "gpspp_mpnn": 142.52724729001523,
+      "pair_update_norm": 139.44019207894803
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

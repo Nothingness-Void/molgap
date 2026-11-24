@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn:A001",
+      "target": "experiments/pcqm_gpspp_mpnn_100k_20261124/generated/3fa78bb972a20d0fd1eb178f59d09e46c31dfbedbee8fcdc9f43e13154480f1c/gpspp_mpnn/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_gpspp_mpnn_100k_20261124/generated/3fa78bb972a20d0fd1eb178f59d09e46c31dfbedbee8fcdc9f43e13154480f1c/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local:A001",
       "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
       "type": "action_produced_evidence"
@@ -1827,6 +1837,16 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
       "type": "prior_evidence"
     },
@@ -1883,6 +1903,16 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
       "type": "prior_evidence"
     },
     {
@@ -4093,6 +4123,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
       "type": "evidence"
     },
@@ -4814,6 +4852,14 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
       "type": "trajectory"
     },
     {
