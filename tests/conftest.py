@@ -59,3 +59,9 @@ def cli_module():
     def load(alias):
         return _load(alias, CLI_MODULES[alias])
     return load
+
+
+@pytest.fixture(autouse=True)
+def _no_vault_refresh(monkeypatch):
+    # Terminal closure rebuilds the real vault; tests must not touch it.
+    monkeypatch.setenv("MOLGAP_VAULT_AUTOREFRESH", "0")
