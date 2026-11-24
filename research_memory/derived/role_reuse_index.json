@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1135,
+  "ambiguous_historical_role_record_count": 1141,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2870,6 +2870,48 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline",
@@ -7947,7 +7989,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1072,
+  "explicit_role_event_count": 1080,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -12676,6 +12718,50 @@
         "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
       }
     ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      }
+    ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train": [
       {
         "access_kind": "training_membership",
@@ -12930,6 +13016,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:fefafcb28045edf38d99980fa6cb13065ed59ebc42a080da979973c560b0fcc2:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed500k_train": [
@@ -15801,6 +15903,8 @@
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline",
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
@@ -16054,6 +16158,8 @@
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline",
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
@@ -19848,6 +19954,50 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157:internal_development": [
@@ -26185,6 +26335,50 @@
         "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
       }
     ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      }
+    ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train": [
       {
         "access_kind": "training_membership",
@@ -26409,6 +26603,22 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:fefafcb28045edf38d99980fa6cb13065ed59ebc42a080da979973c560b0fcc2:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [

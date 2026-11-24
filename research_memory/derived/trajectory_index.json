@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "3ad88a5168ec980bfb0b2e1fe60ef582f843d48bdedcdc675e6fca0c609b62d6",
+  "source_digest": "8fe01b91e66e01e53bed9bf3526356504caaece27ef9c5dcdd2064b1a6dd8aff",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1769,6 +1769,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/decision.md",
+      "family_id": "pcqm-k1-rrwp-mixer-500k-20261118",
+      "outcome": "STOP_FOR_COST",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/decision.md",
+      "family_id": "pcqm-k1-rrwp-mixer-500k-20261118",
+      "outcome": "STOP_FOR_COST",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_rrwp_mixer/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
     },
     {
       "completeness_status": "complete",

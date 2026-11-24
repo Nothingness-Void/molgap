@@ -182872,6 +182872,36 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-rrwp-mixer-500k-20261118-s42:muon_bn:downstream",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-rrwp-mixer-500k-20261118-s42:muon_rrwp_mixer:downstream",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
         "missing_comparability_identity:ema_semantics",
@@ -183309,5 +183339,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "ec79bdff83c07939cd994274e40475fec934d0b5c5b9a3f3e26c849d138e61fe"
+  "source_digest": "2de8353f33f30f1907e2b4014230840a6003a807d96ca6d27ff3545032950c33"
 }

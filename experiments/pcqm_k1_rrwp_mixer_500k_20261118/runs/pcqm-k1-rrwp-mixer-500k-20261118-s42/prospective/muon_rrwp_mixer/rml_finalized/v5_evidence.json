@@ -1,0 +1,74 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_rrwp_mixer/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "0b2141c6b6bea94656c6ca33ec8ca18bd8d6935484d9013ff1baaf6dac92850c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_rrwp_mixer/pause_receipt.json",
+      "name": "pause_receipt",
+      "sha256": "07b2a8c3d6b1062acd477a463f07a245ed3e282f89d66c55bf10801f4497cb43"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_rrwp_mixer/invocation_cost_state.json",
+      "name": "invocation_cost_state",
+      "sha256": "56eeed67181b848fbfe9f8be7f06cc904191de7d1d0e03708d9d8e391722c0f2"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_rrwp_mixer/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "042070fc54c5f5a1efc98ecfbf67b6c5ea95e7624a335ba5c4589ffe86aed399"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_rrwp_mixer/data_open_provenance.json",
+      "name": "data_open_provenance",
+      "sha256": "53d2c61ad23262d6e956eec2b332275cc581245f0ad24ae42c3754d755482e7b"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/generated/77750ef04c1d8fe03dba47c3be234a7e4a6845e9e8d97566c2893017a0861593/muon_rrwp_mixer/recipe.json",
+  "metrics": {
+    "development_mae_eV": null,
+    "missing_reason": "paused_stop_for_cost",
+    "selected_optimizer_step": null,
+    "selected_weights": null,
+    "source_ref": null,
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained paused outputs and explicit STOP_FOR_COST decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "STOP_FOR_COST",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

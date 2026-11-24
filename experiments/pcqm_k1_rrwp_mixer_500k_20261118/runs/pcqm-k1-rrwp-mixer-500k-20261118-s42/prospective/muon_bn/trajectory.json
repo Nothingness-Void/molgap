@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-rrwp-mixer-500k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_rrwp_mixer_500k_20261118/generated/77750ef04c1d8fe03dba47c3be234a7e4a6845e9e8d97566c2893017a0861593/muon_bn/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-rrwp-mixer-500k-20261118-s42:muon_bn:downstream"
+      ],
+      "source_commit": "97ffc0fa108437c30d3fdf9b5e83d49d4614cc40",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-k1-rrwp-mixer-500k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/rml_decision_snapshots/64371dc0e49ce57f18297946a77e684d2a60f54c9a22461bc0f99967d204d7f7.json",
+    "snapshot_sha256": "64371dc0e49ce57f18297946a77e684d2a60f54c9a22461bc0f99967d204d7f7",
+    "state_timestamp": "2026-11-18T01:20:00+09:00"
+  },
+  "family_id": "pcqm-k1-rrwp-mixer-500k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "K1 500K ceiling is limited by 9-layer local capacity or Muon step-scale rather than global mixer rank",
+      "RRWP+global mixer improves convergence speed without passing the 3 meV terminal gate"
+    ],
+    "changed_mechanism": "16-step-symmetric-rrwp-edge-injection-and-6head-global-atom-mixer-with-bond-bias",
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing original 18-BN K1 against RRWP+6-head global mixer K1 from identical k1.pt initialization.",
+    "decision_changed_if_negative": "Close RRWP+global mixer as a standalone K1 salvage lever if it fails the material gate.",
+    "decision_changed_if_positive": "NOMINATE if muon_rrwp_mixer-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+    "observed_deficiency": "Round 1 confirmed K1's 18-BN baseline is not bottlenecked by BatchNorm drift alone; single-slot rank-1 mixers and local-only edge updates limit long-range electronic coupling at 500K.",
+    "related_closed_family_ids": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does injecting 16-step symmetric RRWP into K1 persistent edge updates and adding a 6-head global atom self-attention mixer (with RRWP + persistent bond bias and per-head RMS QK-Norm/sigmoid gate) at layers 3, 6, 9 reduce 500K 60-pass development MAE under batched FP32 Muon?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/generated/77750ef04c1d8fe03dba47c3be234a7e4a6845e9e8d97566c2893017a0861593/muon_bn/recipe.json",
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/data_declaration.json",
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_rrwp_mixer_500k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon_bn",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-rrwp-mixer-500k-20261118-s42",
+      "reference_arm_id": "muon_bn",
+      "reference_trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+      "reference_trajectory_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "a8476d922bd0c74f593b4c9fe46ddae58e957faac51b599601908753c93fe2f1"
+    },
+    "source_commit": "97ffc0fa108437c30d3fdf9b5e83d49d4614cc40",
+    "source_config_identity": "2adb3dd15e5fd8dc858d55e3d94b9d021b9e847134ead0e0d9fd79d969687c83"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+}

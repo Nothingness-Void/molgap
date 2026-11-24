@@ -1,0 +1,36 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "nvoid912",
+  "arms": [
+    "muon_bn",
+    "muon_rrwp_mixer"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "muon_bn",
+  "allocated_t4_hours_ceiling": 36,
+  "allocation_wall_limit_seconds": 32400,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authority": "User explicitly requested the Round 2 500K K1 RRWP+GlobalMixer salvage experiment submitted to Kaggle3 (nvoid912) on 2026-11-18.",
+  "scope": "Exactly two fresh models (muon_bn, muon_rrwp_mixer) on nvoid912, TRAIN/internal-development only, seed 42; at most 2 physical T4x2 sessions, 9h/session, 18h cumulative entry wall and 36 T4-device-hours. Planned pause at step 156240 (pass 40), continuation to terminal step 234360 (pass 60).",
+  "continuation": {
+    "logical_attempt": "v1",
+    "maximum_physical_sessions": 2,
+    "cumulative_pass_boundaries": [
+      40,
+      60
+    ],
+    "cumulative_optimizer_step_boundaries": [
+      156240,
+      234360
+    ],
+    "total_entry_wall_hours_ceiling": 18,
+    "total_allocated_t4_device_hours_ceiling": 36,
+    "quota_policy": "Recheck nvoid912 quota before continuation; retain account and cumulative ceiling.",
+    "recovery_rule": "Wall-limited or planned-pause exact-state continuation only, retaining optimizer/scheduler/RNG/EMA/counters and receipts."
+  }
+}

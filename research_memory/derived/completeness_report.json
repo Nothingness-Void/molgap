@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 276,
+    "trajectories_total": 278,
     "with_complete_native_measurement": 38,
-    "with_cost_event": 265,
-    "with_incomplete_native_measurement": 227,
+    "with_cost_event": 267,
+    "with_incomplete_native_measurement": 229,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -172,7 +172,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 227,
+      "count": 229,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
@@ -286,6 +286,8 @@
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
         "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
         "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+        "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn",
+        "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer",
         "T-pcqm-k1-sam-100k-s42-r2-baseline",
         "T-pcqm-k1-sam-100k-s42-r2-sam",
         "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
