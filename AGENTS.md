@@ -159,6 +159,10 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   system Python. Reuse the primary checkout environment across temporary worktrees;
   do not reinstall editable from a temporary checkout and redirect its shared import.
   Install editable from the primary checkout with that environment's `pip install -e .`.
+  The editable `.pth` holds only the ASCII path `C:\molgap-src`, a junction to the primary
+  `src` (non-ASCII paths crash under GBK or `-X utf8`). `pip install -e .` rewrites it; rebuild with
+  `cmd /c mklink /J C:\molgap-src <primary checkout>\src` and put that one line back in
+  `.venv\Lib\site-packages\__editable__.molgap-0.1.0.pth`. `doctor` prints `molgap_imported_from`.
 - **Targets:** `homo`, `lumo`, `gap` in eV under applicable PubChemQC /
   B3LYP Kohn-Sham contracts; no experimental or alternate target substitution.
 - **Geometry:** generated-3D training/inference contracts must be compatible.
