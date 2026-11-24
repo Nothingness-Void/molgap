@@ -8,6 +8,14 @@ class CredentialBindingError(ValueError):
     """The machine profile cannot supply the Kaggle credential file of a receipt account."""
 
 
+def _username(file):
+    import json
+    try:
+        return json.loads(file.read_text(encoding="utf-8")).get("username")
+    except (OSError, ValueError, AttributeError):
+        return None
+
+
 class MachinePaths:
     """Machine-local locations, never scientific identities or role authority."""
     def __init__(self, *, python, data_root, artifact_root, scratch_root, kaggle_credentials=None):
@@ -37,9 +45,14 @@ class MachinePaths:
 
     def kaggle_credential(self, account):
         path = self.kaggle_credentials.get(account)
-        if path is None:
-            raise CredentialBindingError("Machine profile has no kaggle_credentials entry for receipt account "
-                                         + account + "; add it or pass --credentials")
+        if path is None:  # derive from the key folder of the other entries; match the username field only
+            found = [f for r in {p.parent.parent for p in self.kaggle_credentials.values()}
+                     for f in sorted(r.glob(".kaggle*_cli/kaggle.json")) if _username(f) == account]
+            if not found:
+                raise CredentialBindingError("Machine profile has no kaggle_credentials entry for receipt account "
+                    + account + "; add it or pass --credentials. Searched .kaggle*_cli/kaggle.json beside: "
+                    + ", ".join(sorted({str(p.parent.parent) for p in self.kaggle_credentials.values()})))
+            path = found[0]
         if not path.is_file():
             raise CredentialBindingError("kaggle_credentials file mapped for account " + account
                                          + " does not exist; fix the profile entry")

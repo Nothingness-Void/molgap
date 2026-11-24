@@ -1007,12 +1007,13 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     with redirect_stdout(captured):
         code = experiment_cli.main(["draft-closure", "--profile", case.value["machine_profile"],
             "--repo-root", str(case.repo), "--run-id", run_id, "--attempt-id", attempt,
-            "--resume-prepared", str(resumed_prepared), "--output-dir", str(case.repo / "audits"),
+            "--resume-prepared", str(resumed_prepared),
             *[value for role in ("official_validation", "test_dev", "test_challenge")
               for value in ("--protected-role-use", role + "=untouched")]])
     assert code == 0, captured.getvalue()
     audits = json.loads(captured.getvalue())["roles"]
-    assert json.loads((case.repo / "audits/audit_map.json").read_bytes()) == audits
+    default_dir = next(case.repo.glob(f"experiments/*/runs/{run_id}")).parents[1] / "audit_closure"  # the default output
+    assert json.loads((default_dir / "audit_map.json").read_bytes()) == audits
     assert set(audits) == set(contexts)
     for arm_id, ref in audits.items():
         audit = json.loads((case.repo / ref).read_bytes())
