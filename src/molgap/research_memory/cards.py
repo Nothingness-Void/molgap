@@ -320,13 +320,12 @@ def families_pages(repo_root, index) -> dict[str, bytes]:
         taken |= {c["trajectory_id"] for c in mine}
         open_ = [c for c in mine if c["outcome"] == "ACTIVE"]
         closed = [c for c in mine if c["outcome"] != "ACTIVE"]
-        refs = sum(c["outcome"] == "CLOSED" for c in closed)
         reopen = list(dict.fromkeys(r for c in closed for r in c["reopen_conditions"] or []))
         nxt = list(dict.fromkeys(str(c["next_candidates"]) for c in mine if c.get("next_candidates")))
         mods = [f"src/molgap/{p}" for p in src if hit(p, f["src"])]
         dirs = sorted(d.name for d in (root / "experiments").iterdir() if d.is_dir() and hit(d.name, f["experiments"]))
         more = lambda xs, n: ", ".join(xs[:n]) + (f", +{len(xs) - n} more" if len(xs) > n else "") or "-"  # noqa: E731
-        out = [f"# {f['name']} ({', '.join(f['aliases'])})", "", "## Quick answer", f"Last closed (of {len(closed)}, {refs} are CLOSED reference arms):",
+        out = [f"# {f['name']} ({', '.join(f['aliases'])})", "", "## Quick answer", f"Last closed (of {len(closed)}, {sum(c['outcome'] == 'CLOSED' for c in closed)} are CLOSED reference arms):",
                *map(compact_line, [c for c in closed if c["outcome"] != "CLOSED"][-3:][::-1]), f"Open (ACTIVE) {len(open_)}: " + more([c["trajectory_id"] for c in open_], 3),
                "Reopen: " + (" / ".join(r[:100] for r in reopen[:3]) or "none recorded"),
                *([f"Next candidates: {' / '.join(nxt[:3])}"] if nxt else []),
