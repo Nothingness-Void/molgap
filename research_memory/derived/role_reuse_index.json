@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 971,
+  "ambiguous_historical_role_record_count": 977,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2611,6 +2611,48 @@
       "role_name": "unseen_50k_secondary",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-c3-full-tail-20261123",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -6799,7 +6841,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 817,
+  "explicit_role_event_count": 820,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -12669,6 +12711,27 @@
     "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-c3ft-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3ft-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3ft-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-c4wd-tail_holdout_v1-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -12840,6 +12903,7 @@
       "k1-saved-trace-pair-20261008-evidence",
       "pcqm-c2-xtb-diagnostic-20261123",
       "pcqm-c3-checkpoint-space-20261123",
+      "pcqm-c3-full-tail-20261123",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -13041,6 +13105,7 @@
       "k1-saved-trace-pair-20261008-evidence",
       "pcqm-c2-xtb-diagnostic-20261123",
       "pcqm-c3-checkpoint-space-20261123",
+      "pcqm-c3-full-tail-20261123",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -21811,6 +21876,50 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-spread-fit"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c3ft-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c3ft-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c3ft-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-c3-full-tail"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c4wd-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c4wd-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c4wd-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
       }
     ],
     "pcqm4mv2-ogb-official-train:fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb:dev_replay_128": [

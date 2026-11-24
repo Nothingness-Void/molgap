@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "score-v1",
+  "category": "inference",
+  "cost_event_id": "cost-c3ft-inference",
+  "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+  "hardware": "RTX 5060 and CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.78
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-c3-full-tail-score",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-c3-full-tail"
+}

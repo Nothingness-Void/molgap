@@ -1,0 +1,61 @@
+{
+  "format": "molgap-tail-holdout-eval-v1",
+  "role": "tail_holdout_v1",
+  "rows": [
+    3250000,
+    3378606
+  ],
+  "results": {
+    "gptrans_minus_tail_s42_mc32": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "f6e8eaf4c189db6398da85fe3ef98dcd5568467c8cb6d4d23e1bff1dd7a617c1",
+      "tail_holdout_v1": {
+        "mae_ev": 0.0873286622054387,
+        "rows": 128606
+      }
+    },
+    "gptrans_minus_tail_s43_mc32": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "a639c9c92b4b1574ab59ecec78d21f3dd3f9865dd33d79595f67194319001246",
+      "tail_holdout_v1": {
+        "mae_ev": 0.08717217513269525,
+        "rows": 128606
+      }
+    },
+    "gptrans_minus_tail_s44_mc32": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "6793390fb4d4f148bf703e40c1cef5320ae97cc2baa1f0eba38628ea9bc402d7",
+      "tail_holdout_v1": {
+        "mae_ev": 0.08735763642205993,
+        "rows": 128606
+      }
+    },
+    "gptrans_minus_tail_s45_mc32": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "5ebc5dd0a45f58f353f5f2a83f6294755d001b45bef1e953a6fd08d251db8728",
+      "tail_holdout_v1": {
+        "mae_ev": 0.08752948586457739,
+        "rows": 128606
+      }
+    },
+    "gptrans_minus_tail_ens4_mc32": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "173e06d5cb45b9259115fb98766704a630dee05f291fdd645a94b5d76147e7b6",
+      "tail_holdout_v1": {
+        "mae_ev": 0.08378390993652857,
+        "rows": 128606
+      }
+    },
+    "gptrans_minus_tail_ens4_det": {
+      "train_rows": 3250000,
+      "checkpoint_sha256": "173e06d5cb45b9259115fb98766704a630dee05f291fdd645a94b5d76147e7b6",
+      "tail_holdout_v1": {
+        "mae_ev": 0.08399220102134107,
+        "rows": 128606
+      }
+    }
+  },
+  "note": "MC-dropout K=32 (dropout layers only) and 4-model equal-weight ensembles; ens rows use sha256 of the four ema_model sha256 strings concatenated in s42..s45 order",
+  "script_sha256": "1ba110c6ca43fc4b36e9a8c652fef82dedefee850f2586d0182d192fd3c18a79",
+  "source": "experiments/pcqm_c3_full_tail_20261123/results.json"
+}

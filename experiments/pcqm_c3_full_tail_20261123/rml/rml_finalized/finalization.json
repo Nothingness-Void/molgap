@@ -1,0 +1,37 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-a4bc2725ae0681d016c21221ff7c489832ef983e97c286f319fbded3d52c92aa",
+  "finalized_at": "2026-11-23T03:00:00+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_c3_full_tail_20261123/acceptance.json": "c69698d175327270b29d9f1fcd0ba87774aa49872515773b87c81cba3b9bc3c4",
+    "experiments/pcqm_c3_full_tail_20261123/decision.md": "c2a961ca64e3f9d310c494a5673168bfc66fdf91bd0b271d7eb3efab2abf55b9",
+    "experiments/pcqm_c3_full_tail_20261123/leaderboard_eval.json": "cd41106ebcddd081245d1b7567e8cf8d9d1a8d0121c59e7c9101f64697114092",
+    "experiments/pcqm_c3_full_tail_20261123/mc_tail.py": "1ba110c6ca43fc4b36e9a8c652fef82dedefee850f2586d0182d192fd3c18a79",
+    "experiments/pcqm_c3_full_tail_20261123/protocol.md": "3990e2f86f94fc712944f3bdebcb5d1a7f890ff431d19062ba4524e09abe83c9",
+    "experiments/pcqm_c3_full_tail_20261123/results.json": "31d6dc0975e3e581786842923591758dab4d6aaac97f92cd4235d7111ae05ee2",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-full-tail-20261123/tail/models.json": "7b336ce7cf5cdb04a3c16229ea40691ddcffdb438820f128a356bfd700639a7e",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-full-tail-20261123/tail/rows.json": "c5dd806bb20bf7fc262f0b1121fbb1039637d82638c29ddc4cbba1fb91aec662"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_c3_full_tail_20261123/rml/trajectory.json",
+  "prospective_sha256": "2a1af136f0de98ee01457c88d3eae8833ca38d3c2ceea392e61f16f03e8a0bed",
+  "published_hashes": {
+    "costs/cost-c3ft-analysis.json": "227a4ebf7753060eb270f614ba307a3cc90f8a258c7522e9489df46639157c0b",
+    "costs/cost-c3ft-inference.json": "e5eed19327b2b15a0e6983bacee10ef6900d083569155baed3c6199039d5aeee",
+    "roles/role-c3ft-tail_holdout_v1-labels_read.json": "87e1942f047baecba41bce2dfe82e7cf4f8ba910359775f1867b1ae3404bb8bd",
+    "roles/role-c3ft-tail_holdout_v1-metric_computed.json": "94602699e0613e20c54e0218332a09eecc458124655cb74e33a88405b85710f6",
+    "roles/role-c3ft-tail_holdout_v1-prediction_input.json": "00da59a0a6b63d9c7bc794b5a203975f23941310c032123d9aa82aa5f219124b",
+    "terminal_input.json": "d017efce5037c8e4e9761c0cf9a1b6a0bbc411f2b7d224b51ee94c233eaf1d60",
+    "trajectory.json": "a806ea0fb96096125f07423e480e0cca259f381491d93a3cd9885a0b6f749d78",
+    "v5_evidence.json": "b0adbecd5f078bebdbba0c12130559136fe8d5071997b64348d33ff14ca386be"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_c3_full_tail_20261123/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "a4bc2725ae0681d016c21221ff7c489832ef983e97c286f319fbded3d52c92aa",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-c3-full-tail"
+}

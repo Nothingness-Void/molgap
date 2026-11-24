@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_C3_FULL_TAIL_MC",
+    "field": "frozen_models_and_tail_rules_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-c3-full-tail-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "3990e2f86f94fc712944f3bdebcb5d1a7f890ff431d19062ba4524e09abe83c9",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-c3-full-tail",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "frozen_models_and_tail_rules_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

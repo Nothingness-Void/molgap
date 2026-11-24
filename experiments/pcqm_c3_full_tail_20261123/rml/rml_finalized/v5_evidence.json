@@ -1,0 +1,96 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/protocol.md",
+      "name": "protocol.md",
+      "sha256": "3990e2f86f94fc712944f3bdebcb5d1a7f890ff431d19062ba4524e09abe83c9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/mc_tail.py",
+      "name": "mc_tail.py",
+      "sha256": "1ba110c6ca43fc4b36e9a8c652fef82dedefee850f2586d0182d192fd3c18a79"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/decision.md",
+      "name": "decision.md",
+      "sha256": "c2a961ca64e3f9d310c494a5673168bfc66fdf91bd0b271d7eb3efab2abf55b9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/results.json",
+      "name": "results.json",
+      "sha256": "31d6dc0975e3e581786842923591758dab4d6aaac97f92cd4235d7111ae05ee2"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "c69698d175327270b29d9f1fcd0ba87774aa49872515773b87c81cba3b9bc3c4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_c3_full_tail_20261123/leaderboard_eval.json",
+      "name": "leaderboard_eval.json",
+      "sha256": "cd41106ebcddd081245d1b7567e8cf8d9d1a8d0121c59e7c9101f64697114092"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-full-tail-20261123/tail/models.json",
+      "name": "models.json",
+      "sha256": "7b336ce7cf5cdb04a3c16229ea40691ddcffdb438820f128a356bfd700639a7e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-c3-full-tail-20261123/tail/rows.json",
+      "name": "rows.json",
+      "sha256": "c5dd806bb20bf7fc262f0b1121fbb1039637d82638c29ddc4cbba1fb91aec662"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_c3_full_tail_20261123/protocol.md",
+      "experiments/pcqm_c3_full_tail_20261123/results.json",
+      "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "experiments/pcqm_c3_full_tail_20261123/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-c3-full-tail-20261123",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-c3-full-tail-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure of a completed local study; no new execution in closure."
+  },
+  "observed_execution": {
+    "backbone_training": false,
+    "execution_ref": "experiments/pcqm_c3_full_tail_20261123/results.json",
+    "inference_executed": true,
+    "postprocessor_fit": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_release_ensemble_gain_below_gate",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_EFFECT_MC_DROPOUT_K32_FULL_SCALE_TAIL",
+    "transfer_status": "full_scale_tail_scored_once"
+  },
+  "role_use": {
+    "common": "untouched",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-c3-full-tail",
+  "track": "B"
+}

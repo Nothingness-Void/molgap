@@ -1,0 +1,158 @@
+{
+  "analysis_ref": "experiments/pcqm_c3_full_tail_20261123/results.json",
+  "comparison_class": "CONTEXT_ONLY",
+  "cost_scope": "Predict stage wall time; GPU device-hours and CPU time were not measured.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "inference",
+      "cost_event_id": "cost-c3ft-inference",
+      "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.78
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c3-full-tail-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c3-full-tail"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "score-v1",
+      "category": "audit",
+      "cost_event_id": "cost-c3ft-analysis",
+      "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-c3-full-tail-score",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-c3-full-tail"
+    }
+  ],
+  "evidence_id": "pcqm-c3-full-tail-20261123",
+  "format": "molgap-local-saved-prediction-acceptance-v1",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_release_ensemble_gain_below_gate",
+    "comparison_status": "paired_rows_frozen_checkpoints_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_EFFECT_MC_DROPOUT_K32_FULL_SCALE_TAIL",
+    "transfer_status": "full_scale_tail_scored_once"
+  },
+  "role_counts": {
+    "tail_holdout_v1": 128606
+  },
+  "role_use": {
+    "common": "untouched",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "role_event_id": "role-c3ft-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-c3-full-tail-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-full-tail"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "role_event_id": "role-c3ft-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-c3-full-tail-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-full-tail"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_c3_full_tail_20261123/acceptance.json",
+      "role_event_id": "role-c3ft-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-c3-full-tail-score",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-c3-full-tail"
+    }
+  ],
+  "run_id": "pcqm-c3-full-tail-score",
+  "scope": "Frozen K=32 dropout-only MC-dropout vs deterministic on tail_holdout_v1 for four full-scale B1024 GPT-T minus-tail models s42-s45; scored once; no training; official valid/test and sealed 20K untouched.",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_c3_full_tail_20261123/decision.md",
+    "facts": {
+      "ci_meV": [
+        -0.2572649724047464,
+        -0.15488049629870917
+      ],
+      "effect_meV": -0.2082910848125023,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "mc dropout",
+        "full scale",
+        "tail holdout",
+        "gptrans b1024",
+        "four init ensemble",
+        "variance already removed by ensemble"
+      ],
+      "source": "experiments/pcqm_c3_full_tail_20261123/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "A different ensemble (more diverse members or fewer members) or a different tail-free inference add-on under a new frozen protocol; this endpoint is scored once."
+    ]
+  }
+}

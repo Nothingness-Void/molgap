@@ -876,6 +876,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-c3-full-tail:A001",
+      "target": "experiments/pcqm_c3_full_tail_20261123/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-gptrans-full-wd-c4:A001",
       "target": "experiments/pcqm_gptrans_full_wd_c4_20261123/protocol.md",
       "type": "action_produced_evidence"
@@ -1638,6 +1643,11 @@
     {
       "source": "TB-pcqm-c3-checkpoint-space",
       "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-c3-checkpoint-space",
+      "target": "TB-pcqm-c3-full-tail",
       "type": "parent_trajectory"
     },
     {
@@ -2498,6 +2508,11 @@
     {
       "source": "pcqm-c3-checkpoint-space-20261123",
       "target": "TB-pcqm-c2-xtb-diagnostic",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-c3-checkpoint-space-20261123",
+      "target": "TB-pcqm-c3-full-tail",
       "type": "prior_evidence"
     },
     {
@@ -4451,6 +4466,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-c3-full-tail-20261123",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "type": "evidence"
     },
@@ -5620,6 +5639,10 @@
     },
     {
       "id": "TB-pcqm-c3-checkpoint-space",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-c3-full-tail",
       "type": "trajectory"
     },
     {
