@@ -11,6 +11,9 @@ Nothing here is live status or the code map:
 | Which file owns a behavior? | `ARCHITECTURE.md` |
 | What did one experiment conclude? | that experiment's `decision.md`, indexed by `experiments/README.md` |
 | What ships, in what order? | `production/README.md` |
+| Which command comes next, and who reads its output? | `docs/operations/LIFECYCLE_MAP.md` |
+| What does the Obsidian vault hold? | `docs/operations/VAULT.md` (a view, not an authority) |
+| Which skill runs a platform? | `skills/README.md` |
 | How was a phase 1-7 result obtained? | `archive` branch: `production/history/phaseN.md` |
 
 Method documents live beside the work they describe: the Delta-learning and
