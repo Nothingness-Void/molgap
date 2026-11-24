@@ -254,7 +254,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
     payloads.update({
         "research_summary.md": render_summary_markdown(summary).encode("utf-8"),
     })
-    payloads.update(families_pages(root, trajectory_index))
+    payloads.update(families_pages(root, trajectory_index) if (root / "research_memory/families.json").is_file() else {})  # optional
     return payloads
 
 
@@ -283,7 +283,7 @@ def frozen_differences(repo_root: str | Path) -> list[str]:
     output_root = root / "research_memory" / "derived"
     differences = []
     stray = {f"families/{p.name}" for p in (output_root / "families").glob("*.md")} - set(payloads)
-    for name in [*DERIVED_FILENAMES, *sorted(payloads.keys() - set(DERIVED_FILENAMES)), *sorted(stray)]:
+    for name in [*(n for n in DERIVED_FILENAMES if n in payloads or (output_root / n).exists()), *sorted(payloads.keys() - set(DERIVED_FILENAMES)), *sorted(stray)]:
         path = output_root / name
         if not path.is_file() or path.read_bytes() != payloads.get(name):
             differences.append(name)
