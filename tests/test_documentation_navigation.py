@@ -1,7 +1,9 @@
 """Static reuse navigation checks; no model imports or evidence-role access."""
 from __future__ import annotations
 
+import argparse
 import ast
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -21,20 +23,13 @@ BLOCK_READMES = tuple(
         "05_delta_gw", "06_uq", "07_database", "history",
     )
 ) + ("platforms/_records/README.md", "platforms/_staging/README.md")
-DOCUMENTS = (
-    "README.md", "ARCHITECTURE.md", "AGENTS.md", "BRANCHES.md",
-    "CURRENT_STATE.md", "ROADMAP.md", CLI, GUIDE, WORKFLOW, MODULAR_RUNTIME,
-    "docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md",
-    "docs/operations/MODULAR_RUNTIME_DESKTOP_ACCEPTANCE.md",
-    "docs/operations/SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md",
-    "docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md",
-    "docs/operations/FAMILY_TRAINING_EXAMPLES.md",
-    "docs/operations/FAMILY_TRAINING_CORE.md",
-    "docs/operations/INFRASTRUCTURE_REPAIR_20261003.md",
-    "docs/operations/RESEARCH_PROTOCOL.md", "docs/operations/BRANCH_HISTORY.md",
-    "docs/operations/LOCAL_AUDIT_20261001.md",
-    "production/README.md", "platforms/README.md", "models/REFERENCE_INDEX.md",
+EXTRA_PAGES = (
+    "experiments/README.md", "production/README.md", "platforms/README.md", "models/REFERENCE_INDEX.md",
 ) + BLOCK_READMES
+DOCUMENTS = tuple(sorted({
+    p.relative_to(ROOT).as_posix() for pattern in ("*.md", "docs/**/*.md", "research_memory/*.md", "skills/**/*.md")
+    for p in ROOT.glob(pattern)
+} | set(EXTRA_PAGES)))
 LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)\n]+)\)")
 
 
@@ -88,3 +83,71 @@ def test_block_navigation_is_not_hidden_by_gitignore():
         capture_output=True, text=True, check=False,
     )
     assert result.returncode == 1, result.stdout + result.stderr
+
+
+# --- Durable documentation: stale text must fail a test ---
+CALL = re.compile(r"(?:(?P<rml>rml)|molgap\.research_memory|(?P<cli>cli|molgap\.experiment_cli|experiment_cli))"
+                  r"(?:\s+--)?(?:\s+--repo-root\s+\S+)?\s+(?P<sub>[a-z][a-z-]+)(?P<rest>.*)$")
+MACHINE_PATHS = ("D:/文档/molgap/", "D:/molgap-machine-profile.json", "D:/molgap-artifacts", "D:/molgap-worktrees/", "D:/下载/Key")
+SINGLE_SOURCE = (  # fact -> the one page that may state it (listed in docs/README.md)
+    (r"python(?:\.exe)? platforms/local/infra_budget\.py", "AGENTS.md"),
+    (r"128,606", "AGENTS.md"),
+    (r"D:/下载/Key", "skills/kaggle-molgap-workloads/references/account-and-cli.md"),
+)
+
+
+def _subcommands() -> dict[str, dict[str, set[str]]]:
+    from molgap.experiment_cli import _parser
+    from molgap.research_memory.cli import build_parser
+    table = {}
+    for tool, parser in (("rml", build_parser()), ("cli", _parser())):
+        flags = lambda p: {o for a in p._actions for o in a.option_strings}
+        sub = next(a for a in parser._actions if isinstance(a, argparse._SubParsersAction))
+        table[tool] = {name: flags(p) | flags(parser) for name, p in sub.choices.items()}
+    return table
+
+
+@pytest.mark.parametrize("relative", DOCUMENTS)
+def test_documented_commands_exist(relative):
+    known = _subcommands()
+    for span in re.findall(r"`([^`\n]+)`", _read(relative)):
+        found = CALL.search(span)
+        if found:
+            tool = "cli" if found["cli"] else "rml"
+            assert found["sub"] in known[tool], (relative, span)
+            for flag in re.findall(r"--[a-z][a-z-]*", found["rest"]):
+                assert flag in known[tool][found["sub"]], (relative, span, flag)
+
+
+def test_lifecycle_map_commands_exist():
+    text = _read("docs/operations/LIFECYCLE_MAP.md")
+    for row in re.findall(r"^\| (?:Research|Plan|Propose|Accept|Archive) \| ([^|]+)\|", text, re.MULTILINE):
+        script = re.match(r"`(platforms/[^`\s]+\.py)`", row)
+        if script:
+            source = _read(script[1])
+            assert all(flag in source for flag in re.findall(r"--[a-z][a-z-]*", row)), row
+    named = set(re.findall(r"`(?:rml |cli )?([a-z][a-z-]+)", text))
+    missing = [f"{tool} {name}" for tool, names in _subcommands().items() for name in names if name not in named]
+    assert not missing, f"commands with no lifecycle map row: {missing}"
+
+
+@pytest.mark.parametrize("relative", DOCUMENTS)
+def test_pages_use_no_absolute_paths_or_copied_facts(relative):
+    text = _read(relative)
+    assert "file:///" not in text, relative
+    assert all(p.startswith(MACHINE_PATHS) for p in re.findall(r"D:/[^\s`'\")]*", text)), relative
+    for fact, owner in SINGLE_SOURCE:
+        assert relative == owner or not re.search(fact, text), (relative, fact, owner)
+    for path, function in re.findall(r"Verified by: (tests/\S+?\.py)::(\w+)", text):
+        assert function in {n.name for n in ast.walk(ast.parse(_read(path))) if isinstance(n, ast.FunctionDef)}, relative
+
+
+def test_docs_are_undated_and_current_state_ids_are_open():
+    assert not [p for p in (ROOT / "docs").rglob("*") if re.search(r"\d{8}", p.name)]
+    index = {t["trajectory_id"]: t["outcome"] for t in json.loads(
+        _read("research_memory/derived/trajectory_index.json"))["trajectories"]}
+    for row in _read("CURRENT_STATE.md").splitlines():
+        for tid in re.findall(r"`(TB?-[^`\s]+)`", row):
+            # An id missing here is allowed only when another branch owns the record.
+            assert index.get(tid, "ACTIVE") == "ACTIVE", (tid, index.get(tid))
+            assert tid in index or "`codex/exp/" in row, f"unknown trajectory id {tid}"
