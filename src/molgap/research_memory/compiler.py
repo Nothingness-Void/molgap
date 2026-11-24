@@ -9,6 +9,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .cards import families_page
 from .backtest import build_screening_backtest
 from .backtest import build_policy_backtests
 from .policy import load_policy_registry
@@ -35,6 +36,7 @@ DERIVED_FILENAMES = (
     "completeness_report.json",
     "research_summary.json",
     "research_summary.md",
+    "families.md",
 )
 
 
@@ -311,6 +313,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
     }
     payloads.update({
         "research_summary.md": render_summary_markdown(summary).encode("utf-8"),
+        "families.md": families_page(root, trajectory_index).encode("utf-8"),
     })
     return payloads
 
