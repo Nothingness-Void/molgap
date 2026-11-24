@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/muon_graph_rms/terminal_staging/v1/219f4cadecab6bce/acceptance.json",
+      "sha256": "7ff870b85848806e0dd24ab160bea48acaad7b5d254272047c848df63e8cf762"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_graph_rms/selected_model.pt",
+      "sha256": "9c08382057124d93a9a6ffe9b8a533d08548722d26d02cbc0e651b5ef5b835fc"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/cost_records.json",
+      "sha256": "4f2e0e124f575071e8cd19bf8d24dd05ec91cf7d0c74180136f94faddef7b73a"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+      "sha256": "ee28ea1f430c0696a3a9b22754871b94e4043a8df1dd4ac78c8bb8b7a1e0bdf7"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/paired_analysis.json",
+      "sha256": "b73737a55fbeb7241a0c929b8e01ff8ad8b8ee70a0e9d2f7baecef91e0b78ac4"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/prediction_manifest.json",
+      "sha256": "256878de96632f85e6e5f973b1ed2cfde15982ac8043a6b0c772c716b047a72d"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/role_history.json",
+      "sha256": "66e9e495ea3fc7f1f400718894de76bbae881029050c043c2e44ff8f60afb028"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/row_manifest.json",
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/_resume_preflight/muon_graph_rms/runtime_certificate.json",
+      "sha256": "0a6905f0b2b5af695684feecd5ac3f0982046e6d26ab48b991246ce3fb451d39"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_graph_rms/training_contract.json",
+      "sha256": "06993fa714f84bebbd9706795b63a48db6804922f4f8d9bdd35f4a50c8d885fd"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/target_manifest.json",
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/comparison_assets/d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a/target_transform.json",
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/bound_trace_manifest.json",
+      "sha256": "b89555472cd8c5911002e80e276fe400e44c5834988bd76c2e9efd58bef48f68"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "replace-18-local-batchnorm1d-with-post-graph-rmsnorm-under-batched-muon",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659",
+    "evaluation_weight_source": "live",
+    "feature_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058",
+    "optimizer_fused": false,
+    "optimizer_identity": "3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7",
+    "optimizer_mode": "k1-muon-batched-adamw-fp32-v1",
+    "optimizer_steps": 234360,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1",
+    "row_order_identity": "39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1",
+    "runtime_certificate_scope": "c75011519274a52cd40b1610d8b967276fc8fcad5887ab4ca2b68969533ba539",
+    "sample_presentations": 29998080,
+    "schedule_identity": "7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4",
+    "seed": 42,
+    "selection_role_identity": "926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a",
+    "target_transform_identity": "2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "8770ec33495cedc39e541b85500d32a76b104c518e3de788cf91ffba121d9b37",
+      "reference": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/muon_bn/terminal_staging/v1/72aa96ee95e8a9fc/acceptance.json",
+      "sha256": "0730d9107a50fd961de8829002118f8b73510abdb0d371d42715513832dcbc33"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/selected_model.pt",
+      "sha256": "328acc53b096e163a284686b91517a10f8452ddef613a72d04b98dec01813ac8"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/cost_records.json",
+      "sha256": "44dd4199821b9db1d1e4231bae692a9551b380b814e483467ac3cbc11923caf5"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+      "sha256": "ee28ea1f430c0696a3a9b22754871b94e4043a8df1dd4ac78c8bb8b7a1e0bdf7"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/prediction_manifest.json",
+      "sha256": "347b1f0d184745d5ece1f48f6990b5a9ecf7e810bdb63a4072d3cd39b9f68ae2"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/role_history.json",
+      "sha256": "b1c1f3aa485ca84624afd04da9a49e47f8b5e1e2f73f9ee9833e068b8661658c"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/row_manifest.json",
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/_resume_preflight/muon_bn/runtime_certificate.json",
+      "sha256": "1d0ca0a772f66499b384ec3f7c0b937382a822037c037bf41a1e9ca34b048ce9"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/training_contract.json",
+      "sha256": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/target_manifest.json",
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/comparison_assets/d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a/target_transform.json",
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_bn/bound_trace_manifest.json",
+      "sha256": "2a2f5276e16550c7b6e4af39e3cd473efe8180240eee6275971a454d6446fb50"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn-2b1a2d32f3f003ad86e6",
+  "reference_bundle_sha256": "0c9ae9945673981857e5d0814f91c2049bea76f6614b5a7e5b29db9adae9371c",
+  "reference_id": "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "06e9f45ff7e1e05b832bfed58d47bf799ad16d4dec1c1e1599f0a54267e31331"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "7e1dc21bd482f424157069dfbad80cc98e478b44de311b55754bcd81d91042ce"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/_execution/muon_bn/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "7e1dc21bd482f424157069dfbad80cc98e478b44de311b55754bcd81d91042ce"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/training_contract.json",
+      "name": "contract",
+      "sha256": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "86e4e8b12090922c13555df1eb5967c4c65a798e5d6243fe7049e2270631de05"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "93051426d64c17bf95ea1903390ed1da80a23d24febf0805c13b010fb377d92b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "218f25d9e7301260ff5d4f01e7caa9494904ab6917ae8a8a5ef8968d83d0a06d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "328acc53b096e163a284686b91517a10f8452ddef613a72d04b98dec01813ac8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "83b6697c93b7e6eb4bc7fdfcabc92cb63d38ce0ded5aa7c3d05e8ffab338ee74"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-graph-rms-muon-500k-20261117-s42/v1/version2/muon_bn/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "9df6fbf51b969cf7cef5567af1680a484a61d33686700c765448fd3d27665e83"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/generated/ea0a9f55f06abb561c7beb736d7dcd5bb56cb20525b7db75852b304629752411/muon_bn/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.10186369444847107,
+    "missing_reason": null,
+    "selected_optimizer_step": 210924,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/muon_bn/terminal_staging/v1/72aa96ee95e8a9fc/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

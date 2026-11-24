@@ -1,0 +1,139 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-graph-rms-muon-500k-20261117-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms-planned",
+        "cost-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms-0",
+        "cost-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_graph_rms_muon_500k_20261117/generated/ea0a9f55f06abb561c7beb736d7dcd5bb56cb20525b7db75852b304629752411/muon_graph_rms/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-graph-rms-muon-500k-20261117-s42:muon_graph_rms:downstream"
+      ],
+      "source_commit": "50c84066f35e0a79f8985f76b06f9d8dc5fe6903",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/strict_qualification/2b1a2d32f3f003ad86e6/muon_graph_rms/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+    "facts": {
+      "ci_meV": [
+        2.139911138176918,
+        3.369149134993553
+      ],
+      "effect_meV": 2.7669811391830446,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "graph-rms-norm",
+        "batchnorm-free",
+        "muon",
+        "500k",
+        "negative"
+      ],
+      "source": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/closure_v1/measured_pcqm-k1-graph-rms-muon-500k-20261117-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-k1-graph-rms-muon-500k-20261117",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/rml_decision_snapshots/12d819d78faed32522354f8dfdd6c62fd040b9b25e6a52e398ce62badea6983a.json",
+    "snapshot_sha256": "12d819d78faed32522354f8dfdd6c62fd040b9b25e6a52e398ce62badea6983a",
+    "state_timestamp": "2026-11-17T03:20:00+09:00"
+  },
+  "family_id": "pcqm-k1-graph-rms-muon-500k-20261117",
+  "hypothesis": {
+    "alternative_explanations": [
+      "K1's 500K ceiling is dominated by single-slot rank-1 and MPNN capacity rather than BatchNorm buffer drift",
+      "GraphRMSNorm under Muon changes effective step scale without passing the 3 meV gate"
+    ],
+    "changed_mechanism": "replace-18-local-batchnorm1d-with-post-graph-rmsnorm-under-batched-muon",
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing original 18-BN K1 against BN-free GraphRMSNorm K1 from identical k1.pt initialization.",
+    "decision_changed_if_negative": "Close BN replacement as a standalone K1 salvage lever if it fails the material gate.",
+    "decision_changed_if_positive": "NOMINATE if muon_graph_rms-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms",
+    "observed_deficiency": "Every K1-Muon run to date retained 18 legacy BatchNorm1d layers whose running_var buffers explode (~76,472 L2 norm) as Muon orthogonal updates grow hidden weights, while GraphRMSNorm was only tested under AdamW at 100K.",
+    "related_closed_family_ids": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does replacing K1's 18 legacy BatchNorm1d layers with BN-free per-graph channel RMSNorm (GraphRMSNorm) eliminate running-variance drift and reduce 500K 60-pass development MAE under batched FP32 Muon?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn-2b1a2d32f3f003ad86e6",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/muon_graph_rms/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/generated/ea0a9f55f06abb561c7beb736d7dcd5bb56cb20525b7db75852b304629752411/muon_graph_rms/recipe.json",
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/data_declaration.json",
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_graph_rms_muon_500k_20261117/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon_graph_rms",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-graph-rms-muon-500k-20261117-s42",
+      "reference_arm_id": "muon_bn",
+      "reference_trajectory_id": "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
+      "reference_trajectory_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/runs/pcqm-k1-graph-rms-muon-500k-20261117-s42/prospective/muon_bn/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "7b995d7c49f6357bffada6169965f97af50176d966bb53c0d00870d01e503d74"
+    },
+    "source_commit": "50c84066f35e0a79f8985f76b06f9d8dc5fe6903",
+    "source_config_identity": "52fe01149dba25a53704f3f2271d0910fb5716cecd6a26f22a5d86df6d0f58c2"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms"
+}
