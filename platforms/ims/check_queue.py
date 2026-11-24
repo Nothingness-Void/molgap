@@ -55,7 +55,8 @@ echo "===__SEC_SHOWLIM_C__==="
 showlim -c 2>&1
 printf "\n===__RC_SHOWLIM_C__%s===\n" "$?"
 echo "===__SEC_CHOU_RUNS__==="
-PY="$(command -v python3)" || exit 2
+PY="$(realpath -e -- "$BOUNDARY/molgap/.venv/bin/python" 2>/dev/null)" || PY=""
+case "$PY" in "$BOUNDARY"/*) ;; *) PY="$(command -v python3)" || exit 2;; esac
 "$PY" - <<'__CHOU_PY__' 2>&1
 import json
 import os
@@ -826,27 +827,35 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
 
     codes = dict(re.findall(r"===__RC_(\w+)__(\d+)===", stdout))
     failed = [name for name in _SECTIONS if codes.get(name) != "0"]
-    if failed:
-        raise RuntimeError("partial:" + ",".join(failed) if len(failed) < len(_SECTIONS) else "scheduler:all")
+    if len(failed) == len(_SECTIONS):
+        raise RuntimeError("scheduler:all")
     sec = _split_sections(re.sub(r"===__RC_\w+__\d+===", "", stdout))
-    if any(sec[name] and "Job Status at" not in sec[name] for name in ("JOBINFO_C", "JOBINFO_M", "JOBINFO_W")):
-        raise RuntimeError("parse:jobinfo")
+    for name in failed:
+        sec[name] = ""
     jobs, ts1 = parse_jobinfo_cmw(sec["JOBINFO_C"], sec["JOBINFO_M"], sec["JOBINFO_W"], remote_root=remote_root)
     user_group_stat, queue_status, ts2 = parse_jobinfo_s(sec["JOBINFO_S"])
     points = parse_showlim_c(sec["SHOWLIM_C"])
-    chou_raw = []
-    if not sec["CHOU_RUNS"]:
-        raise RuntimeError("parse:CHOU_RUNS")
-    if sec["CHOU_RUNS"]:
+    invalid = []
+    for index, name in enumerate(("JOBINFO_C", "JOBINFO_M", "JOBINFO_W")):
+        if sec[name] and "Job Status at" not in sec[name]:
+            fields = ["", "", ""]
+            fields[index] = sec[name]
+            if not parse_jobinfo_cmw(*fields, remote_root=remote_root)[0]:
+                invalid.append(name)
+    if not user_group_stat["rows"] and not any(queue_status.values()):
+        invalid.append("JOBINFO_S")
+    if not any(points.values()):
+        invalid.append("SHOWLIM_C")
+    chou_runs = []
+    if "CHOU_RUNS" not in failed:
         try:
-            chou_raw = json.loads(sec["CHOU_RUNS"])["runs"]
-        except (json.JSONDecodeError, AttributeError, KeyError, TypeError):
-            raise RuntimeError("parse:CHOU_RUNS")
-    if not ts2 or not user_group_stat["rows"] or not points.get("group"):
-        raise RuntimeError("parse:scheduler")
-    if not isinstance(chou_raw, list):
-        raise RuntimeError("parse:CHOU_RUNS")
-    chou_runs = _enrich_chou_runs(chou_raw, jobs)
+            runs = json.loads(sec["CHOU_RUNS"])["runs"]
+            if not isinstance(runs, list):
+                raise ValueError("expected runs")
+            chou_runs = _enrich_chou_runs(runs, jobs)
+        except (ValueError, AttributeError, KeyError, TypeError):
+            invalid.append("CHOU_RUNS")
+    error = ("partial:" if failed else "parse:") + ",".join(dict.fromkeys(failed + invalid)) if failed or invalid else None
     now_epoch = time.time()
     queue_wait_history = _compute_queue_wait_history(chou_runs, now_epoch)
 
@@ -857,6 +866,7 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
         "fetched_at_jst": datetime.now(JST).strftime("%Y-%m-%d %H:%M:%S JST"),
         "fetched_at_epoch": now_epoch,
         "scheduler_timestamp": ts2 or ts1,
+        "error": error,
         "ssh_latency_ms": latency_ms,
         "host": host,
         "user": user,
@@ -898,6 +908,8 @@ def render_terminal(snap: dict) -> str:
     lines.append(f"IMS/RCCS Queue H | Fetched: {snap['fetched_at_jst']} | Scheduler: {snap.get('scheduler_timestamp') or '-'} | SSH {snap['ssh_latency_ms']}ms")
     lines.append("")
 
+    if snap.get("error"):
+        lines.append("Partial data: " + snap["error"])
     s = snap["summary"]
     g1 = s.get("gpu_within_week") or {}
     g2 = s.get("gpu_over_week") or {}
@@ -986,6 +998,9 @@ def public_snapshot(snap: dict) -> dict:
             items.append(item)
         runs.append({"job_id": job(r)["job_id"], "items": items})
     return {"public": True, "fetched_at_epoch": snap["fetched_at_epoch"], "jobs": jobs, "chou_runs": runs,
+            "summary": {period: numbers((snap.get("summary") or {}).get(period) or {},
+                         ("free_gpus", "jobs_waiting", "req_gpus", "free_cores", "req_cores"))
+                        for period in ("gpu_within_week", "gpu_over_week")},
             "points": {scope: numbers(snap.get("points", {}).get(scope) or {},
                        ("limit", "remaining", "total_use", "running_job")) for scope in ("user", "group")}}
 
@@ -1033,7 +1048,10 @@ def collect_once(path: Path, **connection) -> bool:
     prior = SnapshotState(path).get()
     last = prior if prior.get("available") else None
     try:
-        snap = public_snapshot(fetch_snapshot(**connection))
+        raw = fetch_snapshot(**connection)
+        if raw["error"]:
+            raise RuntimeError(raw["error"])
+        snap = public_snapshot(raw)
         failure = None
     except subprocess.TimeoutExpired:
         snap, failure = last, "ssh_timeout"
@@ -1083,7 +1101,7 @@ class MonitorState:
             if fresh is not None:
                 self._snapshot = fresh
                 self._last_fetch = time.monotonic()
-                payload = {**fresh, "cached": False, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval, "error": None}
+                payload = {**fresh, "cached": False, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval}
             elif self._snapshot is not None:
                 payload = {**self._snapshot, "cached": True, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval, "error": err}
             else:
@@ -1836,7 +1854,8 @@ function render(d) {
     $('heroBar').textContent = !d.available ? '队列未知' : d.jobs.length ? `自己的作业: ${d.jobs.length}` : '最后成功采集时队列为空';
     $('kpiGrid').innerHTML = !d.available ? '' : d.chou_runs.map(r => `<div class="card">Job ${esc(r.job_id || '-')}<br>${r.items.map(i => `${esc(i.status)} · Epoch ${i.epoch ?? '-'} / ${i.total_passes ?? '-'} · ETA ${fmtDur(i.eta_s)}`).join('<br>')}</div>`).join('');
     $('jobsTbl').innerHTML = !d.available ? '' : d.jobs.map(j => `<tr><td>${esc(j.job_id)}</td><td>${esc(j.status)}</td><td>${j.gpus ?? '-'} A100</td></tr>`).join('');
-    $('queueTbl').textContent = '';
+    $('queueTbl').innerHTML = !d.available ? '' : Object.entries(d.summary).map(([period, row]) =>
+      `<tr><th>${period === 'gpu_within_week' ? '≤ 7 天' : '> 7 天'}</th><td>空闲 A100: ${row.free_gpus ?? '-'}</td><td>排队作业: ${row.jobs_waiting ?? '-'}</td><td>请求 A100: ${row.req_gpus ?? '-'}</td></tr>`).join('');
     $('ugTbl').textContent = !d.available ? '' : '配额汇总: ' + JSON.stringify(d.points);
     document.querySelectorAll('details').forEach(e => e.style.display = 'none');
     $('predResult').closest('.pred-card')?.style.setProperty('display', 'none');

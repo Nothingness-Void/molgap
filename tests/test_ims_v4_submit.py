@@ -316,9 +316,9 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     spec.loader.exec_module(dashboard)
     sections = {
         "JOBINFO_C": "Job Status at 2026-11-24 12:00:00\nH 123 model Run 16 sm2/ew6 1:00 node-secret",
-        "JOBINFO_M": "Job Status at 2026-11-24 12:00:00\ngpu 123 model Run 16+1 sm2/ew6 100 200",
+        "JOBINFO_M": "gpu 123 model Run 16+1 sm2/ew6 100 200",
         "JOBINFO_W": 'Job Status at 2026-11-24 12:00:00\nH 123 model Run "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/example"',
-        "JOBINFO_S": "Job Status at 2026-11-24 12:00:00\nUser/Group Stat:\nuser(sm2) group(ew6)\nGPUs | 1/0/0/6 | 1/0/0/6",
+        "JOBINFO_S": "Job Status at 2026-11-24 12:00:00\nUser/Group Stat:\nuser(sm2) group(ew6)\nGPUs | 1/0/0/6 | 1/0/0/6\nQueue Status (H)\nJobs within a week\ngpu | 2 | 32(2) | 3 | 48(3)",
         "SHOWLIM_C": "CPU resource information: Group=ew6\nTOTAL 1000 100 50 50",
         "CHOU_RUNS": '{"runs": []}',
     }
@@ -335,6 +335,7 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     assert not reader.get()["available"]
     assert dashboard.collect_once(path, **conn)
     result = reader.get()
+    assert result["summary"]["gpu_within_week"]["jobs_waiting"] == 3
     assert result["jobs"][0]["job_id"] == "123" and not result["stale"]
     assert not any(secret in path.read_text() for secret in ["node-secret", "sm2", "ew6", "/lustre", "raw", "workdir"])
     server = dashboard.ThreadingHTTPServer(("127.0.0.1", 0), dashboard.make_handler(reader))
@@ -362,6 +363,9 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     sections["CHOU_RUNS"] = "bad json"
     assert not dashboard.collect_once(path, **conn)
     assert reader.get()["failure"] == "parse"
+    local = dashboard.MonitorState(**conn, min_interval=15).get()
+    assert local["jobs"][0]["job_id"] == "123" and "CHOU_RUNS" in local["error"]
+    assert "123" in dashboard.render_terminal(local)
     sections["CHOU_RUNS"] = '{"runs": []}'
     original = ssh
     def partial(*args, **kwargs):
