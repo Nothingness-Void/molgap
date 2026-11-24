@@ -1,7 +1,7 @@
 # xtb_mc_dropout (C2 xTB, C3 MC-dropout)
 
 ## Quick answer
-Recent closed (of 3):
+Last closed (of 3, 0 are CLOSED reference arms):
 TB-pcqm-c3-full-tail | NO_TRAIN | pcqm-c3-full-tail | no-training-dropout-layers-only-in | -0.21 | -
 TB-pcqm-c3-checkpoint-space | NO_TRAIN | pcqm-c3-checkpoint-space | no-training-enable-dropout-layers-only | -0.75 | -
 TB-pcqm-c2-xtb-diagnostic | NEGATIVE_UNDER_CONTRACT | pcqm-c2-xtb-diagnostic | no-backbone-training-compute-20-gfn2 | -0.14 | below_gate

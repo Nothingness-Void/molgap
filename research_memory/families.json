@@ -1,7 +1,7 @@
 {"families": [
 {"name": "gptrans", "aliases": ["GPT-T", "GPTrans", "GPT-T pair transformer"], "family_id": ["*gptrans*"], "experiments": ["*gptrans*"], "src": ["*gptrans*"]},
 {"name": "k1", "aliases": ["K1", "neural atom K1"], "family_id": ["*k1*", "neural_atom*"], "experiments": ["*k1*", "v5_legacy_evidence_migration", "family_checkpoint_efficiency"], "src": ["*k1*", "*neural_atom*"]},
-{"name": "gpspp", "aliases": ["GPS++", "GPS++ MPNN"], "family_id": ["*gpspp*", "gps-*"], "experiments": ["*gpspp*", "pcqm_route_b"], "src": ["gps*", "*gpspp*", "pcqm_route_b*"]},
+{"name": "gpspp", "aliases": ["GPS++", "GPS++ MPNN"], "family_id": ["*gpspp*"], "experiments": ["*gpspp*", "pcqm_route_b"], "src": ["gps*", "*gpspp*", "pcqm_route_b*"]},
 {"name": "edge_state", "aliases": ["edge state", "edge-state GPS"], "family_id": ["edge-state*"], "experiments": ["pcqm_edge_state*"], "src": ["*edge_state*", "pcqm_official_edge_state*"]},
 {"name": "geometry", "aliases": ["3D geometry", "distance angle", "DFT distance"], "family_id": ["distance-angle*", "*geometry*"], "experiments": ["*geometry*", "pcqm_distance_angle*"], "src": ["*geometry*", "pcqm_distance_angle*"]},
 {"name": "scale_transfer", "aliases": ["scale transfer", "100K to 500K", "total budget"], "family_id": ["*scale-*", "pcqm-single-model-total-budget*", "matched-500k*"], "experiments": ["*scale_*", "pcqm_single_model_total_budget", "pcqm_500k_v4_evidence"], "src": ["*scale*", "pcqm_500k*"]},

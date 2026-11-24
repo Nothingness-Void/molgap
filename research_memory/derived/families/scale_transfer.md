@@ -1,22 +1,23 @@
 # scale_transfer (scale transfer, 100K to 500K, total budget)
 
 ## Quick answer
-Recent closed (of 6):
-TB-pcqm-scale-fit-retained-20261001 | NO_TRAIN | pcqm-scale-fit-retained | no-model-or-optimizer-change-six | null | -
-TB-pcqm-scale-transfer-reassessment-20260925 | NO_TRAIN | pcqm-scale-transfer-postmortem | no-model-change-backtest-earlier-rml | null | -
-TB-pcqm-scale-transfer-diagnostic | POSITIVE_UNDER_CONTRACT | pcqm-scale-transfer-diagnostic | evidence-based-quantitative-cross-scale-exposure | null | -
-Open (ACTIVE) 0: -
-Reopen: A new matched, budget-bounded causal comparison is frozen and separately authorized. / new_decision_relevant_matched_factorial_contract
-src (src/molgap/): pcqm_500k_v4_ablation.py, pcqm_500k_v4_evidence.py, pcqm_distance_angle_scale.py, pcqm_k1_scale.py, pcqm_k1_scale_runner.py, scale_transfer_diagnostic.py, substrate_scale_addon.py
-Experiments: pcqm_500k_v4_evidence, pcqm_k1_scale_attribution_20261025, pcqm_scale_fit_retained, pcqm_scale_transfer_attribution, pcqm_scale_transfer_diagnostic, pcqm_scale_transfer_reassessment, pcqm_single_model_total_budget
-
-## Closed (6)
-TB-pcqm-scale-fit-retained-20261001 | NO_TRAIN | pcqm-scale-fit-retained | no-model-or-optimizer-change-six | null | -
+Last closed (of 7, 1 are CLOSED reference arms):
 TB-pcqm-scale-transfer-reassessment-20260925 | NO_TRAIN | pcqm-scale-transfer-postmortem | no-model-change-backtest-earlier-rml | null | -
 TB-pcqm-scale-transfer-diagnostic | POSITIVE_UNDER_CONTRACT | pcqm-scale-transfer-diagnostic | evidence-based-quantitative-cross-scale-exposure | null | -
 TB-pcqm-scale-transfer-attribution | NO_TRAIN | pcqm-scale-transfer-attribution | no-model-change-evidence-only-decomposition | null | -
+Open (ACTIVE) 0: -
+Reopen: new_decision_relevant_matched_factorial_contract / A new matched, budget-bounded causal comparison is frozen and separately authorized.
+src (src/molgap/): pcqm_500k_v4_ablation.py, pcqm_500k_v4_evidence.py, pcqm_distance_angle_scale.py, pcqm_k1_scale.py, pcqm_k1_scale_runner.py, scale_transfer_diagnostic.py, substrate_scale_addon.py
+Experiments: pcqm_500k_v4_evidence, pcqm_k1_scale_attribution_20261025, pcqm_scale_fit_retained, pcqm_scale_transfer_attribution, pcqm_scale_transfer_diagnostic, pcqm_scale_transfer_reassessment, pcqm_single_model_total_budget
+
+## Closed (7)
+TB-pcqm-scale-transfer-reassessment-20260925 | NO_TRAIN | pcqm-scale-transfer-postmortem | no-model-change-backtest-earlier-rml | null | -
+TB-pcqm-scale-transfer-diagnostic | POSITIVE_UNDER_CONTRACT | pcqm-scale-transfer-diagnostic | evidence-based-quantitative-cross-scale-exposure | null | -
+TB-pcqm-scale-transfer-attribution | NO_TRAIN | pcqm-scale-transfer-attribution | no-model-change-evidence-only-decomposition | null | -
+TB-pcqm-scale-fit-retained-20261001 | NO_TRAIN | pcqm-scale-fit-retained | no-model-or-optimizer-change-six | null | -
 TB-matched-500k-v4-three-arm | POSITIVE_UNDER_CONTRACT | matched-500k-architecture-comparison | matched-three-arm-architecture-comparison | null | -
 T-pcqm-single-model-total-budget-500k-s42-b_16x256 | NEGATIVE_UNDER_CONTRACT | pcqm-single-model-total-budget-500k | architecture-package-system-performance | null (see experiments/pcqm_single_model_total_budget/terminal_decision.md) | -
+T-pcqm-single-model-total-budget-500k-s42-a_12x384 | CLOSED | pcqm-single-model-total-budget-500k | architecture-package-system-performance | null | -
 
 ## Open (0)
 
@@ -30,8 +31,8 @@ pcqm-scale-transfer-postmortem | pcqm-scale-transfer-reassessment-20260925 | NO_
 pcqm-single-model-total-budget-500k | s42-b_16x256 | NEGATIVE_UNDER_CONTRACT | null (see experiments/pcqm_single_model_total_budget/terminal_decision.md) | - | architecture-package-system-performance
 
 ## Reopen conditions
-A new matched, budget-bounded causal comparison is frozen and separately authorized.
 new_decision_relevant_matched_factorial_contract
+A new matched, budget-bounded causal comparison is frozen and separately authorized.
 
 ## src
 src/molgap/pcqm_500k_v4_ablation.py

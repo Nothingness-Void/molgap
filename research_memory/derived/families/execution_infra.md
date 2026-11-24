@@ -1,19 +1,19 @@
 # execution_infra (execution speed, operator profile, T4 topology)
 
 ## Quick answer
-Recent closed (of 5):
-TB-family-session-speed-20261014 | NO_TRAIN | shared-family-execution | reviewed-metric-prefix-layout-transport-distance | null | -
+Last closed (of 5, 0 are CLOSED reference arms):
 TB-family-topology-t4-100k-k1_mean2-s42 | INCONCLUSIVE | family-topology-t4-execution | shared-mask-index-reuse-and-exact | null | -
 TB-family-topology-t4-100k-gptrans_local-s42 | INCONCLUSIVE | family-topology-t4-execution | shared-mask-index-reuse-and-exact | null | -
+TB-family-session-speed-20261014 | NO_TRAIN | shared-family-execution | reviewed-metric-prefix-layout-transport-distance | null | -
 Open (ACTIVE) 0: -
-Reopen: Separately authorized profiler-off same-source equivalence and throughput test / Separately authorized repeated profiler-off same-runtime old/new execution control; no automatic ret / Separately authorized representative data/runtime/platform test
+Reopen: Separately authorized profiler-off same-source equivalence and throughput test / Separately authorized representative data/runtime/platform test / Separately authorized repeated profiler-off same-runtime old/new execution control; no automatic ret
 src (src/molgap/): execution_comparison.py, experiment_execution.py, family_execution_diagnostic.py, family_execution_profile.py, family_model_ops.py, family_training_core.py, family_training_data.py, family_training_device_inputs.py, family_training_kernel.py, family_training_loaders.py, +14 more
 Experiments: family_100k_operator_profile, family_checkpoint_efficiency, family_session_execution_speed, family_topology_t4_100k, local_k1_ten_epoch_flow
 
 ## Closed (5)
-TB-family-session-speed-20261014 | NO_TRAIN | shared-family-execution | reviewed-metric-prefix-layout-transport-distance | null | -
 TB-family-topology-t4-100k-k1_mean2-s42 | INCONCLUSIVE | family-topology-t4-execution | shared-mask-index-reuse-and-exact | null | -
 TB-family-topology-t4-100k-gptrans_local-s42 | INCONCLUSIVE | family-topology-t4-execution | shared-mask-index-reuse-and-exact | null | -
+TB-family-session-speed-20261014 | NO_TRAIN | shared-family-execution | reviewed-metric-prefix-layout-transport-distance | null | -
 TB-family-100k-operator-profile-k1_mean2-s42 | INCONCLUSIVE | family-100k-operator-profile | observation-only-shared-phase-operator-profiling | null | -
 TB-family-100k-operator-profile-gptrans_local-s42 | INCONCLUSIVE | family-100k-operator-profile | observation-only-shared-phase-operator-profiling | null | -
 
@@ -29,8 +29,8 @@ shared-family-execution | family-session-speed-20261014 | NO_TRAIN | null | - | 
 
 ## Reopen conditions
 Separately authorized profiler-off same-source equivalence and throughput test
-Separately authorized repeated profiler-off same-runtime old/new execution control; no automatic retry
 Separately authorized representative data/runtime/platform test
+Separately authorized repeated profiler-off same-runtime old/new execution control; no automatic retry
 
 ## src
 src/molgap/execution_comparison.py

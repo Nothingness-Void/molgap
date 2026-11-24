@@ -1,7 +1,8 @@
 # routing_fusion (router, expert routing, fusion)
 
 ## Quick answer
-Recent closed (of 2):
+Last closed (of 3, 0 are CLOSED reference arms):
+TB-route-b-four-encoder-specialist | POSITIVE_UNDER_CONTRACT | gps-schnet-bounded-fusion | gps9-gps11-160-and-dual-schnet | null | -
 TB-pcqm-pairnorm-prediction-router-500k-20261027 | NO_TRAIN | pcqm-pairnorm-prediction-router-500k | existing-hard-and-convex-soft-cross | null | below_gate
 TB-pcqm-expert-oracle-feasibility-20260930 | NO_TRAIN | pcqm-prediction-disagreement-expert-routing | saved-prediction-only-postdispatch-hard-soft | null | -
 Open (ACTIVE) 0: -
@@ -9,7 +10,8 @@ Reopen: new_accepted_pretraining_artifacts_and_independently_qualified_role / Ne
 src (src/molgap/): conservative_fusion_payload.py, conservative_fusion_runner.py, fusion.py, hierarchical_fusion.py, multi2d.py, multi2d_router_fusion.py, pcqm_expert.py, pcqm_k1_gptrans_fusion.py, pcqm_route_b_fusion.py, qm9_fusion.py, +3 more
 Experiments: multi2d_experts, pcqm_expert_oracle_feasibility, pcqm_full_minus_tail_fusion_20261113, pcqm_gine_expert, pcqm_k1_consistency_fusion_transfer, pcqm_k1_fusion_distillation, pcqm_k1_gptrans_full_fusion, pcqm_k1_gptrans_pairnorm_fusion_500k, pcqm_k1_hop_fusion_qualification, pcqm_pairnorm_prediction_router_500k
 
-## Closed (2)
+## Closed (3)
+TB-route-b-four-encoder-specialist | POSITIVE_UNDER_CONTRACT | gps-schnet-bounded-fusion | gps9-gps11-160-and-dual-schnet | null | -
 TB-pcqm-pairnorm-prediction-router-500k-20261027 | NO_TRAIN | pcqm-pairnorm-prediction-router-500k | existing-hard-and-convex-soft-cross | null | below_gate
 TB-pcqm-expert-oracle-feasibility-20260930 | NO_TRAIN | pcqm-prediction-disagreement-expert-routing | saved-prediction-only-postdispatch-hard-soft | null | -
 
@@ -17,6 +19,7 @@ TB-pcqm-expert-oracle-feasibility-20260930 | NO_TRAIN | pcqm-prediction-disagree
 
 ## Levers (first 10)
 family | arm | outcome | effect_meV | failure_mode | mechanism
+gps-schnet-bounded-fusion | route-b-four-encoder-specialist | POSITIVE_UNDER_CONTRACT | null | - | gps9-gps11-160-and-dual-schnet
 pcqm-pairnorm-prediction-router-500k | 20261027 | NO_TRAIN | null | below_gate | existing-hard-and-convex-soft-cross
 pcqm-prediction-disagreement-expert-routing | pcqm-expert-oracle-feasibility-20260930 | NO_TRAIN | null | - | saved-prediction-only-postdispatch-hard-soft
 

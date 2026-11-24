@@ -1,7 +1,7 @@
 # residual_corrector (residual corrector, residual block)
 
 ## Quick answer
-Recent closed (of 3):
+Last closed (of 3, 0 are CLOSED reference arms):
 TB-pcqm-residual-spread-fit | NEGATIVE_UNDER_CONTRACT | pcqm-residual-spread-fit | no-model-change-fit-p0-s | -0.73 | below_gate
 TB-pcqm-residual-block-transfer | NEGATIVE_UNDER_CONTRACT | pcqm-residual-block-transfer | no-model-change-keep-p0-s | +2.27 | endpoint_regression
 TB-pcqm-pairnorm-residual-2d-p0 | NO_TRAIN | pcqm-pairnorm-residual-2d-p0 | single-fixed-2d-chemistry-residual-corrector | null | -
