@@ -8,10 +8,8 @@ lifecycle internals (`plan`, `finalize`, traces, policies) live in
 `src/molgap/research_memory/` (`cli.py`, `cards.py`, `saved_analysis.py`,
 `schemas.py`, `validate.py`).
 
-Samples below were produced on 2026-11-01 from `molgap-desktop` at `6087301a`
-(185 trajectories, 173 evidence records). Samples for `levers`, `--compact` and
-`experiment_cli catalog --compact` were produced the same day at `5f829540`
-(185 cards). Counts will change; formats will not.
+Samples below came from one past `molgap-desktop` snapshot. Counts change;
+formats do not. Run a command to see the live numbers.
 
 ## Invocation
 
@@ -151,7 +149,7 @@ from decision prose.
    then the 12 most frequent keywords across the matches (ties keep first-seen
    order), without duplicates. There is no length cap.
 
-On the sample date no file under `experiments/` held a non-empty
+In the sample no file under `experiments/` held a non-empty
 `search_terms` list, so every term came from `failure_mode` and id tokens.
 
 #### `levers --family PATTERN`
@@ -247,7 +245,7 @@ Older K1 trajectories, mostly from the server branch, have no desktop trajectory
 record, so they have no card and `lookup`/`levers` cannot list them. Their one
 index is the table under "Indexed trajectory and attempt coverage" in
 `experiments/pcqm_k1_complete_local_audit/historical_evidence.md` (87 rows, 27 of
-them carded on 2026-11-01). Example: `TC-k1-degree-balance-100k-s42`,
+them carded when written). Example: `TC-k1-degree-balance-100k-s42`,
 `POSITIVE_BELOW_GATE`, +1.28 meV against the 3 meV gate on K1 v4 100K, and a
 500K regression (same file, lines 151-153).
 
@@ -272,7 +270,7 @@ one line per item instead: `sparse | <family_id> | n=<N> with_effect=<N>` and
 `contradiction | <arm> | <id> <scale>k <outcome> <effect> vs <id> <scale>k <outcome> <effect>`.
 
 - `sparse`: families with exactly one trajectory, as
-  `{family_id, n_trajectories, n_with_effect}` (58 on the sample date).
+  `{family_id, n_trajectories, n_with_effect}` (58 on the sample).
 - `contradictions`: the same named arm at two scales with different
   `POSITIVE_UNDER_CONTRACT`/`NEGATIVE_UNDER_CONTRACT` outcomes. Arms are matched by
   trajectory id with the track prefix, `-NNNk` and `-sNN`/`-seedNN` removed. Each
@@ -338,7 +336,7 @@ with `stale derived outputs: <files>`.
 
 `--portable` also checks that every RML input, the runtime and the derived files
 are in Git HEAD unchanged, and that every artifact V5 evidence claims is local. It
-takes about 50 s. On the sample date it exited 1 in the primary checkout, listing
+takes about 50 s. In the sample it exited 1 in the primary checkout, listing
 103 `V5 evidence claims missing local artifacts` lines for evicted checkpoints
 (see [storage lifecycle](LOCAL_STORAGE_RETIREMENT.md)). Report that honestly. Do
 not hydrate artifacts to make it pass.
@@ -375,7 +373,7 @@ trajectories by outcome, READY transfer, roles and cost totals. Exits 1 with
 Prints `completeness_report.json` with these keys: `broken_required_pointers`,
 `cost_completeness`, `counts_by_severity`, `format`, `issues[{code, severity,
 count, items}]` and `ready_prerequisites_missing`. It exits 1 on any `ERROR`
-issue, and with `--strict` also on any `WARN` issue. On the sample date the plain
+issue, and with `--strict` also on any `WARN` issue. In the sample the plain
 command exited 0 and `--strict` exited 1. The issues were
 `historical_partial_record` (20), `incomplete_native_cost_measurement` (142),
 `missing_cost_event` (11), `missing_explicit_role_identity` (47) and
@@ -437,7 +435,7 @@ and `handoff/READY_FOR_DESKTOP.json`. A closed arm keeps them under
 
 ### Outcome vocabulary
 
-From `TRAJECTORY_OUTCOMES` in `schemas.py`. Counts are from the sample date.
+From `TRAJECTORY_OUTCOMES` in `schemas.py`. Counts are from the sample.
 
 | Outcome | Meaning | n |
 |---|---|---|
@@ -500,7 +498,7 @@ labels use each value.
 ### `attribution_label.json` side files
 
 These are weak-evidence labels beside a decision file (in the decision's
-directory). There are 43 on the sample date. `cards` uses a label only when the
+directory). There are 43 on the sample. `cards` uses a label only when the
 trajectory has no closure-fact `failure_mode` and the trajectory id is in
 `trajectory_ids`.
 
@@ -513,7 +511,7 @@ trajectory has no closure-fact `failure_mode` and the trajectory id is in
 | `basis` | `{path, sha256}` of the attribution text the label was read from |
 | `labeled_at`, `note` | date and one-line reason |
 
-No code checks a label's schema or `basis.sha256`. On the sample date all 43
+No code checks a label's schema or `basis.sha256`. In the sample all 43
 basis hashes matched their files.
 
 ### Errata
@@ -612,7 +610,7 @@ Honest limits:
 | `validate` passes, `check --frozen --portable` fails | both are correct; the run is valid here but not portable. Report the gap |
 | card or label vs decision file | the decision file ([AGENTS precedence](../../AGENTS.md#authority)) |
 
-Example on 2026-11-01:
+Example:
 `accept_run.py --strict --execute --profile D:/molgap-machine-profile.json
 --run-id pcqm-k1-init-noise-100k-s43 --attempt-id v1` exits 1 with
 `replay_readiness: BLOCKED`, because both arms report `bound artifact SHA mismatch:

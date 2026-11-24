@@ -18,11 +18,28 @@ Apply these Orwell-inspired rules to responses and project documentation:
 Lead with the answer. State a limitation once when it affects the decision;
 avoid repetitive disclaimers. Be concise without hiding uncertainty or results.
 
+## Read Routes by Role
+
+Start from the row for the task. Each route goes to the
+[lifecycle map](docs/operations/LIFECYCLE_MAP.md), then
+[families.md](research_memory/derived/families.md) (closed and open items per model
+family), then the family page and the last page named.
+
+| Role | Then read |
+|---|---|
+| Retrieve, accept, close a run | platform skill in `skills/`, then [RML interfaces](docs/operations/RML_INTERFACES.md) (closure format) |
+| Plan research | [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md), then RML interfaces (planning section) |
+| Change infrastructure | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md), then the [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) |
+| Look up past notes | [vault](docs/operations/VAULT.md) (a view, never an authority) |
+
+Changing a command means changing its row in the lifecycle map; a test enforces it.
+
 ## Reuse First
 
 For routine operations on an already declared, authorized run, start with the
 platform skill and supplied run contract. Read only the instructions relevant to
 that operation. For infrastructure changes, start with the
+[lifecycle map](docs/operations/LIFECYCLE_MAP.md) and the
 [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
 Use the [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
 [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
@@ -297,6 +314,6 @@ experiment records. Comments explain why, not what.
 Basic install/inference: [README](README.md); shipping: [production](production/README.md).
 Remote routing: [platforms](platforms/README.md); closed evidence: [experiments](experiments/README.md).
 Detailed research checklists: [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md).
-Historical branch audits: [Branch History](docs/operations/BRANCH_HISTORY.md).
-Platform skills live outside the repository, in the user's `~/.agents/skills/` (linked from `~/.claude/skills/` and `~/.codex/skills/`): `kaggle-molgap-workloads/SKILL.md`, `ims-molgap-workloads/SKILL.md`, `scnet-bw-dcu-molgap/SKILL.md`. Read the one for the platform before submit, retrieve or close.
+Docs map and archived pages: [docs/README.md](docs/README.md).
+Project skills live in [skills/](skills/README.md); that copy is the authority and the user directory only links to it. Read `kaggle-molgap-workloads`, `ims-molgap-workloads` or `scnet-bw-dcu-molgap` for the platform before submit, retrieve or close.
 Obtain the minimum new evidence needed for the next justified decision, not busy GPUs.

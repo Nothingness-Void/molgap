@@ -1,187 +1,59 @@
 # Current State
 
-## Reuse Navigation
-
-Start with the [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md); use the
-[workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
-[operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
-and [local CLI](docs/operations/EXPERIMENT_CLI.md), not a copied launcher.
-Platform skills own remote operations; reuse does not authorize execution.
-This file owns recommendations, blockers and queue observations, not evidence.
-[ROADMAP](ROADMAP.md) owns priorities; [BRANCHES](BRANCHES.md) owns checkout routing.
+This file owns the project recommendation, blockers and queue observations, not
+evidence. [ROADMAP](ROADMAP.md) owns priorities; [BRANCHES](BRANCHES.md) owns
+checkout routing; the [lifecycle map](docs/operations/LIFECYCLE_MAP.md) owns the
+command order; [skills/](skills/README.md) own remote operations.
 
 ## Production Identity
-
-- Track A recommendation: repaired-2M three-GPS dense pure 2D.
-- Registry: `repaired_2m_dense_2d`; lower-cost preset: `repaired_2m_equal_2d`.
+- Track A recommendation: repaired-2M three-GPS dense pure 2D (registry `repaired_2m_dense_2d`; lower-cost preset `repaired_2m_equal_2d`).
 - Public loader: `load_repaired_2m_2d` in `src/molgap/inference.py`.
 - Authority: [Track A decision](production/04_evaluate/project_freeze/track_a_final_decision.md); [asset hashes](models/README.md).
 
-## Track B Recommendation and Blockers
+## Track B
+Track B predicts PCQM4Mv2 Gap only; it does not change Track A. Accepted full
+EdgeState is the operational full-scale reference; the
+[scale reassessment](experiments/pcqm_scale_transfer_reassessment/decision.md) owns the
+limits of comparing 500K and full contracts. The [GPTrans 100K reference](experiments/pcqm_gptrans_t_100k_v4/decision.md)
+is reusable but closed for 100K promotion. Official validation and test roles have
+recorded consumption; reuse needs explicit authority ([reference roles](models/REFERENCE_INDEX.md)).
+**For closed and open items by model family, read [families.md](research_memory/derived/families.md)**
+(generated, never stale). A closed negative releases no successor, adoption, retry or scale-up.
+Registered K1 and GPTrans runs use accelerated execution with no slow fallback
+([K1](docs/operations/K1_EXECUTION.md), [GPTrans](docs/operations/GPTRANS_EXECUTION.md)).
 
-K1 FP32 Muon100K is accepted and adopted as the selected optimizer route for
-the user-authorized500K transfer pair, not as a full/production replacement.
-Selected Live MAE0.132520668eV versus same-job AdamW0.141294461eV; both strict
-replay entries complete. [Decision](experiments/pcqm_k1_muon_100k_20261106/decision.md)
-and [cost/scale review](experiments/pcqm_k1_muon_100k_20261106/cost_and_scale_review_20261106.md)
-own the evidence. The500K question remains on codex/exp/k1-muon-500k-20261106;
-its source/prospective/receipt determines execution state.
+## Blockers
+- Missing frozen references stay pending, never retrained. Unknown remote state is `UNKNOWN`: reconcile first.
+- TPU request metadata did not establish TPU execution; qualification stays pending under `platforms/_records/kaggle/preflight/`.
+- No observation below releases adoption, scale-up, heartbeat or server takeover.
 
-Track B predicts PCQM4Mv2 Gap only; it does not change Track A.
-Accepted full EdgeState remains the operational full-scale reference.
-[Scale reassessment](experiments/pcqm_scale_transfer_reassessment/decision.md)
-owns the limits of comparing 500K and full contracts; their ordering is not causal.
-New screens retain V4 rows/recipe/runtime. The [GPTrans 100K reference](experiments/pcqm_gptrans_t_100k_v4/decision.md)
-is reusable but closed for 100K promotion.
-Official validation/test roles have recorded consumption; exploratory reuse or
-another submission needs explicit authority. See [reference roles](models/REFERENCE_INDEX.md).
+## Open Acceptance Items (owner branch holds the evidence)
 
-User-directed K1 focus remains cost and 500K enhancement, not a full-data rerun.
-Standing guidance for the next K1 choice:
+| Item | State | Missing | trajectory_id | Branch |
+|---|---|---|---|---|
+| Real-tri-pair 500K (two Kaggle segments) | Both arms 60/60, retrieved; dev EMA delta cannot reach the frozen gate | Strict acceptance, role audit, closure | `T-pcqm-gptrans-real-tri-pair-500k-20261118-s42-real_tri_pair` | `codex/exp/gptrans-real-tri-pair-500k-20261118` |
+| GPT-T width/FFN 500K (IMS) | Closed by decision; no variant nominated | Terminal RML record (placeholder `source_commit`) | `TB-pcqm-gptrans-width-500k-20261117` | `codex/exp/gptrans-width-500k-20261117` |
+| Cutlass-GT 500K r2 (IMS) | Complete, retrieved, tail scored once; fails the tail bar | Decision and closure | `T-pcqm-cutlass-gt-100k-20261118-r2-s42-cutlass_gt` | `codex/exp/cutlass-gt-100k-20261118` |
+| GRIT-SPSE 500K r2 (IMS) | Complete, retrieved, tail scored once; fails the tail bar | Decision and closure | `T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse` | `codex/exp/grit-spse-100k-20261118` |
+| DeMol-CIN s43 IMS replication | User cancelled the four jobs; one serial job replaces them, not submitted | None | `T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin` | `codex/exp/demol-cin-ims-replication-20261120` |
+| DeMol-CIN late give-back (local) | Arm A finished; arms B and C not run | Decision and closure for A; B/C need the `training_workers=0` prepare step | `T-pcqm-demol-cin-100k-20261118-r2-s42-demol_cin` | `codex/exp/demol-cin-late-giveback-20261119` |
+| Local single-forward/EMA 100K | Clean-EMA misses the frozen primary tolerance; cost crosses RTX 5060 and T4 | Terminal evidence, strict reference | `TB-pcqm-k1-single-true-ema-100k` | `molgap-desktop` |
+| GPT-T triplet norm 100K | Six arms still ACTIVE in the index | Terminal closure | `T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm` (+5) | `molgap-desktop` |
 
-- The [2026-10-25 scale synthesis](experiments/pcqm_k1_scale_attribution_20261025/analysis.md)
-  and accepted [retained-tail discriminator](experiments/pcqm_k1_scale_attribution_20261025/README.md)
-  take precedence. Recent within-module 100K gains do not establish improvement
-  over original K1, and the strongest 100K package never ran unchanged at 500K.
-- Do not repeat the tail-WD grid or stack nominal gains into another 500K package.
-  A new training discriminator is proposed only; this NO_TRAIN diagnostic releases
-  no training or adoption.
-- Read the [complete K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
-  and [historical matrix](experiments/pcqm_k1_complete_local_audit/historical_evidence.md)
-  before choosing a route. The [saved-trace analysis](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md)
-  and [BN row attribution](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md)
-  are accepted local descriptions, not terminal training truth, stopping policy or adoption.
-- The composed 500K package differences (best 100K includes a teacher absent from 500K;
-  live/EMA/BN differences are not architecture transfer) sit with owner
-  `codex/exp/k1-gptrans-500k-package` in the [custody map](BRANCHES.md#retained-checkout-map).
-- Further profiling or diagnostics need their own prospective scope and authority.
-- Closed negatives below release no successor, adoption, retry or scale-up.
+## Needs Check (last record is old; confirm on the owner branch first)
 
-Registered K1 and GPTrans preflight/training use accelerated execution by default:
-[K1 policy](docs/operations/K1_EXECUTION.md),
-[GPTrans policy](docs/operations/GPTRANS_EXECUTION.md).
-No execution addon or slow fallback. New recipes bind execution identity;
-historical jobs retain frozen packages. Native qualification and scientific/
-compute gates remain mandatory; this is not a model promotion or new job release.
-
-## Active Work and Unresolved Acceptance
-
-- **Needs check (state as of 2026-10-15; no later record in `research_memory/derived` or `experiments/*/decision.md`):** K1 mean2 versus single-forward EMA 500K: desktop-owned on
-  `codex/exp/k1-mean2-single-ema-500k-20261013` (see [owner custody index](BRANCHES.md#retained-checkout-map)).
-  Kaggle1 kernel ID 138365645/version2: scheduler ERROR is the frozen nine-hour
-  STOP_FOR_COST after 29/53 complete trace passes (reconciled 2026-10-15 JST), not a
-  startup failure. Full native/artifact/terminal RML acceptance is pending; unequal
-  partial exposure is not a complete reference. Version1 ended ERROR before training
-  and is finalized NO_TRAIN on the owner; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md).
-  No continuation, retry, monitor or adoption.
-- Clean K1/degree-bond-local GPTrans 500K, kernel 138717853/version1: mechanical/native
-  integrity VERIFIED, science INCONCLUSIVE (no qualified strict 500K reference bound
-  before launch); neither arm is READY and replay exclusions remain. The owner ref
-  `codex/exp/k1-clean-ema-gptrans-local-500k` was deleted locally on 2026-10-28; resolve
-  it through the [retirement index](docs/operations/LOCAL_RETIREMENT_INDEX.json); canonical paths
-  `archive:experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md`
-  and `terminal_acceptance/closure.md` (held on the archive ref, not in this checkout).
-  No adoption, continuation, successor, baseline retraining, monitor or full release.
-- Local single-forward/EMA 100K: live 0.139370 eV, raw EMA 0.156533 eV, clean-BN EMA
-  0.143099 eV ([result](experiments/pcqm_k1_single_true_ema_100k/result.json)). The
-  clean-EMA protocol endpoint is 2.842 meV worse than historical mean2. Same-hardware
-  cost/quality qualification and formal V5/RML terminal closure are not established;
-  the canonical trajectory stays ACTIVE. Do not treat the handwritten positive decision
-  as verified EMA benefit or single-forward non-inferiority. The
-  [desktop curve review](docs/operations/DESKTOP_RML_CURVE_REVIEW_20261013.md) owns this.
-- Reconciliation rule: the 2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
-  retrieved retained outputs without resuming, submitting or adopting jobs. Reconcile
-  exact owner/job/attempt and durable artifacts before acting; stale remote state is
-  UNKNOWN. Branch-local evidence stays on the [custody index](BRANCHES.md#retained-checkout-map).
-
-| Question | Retained observation / blocker | Owner entry |
-|---|---|---|
-| K1 execution pair custody | Needs check (October state, no later record found): Fused/layout attempt003 and initialized-layout release002 completed 40 epochs; native/mechanical inspection passes, speed gates fail. User selects initialized-layout for new compatible declarations only. Formal terminal RML closure/routing pending on owner; no new job release. | [Execution selection/evidence pointers](docs/operations/K1_EXECUTION.md), [fused result](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/attempt_003/terminal_acceptance/decision.md) |
-| K1 bounded single/EMA 500K T4 | Needs check (October state, no later record found): Kaggle1 ID 137983743/version1 COMPLETE; worker STOP_FOR_COST. Matched 18-epoch partial: mechanical acceptance passes, science INCONCLUSIVE; not a complete 60-epoch result, replay-ready record or promotion. Formal V5/RML terminal publication blocked. | [Decision / attribution / blockers](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-colab-500k-efficient/experiments/pcqm_k1_single_ema_500k/t4_native/terminal_acceptance/decision.md) |
-| Native T4 cost / 100K quality | Needs check (October state, no later record found): Kaggle3 ID 137853937/version1 COMPLETE 40/40 (2026-10-10); native qualification passes, single fails quality gate. Allocation timing and frozen prospective identities block complete RML closure; no adoption/retry/500K/full. | [Owner status, decision and RML blockers; owner `codex/exp/k1-t4-cost-quality-100k`](BRANCHES.md#retained-checkout-map) |
-| Standalone K1 EMA 100K | Needs check (October state, no later record found): Version2 ERROR, empty outputs/log; cause, native cost and scientific endpoint unresolved; no further retry. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
-| Gaussian spectral 100K | Needs check (October state, no later record found): COMPLETE 40/40, native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
-| Local single-forward/EMA 100K | See the Active item above: clean-EMA misses the frozen primary tolerance; cost crosses RTX 5060/T4; terminal evidence and strict reference qualification absent. | [Protocol](experiments/pcqm_k1_single_true_ema_100k/protocol.md), [Review](docs/operations/DESKTOP_RML_CURVE_REVIEW_20261013.md) |
-| K1 + GPT-T minus-tail fusion (full scale) | Closed 2026-11-15. Tail MAE once per endpoint: K1 s42 97.026, K1 s43 99.006 (outside +/-1.5 band), GPT-T B1024 s42 87.941, s43 87.846 meV. Original fusion FAIL (hetero +0.229 meV vs GPT-T s42); supplement (a) not passed, (b)/(c) INCONCLUSIVE (would not pass). GPT-T two-init pair 85.349 meV is descriptive, not pre-registered; adopting it needs a new frozen question. [Decision](experiments/pcqm_full_minus_tail_fusion_20261113/decision_full_minus_tail.md) (branch `codex/exp/gptrans-full-minus-tail-20261110`, e32009ae). | [Protocol](experiments/pcqm_full_minus_tail_fusion_20261113/protocol.md); [second-init supplement](experiments/pcqm_full_minus_tail_fusion_20261113/protocol_supplement_second_init.md) (adds K1 s43 + GPT-T s43, frozen before any GPT-T s42 score) |
-| GPT-T full-scale lever experiments | Protocol frozen 2026-11-15 before any result: A same-recipe inits s44/s45 (submit to IMS), B batch 256/512, C depth 20, D 90 passes (conditional on offline curves), E cross-recipe ensemble; tail scored once per endpoint, Bonferroni one-sided 99%. Closed 2026-11-16 (branch `codex/exp/gptrans-full-levers-20261115`, 33ab4571; IMS A100, B512 NO_TRAIN). **A: PASS**: four B1024 inits (s42-s45) equal weights 83.992 meV tail, -1.357 vs 85.349 (99% upper -1.207); init-only noise std 0.099 meV (data order and dropout seed fixed, so it understates training noise). B256 FAIL (89.439/89.256, worse than B1024 by 1.4-1.5), C depth 20 FAIL (87.048, gain 0.89 < 1.5 bar), D 90 passes FAIL (87.130, gain 0.81 < 1.5), E cross-recipe FAIL (83.340 vs 83.992, -0.653 > -1.0). Final candidate: four-init B1024 equal-weight ensemble; tail number is optimistic (tail used to choose among levers). Official valid read once for it: 0.08281 eV (report only; official test not read). No successor, adoption or production change released ([A](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-full-levers-20261115/experiments/pcqm_gptrans_full_levers_20261115/decision_A.md), [C/D](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-full-levers-20261115/experiments/pcqm_gptrans_full_levers_20261115/decision_CD.md), [B/E](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-full-levers-20261115/experiments/pcqm_gptrans_full_levers_20261115/decision_BE.md), [valid](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-full-levers-20261115/experiments/pcqm_gptrans_full_levers_20261115/official_valid_ensemble.md)). | [Protocol](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-full-levers-20261115/experiments/pcqm_gptrans_full_levers_20261115/protocol.md) |
-
-### Open acceptance items (audit 2026-11-20)
-
-Queue observations only; each owner branch holds the evidence. Nothing here releases a run, closure shortcut or scoring.
-
-| Item | State | Missing | Owner branch |
+| Item | Last known state | trajectory_id | Branch |
 |---|---|---|---|
-| Real-tri-pair 500K (Kaggle, two segments) | Both arms 60/60, retrieved. Dev EMA delta -0.31 meV (pass 60), -0.66 meV (lowest-EMA snapshot); gate is -3.0 meV and bound < 0, so it cannot pass. | Strict acceptance with 2000-bootstrap diagnosis, role audit, closure, RML terminal. Waits for CPU. | `codex/exp/gptrans-real-tri-pair-500k-20261118` |
-| GPT-T width/FFN 500K (IMS 2025095/2025099) | Closed by decision: W320 and F3 not nominated, L20 NO_SIGNAL (8 endpoints scored once on tail). | Terminal RML record (only the prospective trajectory exists; its `source_commit` is a placeholder). The 8 tail scores (110.324 to 113.601 meV) joined the master leaderboard 2026-11-21 from the existing results; none was rescored. | `codex/exp/gptrans-width-500k-20261117` |
-| Cutlass-GT and GRIT-SPSE 500K r2 (IMS 2066227, 2066231) | Complete, retrieved. Tail scored once 2026-11-21 (user-approved): Cutlass-GT 117.660, GRIT-SPSE 116.205 meV, both above the 104.273 gate; scores in the master leaderboard, files in `D:/molgap-artifacts/tail_eval_cutlass_grit_500k_20261121/`. No dev MAE was recorded for these runs, so the dev-MAE guard did not run. | Decision and closure (no paired CI needed: the tail bar already fails). | `codex/exp/cutlass-gt-100k-20261118`, `codex/exp/grit-spse-100k-20261118` |
-| DeMol-CIN s43 IMS jobs 2077090/91/93/94 | Cancelled by the user (user-reported); a single serial job replaces them, not yet submitted. | n/a | `codex/exp/demol-cin-ims-replication-20261120` |
-| DeMol-CIN late give-back (local) | Arm A finished 36/36 on the fourth launch (best 135.948, final 137.101 meV); arms B and C not run. | Decision and closure for A; B/C need the `training_workers=0` prepare step. | `codex/exp/demol-cin-late-giveback-20261119` |
-
-No observation releases adoption, scale-up, heartbeat or server takeover.
-TPU request metadata did not establish actual TPU execution; allocation/runtime
-qualification stays pending under `platforms/_records/kaggle/preflight/`.
-
-## Archived status (as of 2026-11-24)
-
-Moved from "Active Work and Unresolved Acceptance" because later records close them. Sources: `research_memory/derived/trajectory_index.json` and the decision files named. Nothing here releases a run.
-
-| Item | Closed state | Source |
-|---|---|---|
-| User-released two-slot 100K batch (Kaggle3, 2026-10-10) | Seed43 pair: both arms `NO_TRAIN` (no arm trained at mean2 qualification), so replication stays unrun. Clean-second: `clean_second` `NEGATIVE_UNDER_CONTRACT`, `mean2` reference `CLOSED`. No retry, 500K or full release. The earlier text said "replication unresolved"; the index now holds terminal outcomes. | [Replication decision](experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/decision.md), [clean-second decision](experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md) |
-
-## Closed Questions
-
-Decisions and attribution own the values, replay exclusions and custody. Do not
-repeat them as current work or infer a successor, adoption, retry or scale-up from
-a negative result. Use the [attribution audit](research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md)
-before another same-family module; missing discriminators stay insufficient evidence.
-
-| Question | Disposition | Owner decision / attribution |
-|---|---|---|
-| Retained-initialization 500K | Negative; pretraining worsens Clean-EMA by 0.924 meV (single) and 1.916 meV (mean2); strict replay complete; no universal rejection of pretraining | [Attribution](experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md) |
-| Tail regularization 500K | Both recipes NEGATIVE_UNDER_CONTRACT; replay status sits in the qualification record; no successor | [Custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md) |
-| Consistency 500K / clean-fit | Negative, archived, strict replay excluded; clean-fit accepted NO_TRAIN, no unique cause or promotion | [Custody](experiments/pcqm_k1_consistency_ablation_500k/README.md), [clean-fit](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md) |
-| GPTrans BondLocal + PairNorm 500K LR pair | `5e-4` NEGATIVE_UNDER_CONTRACT (+0.515 meV vs `1e-3`); strict replay complete; says nothing about PairNorm alone | [Attribution](experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/attribution.md) |
-| GPTrans BondLocal + PairNorm 100K | Passes its nomination gate; unadopted, stays on owner ref; PairNorm effect against a qualified 500K BondLocal reference untested | [Attribution](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/attribution.md) |
-| K1 hop-shell 100K | Mixed CLOSED; ordered NEGATIVE_UNDER_CONTRACT (1.116 meV, below 3 meV gate); strict replay complete | [Attribution](experiments/pcqm_k1_hop_shell_100k/analysis_zh.md) |
-| Hop-fusion qualification | Closed NO_TRAIN; fixed fusion descriptive only; no strict fusion replay | [Analysis](experiments/pcqm_k1_hop_fusion_qualification/analysis_zh.md), [decision](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md) |
-| Batch Renorm 100K | Scale-only CLOSED; scale+mean NEGATIVE_UNDER_CONTRACT (1.646 meV worse; 14.037 meV after Clean-BN); strict replay complete | [Final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md) |
-| Message DropPath 100K | Negative (2.373 meV worse); strict replay complete | [Attribution](experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/attribution.md) |
-| MsgNorm 100K | Fixed CLOSED; learned NEGATIVE_UNDER_CONTRACT (1.364 meV, below gate); strict replay complete | [Qualification](experiments/pcqm_k1_message_norm_100k/qualification_20261024.md) |
-| Normalization mechanisms 100K (position, scope, gain) | Closed 2026-10-23 without model adoption; no arm clears the 3 meV nomination; Post-Graph RMS best at 1.645 meV; no scale-up | [Terminal disposition](experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md), [qualification](experiments/pcqm_k1_norm_mechanisms_100k/qualification_20261023.md) |
-| Normalization exposure 100K | Both references CLOSED; both candidates NEGATIVE_UNDER_CONTRACT (warmup 2.973 meV, below 3 meV); strict replay excluded | [Decision](experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md), [custody](experiments/pcqm_k1_norm_exposure_100k/terminal_custody.md) |
-| Pre-norm BN/Ada 100K | BN CLOSED; Ada NEGATIVE_UNDER_CONTRACT; replay excluded (missing LR/checkpoint history) | [Decision](experiments/pcqm_k1_prenorm_norm_100k/decision.md), [custody](experiments/pcqm_k1_prenorm_norm_100k/terminal_custody_decision.md) |
-| Structural-bias / normalization 100K | K1 Post-LN and GPTrans resistance both negative; replay exclusions remain | [Custody](experiments/pcqm_structural_bias_norm_100k/terminal_custody.md) |
-| Operator profile 100K | Accepted non-promotion diagnostic; INCONCLUSIVE science, replay excluded (no frozen reference); shared topology reuse adopted | [Closure](experiments/family_100k_operator_profile/terminal_acceptance/closure.md), [topology](experiments/family_100k_operator_profile/terminal_acceptance/topology_verification.md) |
-| Topology T4 comparison | Accepted diagnostic; faster wall, bitwise-equal predictions; one cross-job difference, not a causal speed estimate; recommendations unchanged | [Decision](experiments/family_topology_t4_100k/terminal_acceptance/decision.md), [closure](experiments/family_topology_t4_100k/terminal_acceptance/closure.md) |
-| Complete module audit / late endpoint average | NO_TRAIN, no adoption | [Audit](experiments/pcqm_k1_complete_local_audit/terminal_decision.md), [average](experiments/pcqm_k1_late_weight_average/terminal_decision.md) |
-| A100 execution and BN mechanisms | NO_TRAIN, no training-time causal verdict | [Execution](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md), [BN mechanism](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md) |
-| 500K BN / frozen bottleneck | NO_TRAIN; capacity/exposure unresolved | [BN](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md), [bottleneck](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md) |
-| Fixed fusion / student distillation | Fusion diagnostic; students negative, archived; no adoption/retry | [Fusion](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md), [students](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md) |
-| Dropout pair | Negative under contract; replay/READY exclusions remain | [Decision](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md), [attribution](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/attribution.md) |
-| FLAG / slot96 | Negative, archived, no active GPU job | [FLAG](experiments/pcqm_k1_flag/STATUS.md), [slot96](experiments/pcqm_k1_slot_width96/STATUS.md) |
-| Chemical auxiliary | Terminal inconclusive; exclusions unchanged, no duplicate acceptance | [Custody](experiments/pcqm_gptrans_chemical_aux/terminal_custody_decision.md) |
-| K1 V4 / SSMA | Negative, no successor | [Owner entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) |
-| Centered logits | Scientifically closed; reference gap is not a retry trigger | [Status](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md) |
-| RML source custody | Historical qualification limits unchanged | [Exact-hash recovery](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md) |
-| GPTrans multi-hop path edge encoding (100K E1, 500K E2) | E1 NEGATIVE_UNDER_CONTRACT; E2 FAIL (mean candidate tail 107.801 meV vs gate 104.94; references 107.849/107.642 inside [105.3, 110.6]; candidate minus reference +0.056 meV). Route closed under Amendment 2; W2 not triggered; P1 noise calibration undetermined. | Branch `codex/exp/gptrans-multihop-edge-20261112`, `experiments/pcqm_gptrans_multihop_edge_20261112/decision_e2.md` |
-| Post-hoc residual corrector line (local, 2026-11-22/23): S1-P0, H1 100K fixed-budget pilot, block transfer, spread fit, C2 GFN2-xTB | Closed. P0 passed in-block (-3.99/-4.12 meV) but the gain is local: H1 net +5.83 meV; same corrector on far rows +2.27/+2.47; 120K spread fit -0.73/-0.25 after the fit range (gate -2.0), losing on unseen scaffolds; xTB adds -0.14/-0.19 over P0. N4 single-bond group did not replicate. No successor; only a new mechanism reopens residual work. | [P0 attribution](experiments/pcqm_pairnorm_residual_2d_p0/attribution.md), [H1](experiments/pcqm_h1_heldout_budget/decision.md), [block transfer](experiments/pcqm_residual_block_transfer/decision.md), [spread fit](experiments/pcqm_residual_spread_fit/decision.md), [C2](experiments/pcqm_c2_xtb_diagnostic/decision.md) |
-| C3 MC-dropout / checkpoint space (local 500K, 2026-11-23) | NO_TRAIN diagnostic; model recommendation unchanged. K=32 dropout-only MC-dropout on 500K PairNorm EMA@60: dev -0.75/-0.69 meV single, -0.48 2-init ensemble; unseen rows -0.60/-0.55 single, -0.22 ensemble; 32x inference cost. Multi-epoch snapshot averaging cancelled (snapshots not retained). Full-scale effect untested; a tail score needs explicit authority and a frozen protocol. | [Decision](experiments/pcqm_c3_checkpoint_space/decision.md) |
-
-All closed transfer, geometry, initialization, Oracle and submission decisions
-are indexed by [experiments](experiments/README.md) and [RML](research_memory/README.md).
-Archived qualification work stays paused with its original gaps; no reopening/
-retry/takeover is released. DSAR/DSMR stays server-owned and remote state UNKNOWN.
-The [dated local audit](docs/operations/LOCAL_AUDIT_20261001.md) is maintenance evidence, not queue truth.
+| K1 mean2 vs single-forward EMA 500K | Kaggle1 stopped at the frozen cost cap after 29/53 passes; partial exposure is not a reference | `TB-k1-mean2-single-ema-500k-20261013-mean2` | `codex/exp/k1-mean2-single-ema-500k-20261013` |
+| K1 execution pair custody | Fused and initialized layouts ran 40 epochs; speed gates failed; initialized layout adopted for new declarations | `TB-molgap-k1-fused-layout-100k-s42-v3-fused_layout` | `codex/exp/k1-fused-layout-t4-100k` |
+| K1 bounded single/EMA 500K (T4) | Worker stopped at the cost cap; matched partial passes mechanical, science INCONCLUSIVE | `TB-k1-single-ema-500k-t4-20261010` | `codex/exp/k1-colab-500k-efficient` |
+| Native T4 cost / 100K quality | 40/40 complete; native qualification passes, single fails quality; closure blocked by allocation timing | `TB-k1-t4-cost-quality-single-100k-s42-v1` | `codex/exp/k1-t4-cost-quality-100k` |
+| Standalone K1 EMA 100K | Version 2 ERROR with empty outputs; cause unresolved | `TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1` | `codex/exp/k1-ema-100k-night-20261006` |
+| Gaussian spectral 100K | 40/40 complete; fresh-pair gate fails; closure pending | `TB-k1-spectral-night-spectral-kaggle3-100k-s42-v1` | `codex/exp/k1-spectral-100k-night-20261006` |
 
 ## Operating Boundaries
-
-- V5 remains stable: [common contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md), [desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md).
-- No default desktop heartbeat, server takeover or cross-machine live handoff.
-- Remote work requires frozen identities, resumable checkpoints, durable outputs;
-  reconcile scheduler/artifacts after downtime before continuation.
-- IMS access obeys [REMOTE_HANDOFF](platforms/REMOTE_HANDOFF.md) below `/lustre/home/users/sm2/chou/`.
-- Common/OOD/P8-hard and official roles are not debugging or screen-tuning data.
-- Generated geometry retains applicable ETKDGv3+MMFF train/inference consistency.
-- Router/MoE/replacement-data/closed fusion need a genuinely new question and stop rule.
-- Track A delivery priorities stay in ROADMAP; no Track B analysis modifies production.
+- V5 stays stable: [common contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md), [desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md). No heartbeat, takeover or cross-machine live handoff.
+- Remote work needs frozen identities, resumable checkpoints and durable outputs; IMS obeys [REMOTE_HANDOFF](platforms/REMOTE_HANDOFF.md).
+- Common, OOD, P8-hard and official roles are not debugging or tuning data. Geometry keeps ETKDGv3+MMFF train/inference consistency.
+- Router, MoE, replacement data and closed fusion need a genuinely new question.
+- Old status text is in tag `docs-archive-20261124`.

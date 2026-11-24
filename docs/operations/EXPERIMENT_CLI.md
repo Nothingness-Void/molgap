@@ -16,7 +16,7 @@ not native qualification.
 
 Run from the selected checkout's root with the primary checkout's `.venv`
 interpreter, not system Python. In a worktree, use the
-[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#select-code-and-storage)
+[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#storage-addons-and-tests)
 `platforms/local/run.py --profile $profilePath -- <command> ...` so the
 worktree's own source runs; `python -m molgap.experiment_cli` imports the primary
 checkout's source. `<command> --help` prints that command's flags as JSON.
