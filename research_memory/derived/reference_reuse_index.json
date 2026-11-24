@@ -2385,6 +2385,29 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "paired_rows_same_init_context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_use": {
+        "common": "untouched",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-gptrans-full-wd-c4",
+      "source_envelope": "experiments/pcqm_gptrans_full_wd_c4_20261123/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "full_scale_tail_scored_once",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "same_job_reference_endpoint_not_strict",

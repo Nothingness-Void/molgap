@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 152,
-  "event_count": 496,
+  "estimated_event_count": 153,
+  "event_count": 499,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 448,
-  "not_applicable_event_count": 126,
+  "measurement_missing_event_count": 451,
+  "not_applicable_event_count": 127,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -748,7 +748,7 @@
           "known_total": 1.4560503472222224
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "desktop CPU:device_hours": {
         "estimated": {
@@ -759,7 +759,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "desktop CPU:queue_hours": {
@@ -771,7 +771,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "desktop CPU:wall_hours": {
@@ -784,7 +784,7 @@
           "known_total": 0.4434067809722304
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "not_applicable:cpu_hours": {
         "estimated": {
@@ -3386,6 +3386,54 @@
         "measured": {
           "known_records": 2,
           "known_total": 30.91138888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "IMS A100-SXM4-80GB x1:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "IMS A100-SXM4-80GB x1:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "IMS A100-SXM4-80GB x1:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "IMS A100-SXM4-80GB x1:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -6171,6 +6219,56 @@
         "unknown_records": 0
       }
     },
+    "IMS A100-SXM4-80GB x1": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "IMS_GPU_UNSPECIFIED": {
       "cpu_hours": {
         "estimated": {
@@ -8532,7 +8630,7 @@
           "known_total": 1.4560503472222224
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 5
       },
       "device_hours": {
         "estimated": {
@@ -8543,7 +8641,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 9,
+        "not_applicable_records": 10,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -8555,7 +8653,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 9,
+        "not_applicable_records": 10,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -8568,7 +8666,7 @@
           "known_total": 0.551604424861115
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "desktop CPU (12 xtb workers)": {
@@ -24685,6 +24783,104 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      }
+    },
+    "TB-pcqm-gptrans-full-wd-c4": {
+      "IMS A100-SXM4-80GB x1:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "IMS A100-SXM4-80GB x1:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "IMS A100-SXM4-80GB x1:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "IMS A100-SXM4-80GB x1:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 8.5
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 8.2569
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "desktop CPU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "desktop CPU:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
       }
     },
     "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local": {

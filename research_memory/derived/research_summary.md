@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 199
+- Validated V5 evidence: 200
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - CLOSED: 39
 - INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
-- NEGATIVE_UNDER_CONTRACT: 68
+- NEGATIVE_UNDER_CONTRACT: 69
 - NO_TRAIN: 59
 - POSITIVE_UNDER_CONTRACT: 10
 
@@ -19,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 814
-- Coarse historical role records: 965
+- Explicit role events: 817
+- Coarse historical role records: 971
 - Repeatedly selected role identities: 50
 
 ## Cost
@@ -108,6 +108,10 @@
 - Hygon DCU device_hours: measured=30.974167 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - Hygon DCU wall_hours: measured=30.974167 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- IMS A100-SXM4-80GB x1 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- IMS A100-SXM4-80GB x1 device_hours: measured=8.256900 (1 measured record), estimated=8.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- IMS A100-SXM4-80GB x1 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- IMS A100-SXM4-80GB x1 wall_hours: measured=8.256900 (1 measured record), estimated=8.500000 (1 estimated record), measurement_missing=0, not_applicable=0
 - IMS_GPU_UNSPECIFIED cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - IMS_GPU_UNSPECIFIED queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -296,10 +300,10 @@
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU wall_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- desktop CPU cpu_hours: measured=1.456050 (5 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- desktop CPU device_hours: not applicable (9 records); measurement_missing=0
-- desktop CPU queue_hours: not applicable (9 records); measurement_missing=0
-- desktop CPU wall_hours: measured=0.551604 (8 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- desktop CPU cpu_hours: measured=1.456050 (5 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
+- desktop CPU device_hours: not applicable (10 records); measurement_missing=0
+- desktop CPU queue_hours: not applicable (10 records); measurement_missing=0
+- desktop CPU wall_hours: measured=0.551604 (8 measured records), estimated=0.500000 (1 estimated record), measurement_missing=1, not_applicable=0
 - desktop CPU (12 xtb workers) cpu_hours: measured=5.219553 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - desktop CPU (12 xtb workers) device_hours: not applicable (1 records); measurement_missing=0
 - desktop CPU (12 xtb workers) queue_hours: not applicable (1 records); measurement_missing=0
@@ -328,8 +332,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 448
-- Cost-event coverage: 206/217 trajectories; incomplete native measurement=169
+- Measurement-missing cost events: 451
+- Cost-event coverage: 207/218 trajectories; incomplete native measurement=170
 
 ## Screening Backtest
 - Status: available
@@ -337,9 +341,9 @@
 - Excluded traces: 41
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 112
+- [INFO] trace_unavailable_for_backtest: 113
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 169
+- [WARN] incomplete_native_cost_measurement: 170
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 53
 - [WARN] trajectory_without_v5_evidence: 18

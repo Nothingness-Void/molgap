@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "train-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-gptrans-full-wd-c4-expected",
+  "evidence_ref": "experiments/pcqm_gptrans_full_wd_c4_20261123/protocol.md",
+  "hardware": "IMS A100-SXM4-80GB x1",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 8.5
+    }
+  },
+  "platform": "ims-rccs",
+  "run_id": "pcqm-gptrans-full-wd-c4-s43",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+}

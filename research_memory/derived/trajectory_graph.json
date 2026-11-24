@@ -876,6 +876,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-gptrans-full-wd-c4:A001",
+      "target": "experiments/pcqm_gptrans_full_wd_c4_20261123/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
       "type": "action_produced_evidence"
@@ -2061,6 +2066,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
+      "target": "TB-pcqm-gptrans-full-wd-c4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "target": "TB-pcqm-gptrans-full-wd-c4",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "target": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
       "type": "prior_evidence"
@@ -2068,6 +2083,16 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "target": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
+      "target": "TB-pcqm-gptrans-full-wd-c4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "target": "TB-pcqm-gptrans-full-wd-c4",
       "type": "prior_evidence"
     },
     {
@@ -4534,6 +4559,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-full-wd-c4-20261123",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
       "type": "evidence"
     },
@@ -5603,6 +5632,10 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-full-wd-c4",
       "type": "trajectory"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 965,
+  "ambiguous_historical_role_record_count": 971,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -3509,6 +3509,48 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-full-wd-c4-20261123",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-geometry-distance-100k-s42-a2",
       "role_identity": null,
       "role_name": "internal_development",
@@ -6757,7 +6799,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 814,
+  "explicit_role_event_count": 817,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -6765,6 +6807,7 @@
     "internal_development",
     "official_train_prefix_0_100000",
     "official_validation",
+    "tail_holdout_v1",
     "train",
     "train_prefix"
   ],
@@ -12623,6 +12666,29 @@
         "trajectory_id": "TB-pcqm-residual-spread-fit"
       }
     ],
+    "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-c4wd-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-c4wd-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-c4wd-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb:alignment_500k": [
       {
         "access_kind": "metric_computed",
@@ -12800,6 +12866,7 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-full-wd-c4-20261123",
       "pcqm-gptrans-geometry-distance-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
@@ -13000,6 +13067,7 @@
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
       "pcqm-gptrans-full-convergence-20260919",
+      "pcqm-gptrans-full-wd-c4-20261123",
       "pcqm-gptrans-geometry-distance-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-a2",
       "pcqm-gptrans-geometry-distance-angle-100k-s42-v1-infra",
