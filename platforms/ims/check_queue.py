@@ -2037,7 +2037,7 @@ def make_handler(state: MonitorState):
         def do_GET(self) -> None:
             parsed = urlparse(self.path)
             if parsed.path in {"/", "/index.html"}:
-                page = HTML_PAGE
+                page = getattr(state, "page", HTML_PAGE)
                 if isinstance(state, SnapshotState):
                     # Keep the same page; replace account labels consistently in JS and DOM.
                     page = page.replace("chou", "own").replace("sm2", "account").replace("ew6", "group")

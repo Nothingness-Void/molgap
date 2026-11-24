@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh Kaggle snapshots
+
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=120s
+Unit=kaggle-dashboard-collector.service
+
+[Install]
+WantedBy=timers.target
