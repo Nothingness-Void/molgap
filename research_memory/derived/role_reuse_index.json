@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1153,
+  "ambiguous_historical_role_record_count": 1162,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -3972,6 +3972,69 @@
     },
     {
       "evidence_id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "dev_50k_ema60_replay",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "dev_replay_128",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "scoring_block_shards_58_61_minus_fit_idx",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -8073,7 +8136,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1100,
+  "explicit_role_event_count": 1108,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -15271,6 +15334,29 @@
         "trajectory_id": "TB-matched-500k-v4-three-arm"
       }
     ],
+    "pcqm4mv2-ogb-official-train:005ea3f95b593f320db0752eb7267d310b318f929e52228f4e5b511eaf67e232:dev_50k_ema60_replay": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-dgap-dev_50k_ema60_replay-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-dgap-dev_50k_ema60_replay-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-dgap-dev_50k_ema60_replay-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:091f104f9b97f7f91a53be56e77631155d8fd40aa520cf970525cc76735eedee:scalar_selection_30k": [
       {
         "access_kind": "metric_computed",
@@ -15402,6 +15488,22 @@
         "trajectory_id": "TB-pcqm-h1-heldout-budget"
       }
     ],
+    "pcqm4mv2-ogb-official-train:2f705a92f75c0104c4ec28a94c45cac8f8f9f80c71e205ab961259c927d181de:dev_replay_128": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-dgap-dev_replay_128-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-dgap-dev_replay_128-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      }
+    ],
     "pcqm4mv2-ogb-official-train:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_100k_saved_verification": [
       {
         "access_kind": "labels_read",
@@ -15508,6 +15610,29 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-residual-block-transfer"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:5b3ffe2041567044f8112be84a43ac7d39f794e87d81ccca2e2cfd5c161f5381:scoring_block_shards_58_61_minus_fit_idx": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
       }
     ],
     "pcqm4mv2-ogb-official-train:5e4ab6cf8ab1d64baafa090596cca2ce6ec7335c3cf2d1e1c78d1af739619d75:scalar_selection_30k": [
@@ -16162,6 +16287,7 @@
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "pcqm-delta-gap-mmp-diag-20261124",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",
@@ -16421,6 +16547,7 @@
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "pcqm-delta-gap-mmp-diag-20261124",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",

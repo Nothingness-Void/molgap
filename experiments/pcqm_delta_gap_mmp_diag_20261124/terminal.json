@@ -1,0 +1,373 @@
+{
+  "acceptance_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json": "964c9f423adb25abfb9268aaaf29c251ad2686c127d42cecd2de0ff1eafc5fde",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md": "53e5ec2c2a8a91ea2da6f39fe775ec3d34f2a386925ab7fcead7b6a4947f2b9b",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/probe_delta_gap.py": "5c82566be150536da4745820580de1feb4d614c67a4cbe6249b57cd2a312c8b0",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md": "6d06e7a410e3656dce0d61998b6c80817953e50bf44bbd2e17216b0ce3d98e78",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json": "91e9d1dd8e66ed356d6c715b03bd49fa2589d84c5de7b0306d3848e07bc95319",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage1_real_pairs.npz": "d5dd5dcbc24f1dc2800ecd09d15ab9b272b320a00ad3ae0d2cecfd9aadc290ff",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage2_predictions.npz": "099a60a02b674cb937b07971d121263932321506cd4996303c3636e0797465d7",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage3_rewiring.npz": "9c8fb1a5b6a2668c0837596000d831ab47f12d6bfde35265c3903895a2a23cc1"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "diag-v1",
+      "category": "cache_build",
+      "cost_event_id": "cost-dgap-stage1-mmp",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "hardware": "desktop CPU (4 workers)",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.01569795302777897
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "diag-v1",
+      "category": "inference",
+      "cost_event_id": "cost-dgap-stage2-inference",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.03684027777777778
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.036796446777779136
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "diag-v1",
+      "category": "audit",
+      "cost_event_id": "cost-dgap-stage3-rewire",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "hardware": "RTX 5060 and CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.020464409722222222
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.020950121194445174
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "diag-v1",
+      "category": "audit",
+      "cost_event_id": "cost-dgap-stage4-score",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "hardware": "desktop CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.0017534722222222222
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0017660376111113389
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md",
+    "facts": {
+      "ci_meV": [
+        -1.2095016185063234,
+        -0.7320269568970744
+      ],
+      "effect_meV": -0.967146647767338,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "delta gap",
+        "mmp",
+        "single-point substitution",
+        "rewiring control",
+        "pairnorm 500k",
+        "ema60",
+        "series cluster",
+        "no train"
+      ],
+      "source": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Only under a new prospective protocol targeting a distinct error structure (e.g., common-series bias or explicit activity-cliff subsets) rather than generic 1-cut MMP DeltaGap recovery."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+        "name": "protocol.md",
+        "sha256": "6d06e7a410e3656dce0d61998b6c80817953e50bf44bbd2e17216b0ce3d98e78"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/probe_delta_gap.py",
+        "name": "probe_delta_gap.py",
+        "sha256": "5c82566be150536da4745820580de1feb4d614c67a4cbe6249b57cd2a312c8b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+        "name": "results.json",
+        "sha256": "91e9d1dd8e66ed356d6c715b03bd49fa2589d84c5de7b0306d3848e07bc95319"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md",
+        "name": "decision.md",
+        "sha256": "53e5ec2c2a8a91ea2da6f39fe775ec3d34f2a386925ab7fcead7b6a4947f2b9b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "964c9f423adb25abfb9268aaaf29c251ad2686c127d42cecd2de0ff1eafc5fde"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage1_real_pairs.npz",
+        "name": "stage1_real_pairs.npz",
+        "sha256": "d5dd5dcbc24f1dc2800ecd09d15ab9b272b320a00ad3ae0d2cecfd9aadc290ff"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage2_predictions.npz",
+        "name": "stage2_predictions.npz",
+        "sha256": "099a60a02b674cb937b07971d121263932321506cd4996303c3636e0797465d7"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage3_rewiring.npz",
+        "name": "stage3_rewiring.npz",
+        "sha256": "9c8fb1a5b6a2668c0837596000d831ab47f12d6bfde35265c3903895a2a23cc1"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+        "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+        "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+        "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-delta-gap-mmp-diag-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-11-24",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Terminal metadata closure of completed local diagnostic; no new execution in closure."
+    },
+    "observed_execution": {
+      "backbone_training": false,
+      "execution_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+      "inference_executed": true,
+      "postprocessor_fit": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "no_training_released_2slots_4arms_untouched",
+      "comparison_status": "paired_rows_balanced_rewiring_context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE_DO_NOT_TRAIN",
+      "transfer_status": "not_applicable"
+    },
+    "role_use": {
+      "common": "untouched",
+      "dev_50k_ema60_replay": "consumed",
+      "dev_replay_128": "consumed",
+      "official_validation": "untouched",
+      "ood": "untouched",
+      "scoring_block_shards_58_61_minus_fit_idx": "consumed",
+      "tail_holdout_v1": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "pcqm-delta-gap-mmp-diag-20261124",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-23T20:58:43.695394+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-dev_replay_128-prediction_input",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "2f705a92f75c0104c4ec28a94c45cac8f8f9f80c71e205ab961259c927d181de",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-dev_replay_128-metric_computed",
+      "role_name": "dev_replay_128",
+      "row_manifest_hash": "2f705a92f75c0104c4ec28a94c45cac8f8f9f80c71e205ab961259c927d181de",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-dev_50k_ema60_replay-prediction_input",
+      "role_name": "dev_50k_ema60_replay",
+      "row_manifest_hash": "005ea3f95b593f320db0752eb7267d310b318f929e52228f4e5b511eaf67e232",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-dev_50k_ema60_replay-labels_read",
+      "role_name": "dev_50k_ema60_replay",
+      "row_manifest_hash": "005ea3f95b593f320db0752eb7267d310b318f929e52228f4e5b511eaf67e232",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-dev_50k_ema60_replay-metric_computed",
+      "role_name": "dev_50k_ema60_replay",
+      "row_manifest_hash": "005ea3f95b593f320db0752eb7267d310b318f929e52228f4e5b511eaf67e232",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-prediction_input",
+      "role_name": "scoring_block_shards_58_61_minus_fit_idx",
+      "row_manifest_hash": "5b3ffe2041567044f8112be84a43ac7d39f794e87d81ccca2e2cfd5c161f5381",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-labels_read",
+      "role_name": "scoring_block_shards_58_61_minus_fit_idx",
+      "row_manifest_hash": "5b3ffe2041567044f8112be84a43ac7d39f794e87d81ccca2e2cfd5c161f5381",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "role_event_id": "role-dgap-scoring_block_shards_58_61_minus_fit_idx-metric_computed",
+      "role_name": "scoring_block_shards_58_61_minus_fit_idx",
+      "row_manifest_hash": "5b3ffe2041567044f8112be84a43ac7d39f794e87d81ccca2e2cfd5c161f5381",
+      "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+    }
+  ],
+  "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+  "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+}

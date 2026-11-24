@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 282,
-    "with_complete_native_measurement": 38,
-    "with_cost_event": 271,
+    "trajectories_total": 283,
+    "with_complete_native_measurement": 39,
+    "with_cost_event": 272,
     "with_incomplete_native_measurement": 233,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 123,
+      "count": 124,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-dft-distance-aux-20261121",
@@ -116,6 +116,7 @@
         "TB-pcqm-c2-xtb-diagnostic",
         "TB-pcqm-c3-checkpoint-space",
         "TB-pcqm-c3-full-tail",
+        "TB-pcqm-delta-gap-mmp-diag-20261124",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",

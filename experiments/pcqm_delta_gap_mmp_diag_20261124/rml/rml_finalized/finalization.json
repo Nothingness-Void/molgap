@@ -1,0 +1,44 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-07592c47a797dd367cacadba033f7c28cd0d22fcd426812702ddc17fda6c1632",
+  "finalized_at": "2026-11-23T20:58:43.695394+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json": "964c9f423adb25abfb9268aaaf29c251ad2686c127d42cecd2de0ff1eafc5fde",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md": "53e5ec2c2a8a91ea2da6f39fe775ec3d34f2a386925ab7fcead7b6a4947f2b9b",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/probe_delta_gap.py": "5c82566be150536da4745820580de1feb4d614c67a4cbe6249b57cd2a312c8b0",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md": "6d06e7a410e3656dce0d61998b6c80817953e50bf44bbd2e17216b0ce3d98e78",
+    "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json": "91e9d1dd8e66ed356d6c715b03bd49fa2589d84c5de7b0306d3848e07bc95319",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage1_real_pairs.npz": "d5dd5dcbc24f1dc2800ecd09d15ab9b272b320a00ad3ae0d2cecfd9aadc290ff",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage2_predictions.npz": "099a60a02b674cb937b07971d121263932321506cd4996303c3636e0797465d7",
+    "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage3_rewiring.npz": "9c8fb1a5b6a2668c0837596000d831ab47f12d6bfde35265c3903895a2a23cc1"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/rml/trajectory.json",
+  "prospective_sha256": "33879d538c039a996a001d8a9b040567138a170928da5ced3490a2a72f299055",
+  "published_hashes": {
+    "costs/cost-dgap-stage1-mmp.json": "5af1094930dd82852a8d411db8d21f1236b57e8a061659e4289656d414c320f4",
+    "costs/cost-dgap-stage2-inference.json": "20f5ff6dbc4ea98df8a143426fbb8bd0aa11550d4bb889aa1ec247f0739f97dd",
+    "costs/cost-dgap-stage3-rewire.json": "fe3a79af07bb630c9e7db5ab0a0e7b7bb21713efb167f809e7794a60c63e61e9",
+    "costs/cost-dgap-stage4-score.json": "282579207b2de2b8e7c6ee4cb6323173535d527e44dbd0b7c3d36bbe9eac554a",
+    "roles/role-dgap-dev_50k_ema60_replay-labels_read.json": "82d30b7ca96151ad96e51f7d7d388839ebc95585e77d87b8a903a1b53e884165",
+    "roles/role-dgap-dev_50k_ema60_replay-metric_computed.json": "76a7679c114af20f098a5076094299cce0878751b289429108581e0a47e3e52d",
+    "roles/role-dgap-dev_50k_ema60_replay-prediction_input.json": "5c7a0bd7e9c1e0033a94877653f99c037e74411693477a809ce92e83407e44c0",
+    "roles/role-dgap-dev_replay_128-metric_computed.json": "a43eccf793b1e021bf873ac9cb32dd4225ccaea505648db6f9247cfefd0e3d37",
+    "roles/role-dgap-dev_replay_128-prediction_input.json": "84301ed93727a019b49cb768ff1619238a8d24e673b7cf1574c4266d3b888bf8",
+    "roles/role-dgap-scoring_block_shards_58_61_minus_fit_idx-labels_read.json": "edfca4b9a72cdfc78b7e928d8c18f0ce73e8f497cb3cf1a061f1016daafb27fd",
+    "roles/role-dgap-scoring_block_shards_58_61_minus_fit_idx-metric_computed.json": "8cce670246cf0d3bb4a162ac9dc48b57fd95774ec251019a9861eac8fcd802cc",
+    "roles/role-dgap-scoring_block_shards_58_61_minus_fit_idx-prediction_input.json": "ad5fa18ac4d50656727f3d68bebac619bc11ac2693e18d15048ee12e2f8fe3b4",
+    "terminal_input.json": "a432ad53ad5b6945db11eb7765d416d14ccac7525d312fee44a71e477b8ef2bb",
+    "trajectory.json": "0ac6f2ac8adb44c2045595777e6f6cc44781bb9ac4bdd175e8fe55e45eb16478",
+    "v5_evidence.json": "53778f47e65464285a1f18ceeabfb1f6015e8778778ccad10306cea17fb8ae96"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_delta_gap_mmp_diag_20261124/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "07592c47a797dd367cacadba033f7c28cd0d22fcd426812702ddc17fda6c1632",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+}
