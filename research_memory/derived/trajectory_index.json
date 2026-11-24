@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "34645082623ff838c66d59fc90cc4a22a0570e1ff67a9c6141d3eb1bbb252370",
+  "source_digest": "089a19ece2627494aac03ed58107197a98b899524d8a4c0fe5bb92416a35b51d",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -681,6 +681,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/decision.md",
+      "family_id": "pcqm-gptrans-tokengt-bond-100k-20261117",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/runs/pcqm-gptrans-tokengt-bond-100k-20261117-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/decision.md",
+      "family_id": "pcqm-gptrans-tokengt-bond-100k-20261117",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/runs/pcqm-gptrans-tokengt-bond-100k-20261117-s42/prospective/tokengt_bond/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-tokengt-bond-100k-20261117-s42\\v1\\version1\\pair_update_norm\\development_predictions.pt",
+      "sha256": "535c2ba346d6449a6cffa62d163d019f323e3be28e58594b49886f1ec68245a2"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-tokengt-bond-100k-20261117-s42\\v1\\version1\\tokengt_bond\\development_predictions.pt",
+      "sha256": "f5bbba5ea9f4118bc52bc93fa9a007c0417f3804a0508e4c953ee269685bf552"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.2360658454894917,
+    "ensemble_gain_meV": 5.651778221130371,
+    "ensemble_mae_meV": 134.40644678056242,
+    "fit": null,
+    "m_meV": 1.236065845489502,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "tokengt_bond",
+        "ci95": [
+          0.28076262044906614,
+          2.1739504995346066
+        ],
+        "delta": 1.236065845489502,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0055,
+        "reference": "pair_update_norm",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "pair_update_norm": 139.44019207894803,
+      "tokengt_bond": 140.67625792443752
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}
