@@ -1,0 +1,146 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_soap_100k_20261106/decision.md": "7c251ee9c7f079bf4ce24a98fd5702d482587bf8d3e6d5d223beb897079b58a6",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json": "614d9a768e0021ea7aad882a3996f44042c6e0ba784dd158f67d583ef4b56168",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json": "0eda692d9199bdc2e95bc2524a001cf2887b96eb2030f74497e199cb4d9e5e85",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/acceptance.json": "e739450ebed68468079252b16fd188cde01f32965cbe342dcca3f7fed643c61b",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/observed.json": "db9826190862dee1ea974bd2e351b022dbc98628d7bda0f861bf55a96b5e4a0d",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/muon/reference_bundle.json": "14d4f71dd0e08fc854eaee70110979693674bfd7044106da003264d47cf7155b",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/soap/comparison_readiness.json": "4d2c715ff4f8a401edb152714251c7f6bd34dbfbde1cab02d0ec3759ac64e437",
+    "experiments/pcqm_k1_soap_100k_20261106/terminal_acceptance/role_audit/roles_soap.json": "14bd8a1c0d670f33705eaf5f2c25392d8f2706c869be326411c3c6dd582eb20c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "61fd3186a03a7bcfdfbc83ec2d0c8c760139bb59cb01e47dab9780ac3f3fc961",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/soap/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/canonical_trace.json": "372161d52bc35a3ef924c8aa5f856f241491348289bebf78d6a2dc6bfebb9243",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/canonical_trace.json.context.json": "3e41f4c05ccd385a06ccfdf4085cd6ac895f1b58d604728c88c5b6a4e9dea87e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/data_open_provenance.json": "fa0b2ca2d776b700a28303cb77fd78c0f3010e9911264482a16211e2ad33c0e1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/development_predictions.pt": "ce6569aafeac86cf6a1862089ffa8fe546c03f30ba07d176122fec130922df1a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/last_checkpoint.pt": "dfbb89e74f4e71a34c86b812b400ab2a422a0bb49397c38a23a5f4b50d2d88f2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/output_manifest.json": "aec0cfda3fc5dd26414c8b43758255d5134ef87944b5b06995b8623969769d13",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/selected_model.pt": "bad3f567ab64d5888e11ae0d4b1990b33bbec4424ed61b4e14e7f99b48086fd5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/training_contract.json": "0eda692d9199bdc2e95bc2524a001cf2887b96eb2030f74497e199cb4d9e5e85",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-soap-100k-20261106-s42/v1/reports/diagnostic_fdc1d7c421c016bdd1ec3dd8d2ba56be016b854b3cb2bb0300655b2bf5f3d489.json": "91fa3f9476efb3c4d963b57de4e710f42aed495f809e654669c589442571cc54"
+  },
+  "closure_blockers": [],
+  "comparison_readiness_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/soap/comparison_readiness.json",
+  "finalized_at": "2026-11-06T16:29:20.244890+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap-0.json",
+        "sha256": "e7a611a1c19459404c48715c51abc070d405e5a4fd4f300d885ca3f0a0bbd5f0"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap-allocation-0.json",
+        "sha256": "db9f2db1206f42b3503b39a0ba9cc4dc5a614f3c7d7a97cb439e37cf856a45a0"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "e9ae490f57c75762e98cc34162eac580d63aeae14c675f2415b3c08e2e34bbcf"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "ea74e4f8dbdcd2e727ecc480c4e8764dc36fba42bbd90ae0abfb322e37b1389b"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-train-training_membership.json",
+        "sha256": "6936653f9b1a3742f65055fc6c585fc6a2c6a0bc2942701e3d2a11deea2a7d0e"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-prediction_input.json",
+        "sha256": "ad0377b14a70d6c8b20056dbe964371b8676dd9255ab336043630cc87b3cb886"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-labels_read.json",
+        "sha256": "9ed0bb9f6695c5ba30485ec5238b6f6def4da6b5928fa1c72c1f439330b5582a"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-metric_computed.json",
+        "sha256": "c1a74708cdc324627cc23f8d4d2b35d8bbbc782746b3ddbf6028ec3cede0ceeb"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-selection_used.json",
+        "sha256": "83b2608294c55b055f8170c8b78cf36548cd38195a6b0f66c23e44f4bb54e923"
+      }
+    ]
+  },
+  "requested_outcome": "POSITIVE_BELOW_GATE",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-soap-100k-20261106-s42:soap:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-soap-100k-20261106-s42-v1",
+    "logical_run_id": "pcqm-k1-soap-100k-20261106-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-k1-soap-100k-20261106-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "d8d68e18be3d0b8ab0c1a2e2abde376da9da0ae4",
+    "source_package_sha256": "37691b828ef9e3665201810437b08e191867c92af62bafb8a597b66fe0bf456a",
+    "spec_identity": "466b34aa0c8e38d9167973a7af2b7b689963d490ecb1411118b3313cffdad116"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "k1-soap-adamw-fp32-v1",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+    "run_id": "pcqm-k1-soap-100k-20261106-s42:soap:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/canonical_trace.json",
+    "trace_artifact_sha256": "372161d52bc35a3ef924c8aa5f856f241491348289bebf78d6a2dc6bfebb9243",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+}
