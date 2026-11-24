@@ -3,7 +3,7 @@
 `submit_from_windows.py --retrieve-to` needs `outputs_sha256` in the stage record. This run's worker came from the
 earlier launcher, which wrote none. The remote side is read-only here: `find` lists files, `sha256sum` hashes them, `scp`
 copies them. Every local copy must equal the remote hash. The fixed-dataset mount copies under `dataset_mount/` are skipped
-(fixed data, identical everywhere). Output lands in a new directory; an existing one is only re-verified.
+(fixed data, identical everywhere). Output lands in a new directory, under `training/` as the scorers expect; an existing one is only re-verified.
 
 Usage: python retrieve_legacy_outputs.py --key KEY --run-id gptdft-chain-20261121 --to DIR
 """
@@ -59,7 +59,7 @@ def main(argv=None):
     target = args.to
     target.mkdir(parents=True, exist_ok=True)
     for relative, digest in files.items():
-        local = target / relative
+        local = target / "training" / relative
         if local.exists() and sha256_file(local) == digest:
             continue
         if local.exists():

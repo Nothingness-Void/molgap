@@ -35,12 +35,12 @@ def launch_local(repo_root, module, arguments=(), *, python=None, package_identi
         from .common.paths import validate_relative_path
         from .research_memory.paths import repo_local_path
         validate_relative_path(script)
-        if module is not None or not script.startswith("platforms/") or not script.endswith(".py"):
-            raise ValueError("Select one module or repository-confined platform script")
+        if module is not None or not re.match(r"(platforms|experiments/[^/]+)/", script) or not script.endswith(".py"):
+            raise ValueError("Select one module or a repository script under platforms/ or experiments/<name>/")
         entry = repo_local_path(root, script)
         _safe_local(entry)
         if not entry.is_file():
-            raise ValueError("Selected platform script is missing")
+            raise ValueError("Selected script is missing")
         kind = "script"
     else:
         if not isinstance(module, str) or re.fullmatch(r"[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*", module) is None:
@@ -74,7 +74,7 @@ def main(argv=None):
     parser.add_argument("--profile", type=Path)
     entry=parser.add_mutually_exclusive_group()
     entry.add_argument("--module")
-    entry.add_argument("--script", help="Repository-relative platform script, using the selected checkout")
+    entry.add_argument("--script", help="Repository-relative script under platforms/ or experiments/<name>/, run with the selected checkout")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
     python, paths = None, None
