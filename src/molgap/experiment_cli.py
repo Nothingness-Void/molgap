@@ -299,13 +299,25 @@ def _dispatch(args) -> tuple[dict, int]:
             protected_role_use=_bindings(args.protected_role_use),
             continuation_receipt=args.continuation_receipt), 0
     if args.command == "import-closure":
-        import subprocess
+        import re, subprocess
         git = lambda *a: subprocess.run(["git", "-C", str(args.repo_root), *a], capture_output=True, text=True, check=True).stdout.split(chr(10))
         scope = ("--", "experiments/" + args.experiment, "research_memory/policies", "audit_closure/decision.md")  # last: old root pointer
-        changed = lambda dots: set(git("diff", "--name-only", "--diff-filter=ACMR", *dots, *scope))
-        # Changed on the source branch and still different here; weights stay on the owner branch.
-        paths = sorted(p for p in changed((f"HEAD...{args.source_branch}",)) & changed(("HEAD", args.source_branch)) if p and not p.endswith((".pt", ".pth", ".ckpt", ".safetensors", ".npz")))
-        result = {"parent": git("branch", "--show-current")[0], "source": args.source_branch, "paths": paths, "applied": args.apply}
+        changed = lambda *dots: {p for p in git("diff", "--name-only", "--diff-filter=ACMR", *dots, *scope) if p}
+        weights = (".pt", ".pth", ".ckpt", ".safetensors", ".npz", ".npy", ".pkl", ".parquet")  # weights and arrays stay on the owner branch
+        # Changed on the source branch and still different here.
+        paths = sorted(p for p in changed(f"HEAD...{args.source_branch}") & changed("HEAD", args.source_branch) if not p.endswith(weights))
+        # Policies: only this experiment's own (its files name the policy id); never the whole directory.
+        own = lambda p: not p.startswith("research_memory/policies/") or subprocess.run(["git", "-C", str(args.repo_root), "grep", "-qF",
+            re.sub(r"\.\d+\.json$", "", p.rsplit("/", 1)[1]), args.source_branch, "--", "experiments/" + args.experiment]).returncode == 0
+        paths = [p for p in paths if own(p)]
+        base = git("merge-base", "HEAD", args.source_branch)[0]
+        both = sorted(set(paths) & changed(base, "HEAD"))  # also edited here since the fork: never overwritten
+        dirty = [line for line in git("status", "--porcelain") if line]
+        result = {"parent": git("branch", "--show-current")[0], "source": args.source_branch, "paths": paths, "applied": args.apply,
+                  "checks": {"worktree_clean": not dirty, "dirty": dirty, "changed_on_both_sides": both}}
+        if args.apply and (dirty or both):
+            result.update(applied=False, status="BLOCKED")
+            return result, 1
         if args.apply and paths:
             from .research_memory.compiler import frozen_differences
             from .research_memory.pipeline import recover_terminal_derived
