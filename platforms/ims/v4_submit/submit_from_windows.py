@@ -126,12 +126,13 @@ def main() -> None:
     operation = parser.add_mutually_exclusive_group()
     operation.add_argument("--status", action="store_true", help="Read durable IMS records without submitting")
     operation.add_argument("--retrieve-to", type=Path, help="Retrieve and verify the spec's completed outputs")
+    operation.add_argument("--package-only", action="store_true", help="Freeze the payload (clean commit archive, spec hashes) and stop; no key, no ssh, nothing queued")
     operation.add_argument("--resume", action="store_true", help="Resume after reconciling the paused job with the scheduler")
     parser.add_argument("--host", default="ccfep.ims.ac.jp")
     parser.add_argument("--port", type=int, default=22)
     parser.add_argument("--user", default="sm2")
     args = parser.parse_args()
-    if args.key is None or (args.spec is None and args.payload is None):
+    if (args.key is None and not args.package_only) or (args.spec is None and args.payload is None):
         parser.error("Set --key or MOLGAP_IMS_SSH_KEY, and pass --spec or --payload")
     template = args.spec.resolve() if args.spec else None
     if template:
@@ -149,6 +150,9 @@ def main() -> None:
     run_id = spec["run_id"]
     if not RUN_ID.fullmatch(run_id):
         parser.error("Unsafe run_id in frozen payload")
+    if args.package_only:
+        print(json.dumps({"payload": str(payload), "source": spec["source"], "contract_sha256": spec["contract"]["sha256"]}, indent=2))
+        return
     destination = f"{args.user}@{args.host}"
     ssh = ["ssh", "-T", "-i", str(args.key.resolve()), "-p", str(args.port), destination]
     scp = ["scp", "-i", str(args.key.resolve()), "-P", str(args.port)]

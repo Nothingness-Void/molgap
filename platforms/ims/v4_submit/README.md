@@ -33,7 +33,7 @@ dependency. Serial chain mode (below) is the one deliberate exception.
 Set `MOLGAP_IMS_SSH_KEY` to the key file once or pass `--key`. The helper finds
 the owning checkout from the spec and keeps the frozen payload in
 `~/molgap-ims-payloads/<run_id>`; set `MOLGAP_IMS_PAYLOAD_ROOT` for another
-location. Explicit `--repo` and `--payload` still work. Existing payloads can
+location. `--package-only` freezes the payload and prints its source commit and contract hash without a key, ssh or queueing. Explicit `--repo` and `--payload` still work. Existing payloads can
 be addressed with `--payload` alone without accessing the original checkout.
 The helper creates a complete Git archive, records the
 full source commit, archive SHA256, and contract hash, uploads only the
