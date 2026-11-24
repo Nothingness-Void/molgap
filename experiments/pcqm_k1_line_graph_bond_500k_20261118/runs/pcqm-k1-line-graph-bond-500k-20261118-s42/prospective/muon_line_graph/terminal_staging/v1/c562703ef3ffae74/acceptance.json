@@ -1,0 +1,27 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+  "mechanical_status": "INCOMPLETE_OBSERVED",
+  "outcome": {
+    "artifact_status": "partial",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "PAUSED",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": []
+  }
+}

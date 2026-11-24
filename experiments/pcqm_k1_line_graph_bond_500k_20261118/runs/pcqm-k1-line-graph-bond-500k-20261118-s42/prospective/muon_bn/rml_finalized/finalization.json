@@ -1,0 +1,39 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-6123b9448fad68e19834551fcaaea8aebb99a4ae3387b52374be45b7cddf5597",
+  "finalized_at": "2026-11-18T04:01:23.659010+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_bn.json": "3a774ec88097c125c26741da67941b1d084924ba15332cd6fe3ba0fa35e23ac5",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/decision.md": "5a36a92b43a38447d2d8b8efca9ea65da69e90a36a72bf746fb2cce51310bada",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/generated/85f740a706e14b1a764a534b2577bab7cba65871ea4b460dc2dc6dfb19c436b4/muon_bn/recipe.json": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/d3af6491cbbe7478/acceptance.json": "cbc01f8c6b1e6796f69d5c617a2ce4d0752cfcea95fe0c3b0274efb2e45568e5",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/d3af6491cbbe7478/observed.json": "2e991ea9583426da578348ba7d49eac8c437f1316d832d9bdcdded3cb508a7db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_bn/canonical_trace.json": "9d3a8324e8145100718e8e806647ea4e54497d8a6209ea3a99fb8984d19163e3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_bn/canonical_trace.json.context.json": "6743222faaed90e2f47038b486ba24f0bb998b7079d462390b0c200877b5d842",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_bn/data_open_provenance.json": "34e3debcb38cf0732489ebdd7e3bdec2093426903dfe215a4ec04dbec000fa93",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_bn/training_contract.json": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8"
+  },
+  "outcome": "STOP_FOR_COST",
+  "prospective_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+  "prospective_sha256": "2bea0ceb2f86ea9f70d92bf4b5efe93bc9e999be6170f701764e080e43e5285a",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-0.json": "ca7a4fed74aef42c5503ca025520461a5aa2da863d513b557f75f9fa4ac8c4d9",
+    "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-labels_read.json": "2c50942c49cadc77596f9fc42a4e0b31891bdf9c2353fa8b7e834f1894f9f49a",
+    "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-metric_computed.json": "b065743152aba55b8314996f47647cc65c09258ca4a959de7ef4e2879f09aa4c",
+    "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-prediction_input.json": "16b94024d2e6c1f5cd236163310b65bbec033c9a0e276903c92b9cd3643e104c",
+    "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-selection_used.json": "d0b4353e4b93a3ee4576e1657e3c7b2cba25dc2dfa8dcd4027e39c4dfb20b86d",
+    "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-train-training_membership.json": "211ecd2e397c8cb706208f3046ec982afcd0031e955256dac76f0441794ed42f",
+    "terminal_input.json": "2717b931925d4a07b9ee7593973a1084968a498931390f7ead93c836868fbf46",
+    "trajectory.json": "866b1172da438ae5847a601e8a0487a19497e2b0809df6e495cc4ddf67b7a682",
+    "v5_evidence.json": "685995e1bdf288cad3818233dd3ac2acf67541e47e2b1cdb6177051a64dadf60"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_bn/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "6123b9448fad68e19834551fcaaea8aebb99a4ae3387b52374be45b7cddf5597",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1100,
+  "ambiguous_historical_role_record_count": 1106,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2047,6 +2047,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -7702,7 +7744,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1025,
+  "explicit_role_event_count": 1035,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -11761,6 +11803,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-muon-500k-20261106-s42-adamw-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -12270,6 +12368,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
       },
       {
         "access_kind": "training_membership",
@@ -15194,6 +15306,8 @@
       "ev-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42",
       "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline",
       "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
       "ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
       "ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i44",
       "ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43",
@@ -15437,6 +15551,8 @@
       "ev-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42",
       "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline",
       "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
       "ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
       "ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i44",
       "ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43",
@@ -18646,6 +18762,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
       },
       {
         "access_kind": "labels_read",
@@ -24697,6 +24869,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-muon-500k-20261106-s42-adamw-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -25176,6 +25404,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
       },
       {
         "access_kind": "training_membership",
