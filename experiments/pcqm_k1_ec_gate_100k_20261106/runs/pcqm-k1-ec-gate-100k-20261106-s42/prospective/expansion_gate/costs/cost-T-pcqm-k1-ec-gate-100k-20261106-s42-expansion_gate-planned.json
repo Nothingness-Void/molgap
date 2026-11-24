@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-ec-gate-100k-20261106-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-planned",
+  "evidence_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-ec-gate-100k-20261106-s42:expansion_gate:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate"
+}

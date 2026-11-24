@@ -182,7 +182,7 @@ def _parser() -> argparse.ArgumentParser:
                 help="Per-arm repository-local decision path; repeat for each arm")
             command.add_argument("--arm-facts-ref", action="append", metavar="ARM=PATH",
                 help="Optional per-arm closure_facts JSON, hash-bound into the decision")
-            command.add_argument("--role-audit", type=_local)
+            command.add_argument("--role-audit", help="relative paths resolve against --repo-root")
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
             command.add_argument("--bootstrap-samples", type=int)
             command.add_argument("--seed", type=int, default=42)
@@ -475,7 +475,7 @@ def _dispatch(args) -> tuple[dict, int]:
                     if args.arm_facts_ref is not None:
                         options["facts_ref"] = _bindings(args.arm_facts_ref)
                     if args.role_audit is not None:
-                        audit = _json(args.role_audit)
+                        args.role_audit = _local(str(args.repo_root / args.role_audit)); audit = _json(args.role_audit)  # absolute stays
                         options["role_audit"] = (args.role_audit if "context" in audit
                             or all(isinstance(value, dict) for value in audit.values()) else audit)
                     if args.dry_run:

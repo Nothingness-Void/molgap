@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "6c71765884bd89e5a62c45fe696baa458d6741aa13ff71255395fd3688b5a103"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "c21591f03934d86774252d288a3aa7949bf630d4cf245635916cead84be8185c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/_execution/pair_update_norm/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "c21591f03934d86774252d288a3aa7949bf630d4cf245635916cead84be8185c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/training_contract.json",
+      "name": "contract",
+      "sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "3f1b109ca0e1a7924dc356d9f0e9f3f4884a748edc7779a3a3eaa85b41aa1cbc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "89099142ab9a0e16b9022df6a3b9463283bd7abe8cd006dec3f204905f6f7e8a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/development_predictions_ema0.9999.pt",
+      "name": "predictions_ema_0p9999",
+      "sha256": "defd9b89c9ff98aa0f0b60d84633aa83c66b9f7e4506e36bfe447f7f32834cf8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "429a4d16199d5539a043a94bad922bb24a4cd50a28041fb9be8e5cf91dbb1847"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "2b6afe6812cfae52dd7db942fe73730504bcf8e819d7fff740c0d1fbb93be8cb"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/selected_model_ema0.9999.pt",
+      "name": "selected_model_ema_0p9999",
+      "sha256": "9de643491131ade7f4431db624b123cff6a0e18fd5e00ca0f1772a6c00dea175"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "b91bbef0b0b0acc4cbfefad0f1e21e62ba5997c7670950b5a7f7939edefc132d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-grit-spse-100k-20261118-r2-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "b2702e84e294d849b510ea710e72b0e6f5e887f585cfebdf38e7503b5f6e7139"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_grit_spse_100k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/pair_update_norm/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13944019207894803,
+    "missing_reason": null,
+    "selected_optimizer_step": 32802,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/pair_update_norm/terminal_staging/v1/d4b2d1b6383664af/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-acc6f948b7ea9851382765cbd7f1a82652ad2e8c420a62622b3eea76a1bf1104",
+  "finalized_at": "2026-11-06T11:31:34.601605+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/closure_v1/roles_swiglu_prenorm.json": "3fa7d541306480aa109910f0def9acd70304594f809b2652f610c8b3d800d742",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/decision_runtime_inconclusive.md": "e5281d48f84be782219e3de1353375aa0545b32254dc3a3872c54ca293c17c7e",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/authority.json": "cb911509a61968fe82f65027c8c20b09414918978a2aaf9f28adabfad4f5957b",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json": "ff5cedaedd1fafd865b42a136946fe2fa8b555dfd394b8451fd82127366fe642",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/a141e05f96f09487/acceptance.json": "14ced87ddb1a97fcf71a05b7459bddd3311c3e1e3d06d403c5c0c4cf45b1feba",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/a141e05f96f09487/observed.json": "ab9c4539c854091b157728d25e9340879d87e850d864c450378ceae6478c3286",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "64ff41a6b21ffa76406672a1137850dde77b4ddac9156a456a309cb70cf04ac4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/swiglu_prenorm/allocation_ledger.json": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json": "65fdda11adce2cf33ef19a9739f19d7617cfc872a538977f4f415d37d3f15eb2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json.context.json": "f1a89598b86379ffacdac1324d463857c1e6223de864160bed50af431e382442",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/data_open_provenance.json": "4b6f5c456e1b1b116c73485c3de7dcb2c038eeef45854bc354a6880bececeb92",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/development_predictions.pt": "8b680ed584eb5b9861bc9da66655ae9308b770556da5bb21ac44cd99be394de9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/last_checkpoint.pt": "146419b9265b8113fe27c124409869c0d3d9d21312bd141da81981712f129abe",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/output_manifest.json": "f1d8abd3d7efba0f3c0b63e8987fa64b05ce1f346072ec8e880717b65f22e850",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/selected_model.pt": "1a839ebbab9636d57deb8d7dc26c65c39f06a5abe01bc61016a2f1b10a80e40d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/training_contract.json": "ff5cedaedd1fafd865b42a136946fe2fa8b555dfd394b8451fd82127366fe642",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/reports/diagnostic_c72c8b5a0101be6c2a6acc23f0f5b44cdf2d309a493f5787a57e334240619cff.json": "b90396960ebdaf5a9aae2783917e977bdead6c76185e02692bec34eafc3a6f46"
+  },
+  "outcome": "INCONCLUSIVE",
+  "prospective_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/trajectory.json",
+  "prospective_sha256": "8d9cda75a4db393c282fcf9614829dba46bde495ba5446e9b5fb6922cb0dd0cc",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-0.json": "70c2f66ecdb3fd732eba6870c54b83f676ba5c7e13a724b6e449502568513d68",
+    "costs/cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-allocation-0.json": "dddcb5d4910f4b52a60bd27a4d2bb90ffb3af9c4eed3bf7558cea3491c5b6bec",
+    "roles/role-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-development-labels_read.json": "c7184433398ae6c525cb16b8faed7ea787419eb17fd7bf9a12929d9a042abdd0",
+    "roles/role-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-development-metric_computed.json": "17687cf9a632c1f43b6dc4b8ef4b0df8e26d14ef9ad62864ccf97747f190191d",
+    "roles/role-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-development-prediction_input.json": "97922e681b5705f3e328c0cccd30ef12e06b02fa4b603a24775dbc8bb27daed0",
+    "roles/role-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-development-selection_used.json": "967946f1f6c005fb22d848d61ad9e1af8ec417153243acd96b9c049588e425af",
+    "roles/role-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-train-training_membership.json": "299f5dd15295996fb47d584bf001b9c8e41f4c18751ec21ae75b5c815dc672f9",
+    "terminal_input.json": "273bf62afefe2e593eb1a1c6b167fad6a1c6955844cd5abf2a93afc015c72ecd",
+    "trace.json": "65fdda11adce2cf33ef19a9739f19d7617cfc872a538977f4f415d37d3f15eb2",
+    "trace_manifest.json": "0699f0183ef547cf23c2238c1865ecbadf9f5d82027c93b36aafdcb66d978454",
+    "trajectory.json": "dec3b9fe00fb46f234538b23754bb78b9a07f3eae21bfc0c892d3a4e1d93a282",
+    "v5_evidence.json": "0a21e1343c1442f92c4971a30d612f935079251403d9c2d1a41192bdfdd96f1b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "acc6f948b7ea9851382765cbd7f1a82652ad2e8c420a62622b3eea76a1bf1104",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+}

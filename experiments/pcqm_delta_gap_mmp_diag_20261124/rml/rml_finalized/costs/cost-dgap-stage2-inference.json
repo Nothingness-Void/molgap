@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "diag-v1",
+  "category": "inference",
+  "cost_event_id": "cost-dgap-stage2-inference",
+  "evidence_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+  "hardware": "RTX 5060 and CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.03684027777777778
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.036796446777779136
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "pcqm-delta-gap-mmp-diag-20261124",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+}

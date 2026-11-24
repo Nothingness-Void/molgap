@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-d473ad25def5005e1497e490f37c495755f0c8f879f27d6cbc6934311f752043",
+  "finalized_at": "2026-11-06T05:02:11.190170+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_swiglu_100k_20261106/decision.md": "fc27780f979c1c4009bda9469b8d31e728f11cc909511e0d2b9a212fcdb05964",
+    "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/authority.json": "f0b495f43ae3b182d25e6a876cd975a69fc48e526a460dcceb47134c1aacb31c",
+    "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/swiglu/recipe.json": "53a632f726fec1d06ee57c41301b1024f3ffaa74edc9385cc45933523216db03",
+    "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/a865998aae14d14d/acceptance.json": "4ddd073ffacbfd883d489747c7bfad8dc30d7866811cae33a2d993cc8e8d4003",
+    "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/a865998aae14d14d/observed.json": "132f565e52b9b5e862e3cd5cc7cf0b4cc51495f82692d9c22410c42e9aba2246",
+    "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json": "8ccb16b00168e9b120b0ba7b498227039be13d6b26099a2b71b4012a253bb28e",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/allocation_ledger.json": "1bd590f5bba36b72b8cc9396e88386cb7d25d31fb5c0356914906ef936e2c05b",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/execution_report.json": "56d2afea9debadc47dac1c2ed7c57a6db58aa74d9f748ebe0558f267137e1498",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/execution_retention.json": "a82bf4e982fa0e81f51b9f37953cdee66da101ba722ed8cf7dc6941f4d4f54a6",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/swiglu/canonical_trace.json": "7fc45d761fa68de8e301349fcbeb5907d90f9b501a08ff2c221cb8070c65625d",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/swiglu/canonical_trace.json.context.json": "aa3a6df3347fc6e153c55352eeaba975636e233b35f62b679c2ddc7169bacaaf",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/swiglu/data_open_provenance.json": "0f4710798525b8d06a606e0eb9cae2590fa98ca90dd4894e675cce329116336d",
+    "external:///D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/experiment/swiglu/training_contract.json": "53a632f726fec1d06ee57c41301b1024f3ffaa74edc9385cc45933523216db03"
+  },
+  "outcome": "INCONCLUSIVE",
+  "prospective_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/trajectory.json",
+  "prospective_sha256": "9101c4b60058931cee081b776d9a40aa2ee734c0a0783fa88b473a3494aa2645",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-0.json": "b3030dd2409adad3b1a83e2c7ba213e6d33b56fc831039d35b87643c26cc3f8a",
+    "costs/cost-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-1.json": "26d3e61c772ce5e419fadb9c05ba15a45d74378ed8d9f53bc7fd38f9c3619bf2",
+    "roles/role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-labels_read.json": "168e82cf37588693bc295a9adf2e677a44c1e51fc0fd144e633cfc132770cf98",
+    "roles/role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-metric_computed.json": "58fd74e09e24c795252d4904b11b26733265a97b782d402aea6e70b50d82faed",
+    "roles/role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-prediction_input.json": "0c8e8caeb3c0d8bbaaf1486a23fe4d7ea62931ad4b786eb43068396e07b23d7a",
+    "roles/role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-selection_used.json": "963ed2b827b01aa8895060613997c3a168914f93e110b0b26d6578eb2ffd0eb2",
+    "roles/role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-train-training_membership.json": "57bd4f16330df54f8bf60c62c1174ccbd3bf3daa7aa041ad704896bd43e82346",
+    "terminal_input.json": "0c7f6e87e48cccfaa53ddebdc19c43647d362511cefd5ab3ce5d52b3d52c6b22",
+    "trace.json": "7fc45d761fa68de8e301349fcbeb5907d90f9b501a08ff2c221cb8070c65625d",
+    "trace_manifest.json": "3cd395ea85151ad80712ad0e7b7cfa074414415c4865658900f2ef2330a0af54",
+    "trajectory.json": "c040758c30a912917f0fe1cb46215de6a5bdbc7bada98818558b6ebdac434bc7",
+    "v5_evidence.json": "869418e14e30d6f459980104ff0699132488e94bd6f3e5d0fab01f7d44e23e45"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "d473ad25def5005e1497e490f37c495755f0c8f879f27d6cbc6934311f752043",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+}

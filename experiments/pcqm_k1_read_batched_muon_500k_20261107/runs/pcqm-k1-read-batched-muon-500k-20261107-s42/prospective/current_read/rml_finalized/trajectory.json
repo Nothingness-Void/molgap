@@ -1,0 +1,121 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-read-batched-muon-500k-20261107-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read-planned",
+        "cost-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read-0",
+        "cost-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_read_batched_muon_500k_20261107/generated/2f84fa6aaebadca3d3d83068ed5dcafe9e91d3be23acb8cfdd5862bf228779f3/current_read/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-read-batched-muon-500k-20261107-s42:current_read:downstream"
+      ],
+      "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/prospective/strict_qualification/fa8303df2196b371f36c/current_read/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-k1-read-batched-muon-500k-20261107",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/prospective/rml_decision_snapshots/72d2ab688bd645a1d7772f944ac45e5485e3834337194fec77016c4d482e39f3.json",
+    "snapshot_sha256": "72d2ab688bd645a1d7772f944ac45e5485e3834337194fec77016c4d482e39f3",
+    "state_timestamp": "2026-11-07T04:19:03.757927+00:00"
+  },
+  "family_id": "pcqm-k1-read-batched-muon-500k-20261107",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Larger cohort or full exposure contracts the gain",
+      "The fixed current-only side path retains a material500K gain",
+      "The result is specific to seed42 or this execution"
+    ],
+    "changed_mechanism": "current-layer-normalized-associative-read-500k-under-shared-batched-muon",
+    "cheapest_falsifier": "One same-job original K1/current_read pair under identical registered batched Muon,500K60passes and complete matched exposure; no20/40pass planned pauses.",
+    "decision_changed_if_negative": "Close this fixed500K exploration without recipe grids, extra seeds, history stacking or automatic successor.",
+    "decision_changed_if_positive": "Nominate only if selected current-minus-reference<=-3meV,paired2000-bootstrap95%upper<0,final and last-five matched-pass deltas<0,with strict native/replay acceptance. No automaticfull/adoption.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
+    "observed_deficiency": "Accepted100K same-job current_read gain2.376164meV is positive below the3meV gate; scale transfer and batched T4 native qualification remain unmeasured. The user explicitly authorizes this separate500K exploration.",
+    "related_closed_family_ids": [
+      "k1-associative-history-read",
+      "k1-extremal-readout",
+      "node-query-linear-global-exchange"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the fixed current-layer associative side path improve original K1 under matched batched FP32 Muon execution at500K60passes?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-fa8303df2196b371f36c",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/prospective/current_read/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/generated/2f84fa6aaebadca3d3d83068ed5dcafe9e91d3be23acb8cfdd5862bf228779f3/current_read/recipe.json",
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/data_declaration.json",
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_read_batched_muon_500k_20261107/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "current_read",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+      "reference_arm_id": "muon",
+      "reference_trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
+      "reference_trajectory_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/prospective/muon/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "ec7c2c89fb0ba6b446d9760b8b5d9ac55118ef32404be5bc2130cd65e0f99a26"
+    },
+    "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+    "source_config_identity": "7d05ad00885b2f3e7db5e641a81eeb6305ed3a8316fc0f3a60b48b3aa419bcd7"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read"
+}

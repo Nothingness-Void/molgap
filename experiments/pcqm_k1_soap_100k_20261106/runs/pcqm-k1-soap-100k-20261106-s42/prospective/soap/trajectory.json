@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-soap-100k-20261106-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-soap-100k-20261106-s42-soap-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-soap-100k-20261106-s42:soap:downstream"
+      ],
+      "source_commit": "d8d68e18be3d0b8ab0c1a2e2abde376da9da0ae4",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_soap_100k_20261106/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-soap-100k-20261106",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_soap_100k_20261106/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/rml_decision_snapshots/1a6809adf8ecc19bca2d5fd3083a4c7e671bc0c26d7238006983528687e3dd2a.json",
+    "snapshot_sha256": "1a6809adf8ecc19bca2d5fd3083a4c7e671bc0c26d7238006983528687e3dd2a",
+    "state_timestamp": "2026-11-06T12:05:40.125206+00:00"
+  },
+  "family_id": "pcqm-k1-soap-100k-20261106",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Muon already provides sufficient conditioning",
+      "SOAP costs more without retained terminal benefit",
+      "The fixed SOAP learning recipe is poorly matched",
+      "Short-horizon gains disappear after decay"
+    ],
+    "changed_mechanism": "hidden-matrix-soap-versus-muon-with-matched-adamw-remainder",
+    "cheapest_falsifier": "Shared real kernel/resume qualification then one same-job original K1 Muon/SOAP100K40-pass pair; no module combinations.",
+    "decision_changed_if_negative": "Close this fixed recipe without blind optimizer/lr/frequency grids,hybrid SOAP-Muon or automatic successors.",
+    "decision_changed_if_positive": "Nominate only SOAP-minus-Muon selected delta<=-3meV,paired95percent upper<0,negative final and last-five deltas,strict same-job qualification. Report cost separately,no automatic500K.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-soap-100k-20261106-s42-soap-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-soap-100k-20261106-s42-soap",
+    "observed_deficiency": "Muon improves accepted100K endpoint but costs2.03x process wall; SOAP is a different conditioning recipe with no local2D Gap evidence.500K Muon is unresolved.",
+    "related_closed_family_ids": [
+      "pcqm-k1-muon-100k-20261106",
+      "pcqm-k1-tail-regularization-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does fixed FP32 SOAP on hidden K1 matrices improve completed100K Gap MAE versus same-job FP32 Muon with the same AdamW remainder?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json",
+      "experiments/pcqm_k1_soap_100k_20261106/data_declaration.json",
+      "experiments/pcqm_k1_soap_100k_20261106/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_soap_100k_20261106/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "soap",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-soap-100k-20261106-s42",
+      "reference_arm_id": "muon",
+      "reference_trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "reference_trajectory_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "466b34aa0c8e38d9167973a7af2b7b689963d490ecb1411118b3313cffdad116"
+    },
+    "source_commit": "d8d68e18be3d0b8ab0c1a2e2abde376da9da0ae4",
+    "source_config_identity": "14c9250277d56bff0b72163d83286d3ede218ad1bae6a40368502952e0b9e709"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+}

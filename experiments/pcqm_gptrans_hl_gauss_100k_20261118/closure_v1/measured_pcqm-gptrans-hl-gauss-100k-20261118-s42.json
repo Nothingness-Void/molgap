@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-hl-gauss-100k-20261118-s42\\v1\\version1\\pair_update_norm\\development_predictions.pt",
+      "sha256": "3b4df32ca5240416b1eed61824da284d561fccb4697f2413d82d85fd233db6c3"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-hl-gauss-100k-20261118-s42\\v1\\version1\\hl_gauss_512\\development_predictions.pt",
+      "sha256": "a45eeaa46bd1c70c7cadbaa57140fa94b5aaef5e36adbcf42f97842334331f5f"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 10.711062870025643,
+    "ensemble_gain_meV": 7.829682207107567,
+    "ensemble_mae_meV": 136.9660413068533,
+    "fit": null,
+    "m_meV": 10.711062870025636,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "hl_gauss_512",
+        "ci95": [
+          9.486744851231576,
+          11.910198175430297
+        ],
+        "delta": 10.711062870025636,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "reference": "pair_update_norm",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "hl_gauss_512": 150.15125494897367,
+      "pair_update_norm": 139.44019207894803
+    }
+  },
+  "role_id": "role-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512-development-metric_computed",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

@@ -1,0 +1,111 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_graph_rms_muon_500k_20261117",
+  "logical_run_id": "pcqm-k1-graph-rms-muon-500k-20261117-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-17T03:20:00+09:00",
+  "authority_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/authority.json",
+  "role_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_k1_graph_rms_muon_500k_20261117/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-k1-graph-rms-muon-500k-20261117",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does replacing K1's 18 legacy BatchNorm1d layers with BN-free per-graph channel RMSNorm (GraphRMSNorm) eliminate running-variance drift and reduce 500K 60-pass development MAE under batched FP32 Muon?",
+    "deficiency": "Every K1-Muon run to date retained 18 legacy BatchNorm1d layers whose running_var buffers explode (~76,472 L2 norm) as Muon orthogonal updates grow hidden weights, while GraphRMSNorm was only tested under AdamW at 100K.",
+    "changed_mechanism": "replace-18-local-batchnorm1d-with-post-graph-rmsnorm-under-batched-muon",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    ],
+    "alternatives": [
+      "K1's 500K ceiling is dominated by single-slot rank-1 and MPNN capacity rather than BatchNorm buffer drift",
+      "GraphRMSNorm under Muon changes effective step scale without passing the 3 meV gate"
+    ],
+    "closed_families": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "positive_decision": "NOMINATE if muon_graph_rms-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "negative_decision": "Close BN replacement as a standalone K1 salvage lever if it fails the material gate.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device, single forward",
+    "estimated_device_hours": 22,
+    "estimated_wall_hours": 11,
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing original 18-BN K1 against BN-free GraphRMSNorm K1 from identical k1.pt initialization."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "muon_bn"
+    },
+    {
+      "arm_id": "muon_graph_rms",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_post_graph_rms"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon_bn",
+    "target_manifest_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-k1-graph-rms-muon-500k-20261117-s42",
+      "title": "MolGap K1 Graph RMS Muon 500K 20261117 S42",
+      "datasets": [
+        "kaseichou/k1-graph-rms-muon-500k-20261117-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "kaseichou/k1-graph-rms-muon-500k-20261117-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 187488
+    }
+  }
+}

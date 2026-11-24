@@ -1,0 +1,50 @@
+{
+  "analysis_summary": {
+    "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-nested-subgraph-100k-20261113-s42\\v1\\reports\\analysis_summary.json",
+    "sha256": "636206fdcc172ac0d33995ac71198bdcc530e89e0f6159525ee11d1883023319"
+  },
+  "inputs": [
+    {
+      "arm_id": "muon",
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-muon-100k-20261106-s42\\v1\\version1\\muon\\development_predictions.pt",
+      "sha256": "4b9b614276de4d17c4652ec47ae4d4c481ab7bb498f0593b03c05606d3f281dc"
+    },
+    {
+      "arm_id": "nested_subgraph",
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-nested-subgraph-100k-20261113-s42\\v1\\nested_subgraph\\development_predictions.pt",
+      "sha256": "a707666b4a06eef5d7279d1a826eae29875529285298b1fd1771c0bdf499d316"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "cross_runtime_note": "Post-hoc external comparator: local RTX 5060 PyTorch 2.7.1 (nested_subgraph) vs Kaggle Tesla T4 PyTorch 2.11.0 (muon).",
+    "ensemble_50_50_mae_meV": 128.17455477893352,
+    "oracle_blend_mae_meV": 128.0770406079054,
+    "oracle_candidate_weight": 0.58,
+    "oracle_gain_over_best_single_meV": 2.4126455468177765,
+    "pairs": [
+      {
+        "candidate": "nested_subgraph",
+        "ci95": [
+          -2.6753714642524717,
+          -1.4048662446737295
+        ],
+        "delta": -2.0309815073013306,
+        "n_bootstrap": 10000,
+        "passes_material_gate": false,
+        "passes_noninferiority_gate": true,
+        "probability_better": 1.0,
+        "reference": "muon",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "muon": 132.5206676620245,
+      "nested_subgraph": 130.48968615472317
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

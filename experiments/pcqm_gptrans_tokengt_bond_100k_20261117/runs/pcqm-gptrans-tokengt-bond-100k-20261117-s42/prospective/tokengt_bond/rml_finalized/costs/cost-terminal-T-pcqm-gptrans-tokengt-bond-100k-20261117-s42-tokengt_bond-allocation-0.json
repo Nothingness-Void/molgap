@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-tokengt-bond-100k-20261117-s42-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond-allocation-0",
+  "evidence_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/runs/pcqm-gptrans-tokengt-bond-100k-20261117-s42/prospective/tokengt_bond/terminal_staging/v1/f13bfde23aa8f2b9/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 3.7429089926475005
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-tokengt-bond-100k-20261117-s42:tokengt_bond:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond"
+}

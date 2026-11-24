@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-grit-spse-100k-20261118-r2-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-planned",
+  "evidence_ref": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 7.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse"
+}

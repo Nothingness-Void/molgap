@@ -407,8 +407,8 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
                 if len(paths) > 1 and all(p.is_file() for p in paths.values()) else None)
     out = Path(output_dir)
     publish_immutable_bytes(repo_local_path(root, out / f"measured_{run_id}.json"), json_bytes(measured))
-    audit_map = (out / "audit_map.json").as_posix()
     facts_refs, rel = {}, lambda name: repo_local_path(root, out / name).relative_to(root).as_posix()
+    audit_map = rel("audit_map.json")  # repository-relative: no temporary worktree path in the draft
     for arm in drafted:
         # Measured numbers are copied verbatim; interpretation stays null for the closure author.
         pair = next((p for p in (measured or {}).get("results", {}).get("pairs", []) if p["candidate"] == arm), None) if pairs else None

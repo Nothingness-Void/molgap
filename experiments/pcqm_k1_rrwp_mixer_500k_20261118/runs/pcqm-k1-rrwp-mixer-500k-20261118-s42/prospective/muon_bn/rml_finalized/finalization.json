@@ -1,0 +1,41 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-4945047328ce144eb93d69928a4220cca368c5dcc35f3cf7c0fa2266993e660a",
+  "finalized_at": "2026-11-18T04:02:17.090210+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_rrwp_mixer_500k_20261118/closure_v1/roles_muon_bn.json": "8e30deaa95d0021031cb801c38cb7e82abdbe790b5d6d8d718ecb4e63257f1a0",
+    "experiments/pcqm_k1_rrwp_mixer_500k_20261118/decision.md": "ab085ddee72ea77115982fd22c5259b896d397ee60af482910ea22c78de3b755",
+    "experiments/pcqm_k1_rrwp_mixer_500k_20261118/generated/77750ef04c1d8fe03dba47c3be234a7e4a6845e9e8d97566c2893017a0861593/muon_bn/recipe.json": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8",
+    "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/stop_for_cost/acceptance.json": "521fdf620fc8492c8df306b1193cb726d71ec9d81ce1a7517b4f6e56a383e5ed",
+    "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/terminal_staging/v1/stop_for_cost/observed.json": "a3a978308d6b9c1c3605d828e17ef4141b03a3de6b9bae726dd8621df37017df",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_bn/allocation_ledger.json": "042070fc54c5f5a1efc98ecfbf67b6c5ea95e7624a335ba5c4589ffe86aed399",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_bn/canonical_trace.json": "9955ce1cb6cf89f24dc171f768d8ac2b84540e6cca124f4d6516c18b15b80c45",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_bn/data_open_provenance.json": "7de972da28db516565fec44d0d81f80ccbaa2b0093a697775c8d7d613377157c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_bn/invocation_cost_state.json": "1e14c0b8e6e35cf868a30dac9ad7f8252b8c5a37e2aa10621e82499d78fe7c00",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-rrwp-mixer-500k-20261118-s42/v1/version1/muon_bn/pause_receipt.json": "bf64890d47d454bb1cafb03c633d1251c7ecb227f2c3b39e8bcd27eb10cfd603"
+  },
+  "outcome": "STOP_FOR_COST",
+  "prospective_ref": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+  "prospective_sha256": "2b6457c14f58c8af001c73df6981fa802ac76131f08c4a070de581e60c476166",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-0.json": "d3f2121724284d38c0af092e5098d568a543b090dcfd3120c9e51ea942a68936",
+    "roles/role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-labels_read.json": "1e90d7fc57d9acf39e5bdcb4c485d2bbe6b10fdfda4914856ddc4c915fe0963f",
+    "roles/role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-metric_computed.json": "bcf9f524e6773c93f72b9af1ec0829ec73a16ee175cd7f4e36dc4e28cd132b76",
+    "roles/role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-development-prediction_input.json": "3b9b43a01bc13ce80dc82ef48ef786f7d3654a6548235657811f71a1ba2f84a3",
+    "roles/role-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn-train-training_membership.json": "69413105f3f07d24096ca464a79a689a9192a37b8cfaa837c37eccdd5323c150",
+    "terminal_input.json": "fad18e231daa9e0d167ad050a7ff91ed7ec2e028aa845d2fb880e60a37afa98a",
+    "trace.json": "9955ce1cb6cf89f24dc171f768d8ac2b84540e6cca124f4d6516c18b15b80c45",
+    "trace_manifest.json": "5bbcec2feeb19c2acd265bae853879ce8dd1619b3ebb405cd274fe794fea03aa",
+    "trajectory.json": "1f0a226e3c3c6d4f5c1373383c97718ccf7a21beb6fece2e0cd14626c84168c4",
+    "v5_evidence.json": "0a055e279449a7219e111725db6470243d39ab2132db966d2ca9791f09fefdcb"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_rrwp_mixer_500k_20261118/runs/pcqm-k1-rrwp-mixer-500k-20261118-s42/prospective/muon_bn/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "4945047328ce144eb93d69928a4220cca368c5dcc35f3cf7c0fa2266993e660a",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+}

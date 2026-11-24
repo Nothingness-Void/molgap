@@ -1,0 +1,417 @@
+{
+  "arms": {
+    "s43": {
+      "descriptive_pair_dgap_mae_meV": {
+        "real_dgap_r": 0.971621719779782,
+        "real_pairs": 122.69646861080102,
+        "rew_dgap_r": 0.9696626024263436,
+        "rewired_pairs": 128.2830935576742
+      },
+      "murcko_clustered_descriptive": {
+        "R_real_meV": {
+          "ci95": [
+            12.877495048039691,
+            14.268648510039746
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": 13.644024258563928
+        },
+        "R_rew_meV": {
+          "ci95": [
+            14.021957552150592,
+            15.095137370160094
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": 14.611170906331266
+        },
+        "diff_real_minus_rew_meV": {
+          "ci95": [
+            -1.4154519940500354,
+            -0.5799721541366526
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": -0.967146647767338
+        }
+      },
+      "paired_subset_raw_mae_meV": 89.84036205600779,
+      "residual_corr_real": 0.12952578812078672,
+      "residual_corr_rew": 0.07444906784633493,
+      "series_clustered": {
+        "R_real_meV": {
+          "ci95": [
+            13.181636104567485,
+            14.145174249901295
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": 13.644024258563928
+        },
+        "R_rew_meV": {
+          "ci95": [
+            14.175601680084094,
+            15.090415986439982
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": 14.611170906331266
+        },
+        "diff_real_minus_rew_meV": {
+          "ci95": [
+            -1.2095016185063234,
+            -0.7320269568970744
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": -0.967146647767338
+        }
+      },
+      "whole_block_raw_mae_meV": 97.90062900479079
+    },
+    "s44": {
+      "descriptive_pair_dgap_mae_meV": {
+        "real_dgap_r": 0.9715268969331359,
+        "real_pairs": 122.60170953966566,
+        "rew_dgap_r": 0.9691894318590312,
+        "rewired_pairs": 129.1919296921049
+      },
+      "murcko_clustered_descriptive": {
+        "R_real_meV": {
+          "ci95": [
+            12.860653068267393,
+            14.306031243602543
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": 13.663857273530104
+        },
+        "R_rew_meV": {
+          "ci95": [
+            14.22799798694569,
+            15.31032148058894
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": 14.810805819198166
+        },
+        "diff_real_minus_rew_meV": {
+          "ci95": [
+            -1.6594714747261068,
+            -0.6916680784704249
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 56752,
+          "seed": 20261124,
+          "value": -1.146948545668062
+        }
+      },
+      "paired_subset_raw_mae_meV": 90.21042260977498,
+      "residual_corr_real": 0.1344920517879059,
+      "residual_corr_rew": 0.06884428899064263,
+      "series_clustered": {
+        "R_real_meV": {
+          "ci95": [
+            13.196893843887914,
+            14.158922222391926
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": 13.663857273530104
+        },
+        "R_rew_meV": {
+          "ci95": [
+            14.38499298693368,
+            15.279242898926617
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": 14.810805819198166
+        },
+        "diff_real_minus_rew_meV": {
+          "ci95": [
+            -1.3968130961790035,
+            -0.9085022975135947
+          ],
+          "n_bootstrap": 2000,
+          "n_clusters": 75918,
+          "seed": 20261124,
+          "value": -1.146948545668062
+        }
+      },
+      "whole_block_raw_mae_meV": 98.28946410847838
+    }
+  },
+  "ensemble_2init_descriptive": {
+    "descriptive_pair_dgap_mae_meV": {
+      "real_dgap_r": 0.9729626149245013,
+      "real_pairs": 118.8755271775043,
+      "rew_dgap_r": 0.970999567989674,
+      "rewired_pairs": 124.765689248299
+    },
+    "murcko_clustered_descriptive": {
+      "R_real_meV": {
+        "ci95": [
+          12.406087657261976,
+          13.827361386723465
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 56752,
+        "seed": 20261124,
+        "value": 13.1838216888771
+      },
+      "R_rew_meV": {
+        "ci95": [
+          13.626616112716189,
+          14.677085160834146
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 56752,
+        "seed": 20261124,
+        "value": 14.201567238088654
+      },
+      "diff_real_minus_rew_meV": {
+        "ci95": [
+          -1.4756596689013404,
+          -0.6136909797838308
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 56752,
+        "seed": 20261124,
+        "value": -1.0177455492115541
+      }
+    },
+    "paired_subset_raw_mae_meV": 86.92700732227274,
+    "residual_corr_real": 0.1273897862260825,
+    "residual_corr_rew": 0.06907824167692594,
+    "series_clustered": {
+      "R_real_meV": {
+        "ci95": [
+          12.721543064492234,
+          13.702144409210662
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 75918,
+        "seed": 20261124,
+        "value": 13.1838216888771
+      },
+      "R_rew_meV": {
+        "ci95": [
+          13.780083052409335,
+          14.675141268618423
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 75918,
+        "seed": 20261124,
+        "value": 14.201567238088654
+      },
+      "diff_real_minus_rew_meV": {
+        "ci95": [
+          -1.2437826502307612,
+          -0.7912736965822951
+        ],
+        "n_bootstrap": 2000,
+        "n_clusters": 75918,
+        "seed": 20261124,
+        "value": -1.0177455492115541
+      }
+    },
+    "whole_block_raw_mae_meV": 94.43958280381742
+  },
+  "format": "molgap-delta-gap-diag-results-v1",
+  "investment_gate_meV": 3.0,
+  "molecule_coverage": 0.73578367025466,
+  "parent_cpu_seconds": 6.3125,
+  "rows_total": 190450,
+  "stage1": {
+    "all_mmp_directed_edges": 6315782,
+    "candidate_mmp_vertices": 144167,
+    "labels_used": false,
+    "max_murcko_cluster_share": 0.17195064321344186,
+    "max_series_cluster_share": 0.033195064321344184,
+    "mega_buckets_all_count": 28,
+    "mega_buckets_skipped": 28,
+    "molecule_coverage": 0.73578367025466,
+    "murcko_cluster_count": 56752,
+    "parent_cpu_seconds": 6.703125,
+    "parse_fail": 5,
+    "predictions_used": false,
+    "real_pairs_count": 70065,
+    "rows_total": 190450,
+    "series_cluster_count": 75918,
+    "stage": "stage1_structures_and_real_pairs",
+    "stage1_npz_sha256": "d5dd5dcbc24f1dc2800ecd09d15ab9b272b320a00ad3ae0d2cecfd9aadc290ff",
+    "wall_seconds": 56.5126309000043
+  },
+  "stage2": {
+    "dev_ema60_abs_diff_eV": {
+      "s43": 2.398722026564215e-09,
+      "s44": 4.787428786734438e-09
+    },
+    "dev_ema60_mae_eV": {
+      "s43": 0.10154094041847453,
+      "s44": 0.10136540712831776
+    },
+    "device": "NVIDIA GeForce RTX 5060",
+    "parent_cpu_seconds": 132.625,
+    "replay_max_abs_eV": {
+      "s43": 7.576248375329442e-07,
+      "s44": 6.543748582998887e-07
+    },
+    "rows_total": 190450,
+    "score_labels_used": false,
+    "stage": "stage2_predict_ema60",
+    "stage2_npz_sha256": "099a60a02b674cb937b07971d121263932321506cd4996303c3636e0797465d7",
+    "trace_pass60_ema_dev_mae_eV": {
+      "s43": 0.1015409380197525,
+      "s44": 0.10136540234088898
+    },
+    "wall_seconds": 132.4672084000049
+  },
+  "stage3": {
+    "balance_gate_passed": true,
+    "covariate_balance": {
+      "Tanimoto": {
+        "ks": 0.04407336045100978,
+        "real_mean": 0.46287604821230666,
+        "real_q10_50_90": [
+          0.2972972972972973,
+          0.4482758620689655,
+          0.65
+        ],
+        "real_std": 0.13605132092349612,
+        "rew_mean": 0.45015263523508064,
+        "rew_q10_50_90": [
+          0.28846153846153844,
+          0.4444444444444444,
+          0.6363636363636364
+        ],
+        "rew_std": 0.15069017385504177,
+        "smd": 0.0886294080626109
+      },
+      "abs_dGap_meV": {
+        "ks": 0.027988296581745536,
+        "real_mean": 540.3168581372798,
+        "real_q10_50_90": [
+          24.49024654499965,
+          312.93092807499966,
+          1355.1269754899993
+        ],
+        "real_std": 642.7324379968746,
+        "rew_mean": 540.3170911613437,
+        "rew_q10_50_90": [
+          32.65366206000042,
+          315.65206658000113,
+          1336.0790059550004
+        ],
+        "rew_std": 642.7248460222394,
+        "smd": -3.625543481508695e-07
+      },
+      "abs_dHA": {
+        "ks": 0.005295083137087042,
+        "real_mean": 1.580532362805966,
+        "real_q10_50_90": [
+          0.0,
+          1.0,
+          4.0
+        ],
+        "real_std": 1.4538248161027458,
+        "rew_mean": 1.580532362805966,
+        "rew_q10_50_90": [
+          0.0,
+          1.0,
+          4.0
+        ],
+        "rew_std": 1.4874812225354388,
+        "smd": 0.0
+      },
+      "same_Murcko_abs_diff": 0.0,
+      "same_Murcko_real": 0.5023478198815385,
+      "same_Murcko_rew": 0.5023478198815385
+    },
+    "gate_checks": {
+      "dgap_ks_le_0.10": true,
+      "dgap_smd_le_0.10": true,
+      "dha_ks_le_0.10": true,
+      "dha_smd_le_0.10": true,
+      "mmp_leak_eq_0": true,
+      "same_murcko_diff_le_0.02": true,
+      "tanimoto_ks_le_0.10": true,
+      "tanimoto_smd_le_0.10": true,
+      "unmatched_eq_0": true
+    },
+    "lambda_sweep": [
+      {
+        "Tanimoto_mean_rew": 0.48913115131382706,
+        "lambda": 0.0,
+        "loss": 82.4678347941089,
+        "p1_leftovers": 344,
+        "same_Murcko_rew": 0.40389638193106403
+      },
+      {
+        "Tanimoto_mean_rew": 0.48779902177423556,
+        "lambda": 0.04,
+        "loss": 28.143881270020042,
+        "p1_leftovers": 346,
+        "same_Murcko_rew": 0.47151930350388926
+      },
+      {
+        "Tanimoto_mean_rew": 0.4841489638176068,
+        "lambda": 0.08,
+        "loss": 24.100642802296594,
+        "p1_leftovers": 352,
+        "same_Murcko_rew": 0.5286091486476843
+      },
+      {
+        "Tanimoto_mean_rew": 0.4795353155747842,
+        "lambda": 0.12,
+        "loss": 59.21101088828742,
+        "p1_leftovers": 342,
+        "same_Murcko_rew": 0.5730821380147006
+      },
+      {
+        "Tanimoto_mean_rew": 0.47312579890352136,
+        "lambda": 0.18,
+        "loss": 92.63085974119934,
+        "p1_leftovers": 352,
+        "same_Murcko_rew": 0.6154285306501106
+      },
+      {
+        "Tanimoto_mean_rew": 0.4674014515402985,
+        "lambda": 0.25,
+        "loss": 113.71658576720168,
+        "p1_leftovers": 340,
+        "same_Murcko_rew": 0.6421323057161208
+      }
+    ],
+    "mmp_leak": 0,
+    "p1_leftovers": 352,
+    "pairs_count": 70065,
+    "parent_cpu_seconds": 73.671875,
+    "predictions_used": false,
+    "selected_lambda": 0.08,
+    "stage": "stage3_rewire_and_gate",
+    "stage3_npz_sha256": "9c8fb1a5b6a2668c0837596000d831ab47f12d6bfde35265c3903895a2a23cc1",
+    "swaps_accepted": 11680,
+    "timings_seconds": {
+      "gpu_topk": 39.95463649999874,
+      "phase1": 9.229128400009358,
+      "phase2": 22.05544209999789
+    },
+    "unmatched": 0,
+    "wall_seconds": 75.42043630000262
+  },
+  "verdict": "INCONCLUSIVE_DO_NOT_TRAIN",
+  "wall_seconds": 6.35773540000082
+}

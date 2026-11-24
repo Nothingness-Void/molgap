@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "b09b5f953048ae2dc5fceb42a6db099e45e29e44c026d859ac21f645cc45c8d6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "fb7fb067dcbe1d2061af1c3608c69ff4ae7078516cb3bb98351847fa9704ec7d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/_execution/rrwp_pairffn/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "fb7fb067dcbe1d2061af1c3608c69ff4ae7078516cb3bb98351847fa9704ec7d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/training_contract.json",
+      "name": "contract",
+      "sha256": "47af2ece7c2fd210a00cfeaceedcd6d0f771a42615a113a63b2d896e9c7cffc5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "f7c6015bce36eafae23f614422fd52761fdaa4a9afc4225c176580d8271e520b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "9805156fe6e7785abd7c932339a6afc3985a085b04acd3a9bda5d3510626ccb9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/development_predictions_ema0.9999.pt",
+      "name": "predictions_ema_0p9999",
+      "sha256": "be31ac73243317b8de7c52957c0d40add1d2e019e75c9fdf6a3bdcaef7cc6860"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "da7e484cd0e4ca90cca970b8660c964a518f8aa652705f3beb97e28b46184dee"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "c9e935e22c25cb629104f44120fb240ef140d4404697f24c064026e03adf8f63"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/selected_model_ema0.9999.pt",
+      "name": "selected_model_ema_0p9999",
+      "sha256": "940dac24f4ae984decca7baebdd46781e81da06536f464fa7785df04895f550c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "ead27038092c7e8a53d66c09d72a2675a2f6604313329631648b0ccafe6d02c6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/v1/version1/rrwp_pairffn/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "c7ce978e329387921d97c93382b3cab864b5dc1d87727a12f236f19675a385ee"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118/generated/8ed4943718d574d7aae18a2f6783bb9032373328ab5d903302db8f0e189536f2/rrwp_pairffn/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14007872172772884,
+    "missing_reason": null,
+    "selected_optimizer_step": 35926,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118/runs/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/prospective/rrwp_pairffn/terminal_staging/v1/39aa8ff494352594/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

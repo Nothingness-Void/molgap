@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/generated/5463027cd41e1b25b51a7d69f607afc05c47dbb12b44929e1ffb0a4ef606d2a9/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 7.02
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.51
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42:pair_update_norm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm"
+}

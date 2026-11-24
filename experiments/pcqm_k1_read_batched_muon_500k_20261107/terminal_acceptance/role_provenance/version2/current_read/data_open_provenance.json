@@ -1,0 +1,103 @@
+{
+  "format": "molgap-data-open-record-v1",
+  "context": {
+    "experiment_id": "pcqm_k1_read_batched_muon_500k_20261107",
+    "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+    "arm_id": "current_read",
+    "arm_identity": "7d05ad00885b2f3e7db5e641a81eeb6305ed3a8316fc0f3a60b48b3aa419bcd7",
+    "spec_identity": "ec7c2c89fb0ba6b446d9760b8b5d9ac55118ef32404be5bc2130cd65e0f99a26",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+    "source_archive_sha256": "581796f208c3e8b0f482665fb649daa268cb882bf268f1e5a442ff262f94e861",
+    "package_identity": "8290b35ad86141d8e313ffdcb868bb9a0475f359209532c4faf1be82d67caa74",
+    "training_recipe_sha256": "bac8bae48a467c95aee459207f8cff9031689214bf99b1f8a0de69a8fc2cbbe6",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+    "platform_version": null
+  },
+  "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "manifest": "manifest.json",
+  "manifest_protected_role_flags": {
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "shards": [
+    {
+      "file": "train/train_shard_0000.pt",
+      "role": "train",
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e"
+    },
+    {
+      "file": "train/train_shard_0001.pt",
+      "role": "train",
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd"
+    },
+    {
+      "file": "train/train_shard_0002.pt",
+      "role": "train",
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a"
+    },
+    {
+      "file": "train/train_shard_0003.pt",
+      "role": "train",
+      "sha256": "fd97e30f7421f935b3975f90988ab3f04896594f5aafda9b67b98717d20ac3b1"
+    },
+    {
+      "file": "train/train_shard_0004.pt",
+      "role": "train",
+      "sha256": "d107621e6b5395e1534928be0377b3529ac5ace4e5fe4ffcef52ee72a9567afd"
+    },
+    {
+      "file": "train/train_shard_0005.pt",
+      "role": "train",
+      "sha256": "63cadbbe3109b94019da0188d5d429b84a96ea763b0b5319a773f6d104c9c305"
+    },
+    {
+      "file": "train/train_shard_0006.pt",
+      "role": "train",
+      "sha256": "42ebd3ef40b8594c13dec0f4f7966963105fe95dd66cde613c5d82534792146b"
+    },
+    {
+      "file": "train/train_shard_0007.pt",
+      "role": "train",
+      "sha256": "ba214cc1d5aa6716887079d0fa39080e1477fe4fb3348db1277481af6d2be07f"
+    },
+    {
+      "file": "train/train_shard_0008.pt",
+      "role": "train",
+      "sha256": "5336817d71e253aaafc73f50daeec9e9e068d65e62acac86a40a5e1e85ef99a5"
+    },
+    {
+      "file": "train/train_shard_0009.pt",
+      "role": "train",
+      "sha256": "4753e34c24d535b56f0da81ff92c5bd70348dee4d1acf216f2cc2c2bca669104"
+    },
+    {
+      "file": "train/train_shard_0010.pt",
+      "role": "development",
+      "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1"
+    }
+  ],
+  "invocations": [
+    {
+      "had_checkpoint": true,
+      "opened": [
+        "manifest.json",
+        "train/train_shard_0000.pt",
+        "train/train_shard_0001.pt",
+        "train/train_shard_0002.pt",
+        "train/train_shard_0003.pt",
+        "train/train_shard_0004.pt",
+        "train/train_shard_0005.pt",
+        "train/train_shard_0006.pt",
+        "train/train_shard_0007.pt",
+        "train/train_shard_0008.pt",
+        "train/train_shard_0009.pt",
+        "train/train_shard_0010.pt"
+      ]
+    }
+  ]
+}

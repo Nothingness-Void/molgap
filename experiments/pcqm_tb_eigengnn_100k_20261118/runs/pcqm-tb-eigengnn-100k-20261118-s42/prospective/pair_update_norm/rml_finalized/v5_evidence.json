@@ -1,0 +1,68 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json",
+      "name": "contract",
+      "sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "872e43ff61393ce125033c1ce406bcb91ed9f7bbde44753a24ae1e444790e99f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "1bf165318c68f619f6aef04d2d93376c86f2e06138f508699ca7b38f76a708c1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "61687873c421f4f86d3baeb23284769b37325fb4e4db37c10b5b97f4df967500"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/pair_update_norm/recipe.json",
+  "metrics": {
+    "development_mae_eV": null,
+    "missing_reason": "Development metric not observed",
+    "selected_optimizer_step": null,
+    "selected_weights": null,
+    "source_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "partial",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "PAUSED",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

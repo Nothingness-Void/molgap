@@ -1,0 +1,71 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s43/v1/version2/_resume_preflight/muon_wd1e5/actual_resume_certificate.json",
+    "sha256": "a0a8a0bc33a012ec6f7fd8c0d9aa844482df5f12bd5e9703cd443511544d8e4d"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/resume_to_pass60.json",
+    "sha256": "793810c9c3a10af5d3c9e7ebba007eda002b72d681f02b2777740966dcc5685c"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s43/v2/prepared/source_dataset/resume/muon_wd1e5/files/last_checkpoint.pt",
+    "sha256": "20cb70b8cababadb2204772a2aa71733582755ed339bcf053b1ae0b29a7a04fd"
+  },
+  "continued": {
+    "attempt_id": "pcqm-k1-muon-wd-500k-20261111-s43-v2",
+    "logical_run_id": "pcqm-k1-muon-wd-500k-20261111-s43",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "4d7a765f1b5ec1d18951e6cb916378810a2c002d",
+    "source_package_sha256": "ee4ac8bc6d70faf5b40d12bd3b57b410d38198489cf90d71dd0c9d65ce197843",
+    "spec_identity": "56ba4ac0f3ecce649c75fb43a01f50713f993dd0b9fd8968f528978b7767b835"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s43/v1/version2/muon_wd1e5/output_manifest.json",
+    "sha256": "fe31de2e67766444010bebf9a1bc8a37095fc81e607b8bf47190b64315b9fe51"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s43/v2/operations/launch_receipt.json",
+    "sha256": "c65bbb76e83ff522fd591929de01dd573be291d318e786eabab7152b649a01c3"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s43/v1/version2/muon_wd1e5/canonical_trace.json",
+    "sha256": "b82dcb183ac39a31a994485c846118acb50423d8cf2ea2c7b5cb165a52a8faf0"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s43/v1/version2/_resume_preflight/muon_wd1e5/runtime_certificate.json",
+    "sha256": "aede72fb4d12e4c1b9cbf37539de62315070512fbf4ddbe56b906c93aa1918f5"
+  },
+  "origin": {
+    "attempt_id": "pcqm-k1-muon-wd-500k-20261111-s43-v1",
+    "logical_run_id": "pcqm-k1-muon-wd-500k-20261111-s43",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "4d7a765f1b5ec1d18951e6cb916378810a2c002d",
+    "source_package_sha256": "ee4ac8bc6d70faf5b40d12bd3b57b410d38198489cf90d71dd0c9d65ce197843",
+    "spec_identity": "56ba4ac0f3ecce649c75fb43a01f50713f993dd0b9fd8968f528978b7767b835"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-wd-500k-20261111-s43/v1/operations/launch_receipt.json",
+    "sha256": "0fedac4b1a86a9f454318330f2bf98ad7b5ea2aad8b4f828145222d58e9e26cc"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s43/v2/prepared/source_dataset/resume/muon_wd1e5/resume_bundle.json",
+    "sha256": "722e9fe66c3978e079b14c77fcc6638d86b2ded4eab497201f1228faa03f67c0"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s43/v2/prepared/source_dataset/resume/muon_wd1e5/files/canonical_trace.json.context.json",
+    "sha256": "79eb67d73b88f7ebcca36b3fb66e1602c360573dbfa7305ab08ffb51e982154d"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-wd-500k-20261111-s43/v1/prepared/package/package_manifest.json",
+    "sha256": "8e630f0a1ce3642a94a5bf92672dbc01b4b8eabaf5f7e17fa8cbd21b00a16ae0"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s43/v2/prepared/source_dataset/resume/muon_wd1e5/files/canonical_trace.json",
+    "sha256": "cc5b83ac2be776dcdf165abdb5fa5ef8190955d496dfce7dd5653e1e03e7900f"
+  }
+}

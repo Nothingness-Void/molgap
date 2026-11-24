@@ -1,16 +1,16 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 80, 13 are CLOSED reference arms):
+Last closed (of 104, 25 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
-Open (ACTIVE) 6: T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm, +3 more
+Open (ACTIVE) 10: T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm, T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3, T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-pair_update_norm, +7 more
 Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / a separate training prospective and explicit launch authorization
 src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, gptrans_screen_workflow.py, gptrans_variants.py, +3 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +26 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +39 more
 
-## Closed (80)
+## Closed (104)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
@@ -19,6 +19,7 @@ TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance | NO_TRAIN | pcqm-gptran
 TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2 | CLOSED | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
 TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local | NO_TRAIN | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
 TB-pcqm-gptrans-full-wd-c4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-full-wd-c4 | adamw-weight-decay-0-05-0 | +0.26 | below_gate
+TB-k1-muon-gptrans-fusion-500k-20261108 | NO_TRAIN | pcqm-k1-muon-gptrans-fusion-500k | fixed-float64-averaging-of-accepted-batched | null | -
 TB-k1-gptrans-pairnorm-fusion-500k-20261027 | NO_TRAIN | pcqm-k1-gptrans-pairnorm-fusion-500k | fixed-averaging-of-saved-model-predictions | null | comparator_missing
 TB-k1-gptrans-full-fusion-r3 | NEGATIVE_UNDER_CONTRACT | k1-gptrans-fusion | fixed-k1-and-gptrans-t-prediction | null (see experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md) | -
 TB-gptrans-t-500k-bridge | CLOSED | gptrans-t-500k-bridge | compact-node-all-pairs-propagation-core | null | -
@@ -75,6 +76,27 @@ TB-chemical-aux-fixed-train-cache-20260930 | NO_TRAIN | gptrans-clean-chemical-a
 TB-chemical-aux-component-cache-retry2-20260930 | NO_TRAIN | gptrans-clean-chemical-aux-cache | existing-pcqm-topology-parser-descriptor-only | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | -0.62 | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | +0.65 | -
+T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-tokengt-bond-100k-20261117 | tokengt-explicit-bond-token-incidence-qk-norm-gated-attention | +1.24 | below_gate
+T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm | CLOSED | pcqm-gptrans-tokengt-bond-100k-20261117 | tokengt-explicit-bond-token-incidence-qk-norm-gated-attention | null | -
+T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-tokengt-100k-20261113 | tokengt-chebyshev-node-edge-token-transformer | null (see experiments/pcqm_gptrans_tokengt_100k_20261113/decision.md) | endpoint_regression
+T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44 | CLOSED | pcqm-gptrans-split-ensemble-500k-20261112 | equal-compute-two-member-ensemble-30-vs-60-pass | -0.16 | -
+T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43 | CLOSED | pcqm-gptrans-split-ensemble-500k-20261112 | equal-compute-two-member-ensemble-30-vs-60-pass | null | -
+T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-rrwp-pairffn-100k-20261118 | rrwp-16-step-symmetric-pair-injection-and-preln-swiglu-pair-transition | +0.64 | below_gate
+T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-rrwp-pairffn-100k-20261118 | rrwp-16-step-symmetric-pair-injection-and-preln-swiglu-pair-transition | null | -
+T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread | POSITIVE_BELOW_GATE | pcqm-gptrans-real-tri-vread-100k-20261118 | gptrans-real-atom-triangle-pair-plus-l12-virtual-pair-readout | -1.86 | -
+T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-vread-100k-20261118 | gptrans-real-atom-triangle-pair-plus-l12-virtual-pair-readout | null | -
+T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop | POSITIVE_BELOW_GATE | pcqm-gptrans-real-tri-rcdrop-100k-20261118 | gptrans-real-atom-triangle-pair-post-gate-row-col-dropout-p20 | -1.00 | -
+T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-rcdrop-100k-20261118 | gptrans-real-atom-triangle-pair-post-gate-row-col-dropout-p20 | null | -
+T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-real_tri_pair | POSITIVE_BELOW_GATE | pcqm-gptrans-real-tri-pair-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update | -1.67 | below_gate
+T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-pair-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update | null | -
+T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-real_tri_p2n | POSITIVE_BELOW_GATE | pcqm-gptrans-real-tri-p2n-100k-20261118 | pre-gpa-real-atom-triangle-plus-pair-to-node-vector-feedback | -2.59 | below_gate
+T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-p2n-100k-20261118 | pre-gpa-real-atom-triangle-plus-pair-to-node-vector-feedback | null | -
+T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | +1.02 | below_gate
+T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
+T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6 | POSITIVE_UNDER_CONTRACT | pcqm-gptrans-query-readout-bc-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | -4.21 | -
+T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6 | CLOSED | pcqm-gptrans-query-readout-bc-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | null | -
+T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-query-readout-ad-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | +1.49 | -
+T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12 | CLOSED | pcqm-gptrans-query-readout-ad-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | null | -
 T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low | CLOSED | pcqm-gptrans-pairnorm-wd-500k-s44 | decoupled-weight-decay-strength | null | -
 T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-pairnorm-wd-500k-s44 | decoupled-weight-decay-strength | +1.13 | endpoint_regression
 T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low | CLOSED | pcqm-gptrans-pairnorm-wd-500k-s43 | decoupled-weight-decay-strength | null | -
@@ -87,12 +109,18 @@ T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44 | NEGATIVE_UNDER_CONTRACT |
 T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-pairnorm-init-noise-500k | initialization-seed-noise | null (see experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md) | -
 T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema | CLOSED | pcqm-gptrans-norm-ema-100k-20261104 | normalization-affine-decay-and-same-trajectory-ema-timescale | null | -
 T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-norm-ema-100k-20261104 | normalization-affine-decay-and-same-trajectory-ema-timescale | +1.77 | -
+T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | null | -
+T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | +10.71 | below_gate
 T-pcqm-gptrans-dft-distance-aux-20261121 | INCONCLUSIVE | pcqm-gptrans-dft-distance-aux-20261121 | train-only-pair-state-head-regressing-dft-heavy-atom-distances-pure-2d-inference | -0.14 | -
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm | POSITIVE_UNDER_CONTRACT | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | -3.14 | boundary_pass
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local | CLOSED | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | null | -
 T-gptrans-chemical-aux-feasibility | INCONCLUSIVE | gptrans-clean-chemical-aux | clean-input-graph-level-descriptor-and | null | -
 
-## Open (6)
+## Open (10)
+T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm | ACTIVE | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
+T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3 | ACTIVE | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
+T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-pair_update_norm | ACTIVE | pcqm-gptrans-real-tri-vread-100k-20261118 | gptrans-real-atom-triangle-pair-plus-l12-virtual-pair-readout | null | -
+T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-real_tri_vread | ACTIVE | pcqm-gptrans-real-tri-vread-100k-20261118 | gptrans-real-atom-triangle-pair-plus-l12-virtual-pair-readout | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
@@ -132,6 +160,7 @@ Only a new decision-relevant question under a separately frozen prospective cont
 Only a newly frozen plan with a replay-qualified reference binding.
 a newly authorized matched V4 contract with the same target-scale comparator
 Separately authorized prospective independent evaluation
+Separately authorized independent full-scale validation plan with frozen full reference, role authority and native-cost contract; this closure launches no training
 A different weight-decay value, a second init, or a new frozen protocol; this endpoint is scored once.
 New explicit authorization; no automatic successor
 New explicitly authorized decision-relevant question
@@ -180,6 +209,9 @@ src/molgap/pcqm_k1_gptrans_fusion.py
 - experiments/pcqm_gptrans_geometry_channels_100k_kaggle1: scripts -
   - trace experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_only/rml_finalized/trace.json
+- experiments/pcqm_gptrans_hl_gauss_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/hl_gauss_512/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
 - experiments/pcqm_gptrans_input_init_100k: scripts -
 - experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1: scripts -
   - trace experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/rml_finalized/trace.json
@@ -214,10 +246,43 @@ src/molgap/pcqm_k1_gptrans_fusion.py
 - experiments/pcqm_gptrans_pairnorm_wd_500k_s44: scripts -
   - trace experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_high/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/rml_finalized/trace.json
+- experiments/pcqm_gptrans_query_readout_ad_100k_20261105: scripts -
+  - trace experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full12/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full8_query4/rml_finalized/trace.json
+- experiments/pcqm_gptrans_query_readout_bc_100k_20261105: scripts -
+  - trace experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_late3_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/real_tri_late3/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_p2n_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/real_tri_p2n/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_pair_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_pair_100k_20261118/runs/pcqm-gptrans-real-tri-pair-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_pair_100k_20261118/runs/pcqm-gptrans-real-tri-pair-100k-20261118-s42/prospective/real_tri_pair/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/runs/pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/runs/pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42/prospective/real_tri_rcdrop/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_vread_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_vread_100k_20261118/runs/pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_vread_100k_20261118/runs/pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42/prospective/real_tri_vread/rml_finalized/trace.json
+- experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118/runs/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_rrwp_pairffn_100k_20261118/runs/pcqm-gptrans-rrwp-pairffn-100k-20261118-s42/prospective/rrwp_pairffn/rml_finalized/trace.json
+- experiments/pcqm_gptrans_split_ensemble_500k_20261112: scripts -
+  - trace experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s43/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s44/rml_finalized/trace.json
 - experiments/pcqm_gptrans_t_100k_v4: scripts accept_result.py, run.py
 - experiments/pcqm_gptrans_t_500k: scripts -
+- experiments/pcqm_gptrans_tokengt_100k_20261113: scripts -
+  - trace experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/rml_finalized/trace.json
+- experiments/pcqm_gptrans_tokengt_bond_100k_20261117: scripts -
+  - trace experiments/pcqm_gptrans_tokengt_bond_100k_20261117/runs/pcqm-gptrans-tokengt-bond-100k-20261117-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_tokengt_bond_100k_20261117/runs/pcqm-gptrans-tokengt-bond-100k-20261117-s42/prospective/tokengt_bond/rml_finalized/trace.json
 - experiments/pcqm_gptrans_triplet_norm_100k_20261104: scripts -
   - trace experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/rml_finalized/trace.json
 - experiments/pcqm_k1_gptrans_full_fusion: scripts accept_gptrans_full.py, run_fusion_study.py, run_gptrans_full.py
 - experiments/pcqm_k1_gptrans_pairnorm_fusion_500k: scripts analyze.py, close.py, prepare.py
+- experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108: scripts run.py

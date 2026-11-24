@@ -1,0 +1,110 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_line_graph_bond_500k_20261118",
+  "logical_run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-18T01:20:00+09:00",
+  "authority_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/authority.json",
+  "role_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-k1-line-graph-bond-500k-20261118",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does adding undirected chemical-bond line-graph global multi-head self-attention at edge_updates.{2,5,8} plus bond-aware joint readout reduce 500K 60-pass internal development MAE over muon_bn under batched FP32 Muon?",
+    "deficiency": "K1 only exchanges bond-level state locally through atom message passing and discards persistent bond representations at graph readout, limiting long-range conjugated bond coupling.",
+    "changed_mechanism": "undirected-line-graph-global-mha-at-edge-updates-2-5-8-and-bond-aware-head",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "Long-range bond-to-bond attention adds capacity without clearing the -3.0 meV material gate at 500K",
+      "K1's 500K ceiling is dominated by single-slot atom mixing rather than bond-level global coupling"
+    ],
+    "closed_families": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "positive_decision": "NOMINATE if muon_line_graph-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "negative_decision": "Close line-graph bond attention as a standalone K1 salvage lever if it fails the material gate.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device, single forward",
+    "estimated_device_hours": 24,
+    "estimated_wall_hours": 12,
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing original K1 against line-graph bond K1 from identical k1.pt initialization."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "muon_bn"
+    },
+    {
+      "arm_id": "muon_line_graph",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_line_graph_bond"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon_bn",
+    "target_manifest_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-k1-line-graph-bond-500k-20261118-s42",
+      "title": "MolGap K1 Line Graph Bond 500K 20261118 S42",
+      "datasets": [
+        "nothingnessvoid/k1-line-graph-bond-500k-20261118-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/k1-line-graph-bond-500k-20261118-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 156240
+    }
+  }
+}

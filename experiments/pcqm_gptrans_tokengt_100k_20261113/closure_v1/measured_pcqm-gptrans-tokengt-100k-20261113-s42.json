@@ -1,0 +1,47 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-norm-ema-100k-20261104-s42\\v1\\version1\\uniform_wd_multi_ema\\development_predictions.pt",
+      "sha256": "d537ffd9787297867397e2c0a930359cb4e9b58e1e80f8fbcb3850e1380945d0"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-tokengt-100k-20261113-s42\\v1\\tokengt\\development_predictions.pt",
+      "sha256": "d22e7428fe7a53cbed0d2f44ec19d5d95879cf2c589f8692fa65d63ae2624c4a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-tokengt-100k-20261113-s42\\v1\\reports\\analysis_summary.json",
+      "sha256": "d596f72c0479122a6fa13afb56a1deecd774956952a052f647a805a58596bbab"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": -67.77588612556457,
+    "ensemble_gain_meV": 0.6366809009551999,
+    "ensemble_mae_meV": 156.89447490632534,
+    "fit": null,
+    "m_meV": 67.77588612556458,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "tokengt",
+        "ci95": [
+          66.04034139382838,
+          69.43555457448959
+        ],
+        "delta": 67.77588612556458,
+        "n_bootstrap": 10000,
+        "probability_better": 0.0,
+        "reference": "uniform_wd_multi_ema",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "tokengt": 207.2160782045126,
+      "uniform_wd_multi_ema": 139.44019207894803
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

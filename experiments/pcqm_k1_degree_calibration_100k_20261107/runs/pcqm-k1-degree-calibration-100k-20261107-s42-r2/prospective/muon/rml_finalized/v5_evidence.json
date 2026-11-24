@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "6e6f414fa4ddea9261f82eaa5284279d4d07a2562485d9fc4c51d0c761a89407"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "4a0dc69fbc34fc4c706aae892ea99be3d7e2307922e2641e802f56ae3cf9e5fc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/muon/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "4a0dc69fbc34fc4c706aae892ea99be3d7e2307922e2641e802f56ae3cf9e5fc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/training_contract.json",
+      "name": "contract",
+      "sha256": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "812f0dbca119949e2c6074b030e4b1eef960dd902816d4161fb9c9ddf79e067e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "c5ee451a53e32f0fec2fbfe5c66a2a77eca53342f821756ce99606eaf2ec8397"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "8a1be51f5c742c83b332ee27baa3f9e7c38083d83d6a5500a5027b9e78e119cd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "2bdaba84d5a20312779b2329d5b8b8aa6f2532b8d47dc36eee70b59f05af2513"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "6ec948d61928036ee0af864e9a15e1e3441b266a48213d47502499499fb789c1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/muon/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "1477e67641cbbe25d54a7d9a3867afe64c4478692780e0179ff6747dab81f305"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/muon/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1325206676620245,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/f71d41776b76d8e4/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-0",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/f71d41776b76d8e4/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.5105298021077775
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:muon:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/f71d41776b76d8e4/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.8783690261491666
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:muon:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+    }
+  ]
+}

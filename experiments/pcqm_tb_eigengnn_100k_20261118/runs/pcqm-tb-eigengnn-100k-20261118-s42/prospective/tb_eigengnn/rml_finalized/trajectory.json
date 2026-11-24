@@ -1,0 +1,115 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-tb-eigengnn-100k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-planned",
+        "cost-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/tb_eigengnn/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-tb-eigengnn-100k-20261118-s42:tb_eigengnn:downstream"
+      ],
+      "source_commit": "1d4ea7db47d85def2af7c61b3088e61965c40d34",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-tb-eigengnn-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_tb_eigengnn_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/rml_decision_snapshots/870e73f5b649cf4dee1ed69cdd498bfd7fed66a8e6af7ceca0f607817f749d59.json",
+    "snapshot_sha256": "870e73f5b649cf4dee1ed69cdd498bfd7fed66a8e6af7ceca0f607817f749d59",
+    "state_timestamp": "2026-11-18T16:19:00+09:00"
+  },
+  "family_id": "pcqm-tb-eigengnn-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Explicit 5-orbital tight-binding spectral bottleneck loses spatial expressiveness vs 12-layer GPTrans-T",
+      "2D tight-binding Hamiltonian underfits without 3D distance modulation",
+      "Effect is below the 3 meV material gate"
+    ],
+    "changed_mechanism": "standalone-2d-tight-binding-5orb-hamiltonian-eigvalsh-fermiscope",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm (gptrans.pt) against standalone TB-EigenGNN under identical recipe and split.",
+    "decision_changed_if_negative": "Close this standalone TB-EigenGNN family without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn",
+    "observed_deficiency": "Standard message-passing and Transformer models predict HOMO-LUMO gap as a generic pooled scalar without explicitly diagonalizing a molecular orbital Hamiltonian or enforcing Fermi-level electron counting. Whether a differentiable 5-orbital tight-binding Hamiltonian with exact valence electron FermiScope readout improves 100K gap generalization over BondLocal+PairNorm GPTrans-T is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a standalone Pure-2D differentiable 5-orbital tight-binding Hamiltonian GNN (TB-EigenGNN) with FP32 eigvalsh and FermiScope readout improve matched 100K development MAE over the retained BondLocal+PairNorm GPTrans-T parent?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/tb_eigengnn/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/tb_eigengnn/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_tb_eigengnn_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_tb_eigengnn_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "tb_eigengnn",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-tb-eigengnn-100k-20261118-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "e8e40294d82bdfbf01bff879de5bc381f73cfd6dcbf5ed1c8b08f166c267b26f"
+    },
+    "source_commit": "1d4ea7db47d85def2af7c61b3088e61965c40d34",
+    "source_config_identity": "90c03bd9294e09af7d6a1e4ae39724f946aa2ca2ae585e5788200aff6a010533"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-tb_eigengnn"
+}

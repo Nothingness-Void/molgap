@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/hl_gauss_512/terminal_staging/v1/4b909818079a4eb9/acceptance.json",
+      "sha256": "4bb4fa24a8cfa9e06e5729e3fffa2d020b22431c8687c623ca89f7a460518311"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/hl_gauss_512/selected_model.pt",
+      "sha256": "50e8f4f237410e00822a47f18c936195980313d892e0bb49e27d2ad92be7d7cf"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/cost_records.json",
+      "sha256": "d8993aec3143615c56095489011fd32577d90c080a6fdacd8a217c738b13d6fa"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/decision.md",
+      "sha256": "fbe40cf397cc8ecd617b12bfbd4c99d8530b1503c384f5ae322f6b37a36ae12a"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/paired_analysis.json",
+      "sha256": "b4d02e5fcdbe39e7ac6b557c1de6c566d817e6a17731668181986f42adf219a2"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/prediction_manifest.json",
+      "sha256": "41a3a13a9d6b7169eb13731cca0d2d00c80a3cbc7fcd913e19e5cb404f84abd5"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/role_history.json",
+      "sha256": "b40d386d1a5a3cf920114be38840aed4fcb7fde18ce78618ef8a27ac0b353104"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/row_manifest.json",
+      "sha256": "1f2fce3c85c1b7f13455ec5b47c940091867df46fa4d6981cf48331ab8692cf4"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/hl_gauss_512/runtime_certificate.json",
+      "sha256": "ffef1b43153b06cb2463a234dbc8de15728b8709e6953e46c196d96d1f1ae4e8"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/hl_gauss_512/training_contract.json",
+      "sha256": "21a93d7451a8563471bc5841a8d34da677a92f244e925c1efe5dd5b727305246"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/comparison_assets/acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a/target_transform.json",
+      "sha256": "931ebb7d9942ce24c335a7a661874c832af4ec441a0e54bcc3d9bd41efeea3a6"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/hl_gauss_512/bound_trace_manifest.json",
+      "sha256": "5d38750ffecd8ec9dfcf4f5d0e05b5e81c06eac39ec25bc72edece8a42daf106"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "hl-gauss-512-bin-distributional-readout-cdf-median-decode",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-ema",
+    "data_role_identity": "375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d",
+    "evaluation_weight_source": "ema",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "69f5e97752e51a8d4f0ae8ff4fcd278f7e093c8810e8fbe785f8382c62f2bc35",
+    "optimizer_fused": false,
+    "optimizer_identity": "b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8",
+    "optimizer_mode": "foreach-adamw",
+    "optimizer_steps": 46860,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "c75011519274a52cd40b1610d8b967276fc8fcad5887ab4ca2b68969533ba539",
+    "sample_presentations": 5998080,
+    "schedule_identity": "5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0",
+    "seed": 42,
+    "selection_role_identity": "b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a",
+    "target_transform_identity": "75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b",
+    "tf32_enabled": false,
+    "weight_semantics": "ema"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "30c05e1ef7eba68108086151febdf958244c464c4538d5ea9e9ab7340ae018c7",
+      "reference": "7ec57d0b0d8986701aaae88b2a2008cf728dd3fd19875926c206e7ddb068b842"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/7bc441f1746edcc5/acceptance.json",
+      "sha256": "5b6e54eef517ecdbc3f97d6fc1a18261045a497e87b75ae529f6c48352ebc5aa"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/selected_model.pt",
+      "sha256": "b84508bcfeb0508f443f9ec18a795cd2cebae49eb42530d60fd0ef0ebe552518"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/cost_records.json",
+      "sha256": "b6d935f8f2b380cc46d1241b10531ae823faaea50bf26ffebe72cfb30e9e8ec1"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/decision.md",
+      "sha256": "fbe40cf397cc8ecd617b12bfbd4c99d8530b1503c384f5ae322f6b37a36ae12a"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/prediction_manifest.json",
+      "sha256": "8dc96a7dc1b63d0cb31d1c082a45074c0bb9709ce0951ab9831b00f62c32358d"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/role_history.json",
+      "sha256": "346d06d1277ebccc204905675235fdd80d94309299a8d62c7c374650696f4922"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/row_manifest.json",
+      "sha256": "1f2fce3c85c1b7f13455ec5b47c940091867df46fa4d6981cf48331ab8692cf4"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/runtime_certificate.json",
+      "sha256": "9b1f0a50b0a9bbd8602225edb8d226a7a70313fffc3948bdc573fba0153be602"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json",
+      "sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/comparison_assets/acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a/target_transform.json",
+      "sha256": "931ebb7d9942ce24c335a7a661874c832af4ec441a0e54bcc3d9bd41efeea3a6"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/strict_qualification/b6bd6bad19e3f5075e70/pair_update_norm/bound_trace_manifest.json",
+      "sha256": "73098b3625836ab648a61f6b110ab24eb53ba2953cebf68781df999a84eb6e2d"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm-b6bd6bad19e3f5075e70",
+  "reference_bundle_sha256": "7185d27b306e1248d323eee474b28e6f9fe6d7de233a7588d9e112cc4c3fc495",
+  "reference_id": "ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

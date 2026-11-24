@@ -1,0 +1,44 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-graph-rms-muon-500k-20261117-s42:muon_graph_rms:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+    "facts": {
+      "ci_meV": [
+        2.139911138176918,
+        3.369149134993553
+      ],
+      "effect_meV": 2.7669811391830446,
+      "failure_mode": "endpoint_regression",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "graph-rms-norm",
+        "batchnorm-free",
+        "muon",
+        "500k",
+        "negative"
+      ],
+      "source": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/closure_v1/measured_pcqm-k1-graph-rms-muon-500k-20261117-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

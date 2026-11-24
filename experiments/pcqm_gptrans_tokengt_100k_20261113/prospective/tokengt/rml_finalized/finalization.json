@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-380d7c0f11b724f36decfbe1a160f817c04d0705f4b0984f6410e44205508434",
+  "finalized_at": "2026-11-13T13:54:05.828842+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/closure_v1/closure_facts_tokengt.json": "508899d7a52c9d1ced59e061b58f6de5b8fa6553ef625aecdcfc8c992e146eee",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/closure_v1/roles_tokengt.json": "5ffa937a0241493967fd5074391467338b9319a637ea4aa252084fdee223b7d4",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/decision.md": "eb2cafb701d8d88a3c90058a1f62d5d9730b125c107e5461c387dd866cb5ef5b",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/acceptance.json": "d1d4304e033626b2e1f135e7d0ebb9d511315cf6f89796d95dbf2c8fede76e28",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/observed.json": "56f70d40a29fcc076cf5e5b3d8f3c4a0cac6490a11fcc9550cce44075e101cd2",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/runs/pcqm-gptrans-tokengt-100k-20261113-s42/reports/terminal_diagnostic_e563232409537614.json": "17284b4e207267d310a0779fd955d3ab222836ce9ddb58e8b04fb6263219c273",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/canonical_trace.json": "66512237c8a5cb3f3b243deccc6ca17ef55e1cbbfa020c00150f5830739f121a",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/canonical_trace.json.context.json": "60f4211a077e1cabdda7c8f236205cc95269aefb769222e03bd33eb68c767e13",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/data_open_provenance.json": "718af3f45b813278a639360a74ff4c5ea2db29b1e8dc7006ccd026af4af9cfc4",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/development_predictions.pt": "d22e7428fe7a53cbed0d2f44ec19d5d95879cf2c589f8692fa65d63ae2624c4a",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/last_checkpoint.pt": "f3afbd30f3fb4a58a3997abd2d1a472fe8532f0202eceb4970935f54eb56096b",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/output_manifest.json": "e501e9ece9186ab0f93ebf9db9a8be333fc9b38438596e341b3cfc3c15610662",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/selected_model.pt": "2dee80d2d913ef6806c05cd5600fbb9a6a15a9d8dd0d254c599e772ab28fd2f9",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/training_contract.json": "85a9eecf52603b41e30e89e5bd2a0e60b22a7673848032e23df4d7a47b8680f4"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/trajectory.json",
+  "prospective_sha256": "970d4af5281488632c50e09b5a3607fbc90a42f15af016ea1251aad19121a7b2",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-0.json": "d555c04cf7254fa2f60d1c6861a07465852d21e287107495796d8c45939a2b75",
+    "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-labels_read.json": "52ed7cbad493f036a5f6213ad2d9dee51b817a3ef55c9b827d68ecba491ab7d7",
+    "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-metric_computed.json": "c66d0b898b5f6eca2dcc1ffe1cd2cc260aa474b95f4e1f5a61fbfc4b486dde8e",
+    "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-prediction_input.json": "e14945159312f8f50078af86622d0dfdd78446d871e3cf17b4cc82337580d20b",
+    "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-selection_used.json": "8f1c03bb7d3625b57235a747da9bcbc3ee2b2d6dfb5acbb070b08b73fff504e8",
+    "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-train-training_membership.json": "5bfb9fe586b8d50cd5b4a2d30063867496a7008a6137b5711f9b13fa3601c916",
+    "terminal_input.json": "d5e34e98fc71c52ecc7ac1470f1b1b7a64d63e16039d6d51b87b0626e2333776",
+    "trace.json": "66512237c8a5cb3f3b243deccc6ca17ef55e1cbbfa020c00150f5830739f121a",
+    "trace_manifest.json": "9b78609fadb374c99c5b6d18142f03d9f601ee76e1c24962bf8672a3a8f0566d",
+    "trajectory.json": "12162eaf9c0cee2cc5ce9fd64a4b3b46d0075db241a83fee56a5c039779a8dfd",
+    "v5_evidence.json": "76358dd15a318dbe588ac6491ca01b82284883919cd64fc2f4164a220de68547"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "380d7c0f11b724f36decfbe1a160f817c04d0705f4b0984f6410e44205508434",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+}

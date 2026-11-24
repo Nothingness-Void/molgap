@@ -1,0 +1,100 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_ec_gate_100k_20261106",
+  "logical_run_id": "pcqm-k1-ec-gate-100k-20261106-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-06T11:55:10.984580+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-ec-gate-100k-20261106",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does directed expansion contribution improve K1 plus Muon versus a matched source-degree-guided residual gate?",
+    "deficiency": "K1 already gates messages and uses RWSE/global slots; missing useful directed expansion routing has not been established.",
+    "changed_mechanism": "early-directed-expansion-versus-source-degree-message-gate",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "Degree guidance is sufficient",
+      "Early expansion is constant or empty on molecular graphs",
+      "Extra gating damages already gated messages",
+      "Early fitting gains fail to survive the frozen horizon"
+    ],
+    "closed_families": [
+      "pcqm-k1-hop-shell-100k",
+      "k1-ssma",
+      "pcqm-k1-extremal-readout-100k",
+      "node-query-linear-global-exchange"
+    ],
+    "positive_decision": "Nominate only candidate-control gain>=3meV,paired95percent upper<0,negative final and last-five deltas,strict qualification. No automatic500K.",
+    "negative_decision": "Close the exact pair without blind gate/layer/seed grids,automatic retries or scale-up."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4,
+    "cheapest_falsifier": "Inspect1024 evenly spaced train graphs on CPU for informative early EC and processing cost before training; one matched40-pass pair only if the predeclared viability checks pass."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "degree_gate",
+      "expansion_gate"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "degree_gate",
+    "allocated_t4_hours_ceiling": 10,
+    "allocation_wall_limit_seconds": 18000,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized Kaggle3 paper-inspired submissions and autonomous decisions without further approval on2026-11-06.",
+    "scope": "One fresh100K40-pass pair,one worker per T4,plus training-topology-only CPU diagnosis and existing synthetic/native qualification. No existing-baseline retraining,protected roles,existing-job modifications,automatic successors or500K/full release. Maximum5h allocation wall/10T4-device-hours."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/data_declaration.json",
+      "arm_id": "post_bn"
+    }
+  },
+  "arms": [
+    {
+      "arm_id": "degree_gate",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_ec_degree_gate"
+        ]
+      }
+    },
+    {
+      "arm_id": "expansion_gate",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_ec_expansion_gate"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "degree_gate",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

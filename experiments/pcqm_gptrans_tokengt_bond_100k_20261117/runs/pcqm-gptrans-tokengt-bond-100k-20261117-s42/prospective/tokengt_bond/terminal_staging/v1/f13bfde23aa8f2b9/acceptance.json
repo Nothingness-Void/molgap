@@ -1,0 +1,38 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-tokengt-bond-100k-20261117-s42:tokengt_bond:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/decision.md",
+    "facts": {
+      "ci_meV": [
+        0.28076262044906614,
+        2.1739504995346066
+      ],
+      "effect_meV": 1.236065845489502,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/closure_v1/measured_pcqm-gptrans-tokengt-bond-100k-20261117-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

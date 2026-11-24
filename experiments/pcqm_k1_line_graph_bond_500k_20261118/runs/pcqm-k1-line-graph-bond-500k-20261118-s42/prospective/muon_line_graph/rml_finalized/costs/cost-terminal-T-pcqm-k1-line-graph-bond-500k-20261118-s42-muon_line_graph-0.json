@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-line-graph-bond-500k-20261118-s42-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-0",
+  "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_line_graph/terminal_staging/v1/c562703ef3ffae74/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 8.599201824130834
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+}

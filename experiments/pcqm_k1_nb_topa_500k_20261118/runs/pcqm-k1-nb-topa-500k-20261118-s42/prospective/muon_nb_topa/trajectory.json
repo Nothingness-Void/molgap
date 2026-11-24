@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-nb-topa-500k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_nb_topa/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-nb-topa-500k-20261118-s42:muon_nb_topa:downstream"
+      ],
+      "source_commit": "f43252c0546a837fdcc3d3577dbe2be1d9dcbde4",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-k1-nb-topa-500k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_nb_topa_500k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/rml_decision_snapshots/749714066b63424d148e723a4e8f0e87b1a0a1fb07c7b19b3976c0bb857fc963.json",
+    "snapshot_sha256": "749714066b63424d148e723a4e8f0e87b1a0a1fb07c7b19b3976c0bb857fc963",
+    "state_timestamp": "2026-11-18T01:20:00+09:00"
+  },
+  "family_id": "pcqm-k1-nb-topa-500k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "K1's 500K ceiling is not relieved by non-backtracking bond flow or cross-head local transport",
+      "Added local/edge capacity improves early passes without passing the 3 meV terminal gate"
+    ],
+    "changed_mechanism": "wrap-edge-updates-with-o-e-non-backtracking-flow-and-local-blocks-with-8x8-zero-diag-topa-transport",
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing 18-BN K1 against NB+TopA K1 from identical k1.pt initialization.",
+    "decision_changed_if_negative": "Close NB+TopA K1 rescue if it fails the material gate.",
+    "decision_changed_if_positive": "NOMINATE if muon_nb_topa-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa",
+    "observed_deficiency": "Standard K1 edge updates lack directed non-backtracking path flow, and GINE local aggregation lacks edge-conditioned cross-head transport.",
+    "related_closed_family_ids": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does adding O(|E|) non-backtracking directed bond flow and lightweight 8x8 zero-diagonal cross-head Top-A transport to 18-BN K1 reduce 500K 60-pass development MAE under batched FP32 Muon?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_nb_topa/recipe.json",
+      "experiments/pcqm_k1_nb_topa_500k_20261118/data_declaration.json",
+      "experiments/pcqm_k1_nb_topa_500k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_nb_topa_500k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon_nb_topa",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-nb-topa-500k-20261118-s42",
+      "reference_arm_id": "muon_bn",
+      "reference_trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn",
+      "reference_trajectory_ref": "experiments/pcqm_k1_nb_topa_500k_20261118/runs/pcqm-k1-nb-topa-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "e1e1ec493607a688bcb561a71f373e3a7d281307e43d75ad465ced67c80a4e44"
+    },
+    "source_commit": "f43252c0546a837fdcc3d3577dbe2be1d9dcbde4",
+    "source_config_identity": "e02ad59b98e932cfbb13813d67055ca1c9875ac1d104d1b5c7d5d7d139701731"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa"
+}

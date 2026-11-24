@@ -1,0 +1,99 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+      "name": "protocol.md",
+      "sha256": "6d06e7a410e3656dce0d61998b6c80817953e50bf44bbd2e17216b0ce3d98e78"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/probe_delta_gap.py",
+      "name": "probe_delta_gap.py",
+      "sha256": "5c82566be150536da4745820580de1feb4d614c67a4cbe6249b57cd2a312c8b0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+      "name": "results.json",
+      "sha256": "91e9d1dd8e66ed356d6c715b03bd49fa2589d84c5de7b0306d3848e07bc95319"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md",
+      "name": "decision.md",
+      "sha256": "53e5ec2c2a8a91ea2da6f39fe775ec3d34f2a386925ab7fcead7b6a4947f2b9b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "964c9f423adb25abfb9268aaaf29c251ad2686c127d42cecd2de0ff1eafc5fde"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage1_real_pairs.npz",
+      "name": "stage1_real_pairs.npz",
+      "sha256": "d5dd5dcbc24f1dc2800ecd09d15ab9b272b320a00ad3ae0d2cecfd9aadc290ff"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage2_predictions.npz",
+      "name": "stage2_predictions.npz",
+      "sha256": "099a60a02b674cb937b07971d121263932321506cd4996303c3636e0797465d7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/diagnostics/pcqm-delta-gap-mmp-diag-20261124/local_rtx5060/stage3_rewiring.npz",
+      "name": "stage3_rewiring.npz",
+      "sha256": "9c8fb1a5b6a2668c0837596000d831ab47f12d6bfde35265c3903895a2a23cc1"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/acceptance.json",
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-delta-gap-mmp-diag-20261124",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-delta-gap-mmp-diag-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Terminal metadata closure of completed local diagnostic; no new execution in closure."
+  },
+  "observed_execution": {
+    "backbone_training": false,
+    "execution_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json",
+    "inference_executed": true,
+    "postprocessor_fit": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_training_released_2slots_4arms_untouched",
+    "comparison_status": "paired_rows_balanced_rewiring_context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE_DO_NOT_TRAIN",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "common": "untouched",
+    "dev_50k_ema60_replay": "consumed",
+    "dev_replay_128": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "scoring_block_shards_58_61_minus_fit_idx": "consumed",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-delta-gap-mmp-diag-20261124",
+  "track": "B"
+}

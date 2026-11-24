@@ -1,0 +1,129 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_real_tri_late3_100k_20261118",
+  "logical_run_id": "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-18T13:00:00+09:00",
+  "role_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does pruning the asymmetric low-rank real-atom triangle multiplicative pair update to mid-late layers 6, 8, and 10 only reduce late-horizon overfitting and improve matched 100K development MAE on the accepted BondLocal+PairNorm GPTrans-T parent?",
+    "deficiency": "Five-layer real-atom triangle updates at layers 2, 4, 6, 8, and 10 improved 100K development MAE by -1.667 meV at +19.4% wall overhead, but early gains faded in late training. Whether restricting triangle contraction to mid-late layers 6, 8, and 10 after local bond context matures prevents premature contraction overfitting and lowers wall overhead to ~1.116x is unmeasured.",
+    "changed_mechanism": "gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Early triangle contraction at layers 2 and 4 is helpful rather than premature",
+      "Mid-late 3-layer triangle contraction adds pair capacity without clearing the 3 meV gate",
+      "Effect is indistinguishable from zero"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "positive_decision": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "negative_decision": "Close this mid-late 3-layer real-atom triangle pair intervention without hyperparameter grids or automatic retries.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7.02,
+    "estimated_wall_hours": 3.51,
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealTriLate3 from identical gptrans.pt initialization."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "kaseichou",
+    "arms": [
+      "pair_update_norm",
+      "real_tri_late3"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pair_update_norm",
+    "allocated_t4_hours_ceiling": 9,
+    "user_notebook_wall_ceiling_seconds": 16200,
+    "allocation_wall_limit_seconds": 16200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User explicitly requested 100K mid-late 3-layer real-atom triangle pair experiment submitted to Kaggle on 2026-11-18.",
+    "scope": "One 100K 60-pass T4x2 paired run on kaseichou; train and internal development only; no protected roles or automatic scale-up."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-gptrans-real-tri-late3-100k-20261118-s42",
+      "title": "MolGap GPTrans Real Tri Late3 100K 20261118 S42",
+      "datasets": [
+        "kaseichou/gptrans-real-tri-late3-100k-20261118-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "kaseichou/gptrans-real-tri-late3-100k-20261118-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 16200,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pair_update_norm"
+    },
+    {
+      "arm_id": "real_tri_late3",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_real_tri_late3"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pair_update_norm",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

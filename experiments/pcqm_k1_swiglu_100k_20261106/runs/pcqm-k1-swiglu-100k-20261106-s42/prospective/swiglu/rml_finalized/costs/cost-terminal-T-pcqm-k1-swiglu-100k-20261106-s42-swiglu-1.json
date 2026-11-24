@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "swiglu-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-1",
+  "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/a865998aae14d14d/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.9570111836616666
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+}

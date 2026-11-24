@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 7.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.75
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm"
+}

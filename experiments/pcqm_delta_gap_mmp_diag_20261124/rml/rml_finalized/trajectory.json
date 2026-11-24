@@ -1,0 +1,139 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "diag-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-delta-gap-mmp-diag-20261124-expected",
+        "cost-dgap-stage1-mmp",
+        "cost-dgap-stage2-inference",
+        "cost-dgap-stage3-rewire",
+        "cost-dgap-stage4-score"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-delta-gap-mmp-diag-20261124"
+      ],
+      "source_commit": "ce9f3fe4c024d49eeebd28d8184d3d59a52077c1",
+      "type": "RUN_DELTA_GAP_MMP_DIAG"
+    }
+  ],
+  "comparison_blockers": [
+    "Zero-training matched-molecular-pair DeltaGap recovery diagnostic on fixed 500K EMA@60 checkpoints; releases no model training or promotion."
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/decision.md",
+    "facts": {
+      "ci_meV": [
+        -1.2095016185063234,
+        -0.7320269568970744
+      ],
+      "effect_meV": -0.967146647767338,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "delta gap",
+        "mmp",
+        "single-point substitution",
+        "rewiring control",
+        "pairnorm 500k",
+        "ema60",
+        "series cluster",
+        "no train"
+      ],
+      "source": "experiments/pcqm_delta_gap_mmp_diag_20261124/results.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Only under a new prospective protocol targeting a distinct error structure (e.g., common-series bias or explicit activity-cliff subsets) rather than generic 1-cut MMP DeltaGap recovery."
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DELTA_GAP_MMP_DIAG",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+    "chosen_action": "RUN_DELTA_GAP_MMP_DIAG",
+    "policy_id": "pcqm-delta-gap-mmp-diag",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/rml_decision_snapshots/d4950b87551e977f2b9cf1e399beeb3e0802c17e1dc1810862dcf92f24b53c0e.json",
+    "snapshot_sha256": "d4950b87551e977f2b9cf1e399beeb3e0802c17e1dc1810862dcf92f24b53c0e",
+    "state_timestamp": "2026-11-24T02:34:00+09:00"
+  },
+  "family_id": "pcqm-delta-gap-mmp-diag",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Whole-block recoverable MAE comes purely from generic scaffold/size/similarity/delta-Gap matching and fails to beat the balanced non-MMP rewiring control",
+      "Single-point substitution DeltaGap errors contribute < 3.0 meV of whole-block MAE on fixed 500K EMA@60 checkpoints"
+    ],
+    "changed_mechanism": "No training: evaluate deterministic EMA@60 whole-block recoverable MAE from true single-point substitution DeltaGap vs covariate-balanced non-MMP rewiring on untouched shards 58-61 \\ fit_idx.",
+    "cheapest_falsifier": "One short Kaggle2 T4 forward-pass + GPU Top-K / 2-opt rewiring run on frozen 500K s43/s44 EMA@60 over untouched 190,450 rows (N=190,450).",
+    "decision_changed_if_negative": "Stop the signed DeltaGap auxiliary loss route without consuming training slots.",
+    "decision_changed_if_positive": "Design a separate training protocol with prospective RML on Kaggle2 (training decision metric remains whole-dataset absolute Gap MAE).",
+    "expected_native_cost_ref": "cost-TB-pcqm-delta-gap-mmp-diag-20261124-expected",
+    "hypothesis_id": "H-TB-pcqm-delta-gap-mmp-diag-20261124",
+    "observed_deficiency": "Post-hoc 2D residual correctors fail cross-block transfer; unclear whether local single-point substitution DeltaGap errors cause >= 3 meV whole-block absolute Gap MAE.",
+    "related_closed_family_ids": [
+      "pcqm-residual-spread-fit",
+      "pcqm-c3-checkpoint-space",
+      "pcqm-pairnorm-residual-2d-p0"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-residual-spread-fit-20261123",
+      "pcqm-c3-checkpoint-space-20261123",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does mispredicting single-point substitution DeltaGap on fixed 500K GPTrans-T PairNorm EMA@60 contribute >= 3.0 meV whole-block recoverable MAE above a covariate-balanced non-MMP rewiring control?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-delta-gap-mmp-diag-20261124"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md",
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/probe_delta_gap.py"
+    ],
+    "parent_trajectory_ids": [
+      "TB-pcqm-residual-spread-fit",
+      "TB-pcqm-c3-checkpoint-space"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-residual-spread-fit-20261123",
+      "pcqm-c3-checkpoint-space-20261123",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_delta_gap_mmp_diag_20261124/protocol.md"
+    ],
+    "source_commit": "ce9f3fe4c024d49eeebd28d8184d3d59a52077c1",
+    "source_config_identity": "6d06e7a410e3656dce0d61998b6c80817953e50bf44bbd2e17216b0ce3d98e78"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-delta-gap-mmp-diag-20261124"
+}

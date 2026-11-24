@@ -1,0 +1,99 @@
+{
+  "context": {
+    "experiment_id": "pcqm_k1_line_graph_bond_500k_20261118",
+    "logical_run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42",
+    "arm_id": "muon_line_graph",
+    "arm_identity": "49b182d94b6826941c368e1c07f7962bc6a0dca6709333d07f893bf929e88c9d",
+    "spec_identity": "6000158ac236cda4c82b6c7db9f298b9d98452d805596de7f0a1dda8c0f4ffe7",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "b6ce4c01c2ff8072c5b4c671375fb5725465697b",
+    "source_archive_sha256": "2954c1b69ef9aee77039f7b0b1ec70e02db5e9a6f4315fdda8828c218ee07720",
+    "package_identity": "cfc0561013a37fbb945035a6725a1bc56e836c4a523ccd0184f548f732c79613",
+    "training_recipe_sha256": "8679cd4b4d805f79fc260e8626becd7c89f9f617c1fd8eae329844094dccf318",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-line-graph-bond-500k-20261118-s42",
+    "platform_version": "1"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-train-training_membership",
+      "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-prediction_input",
+      "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-labels_read",
+      "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-metric_computed",
+      "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-selection_used",
+      "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json"
+    }
+  ],
+  "protected_role_evidence": {
+    "status": "untouched",
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "6163a6de73f8aa5dcee08a470453e8a84c4a0114f08916d9df50ab84f3eadbf9"
+    },
+    "text": "Hash-bound record data_open_provenance.json (sha256 6163a6de73f8aa5dcee08a470453e8a84c4a0114f08916d9df50ab84f3eadbf9, listed in output_manifest.json) shows the frozen training process opened 11 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  }
+}

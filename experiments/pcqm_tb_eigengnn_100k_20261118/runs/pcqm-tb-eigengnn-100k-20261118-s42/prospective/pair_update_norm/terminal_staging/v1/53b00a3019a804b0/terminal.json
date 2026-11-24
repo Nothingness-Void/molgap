@@ -1,0 +1,211 @@
+{
+  "acceptance_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json": "4f15282e88c5d2eb801c0abe4e8747a90bdd924c0fb26b1f29aa8364b158c903",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md": "e5b3918e94891c5c6962958be317b05f4daa58c6387a85a6e470e3f6b0462c5c",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/authority.json": "f56e2dfd1d8f9fd878aa15bf91b9b73946f27b2c1b7ab307faa93d0015a07d7a",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/pair_update_norm/recipe.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/acceptance.json": "34ff3103b8011a9a218e57957611c2df8412b6f290f834221501828e149eb685",
+    "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/observed.json": "41bc5fa119c500695df53a8bd1696daee06e1aa2cf06fcc4f40ba4d5201cbdb1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json": "1bf165318c68f619f6aef04d2d93376c86f2e06138f508699ca7b38f76a708c1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json": "61687873c421f4f86d3baeb23284769b37325fb4e4db37c10b5b97f4df967500",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json": "872e43ff61393ce125033c1ce406bcb91ed9f7bbde44753a24ae1e444790e99f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-tb-eigengnn-100k-20261118-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-0",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.626528057051945
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json",
+        "name": "contract",
+        "sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "872e43ff61393ce125033c1ce406bcb91ed9f7bbde44753a24ae1e444790e99f"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "1bf165318c68f619f6aef04d2d93376c86f2e06138f508699ca7b38f76a708c1"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-tb-eigengnn-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "61687873c421f4f86d3baeb23284769b37325fb4e4db37c10b5b97f4df967500"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_tb_eigengnn_100k_20261118/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_tb_eigengnn_100k_20261118/generated/aaca6351894015da53a0aa0e79f4fbd7b3746ebaa3e879b4cc92cfa637e8fd10/pair_update_norm/recipe.json",
+    "metrics": {
+      "development_mae_eV": null,
+      "missing_reason": "Development metric not observed",
+      "selected_optimizer_step": null,
+      "selected_weights": null,
+      "source_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/runs/pcqm-tb-eigengnn-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/53b00a3019a804b0/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "partial",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "PAUSED",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "STOP_FOR_COST",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-18T13:10:39.868471+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "STOP_FOR_COST",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_tb_eigengnn_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+    }
+  ],
+  "run_id": "pcqm-tb-eigengnn-100k-20261118-s42:pair_update_norm:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-tb-eigengnn-100k-20261118-s42-v1",
+    "logical_run_id": "pcqm-tb-eigengnn-100k-20261118-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-tb-eigengnn-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "1d4ea7db47d85def2af7c61b3088e61965c40d34",
+    "source_package_sha256": "8dd8c321330fc9ed717d65205481cc3f5e84e3d8e58b71bf57ad9b083d37456e",
+    "spec_identity": "e8e40294d82bdfbf01bff879de5bc381f73cfd6dcbf5ed1c8b08f166c267b26f"
+  },
+  "trajectory_id": "T-pcqm-tb-eigengnn-100k-20261118-s42-pair_update_norm"
+}

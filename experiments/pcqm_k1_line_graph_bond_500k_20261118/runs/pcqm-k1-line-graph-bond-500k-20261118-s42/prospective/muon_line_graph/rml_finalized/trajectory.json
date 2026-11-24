@@ -1,0 +1,115 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-line-graph-bond-500k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-planned",
+        "cost-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_line_graph_bond_500k_20261118/generated/85f740a706e14b1a764a534b2577bab7cba65871ea4b460dc2dc6dfb19c436b4/muon_line_graph/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream"
+      ],
+      "source_commit": "b6ce4c01c2ff8072c5b4c671375fb5725465697b",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-k1-line-graph-bond-500k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/rml_decision_snapshots/f9f308c018b285dec85276717d881aa934442a86bc400273df5067320379e545.json",
+    "snapshot_sha256": "f9f308c018b285dec85276717d881aa934442a86bc400273df5067320379e545",
+    "state_timestamp": "2026-11-18T01:20:00+09:00"
+  },
+  "family_id": "pcqm-k1-line-graph-bond-500k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Long-range bond-to-bond attention adds capacity without clearing the -3.0 meV material gate at 500K",
+      "K1's 500K ceiling is dominated by single-slot atom mixing rather than bond-level global coupling"
+    ],
+    "changed_mechanism": "undirected-line-graph-global-mha-at-edge-updates-2-5-8-and-bond-aware-head",
+    "cheapest_falsifier": "One same-job 500K 60-pass T4x2 pair under identical batched FP32 Muon comparing original K1 against line-graph bond K1 from identical k1.pt initialization.",
+    "decision_changed_if_negative": "Close line-graph bond attention as a standalone K1 salvage lever if it fails the material gate.",
+    "decision_changed_if_positive": "NOMINATE if muon_line_graph-minus-muon_bn selected Live MAE <= -3.0 meV and paired 95% bootstrap CI upper < 0 under strict acceptance; no automatic full-scale run.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph",
+    "observed_deficiency": "K1 only exchanges bond-level state locally through atom message passing and discards persistent bond representations at graph readout, limiting long-range conjugated bond coupling.",
+    "related_closed_family_ids": [
+      "muon-500k",
+      "read-batched",
+      "k1-post-node-ada"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does adding undirected chemical-bond line-graph global multi-head self-attention at edge_updates.{2,5,8} plus bond-aware joint readout reduce 500K 60-pass internal development MAE over muon_bn under batched FP32 Muon?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_line_graph/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/generated/85f740a706e14b1a764a534b2577bab7cba65871ea4b460dc2dc6dfb19c436b4/muon_line_graph/recipe.json",
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/data_declaration.json",
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_line_graph_bond_500k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon_line_graph",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42",
+      "reference_arm_id": "muon_bn",
+      "reference_trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_bn",
+      "reference_trajectory_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_bn/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "6000158ac236cda4c82b6c7db9f298b9d98452d805596de7f0a1dda8c0f4ffe7"
+    },
+    "source_commit": "b6ce4c01c2ff8072c5b4c671375fb5725465697b",
+    "source_config_identity": "49b182d94b6826941c368e1c07f7962bc6a0dca6709333d07f893bf929e88c9d"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+}

@@ -1,0 +1,129 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_tokengt_bond_100k_20261117",
+  "logical_run_id": "pcqm-gptrans-tokengt-bond-100k-20261117-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-17T03:20:00+09:00",
+  "role_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_tokengt_bond_100k_20261117/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-tokengt-bond-100k-20261117",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does adding an explicit undirected bond-token global attention mixer with QK-Norm, sigmoid output gating, and exact atom-bond incidence bias at layers 3/6/9/12 improve matched 100K development MAE on the accepted BondLocal+PairNorm GPTrans-T parent?",
+    "deficiency": "Standalone Chebyshev TokenGT without GPTrans-T shortest-path distance and pair state underfit severely (+67.8 meV). Whether explicit first-class bond tokens participating in stabilized global self-attention with atom tokens improve over the retained BondLocal+PairNorm GPTrans-T parent under strict same-job initialization parity is unmeasured.",
+    "changed_mechanism": "tokengt-explicit-bond-token-incidence-qk-norm-gated-attention",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Pair state already captures bond-bond interactions",
+      "Bond-token attention adds capacity without improving generalization",
+      "Effect is below the 3 meV material gate"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "positive_decision": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "negative_decision": "Close this TokenGT bond-token intervention without hyperparameter grids or automatic retries.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7.5,
+    "estimated_wall_hours": 3.75,
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+TokenGTBondMixer from identical gptrans.pt initialization."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "pair_update_norm",
+      "tokengt_bond"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pair_update_norm",
+    "allocated_t4_hours_ceiling": 9,
+    "user_notebook_wall_ceiling_seconds": 16200,
+    "allocation_wall_limit_seconds": 16200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User explicitly requested 100K TokenGT debut experiment submitted to Kaggle on 2026-11-17.",
+    "scope": "One 100K 60-pass T4x2 paired run on nothingnessvoid; train and internal development only; no protected roles or automatic scale-up."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-gptrans-tokengt-bond-100k-20261117-s42",
+      "title": "MolGap GPTrans TokenGT Bond 100K 20261117 S42",
+      "datasets": [
+        "nothingnessvoid/molgap-gptrans-tokengt-bond-100k-20261117-s42-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "nothingnessvoid/molgap-gptrans-tokengt-bond-100k-20261117-s42-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 16200,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pair_update_norm"
+    },
+    {
+      "arm_id": "tokengt_bond",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_tokengt_bond_token"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pair_update_norm",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

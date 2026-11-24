@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "muon_bn": {
+      "decision_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+      "facts_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/closure_v1/closure_facts_muon_bn.json",
+      "outcome": "CLOSED"
+    },
+    "muon_graph_rms": {
+      "decision_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/decision.md",
+      "facts_ref": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/closure_v1/closure_facts_muon_graph_rms.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    }
+  },
+  "role_audit": "experiments/pcqm_k1_graph_rms_muon_500k_20261117/closure_v1/audit_map.json"
+}

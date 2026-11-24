@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-grit-spse-100k-20261118-r2-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/grit_spse/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream"
+      ],
+      "source_commit": "0d61c96290db90007a472890355a711cb748eece",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_grit_spse_100k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-grit-spse-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_grit_spse_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/rml_decision_snapshots/85367eabb7ff1bd07239887a3a4e7e147ed9259843f5bd78ba885ae2d19a7da6.json",
+    "snapshot_sha256": "85367eabb7ff1bd07239887a3a4e7e147ed9259843f5bd78ba885ae2d19a7da6",
+    "state_timestamp": "2026-11-18T21:00:00+09:00"
+  },
+  "family_id": "pcqm-grit-spse-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "GRIT SignedSqrt edge-vector attention + RRWP + SPSE does not clear the -3.0 meV material gate over GPTrans-T at 100K",
+      "Additional pair/edge tensor capacity overfits at 100K or exceeds T4 wall budget"
+    ],
+    "changed_mechanism": "pure-2d-grit-spse-rrwp-signed-sqrt-ads-swiglu",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm GPTrans-T against Pure-2D GRIT-SPSE.",
+    "decision_changed_if_negative": "Close GRIT-SPSE under contract without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for grit_spse - pair_update_norm selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
+    "observed_deficiency": "GPTrans-T relies on dot-product attention with shortest-path distance bias and 1D outer-product pair updates, without explicit random-walk return/transition probabilities (RRWP), simple-path/cycle structural encodings (SPSE), signed-sqrt edge-vector attention, or adaptive degree scaling.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a 100% Pure-2D GRIT-SPSE Graph Transformer (CPU SPSE 3..8-step walk/cycle counts, P^1..P^16 RRWP pairwise bias, Bahdanau SignedSqrt edge-vector attention, Adaptive Degree Scaler ADS, and Pre-LN SwiGLU) outperform the retained BondLocal+PairNorm GPTrans-T parent on matched 100K development MAE?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_grit_spse_100k_20261118/generated/27abba2dbd70e4ada60334a40e15784ee0c093aa6da0629f91d47493079c11fe/grit_spse/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_grit_spse_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_grit_spse_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "grit_spse",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-grit-spse-100k-20261118-r2-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_grit_spse_100k_20261118/runs/pcqm-grit-spse-100k-20261118-r2-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "cc5c216d99517de62b2999bfc6bf116fa2ba938ddb833d65e9a3760666218faf"
+    },
+    "source_commit": "0d61c96290db90007a472890355a711cb748eece",
+    "source_config_identity": "0d45364e70bb1d1cdf9950579d55b80704e853172211ac8672e2a73bb8ae4e5e"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse"
+}

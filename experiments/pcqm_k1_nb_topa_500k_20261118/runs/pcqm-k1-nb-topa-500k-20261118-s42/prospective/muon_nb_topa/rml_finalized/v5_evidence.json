@@ -1,0 +1,74 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_nb_topa/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "cfd048e7673e7f8a7b8c69fcf878e19807d5571ef3ba3c6695d28a564c65e9b1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_nb_topa/pause_receipt.json",
+      "name": "pause_receipt",
+      "sha256": "ac9abf6814ae88aa827d011604e85ae66459d13dd4c853418ba70a5c69c1fa3c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_nb_topa/invocation_cost_state.json",
+      "name": "invocation_cost_state",
+      "sha256": "6ab551ad34c1e6de9d12378d2ac23345f603c72cb9c3d9bb945d911b21bf1a4a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_nb_topa/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "6b7ae5a9fd4fc371e85427b897be72a43512c44266d002e6c6f8ee25dabaa84a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-nb-topa-500k-20261118-s42/v1/version1/muon_nb_topa/data_open_provenance.json",
+      "name": "data_open_provenance",
+      "sha256": "9239d16f8b5a5500c1c4d345c4176db70690cad14929243bea4dc5ca6bac89b0"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_nb_topa_500k_20261118/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_nb_topa_500k_20261118/generated/a94d1fbf547016fc059e025b836d52ef60f0e1818c5fb265ebca8c53b8a67f85/muon_nb_topa/recipe.json",
+  "metrics": {
+    "development_mae_eV": null,
+    "missing_reason": "paused_stop_for_cost",
+    "selected_optimizer_step": null,
+    "selected_weights": null,
+    "source_ref": null,
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained paused outputs and explicit STOP_FOR_COST decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "STOP_FOR_COST",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "STOP_FOR_COST",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

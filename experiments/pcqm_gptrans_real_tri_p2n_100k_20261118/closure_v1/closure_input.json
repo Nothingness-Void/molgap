@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "pair_update_norm": {
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/closure_v1/closure_facts_pair_update_norm.json",
+      "outcome": "CLOSED"
+    },
+    "real_tri_p2n": {
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/closure_v1/closure_facts_real_tri_p2n.json",
+      "outcome": "POSITIVE_BELOW_GATE"
+    }
+  },
+  "role_audit": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/closure_v1/audit_map.json"
+}

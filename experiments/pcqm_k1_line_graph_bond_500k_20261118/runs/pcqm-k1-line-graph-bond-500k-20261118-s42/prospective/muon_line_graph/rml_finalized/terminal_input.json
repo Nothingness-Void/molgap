@@ -1,0 +1,78 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_line_graph/terminal_staging/v1/c562703ef3ffae74/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/closure_v1/roles_muon_line_graph.json": "3237c2730cf5514a83d4833fefe967c4e64dc01314041dc79fc55019171fdad1",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/decision.md": "5a36a92b43a38447d2d8b8efca9ea65da69e90a36a72bf746fb2cce51310bada",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/generated/85f740a706e14b1a764a534b2577bab7cba65871ea4b460dc2dc6dfb19c436b4/muon_line_graph/recipe.json": "8679cd4b4d805f79fc260e8626becd7c89f9f617c1fd8eae329844094dccf318",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_line_graph/terminal_staging/v1/c562703ef3ffae74/acceptance.json": "c976e84af482d8400d22550631dc1459e3bed410c9aa65a1a1350eb2c6de6e67",
+    "experiments/pcqm_k1_line_graph_bond_500k_20261118/runs/pcqm-k1-line-graph-bond-500k-20261118-s42/prospective/muon_line_graph/terminal_staging/v1/c562703ef3ffae74/observed.json": "20b52f904d5faa80b3b0e5d5c7abc477bdec0b0ca98cfbebe3218104f4c06b68",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_line_graph/canonical_trace.json": "8721205a2466bba509d2cd8da5a219f8b94138fe5b063b1f290496497b48e4e2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_line_graph/canonical_trace.json.context.json": "744fe4879f11b49d60c0039d930c7e8d7298e89f6ac5bd0a7d81464557f0e6ae",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_line_graph/data_open_provenance.json": "6163a6de73f8aa5dcee08a470453e8a84c4a0114f08916d9df50ab84f3eadbf9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-line-graph-bond-500k-20261118-s42/v1/version1/muon_line_graph/training_contract.json": "8679cd4b4d805f79fc260e8626becd7c89f9f617c1fd8eae329844094dccf318"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-18T04:01:23.763136+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-0.json",
+        "sha256": "fc39d4e62be435be3ba97d6f78b441077ef180065b29e5f2e233723c65ee64d2"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "ea0606779ed4deb1fb2e8c7a80d5b571d337eda801246dbf893ab439fac98ec7"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "9f52ab30853fc5d6bd720c4e5da2d55d2767c4ea3a439c3131af6288ff43a420"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-train-training_membership.json",
+        "sha256": "4956647ffb2599e7b2ef3f7a415ecafcac57ba75478e6fb3cdf0d076cd586c48"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-prediction_input.json",
+        "sha256": "43f82ab4c206cfacdd7c6f360688b159dc6c2b679edc2107b3b93ab94491051f"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-labels_read.json",
+        "sha256": "b805a4064801c8b858ec061618228cadeaf835395f6d81d607cebc5bd9053bef"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-metric_computed.json",
+        "sha256": "99a559d1917ddf17d80189bd0268bb77a62a0a2e028d6deab644fda952bfc885"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph-development-selection_used.json",
+        "sha256": "6060438d138f9f7a9578735fb49d605c5cfc175f527a5115c9d40899a659dab5"
+      }
+    ]
+  },
+  "requested_outcome": "STOP_FOR_COST",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42:muon_line_graph:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-line-graph-bond-500k-20261118-s42-v1",
+    "logical_run_id": "pcqm-k1-line-graph-bond-500k-20261118-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-line-graph-bond-500k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "b6ce4c01c2ff8072c5b4c671375fb5725465697b",
+    "source_package_sha256": "2954c1b69ef9aee77039f7b0b1ec70e02db5e9a6f4315fdda8828c218ee07720",
+    "spec_identity": "6000158ac236cda4c82b6c7db9f298b9d98452d805596de7f0a1dda8c0f4ffe7"
+  },
+  "trajectory_id": "T-pcqm-k1-line-graph-bond-500k-20261118-s42-muon_line_graph"
+}

@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DELTA_GAP_MMP_DIAG",
+    "field": "frozen_pair_and_checkpoints_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-delta-gap-mmp-diag-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "55a842ea87bc07cff5395b655befeb2e8163edac44b8ecb472cb1f9ef26fdb48",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-delta-gap-mmp-diag",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "frozen_pair_and_checkpoints_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

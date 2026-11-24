@@ -44,6 +44,157 @@
         "missing_comparability_identity:optimizer_identity",
         "missing_comparability_identity:precision_identity",
         "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:grit_spse:downstream",
+      "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-grit-spse-100k-20261118-r2-s42:pair_update_norm:downstream",
+      "trajectory_id": "T-pcqm-grit-spse-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_bn:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_bn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-nb-topa-500k-20261118-s42:muon_nb_topa:downstream",
+      "trajectory_id": "T-pcqm-k1-nb-topa-500k-20261118-s42-muon_nb_topa"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-rrwp-mixer-500k-20261118-s42:muon_bn:downstream",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_bn"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "paused_stop_for_cost"
+      ],
+      "run_id": "pcqm-k1-rrwp-mixer-500k-20261118-s42:muon_rrwp_mixer:downstream",
+      "trajectory_id": "T-pcqm-k1-rrwp-mixer-500k-20261118-s42-muon_rrwp_mixer"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "reasons": [
+        "SCIENTIFIC_CONTRACT_MISMATCH",
+        "canonical_trace_marked_ineligible",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+      "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
@@ -492,6 +643,17 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-hl-gauss-100k-20261118-s42:hl_gauss_512:downstream",
+        "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512",
+        "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema\"}",
       "run_ids": [
         "pcqm-gptrans-norm-ema-100k-20261104-s42:uniform_wd_multi_ema:downstream",
@@ -502,6 +664,105 @@
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12\"}",
+      "run_ids": [
+        "pcqm-gptrans-query-readout-ad-100k-20261105-s42:full12:downstream",
+        "pcqm-gptrans-query-readout-ad-100k-20261105-s42:full8_query4:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12",
+        "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6\"}",
+      "run_ids": [
+        "pcqm-gptrans-query-readout-bc-100k-20261105-s42:full6:downstream",
+        "pcqm-gptrans-query-readout-bc-100k-20261105-s42:full6_query6:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
+        "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42:real_tri_late3:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-real-tri-p2n-100k-20261118-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-real-tri-p2n-100k-20261118-s42:real_tri_p2n:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-real_tri_p2n"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-real-tri-pair-100k-20261118-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-real-tri-pair-100k-20261118-s42:real_tri_pair:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-real_tri_pair"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:real_tri_rcdrop:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42:real_tri_vread:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-rrwp-pairffn-100k-20261118-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-rrwp-pairffn-100k-20261118-s42:rrwp_pairffn:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm\"}",
+      "run_ids": [
+        "pcqm-gptrans-tokengt-bond-100k-20261117-s42:pair_update_norm:downstream",
+        "pcqm-gptrans-tokengt-bond-100k-20261117-s42:tokengt_bond:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm",
+        "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond"
       ]
     },
     {
@@ -579,6 +840,61 @@
       "trajectory_ids": [
         "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
         "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"0e4182253ac2662178f79099f8566610765db99962f5c3e1ccf36157814f51ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon\"}",
+      "run_ids": [
+        "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+        "pcqm-k1-degree-calibration-100k-20261107-s42-r2:muon:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"0e4182253ac2662178f79099f8566610765db99962f5c3e1ccf36157814f51ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate\"}",
+      "run_ids": [
+        "pcqm-k1-ec-gate-100k-20261106-s42:degree_gate:downstream",
+        "pcqm-k1-ec-gate-100k-20261106-s42:expansion_gate:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate",
+        "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"0e4182253ac2662178f79099f8566610765db99962f5c3e1ccf36157814f51ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-current_read\"}",
+      "run_ids": [
+        "pcqm-k1-history-read-100k-20261106-s42:current_read:downstream",
+        "pcqm-k1-history-read-100k-20261106-s42:history_read:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-history-read-100k-20261106-s42-current_read",
+        "T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"0e4182253ac2662178f79099f8566610765db99962f5c3e1ccf36157814f51ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean\"}",
+      "run_ids": [
+        "pcqm-k1-message-statistics-100k-20261106-s42:message_mean:downstream",
+        "pcqm-k1-message-statistics-100k-20261106-s42:message_std:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean",
+        "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"0e4182253ac2662178f79099f8566610765db99962f5c3e1ccf36157814f51ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon\"}",
+      "run_ids": [
+        "pcqm-k1-read-calibration-100k-20261107-s42-r2:current_read:downstream",
+        "pcqm-k1-read-calibration-100k-20261107-s42-r2:muon:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+        "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
       ]
     },
     {
@@ -667,6 +983,17 @@
       "trajectory_ids": [
         "T-pcqm-k1-muon-100k-20261106-s42-adamw",
         "T-pcqm-k1-muon-100k-20261106-s42-muon"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap\\\",\\\"comparison_sha256\\\":\\\"4d2c715ff4f8a401edb152714251c7f6bd34dbfbde1cab02d0ec3759ac64e437\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\",\\\"optimizer_mode\\\"],\\\"expected\\\":{\\\"optimizer_identity\\\":{\\\"candidate\\\":\\\"30f94ca345fac8df612687022c4b5dcb4b0c2eeb29157abb30eb6ad4b375ae37\\\",\\\"reference\\\":\\\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\\\"},\\\"optimizer_mode\\\":{\\\"candidate\\\":\\\"k1-soap-adamw-fp32-v1\\\",\\\"reference\\\":\\\"k1-muon-adamw-fp32-v1\\\"}},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"hidden-matrix-soap-versus-muon-with-matched-adamw-remainder\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"56b7c93ca5d97c93dd425e937a8985811db3e0978b466632f307e31b58f3fd0d\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon\"}",
+      "run_ids": [
+        "pcqm-k1-soap-100k-20261106-s42:muon:downstream",
+        "pcqm-k1-soap-100k-20261106-s42:soap:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-soap-100k-20261106-s42-muon",
+        "T-pcqm-k1-soap-100k-20261106-s42-soap"
       ]
     },
     {
@@ -762,6 +1089,17 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44\\\",\\\"comparison_sha256\\\":\\\"82ffbeb099ce2ad7923c5a0113eb25f17b9552fa1703e3401c6a1147697d1ac0\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"94e436d782824f45fccf54618710ca1d5a9f3c76ea4d2ded6acbe79a762394ae\\\",\\\"reference\\\":\\\"db94d7eb619f913b80c24bf2af30b4b61ea55499f24807279a5604451c81e762\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"equal-compute-two-member-ensemble-30-vs-60-pass\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43\\\"}\",\"lr_schedule_identity\":\"0bc223f24164d7881640aee9a729165aca2dea7fdc45513f4b13e00f96f8eb01\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2ead10a2e44e0feda04910c6b6b51c961bb69488be9403978e64134e3f2f9d06\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37\\\"}\",\"strict_identity_sha256\":\"07ce2a18f3a2ed66fdefb92a996a25e77f324eb296a83effad1db5e7184d825b\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"9633b247773bcfc322ad013a9c8a272b1014478eb229f598a996b9d566f45c27\\\",\\\"target_transform_identity\\\":\\\"9c05be497123f3433e24f26c1baa327ffcef3b8c1cd17b91f9ca83eef868b83c\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":117180,\\\"sample_presentations\\\":14999040}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43\"}",
+      "run_ids": [
+        "pcqm-gptrans-split-ensemble-500k-20261112-s42:split_s43:downstream",
+        "pcqm-gptrans-split-ensemble-500k-20261112-s42:split_s44:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
+        "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4\\\",\\\"comparison_sha256\\\":\\\"4b79cff9cc334667a997ce82a2e47d19799ddd2c4257ecb54fb32eb8c425b46b\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"c54ebf231cb22c7c370e719c291016c984fae9da1aeef44cdb916e70d9e8764e\\\",\\\"reference\\\":\\\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"peak-learning-rate\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2ead10a2e44e0feda04910c6b6b51c961bb69488be9403978e64134e3f2f9d06\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37\\\"}\",\"strict_identity_sha256\":\"c9aa44d48075895a2d6855381337506887e050607db49f61f9d195a842591b81\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"9633b247773bcfc322ad013a9c8a272b1014478eb229f598a996b9d566f45c27\\\",\\\"target_transform_identity\\\":\\\"9c05be497123f3433e24f26c1baa327ffcef3b8c1cd17b91f9ca83eef868b83c\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3\"}",
       "run_ids": [
         "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
@@ -795,6 +1133,61 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"758052006725863105127b6b0b688bc5d73ac4f2bd94d5784c88da31bb65bb2f\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn\"}",
+      "run_ids": [
+        "pcqm-k1-graph-rms-muon-500k-20261117-s42:muon_bn:downstream",
+        "pcqm-k1-graph-rms-muon-500k-20261117-s42:muon_graph_rms:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
+        "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"758052006725863105127b6b0b688bc5d73ac4f2bd94d5784c88da31bb65bb2f\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon\"}",
+      "run_ids": [
+        "pcqm-k1-read-batched-muon-500k-20261107-s42:current_read:downstream",
+        "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
+        "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-muon\\\",\\\"comparison_sha256\\\":\\\"c858d750c731b21d7c7e0d1ba3cd045d69fdcbe372eef87c439ab5c0f93c1850\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\",\\\"optimizer_mode\\\"],\\\"expected\\\":{\\\"optimizer_identity\\\":{\\\"candidate\\\":\\\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\\\",\\\"reference\\\":\\\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\\\"},\\\"optimizer_mode\\\":{\\\"candidate\\\":\\\"k1-muon-adamw-fp32-v1\\\",\\\"reference\\\":\\\"native-adamw\\\"}},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"hidden-matrix-fp32-muon-optimizer-scale-transfer\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-adamw\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"0f41782f87a92c8079d1bcc2388f69871f66061fd5fdc6ddd5724558f1b10b2e\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-adamw\"}",
+      "run_ids": [
+        "pcqm-k1-muon-500k-20261106-s42:adamw:downstream",
+        "pcqm-k1-muon-500k-20261106-s42:muon:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-muon-500k-20261106-s42-adamw",
+        "T-pcqm-k1-muon-500k-20261106-s42-muon"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2\\\",\\\"comparison_sha256\\\":\\\"a71295e5e9de6d81122a0b3b08f64c59b2fb3b366ded7966da34905e03e6a7dd\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"e87513f43037570247b91d0a86045013da1f8a96845da34da6d3f47a9310131a\\\",\\\"reference\\\":\\\"3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"recipe-level-weight-decay-1e-5-to-0.05-under-batched-muon\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"488560abf8560a86cb569f83f2e71f34e18d732afd7a0cb562381187588891b7\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5\"}",
+      "run_ids": [
+        "pcqm-k1-muon-wd-500k-20261111-s42:muon_wd1e5:downstream",
+        "pcqm-k1-muon-wd-500k-20261111-s42:muon_wd5e2:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5",
+        "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2\\\",\\\"comparison_sha256\\\":\\\"3fd95dc19486d0f6f5ba122768c722a10ac830633ece7e85125f130c20d56528\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"e87513f43037570247b91d0a86045013da1f8a96845da34da6d3f47a9310131a\\\",\\\"reference\\\":\\\"3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"recipe-level-weight-decay-1e-5-to-0.05-under-batched-muon\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"488560abf8560a86cb569f83f2e71f34e18d732afd7a0cb562381187588891b7\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5\"}",
+      "run_ids": [
+        "pcqm-k1-muon-wd-500k-20261111-s43:muon_wd1e5:downstream",
+        "pcqm-k1-muon-wd-500k-20261111-s43:muon_wd5e2:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
+        "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"9e3ccd7efb63860f44afb9f3c7fddc1e99551ac599f3bcd2693a2847d44e5a9a\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2\\\",\\\"comparison_sha256\\\":\\\"1776f2cb43d6fb5316f8f16404be1052d014a7a0f11a361206a34ab96ac5ccef\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"9391d693e3c6d016657fbf346b0e6b28041a4db4e7f097bd26f2d8048d08f0ff\\\",\\\"reference\\\":\\\"f6b73352e6d914aecdd93b3dd475a05143c24afb217520823e622bdbf3f36504\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"late-decoupled-weight-decay\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"dee78a25b936beea565771f8edc8e04ec525e1679237ec6270fdf0fd36fc919b\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":78120,\\\"sample_presentations\\\":9999360}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3\"}",
       "run_ids": [
         "pcqm-k1-tail-regularization-500k-s42:tail_wd1e2:downstream",
@@ -824,6 +1217,8 @@
   "included_trajectory_ids": [
     "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
     "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+    "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512",
+    "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
     "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
     "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
     "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
@@ -836,12 +1231,40 @@
     "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
     "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
     "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+    "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12",
+    "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4",
+    "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
+    "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6",
+    "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm",
+    "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3",
+    "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm",
+    "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-real_tri_p2n",
+    "T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-pair_update_norm",
+    "T-pcqm-gptrans-real-tri-pair-100k-20261118-s42-real_tri_pair",
+    "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm",
+    "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop",
+    "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-pair_update_norm",
+    "T-pcqm-gptrans-real-tri-vread-100k-20261118-r2-s42-real_tri_vread",
+    "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-pair_update_norm",
+    "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
+    "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
+    "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44",
+    "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-pair_update_norm",
+    "T-pcqm-gptrans-tokengt-bond-100k-20261117-s42-tokengt_bond",
     "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
     "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+    "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+    "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+    "T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate",
+    "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate",
     "T-pcqm-k1-extremal-readout-100k-s42-baseline",
     "T-pcqm-k1-extremal-readout-100k-s42-candidate",
+    "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_bn",
+    "T-pcqm-k1-graph-rms-muon-500k-20261117-s42-muon_graph_rms",
+    "T-pcqm-k1-history-read-100k-20261106-s42-current_read",
+    "T-pcqm-k1-history-read-100k-20261106-s42-history_read",
     "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
     "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
     "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
@@ -862,8 +1285,20 @@
     "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
     "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
     "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+    "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean",
+    "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std",
     "T-pcqm-k1-muon-100k-20261106-s42-adamw",
     "T-pcqm-k1-muon-100k-20261106-s42-muon",
+    "T-pcqm-k1-muon-500k-20261106-s42-adamw",
+    "T-pcqm-k1-muon-500k-20261106-s42-muon",
+    "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5",
+    "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2",
+    "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
+    "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2",
+    "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
+    "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
+    "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+    "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
     "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -872,6 +1307,8 @@
     "T-pcqm-k1-sam-100k-s42-r2-sam",
     "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
     "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+    "T-pcqm-k1-soap-100k-20261106-s42-muon",
+    "T-pcqm-k1-soap-100k-20261106-s42-soap",
     "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
     "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
     "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
@@ -893,5 +1330,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 106
+  "trace_count": 160
 }
