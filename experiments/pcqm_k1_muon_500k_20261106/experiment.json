@@ -1,0 +1,108 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_muon_500k_20261106",
+  "logical_run_id": "pcqm-k1-muon-500k-20261106-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-06T06:45:18Z",
+  "question": {
+    "policy_id": "pcqm-k1-muon-500k-20261106",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does the accepted fixed FP32 Muon/AdamW recipe retain a material K1 advantage at500K and the complete60-pass horizon?",
+    "deficiency": "The strict100K gain is8.774meV but narrows over training;500K optimizer transfer and native cost are unmeasured.",
+    "changed_mechanism": "hidden-matrix-fp32-muon-optimizer-scale-transfer",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "AdamW catches up with larger membership and exposure",
+      "The optimizer gain persists at500K",
+      "Changed development cohort reduces the conditional gain",
+      "Native cost makes the fixed recipe unattractive"
+    ],
+    "closed_families": [
+      "pcqm-k1-init-forward-500k-single-s42",
+      "pcqm-k1-tail-regularization-500k-s42",
+      "k1-pair-token"
+    ],
+    "positive_decision": "Nominate only if selected delta<=-3meV,paired95%upper<0,final and last-five deltas favorable,with strict native/replay qualification. No automaticfull/adoption.",
+    "negative_decision": "Close this fixed500K recipe without blind LR/WD/seed grids or module stacking.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32,one arm per device,single forward",
+    "estimated_device_hours": 48,
+    "estimated_wall_hours": 24,
+    "cheapest_falsifier": "One same-job500K60pass optimizer pair, common20/40/60pass boundary continuations, two freshly trained matched models."
+  },
+  "authority_ref": "experiments/pcqm_k1_muon_500k_20261106/authority.json",
+  "monitor_paths": [
+    "experiments/pcqm_k1_muon_500k_20261106/STATUS.md"
+  ],
+  "role_ref": "experiments/pcqm_k1_muon_500k_20261106/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_muon_500k_20261106/decision.md",
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_muon_500k_20261106/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_muon_500k_20261106/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "adamw"
+    },
+    {
+      "arm_id": "muon",
+      "training": {
+        "optimizer": "k1-muon-adamw-fp32-v1"
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "adamw",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-k1-muon-500k-20261106-s42",
+      "title": "MolGap K1 Muon 500K 20261106 S42",
+      "datasets": [
+        "kaseichou/k1-muon-500k-20261106-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "kaseichou/k1-muon-500k-20261106-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 78120
+    }
+  }
+}

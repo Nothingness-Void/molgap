@@ -1,0 +1,41 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "kaseichou",
+  "arms": [
+    "adamw",
+    "muon"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "adamw",
+  "allocated_t4_hours_ceiling": 54,
+  "allocation_wall_limit_seconds": 32400,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authority": "User explicitly authorized Kaggle2 original K1+AdamW versus Muon500K pair with prearranged segmented continuation on2026-11-06, and then revoked shutdown.",
+  "scope": "One scientific question, two fresh models from the same original random state,500K60passes each. Planned cumulative boundaries20/40/60passes; full schedule/optimizer/RNG/EMA state preserved. Initial submission plus verified boundary/wall-pause continuations preauthorized within maximum4 physical sessions,9h/session,27h cumulative entry wall and54allocated T4-device-hours. Unexpected numerical/identity/role failure stops for diagnosis. No extra seeds, teacher, architecture changes, protected roles, full-scale training or promotion. No computer shutdown.",
+  "continuation": {
+    "logical_attempt": "v1",
+    "normal_physical_sessions": 3,
+    "maximum_physical_sessions": 4,
+    "cumulative_pass_boundaries": [
+      20,
+      40,
+      60
+    ],
+    "cumulative_optimizer_step_boundaries": [
+      78120,
+      156240,
+      234360
+    ],
+    "total_entry_wall_hours_ceiling": 27,
+    "total_allocated_t4_device_hours_ceiling": 54,
+    "credentials_external": "D:/下载/Key/.kaggle2_cli/kaggle.json",
+    "quota_policy": "Recheck before each publication; wait for replenishment rather than change accounts or reset training.",
+    "recovery_rule": "Bind each actual successor kernel/source version, original Spec/package, exact retained prefix and both arm resume states. Reconcile unknown effects before another POST.",
+    "operator": "Desktop owner when active; Luna status only. No new cron or unattended submission service."
+  }
+}
