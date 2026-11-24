@@ -93,5 +93,6 @@ immutable Spec compatibility, static inventory plus isolated imports, explicit
 planning ownership, retained metric units and unchanged default optimizer update.
 Catalogs intentionally differ by reviewed capabilities. Shared parsing does not
 make an unregistered family/addon executable or authorize a previously forbidden
-role. The [shared-core adoption](../../../docs/operations/SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md)
-owns lifecycle integration, exact source inventory and remaining native checks.
+role. The exact source inventory is `docs/operations/SHARED_TRAINING_CORE_FILES.json`;
+the archived adoption record is in the docs archive tag (see the
+[docs map](../../../docs/README.md#archived-pages)).

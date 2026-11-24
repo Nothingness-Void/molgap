@@ -11,12 +11,12 @@ They provide local diagnostics/source preparation, not submission authority.
 
 Cross-scale K1/GPTrans `prepare-family-training` staging is described in
 [Shared Family Training Core](FAMILY_TRAINING_CORE.md). It prepares source and
-inputs, not submission/full admission/scientific acceptance. See
-[CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
+inputs, not submission/full admission/scientific acceptance. CPU acceptance is
+not native qualification.
 
 Run from the selected checkout's root with the primary checkout's `.venv`
 interpreter, not system Python. In a worktree, use the
-[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#select-code-and-storage)
+[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#storage-addons-and-tests)
 `platforms/local/run.py --profile $profilePath -- <command> ...` so the
 worktree's own source runs; `python -m molgap.experiment_cli` imports the primary
 checkout's source. `<command> --help` prints that command's flags as JSON.
@@ -192,7 +192,7 @@ from the repository root.
 `draft-closure` (the same flags as `draft-role-audit`: `--profile`, `--repo-root`,
 `--run-id`, `--attempt-id`, `--output-dir`, optional `--retrieved-root`,
 `--resume-prepared` or `--continuation-receipt`, `--protected-role-use`) returns `DRAFT` and writes into
-the repository-local `--output-dir`: `roles_<arm>.json`, `audit_map.json`,
+the `--output-dir`, which must sit under `experiments/<experiment>/` (a root-level directory fails with `FINALIZATION_FAILED`): `roles_<arm>.json`, `audit_map.json`,
 `measured_<run>.json` (paired development MAE from saved predictions; `delta`
 is candidate minus reference in meV), `closure_facts_<arm>.json` (measured
 `effect_meV`/`ci_meV`, null `failure_mode`/`search_terms`) and
@@ -376,7 +376,7 @@ role use blocks closure rather than becoming an untouched claim. No script
 promotes a numerical diagnosis to positive scientific acceptance.
 `draft-role-audit --profile $profile --repo-root $repoRoot --run-id $run
 --attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
-`roles_<arm>.json` per arm (repository-local `$dir`) for a train/development
+`roles_<arm>.json` per arm (`$dir` under `experiments/<experiment>/`) for a train/development
 family-session screen, and writes `audit_map.json` beside them (also printed) for `--role-audit` to take directly.
 For continued outputs, add the same `--continuation-receipt` used for retrieval
 so the draft binds the successor before its first terminal closure.

@@ -94,7 +94,7 @@ identity. It is false and omitted from the wire by default. No experiment-name
 lookup or host-specific module chooses retention inside the shared runner.
 The registered runner wires the complete-state checkpoint sink and selection
 inside the existing evaluation weight view; the
-[refinement owner](GPTRANS_EXECUTION_REFINEMENT.md) owns these controls and the
+[GPTrans execution page](GPTRANS_EXECUTION.md#shared-refinements) owns these controls and the
 additional GPTrans native safety-fill proof. Do not copy this wiring into an addon.
 Resume validation also checks frozen AdamW defaults, parameter/moment schema and
 the exact schedule axis/configuration. LR validation permits native cosine's
@@ -169,8 +169,7 @@ bounded integer distance codes and all used operations remain unchanged.
 K1's private index/mask copies use non-blocking transport on the owning stream;
 the synthetic RTX5060 test preserves output, gradient, optimizer and RNG exactly.
 
-The [code-level repair and speed audit](FAMILY_RECOVERY_SPEED_AUDIT.md) owns tests,
-operation counts and remaining candidates. These changes are not a measured epoch
+These changes are not a measured epoch
 speed/MAE claim or native T4/A100/DCU qualification. Sampler changes, model algebra
 reordering, async writes and topology-cache changes require separate validation.
 
@@ -188,8 +187,7 @@ versions, not model generations, a V3 scientific contract or a change to V5.
 Historical fixed100K interfaces remain compatible; historical full-source pins
 are unchanged. Old jobs use matching immutable source, never rewritten hashes.
 
-The [test handoff](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance) owns CPU
-acceptance and remaining native qualification limits. CPU acceptance is not a
+CPU acceptance and remaining native qualification limits stay open. CPU acceptance is not a
 native speed/quality claim or an integrated release. Commit source before
 packaging. Scientific comparison,
 full admission and terminal V5/RML closure remain their owning gates, not
@@ -254,8 +252,7 @@ select arbitrary imports. Registered `apply_hook` slots compose in frozen Spec
 order; replacement/objective modes remain exclusive and cannot mix with slots.
 Lifecycle deviations use `TrainingAddon.policy_hook` returning `FamilyModePolicy`,
 never a host/controller branch in the kernel. See the
-[two-family examples](FAMILY_TRAINING_EXAMPLES.md) and
-[adoption/qualification boundary](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md).
+[two-family examples](FAMILY_TRAINING_EXAMPLES.md).
 
 Mechanical verification keeps science/runtime/replay `NOT_EVALUATED`. Final-only
 outputs have no predictions or development score; scientific/full-scale closure

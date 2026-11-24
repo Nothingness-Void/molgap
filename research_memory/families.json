@@ -1,0 +1,13 @@
+{"families": [
+{"name": "gptrans", "aliases": ["GPT-T", "GPTrans", "GPT-T pair transformer"], "family_id": ["*gptrans*"], "experiments": ["*gptrans*"], "src": ["*gptrans*"]},
+{"name": "k1", "aliases": ["K1", "neural atom K1"], "family_id": ["*k1*", "neural_atom*"], "experiments": ["*k1*", "v5_legacy_evidence_migration", "family_checkpoint_efficiency"], "src": ["*k1*", "*neural_atom*"]},
+{"name": "gpspp", "aliases": ["GPS++", "GPS++ MPNN"], "family_id": ["*gpspp*"], "experiments": ["*gpspp*", "pcqm_route_b"], "src": ["gps*", "*gpspp*", "pcqm_route_b*"]},
+{"name": "edge_state", "aliases": ["edge state", "edge-state GPS"], "family_id": ["edge-state*"], "experiments": ["pcqm_edge_state*"], "src": ["*edge_state*", "pcqm_official_edge_state*"]},
+{"name": "geometry", "aliases": ["3D geometry", "distance angle", "DFT distance"], "family_id": ["distance-angle*", "*geometry*"], "experiments": ["*geometry*", "pcqm_distance_angle*"], "src": ["*geometry*", "pcqm_distance_angle*"]},
+{"name": "scale_transfer", "aliases": ["scale transfer", "100K to 500K", "total budget"], "family_id": ["*scale-*", "pcqm-single-model-total-budget*", "matched-500k*"], "experiments": ["*scale_*", "pcqm_single_model_total_budget", "pcqm_500k_v4_evidence"], "src": ["*scale*", "pcqm_500k*"]},
+{"name": "residual_corrector", "aliases": ["residual corrector", "residual block"], "family_id": ["*residual*"], "experiments": ["*residual*"], "src": ["residual_attribution*", "*residual*"]},
+{"name": "routing_fusion", "aliases": ["router", "expert routing", "fusion"], "family_id": ["*routing*", "*router*", "*fusion*", "*expert*"], "experiments": ["*router*", "*fusion*", "*expert*", "multi2d_experts"], "src": ["*router*", "*fusion*", "*expert*", "multi2d*"]},
+{"name": "xtb_mc_dropout", "aliases": ["C2 xTB", "C3 MC-dropout"], "family_id": ["pcqm-c2-*", "pcqm-c3-*"], "experiments": ["pcqm_c2_*", "pcqm_c3_*"], "src": []},
+{"name": "execution_infra", "aliases": ["execution speed", "operator profile", "T4 topology"], "family_id": ["family-*", "shared-family-*", "local-k1-*"], "experiments": ["family_*", "local_k1_*"], "src": ["family_*", "*execution*"]},
+{"name": "other_architecture", "aliases": ["GINE", "recurrent graph state", "determinism audit", "held-out budget"], "family_id": ["gine-*", "recurrent-*", "xian-*", "pcqm-h1-*"], "experiments": ["pcqm_gine*", "pcqm_gap_architecture", "pcqm_xian*", "pcqm_h1_*"], "src": ["gine*", "pcqm_gap_architecture*"]}
+]}

@@ -21,9 +21,8 @@ Both registered families use accelerated execution by default, including
 Scientific addons compose on that base. Freeze a new recipe/source identity;
 historical jobs use their own immutable packages, never silently migrated inputs.
 Cross-scale K1/GPTrans code and platform-neutral `prepare-family-training` are
-documented in [Shared Family Training Core](FAMILY_TRAINING_CORE.md). See its
-[CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
-Use that entry for new cross-scale training; the legacy Kaggle comparison
+documented in [Shared Family Training Core](FAMILY_TRAINING_CORE.md). CPU
+acceptance is not native qualification. Use that entry for new cross-scale training; the legacy Kaggle comparison
 workflow is not a universal platform submitter.
 
 ## Owners
@@ -33,10 +32,7 @@ Desktop/server-neutral declaration, identity and SDK/transport mechanisms use
 remain outside it. Reuse these APIs rather than porting a machine-specific builder.
 
 The reviewed shared lifecycle and ordered slots are implemented. Start with the
-[two-family examples](FAMILY_TRAINING_EXAMPLES.md); the
-[Desktop adoption record](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md) owns executed
-checks and the small common compatibility follow-up to the
-[Server return](SHARED_TRAINING_CORE_SERVER_RETURN.md). Native platform release
+[two-family examples](FAMILY_TRAINING_EXAMPLES.md). Native platform release
 remains separate.
 
 
@@ -194,7 +190,7 @@ the explicit `NvidiaTeslaT4` allocation only.
     "arm_id": "<Spec arm id>",
     "device": 0,
     "recipe": "experiments/<question>/training_contract.json",
-    "initial_state": "D:/frozen/<arm>-initial-state.pt"
+    "initial_state": "<frozen-dir>/<arm>-initial-state.pt"
   }],
   "acceptance_plan": "experiments/<question>/family_acceptance_plan.json",
   "kaggle": {

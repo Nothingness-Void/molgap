@@ -234,5 +234,6 @@ The isolated checkout lacks ignored retained checkpoints, so its RML check
 cannot substitute for the primary artifact-custody check. No canonical/derived
 RML, production registry or scientific result was changed.
 
-The [two-branch drift audit](SHARED_INFRASTRUCTURE_AUDIT.md) distinguishes the
-remaining generic-interface divergence from valid profile/platform differences.
+Generic-interface divergence between branches differs from valid
+profile/platform differences; the old two-branch audit is in the archive tag
+(see the [docs map](../README.md#archived-pages)).

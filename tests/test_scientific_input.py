@@ -3,6 +3,7 @@ from dataclasses import asdict
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -565,6 +566,12 @@ def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_proper
     _write_json(path, value)
     _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "One registered ordinary addon input")
+    needs_review = prepare_experiment_input(path, case.repo)  # the reviewer copies the hash the command prints
+    digest = re.search(r"must be ([0-9a-f]{64})", json.dumps(needs_review["blockers"])).group(1)
+    _write_json(path.parent / "pre_submit_review.json", {"reviewer": "test", "verdict": "APPROVE",
+        "reviewed_commit": _git(case.repo, "rev-parse", "HEAD").strip(), "frozen_source_sha256": digest})
+    _git(case.repo, "add", "--", (path.parent / "pre_submit_review.json").relative_to(case.repo).as_posix())
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Pre-submit review record")
     program = r'''
 import contextlib, importlib.util, io, json, pathlib, sys
 repo=pathlib.Path(sys.argv[1]);config=pathlib.Path(sys.argv[2]);sys.path.insert(0,str(repo/"src"))

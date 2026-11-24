@@ -103,10 +103,9 @@ platform, role and scientific authority requirements.
 
 ## Historical Audit Pointer
 
-The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous
-audit and cleanup records intact, including dated commit/reachability claims.
-The [2026-09-30 reconciliation](docs/operations/LOCAL_RECONCILIATION_20260930.md)
-owns that inventory. Neither audit is current remote scheduler truth.
+The previous branch history and reconciliation audits are archived under tag
+`docs-archive-20261124` (see the [docs map](docs/README.md#archived-pages)).
+They hold dated commit/reachability claims and are not current scheduler truth.
 Use a clean desktop worktree for integration and preserve unrelated changes.
 
 ## V5 workflow boundary

@@ -4,6 +4,8 @@ from __future__ import annotations
 import argparse
 from contextlib import redirect_stdout
 from pathlib import Path
+import re
+import shutil
 import sys
 
 from .experiment_launch import (
@@ -79,14 +81,20 @@ def _parser() -> argparse.ArgumentParser:
     draft.add_argument("--continuation-receipt",type=_local)
     draft.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
     closure=commands.add_parser("draft-closure")
-    for flag in ("--profile","--repo-root","--output-dir"):
+    for flag in ("--profile","--repo-root"):
         closure.add_argument(flag,required=True,type=_local)
+    closure.add_argument("--output-dir",type=_local,help="default: experiments/<experiment>/audit_closure")
     closure.add_argument("--run-id",required=True)
     closure.add_argument("--attempt-id",required=True)
     closure.add_argument("--retrieved-root",type=_local)
     closure.add_argument("--continuation-receipt",type=_local)
     closure.add_argument("--resume-prepared",type=_local,help="Resolve the bound successor receipt")
     closure.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
+    imported=commands.add_parser("import-closure", help="Import one closed experiment's evidence into the checked-out parent branch")
+    imported.add_argument("--repo-root",required=True,type=_local)
+    imported.add_argument("--experiment",required=True,help="directory name under experiments/")
+    imported.add_argument("--source-branch",required=True)
+    imported.add_argument("--apply",action="store_true",help="default: list the paths only")
     diagnose=commands.add_parser("diagnose")
     diagnose.add_argument("--control",type=_local)
     diagnose.add_argument("--candidate",type=_local)
@@ -187,6 +195,8 @@ def _parser() -> argparse.ArgumentParser:
                 help="Explicit recovery decision/authority retained for this continuation")
             command.add_argument("--strict", action="store_true",
                 help="Recheck retained native, strict comparison and canonical replay evidence")
+            command.add_argument("--dry-run", action="store_true",
+                help="With --strict: read-only recheck; no closure, and new strict_qualification records are removed")
             command.add_argument("--strict-inputs", type=_local,
                 help="Per-arm local proof/comparison locations; recheck existing strict owners")
             command.add_argument("--physical-runs", type=_local,
@@ -288,8 +298,41 @@ def _dispatch(args) -> tuple[dict, int]:
             retrieved_root=args.retrieved_root, output_dir=args.output_dir,
             protected_role_use=_bindings(args.protected_role_use),
             continuation_receipt=args.continuation_receipt), 0
+    if args.command == "import-closure":
+        import re, subprocess
+        git = lambda *a: subprocess.run(["git", "-C", str(args.repo_root), *a], capture_output=True, text=True, check=True).stdout.split(chr(10))
+        scope = ("--", "experiments/" + args.experiment, "research_memory/policies", "audit_closure/decision.md")  # last: old root pointer
+        changed = lambda *dots: {p for p in git("diff", "--name-only", "--diff-filter=ACMR", *dots, *scope) if p}
+        weights = (".pt", ".pth", ".ckpt", ".safetensors", ".npz", ".npy", ".pkl", ".parquet")  # weights and arrays stay on the owner branch
+        # Changed on the source branch and still different here.
+        paths = sorted(p for p in changed(f"HEAD...{args.source_branch}") & changed("HEAD", args.source_branch) if not p.endswith(weights))
+        # Policies: only this experiment's own (its files name the policy id); never the whole directory.
+        own = lambda p: not p.startswith("research_memory/policies/") or subprocess.run(["git", "-C", str(args.repo_root), "grep", "-qF",
+            re.sub(r"\.\d+\.json$", "", p.rsplit("/", 1)[1]), args.source_branch, "--", "experiments/" + args.experiment]).returncode == 0
+        paths = [p for p in paths if own(p)]
+        base = git("merge-base", "HEAD", args.source_branch)[0]
+        both = sorted(set(paths) & changed(base, "HEAD"))  # also edited here since the fork: never overwritten
+        dirty = [line for line in git("status", "--porcelain") if line]
+        result = {"parent": git("branch", "--show-current")[0], "source": args.source_branch, "paths": paths, "applied": args.apply,
+                  "checks": {"worktree_clean": not dirty, "dirty": dirty, "changed_on_both_sides": both}}
+        if args.apply and (dirty or both):
+            result.update(applied=False, status="BLOCKED")
+            return result, 1
+        if args.apply and paths:
+            from .research_memory.compiler import frozen_differences
+            from .research_memory.pipeline import recover_terminal_derived
+            git("checkout", args.source_branch, "--", *paths)
+            arms = sorted({p.split("/rml_finalized/")[0] for p in paths if "/rml_finalized/" in p})
+            result["rebuild"] = [(r["pipeline_status"], r.get("vault_refresh")) for r in recover_terminal_derived(args.repo_root, arms)]
+            result["frozen_differences"] = frozen_differences(args.repo_root)
+        return result, 1 if result.get("frozen_differences") or any(s != "COMPLETE" for s, _ in result.get("rebuild", [])) else 0
     if args.command == "draft-closure":
         from .experiment_terminal_staging import draft_closure
+        home = next(iter(args.repo_root.glob(f"experiments/*/runs/{args.run_id}")), None)
+        if home is not None and args.output_dir is None:
+            args.output_dir = home.parents[1] / "audit_closure"
+        if args.output_dir is None or (home is not None and not args.output_dir.is_relative_to(home.parents[1])):
+            raise ValueError("draft-closure output must be inside this run's experiments/<experiment>/ (default audit_closure)")
         return draft_closure(args.profile, args.repo_root, args.run_id, args.attempt_id,
             retrieved_root=args.retrieved_root, output_dir=args.output_dir,
             protected_role_use=_bindings(args.protected_role_use),
@@ -435,7 +478,26 @@ def _dispatch(args) -> tuple[dict, int]:
                         audit = _json(args.role_audit)
                         options["role_audit"] = (args.role_audit if "context" in audit
                             or all(isinstance(value, dict) for value in audit.values()) else audit)
-                    result = accept_run_workflow(*original, **options)
+                    if args.dry_run:
+                        if not args.strict or args.outcome or args.arm_outcome:
+                            raise ValueError("--dry-run is a read-only --strict recheck without an outcome")
+                        options.update(execute=False, stage_terminal=False)
+                    made = lambda: set(args.repo_root.glob("experiments/*/runs/*/*/strict_qualification/*"))
+                    before = made()
+                    try:
+                        result = accept_run_workflow(*original, **options)
+                    except ValueError as exc:
+                        text = next(iter(args.repo_root.glob(f"experiments/*/runs/{args.run_id}")), None)
+                        text = text and (text.parents[1] / "protocol.md").is_file() and (text.parents[1] / "protocol.md").read_text(encoding="utf-8")
+                        if "Strict comparison remains blocked" in str(exc) and text and re.search(r"(?i)acceptance path.*pre-?registered", text):
+                            raise ValueError(str(exc) + ": the protocol pre-registered a non-strict path; drop --strict") from exc
+                        raise
+                    finally:
+                        for path in (made() - before if args.dry_run else ()):
+                            shutil.rmtree(path)
+                    if any(r.get("pipeline_status") == "COMPLETE" for r in result.get("results", [])):
+                        from .experiment_terminal_staging import fill_status_placeholder
+                        result["status_md"] = fill_status_placeholder(args.repo_root, args.run_id)
                     return result, 0 if result["status"] in _SUCCESS else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
@@ -658,7 +720,7 @@ def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
         "executed", "closure_complete", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
-        "strict_mode", "physical_allocation_costs") if key in result}
+        "strict_mode", "physical_allocation_costs", "status_md") if key in result}
     if "results" in result:
         summary["closure"] = [{key: row[key] for key in
             ("trajectory_id", "trajectory", "pipeline_status", "finalization_status", "error") if key in row}

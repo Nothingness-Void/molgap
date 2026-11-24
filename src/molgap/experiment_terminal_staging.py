@@ -8,6 +8,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import hashlib
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -788,3 +789,51 @@ def stage_incomplete_run(profile, repo_root, run_id, attempt_id, *, retrieved_ro
     publish_immutable_bytes(output, descriptor.to_json().encode())
     return {"status": "DESCRIPTOR_BUILT", "descriptor": str(output), "spec": str(resolved["run_directory"] / "inputs/experiment_spec.json"),
             "terminal_staging": {key: staged[key] for key in ("status", "paths", "blockers")}, "executed": False}
+
+
+def clean_unclosed_staging(repo_root, apply=False, run_id=None):
+    """List terminal_staging folders of arms never finalized; remove them only with ``apply`` (needs ``run_id``, which limits it).
+
+    A folder is kept when its arm has rml_finalized or qualification_revisions, or when any
+    other record in the experiment names one of its files (a hash-bound file).
+    """
+    import shutil
+    if apply and not run_id:
+        raise ValueError("--apply needs an explicit --run-id: it removes only that run's staging")
+    root, rows = Path(repo_root).resolve(), []
+    for staging in sorted(root.glob(f"experiments/*/runs/{run_id or '*'}/*/*/terminal_staging")):
+        arm, experiment = staging.parent, staging.parents[4]
+        closed = (arm / "rml_finalized").exists() or (arm / "qualification_revisions").exists()
+        names = [p.relative_to(root).as_posix() for p in staging.rglob("*") if p.is_file()]
+        text = "".join(p.read_text(encoding="utf-8", errors="replace") for p in experiment.rglob("*.json")
+                       if staging not in p.parents)
+        state = "kept_finalized" if closed else "kept_bound" if any(n in text for n in names) else "remove"
+        if state == "remove" and apply:
+            shutil.rmtree(staging)
+            state = "removed"
+        rows.append({"path": staging.relative_to(root).as_posix(), "state": state})
+    return {"kept_finalized": sum(r["state"] == "kept_finalized" for r in rows),
+            "others": [r for r in rows if r["state"] != "kept_finalized"]}
+
+
+_STATUS_PLACEHOLDER = re.compile(r"(?mi)^(\s*(?:[-*]\s*|status:\s*)?)(?:not submitted|pending)\.?[ \t]*(?=\r?$)")
+
+
+def fill_status_placeholder(repo_root, run_id):
+    """After closure, replace the fixed 'Not submitted'/'Pending' lines of STATUS.md, unless a record binds its hash."""
+    root = Path(repo_root).resolve()
+    home = next(iter(root.glob(f"experiments/*/runs/{run_id}")), None)
+    status = home and home.parents[1] / "STATUS.md"
+    if not status or not status.is_file():
+        return "no STATUS.md"
+    if any(not ((arm := staging.parent) / "rml_finalized").exists() and not (arm / "qualification_revisions").exists()
+           for staging in home.glob("*/*/terminal_staging")):
+        return "kept: some arms of this run are not closed yet"
+    digest = hashlib.sha256(status.read_bytes()).hexdigest()
+    if any(digest in p.read_text(encoding="utf-8", errors="replace") for p in home.parents[1].rglob("*")
+           if p.suffix in {".json", ".md"} and p != status):
+        return "kept: hash-bound"
+    text, count = _STATUS_PLACEHOLDER.subn(r"\1CLOSED; see decision.md", status.read_bytes().decode("utf-8"))
+    if count:
+        status.write_bytes(text.encode("utf-8"))
+    return f"replaced {count} placeholder line(s)"

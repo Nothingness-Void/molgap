@@ -165,6 +165,16 @@ Track C.
 | Conditional-flow historical arm views? | NEGATIVE_UNDER_CONTRACT: readback 4.309 meV and recurrence 3.251 meV worse than the reference; no scaling or seeds | `pcqm_gptrans_conditional_flow_history/` |
 | Historical flow ablation? | NEGATIVE_UNDER_CONTRACT: removing pair-to-node (2.657 meV) or pair recurrence (1.547 meV) worsens MAE; both paths are useful | `pcqm_gptrans_flow_ablation_100k/` |
 | Frozen 100K weights on the 500K development cohort? | INCONCLUSIVE as a general cutoff: frozen 100K candidate 5.109 meV better on the 500K cohort, yet its 500K retraining gain was 1.140 meV | `pcqm_gptrans_frozen_transfer_probe/` |
+| Does GFN2-xTB feature residual correction (C2) help the 2D stacker? | FAIL: under 0.2 meV within block, hurts on distant rows; closed NEGATIVE_UNDER_CONTRACT | `pcqm_c2_xtb_diagnostic/` |
+| Does MC-dropout or snapshot averaging (C3) improve 500K GPT-T checkpoints? | MC-dropout K=32 passes on dev rows; snapshot averaging cancelled (snapshots not retained); closed NO_TRAIN | `pcqm_c3_checkpoint_space/` |
+| Does C3 MC-dropout hold at full scale on the tail holdout? | NO EFFECT: 4-model ensemble 0.208 meV better, below the 1.0 meV bar; not adopted | `pcqm_c3_full_tail_20261123/` |
+| Does a GPS++ MPNN match the 100K reference? | NEGATIVE_UNDER_CONTRACT: 3.09 meV worse than the frozen reference; no retry | `pcqm_gpspp_mpnn_100k_20261124/` |
+| Does a DFT distance auxiliary label (2D inference) help GPT-T? | Positive at 100K; INCONCLUSIVE at 500K (-0.14 meV), so nothing adopted and no tail score | `pcqm_gptrans_dft_distance_aux_20261121/` |
+| Does full-scale weight decay 0.022 (C4) beat 0.05 on the tail holdout? | NO EFFECT: +0.256 meV (slightly worse), interval crosses zero | `pcqm_gptrans_full_wd_c4_20261123/` |
+| Does the chemistry correction repay the 6K rows it costs (H1)? | FAIL: 94K plus chemistry is worse than the raw backbone; closed NEGATIVE_UNDER_CONTRACT | `pcqm_h1_heldout_budget/` |
+| Does a 2D descriptor residual corrector help the 500K PairNorm backbones (P0)? | PASS on development-fit residuals only (about -4 meV locally); not model adoption; closed NO_TRAIN | `pcqm_pairnorm_residual_2d_p0/` |
+| Does P0's corrector transfer to distant rows? | FAIL: its gain stays inside its own row block; closed NEGATIVE_UNDER_CONTRACT | `pcqm_residual_block_transfer/` |
+| Does a 120K spread fit rescue the post-hoc 2D corrector? | FAIL: under 0.8 meV after the fit range, hurts unseen scaffolds; the corrector line is closed | `pcqm_residual_spread_fit/` |
 
 `_closed/` holds branches that are settled and must not be rerun without a
 materially new hypothesis. `_scripts/` holds entrypoints shared by more than one

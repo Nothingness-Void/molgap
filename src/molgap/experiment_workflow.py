@@ -5,6 +5,7 @@ import ast
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 from time import perf_counter
 
 from .experiment_launch import _safe_local, build_launch_receipt
@@ -346,6 +347,36 @@ def _artifact_or_local_path(repo_root, value):
     return path.absolute()
 
 
+REVIEW_VERDICTS = ("APPROVE", "APPROVE_WITH_CHANGES")  # the only verdicts that let a run submit
+
+
+def check_pre_submit_review(spec, root, source_files):
+    """Require the reviewer's JSON record for an experiments/<id>/ run; its verdict is the reviewer's to write.
+
+    The record names the reviewed commit (HEAD or an ancestor) and the hash of the frozen Python source
+    bytes plus experiment.json, so a later edit to either makes the record stale. Only REVIEW_VERDICTS pass.
+    """
+    arms = spec.to_dict()["prospective"].get("arms", [])
+    home = arms[0]["output"].split("/runs/")[0] if arms else ""
+    if not (root / home / "experiment.json").is_file():
+        return {"required": False}
+    from .experiment_package import _git
+    from .screen_policy import canonical_fingerprint
+    head = _git(root, "rev-parse", "HEAD").decode().strip()
+    frozen = canonical_fingerprint({n: hashlib.sha256(_payload(_source(root, n))).hexdigest() for n in source_files if n.endswith(".py")}
+                                | {f"{home}/experiment.json": hashlib.sha256(_payload(_source(root, f"{home}/experiment.json"))).hexdigest()})  # records embed HEAD, so only code and the declaration are stable
+    path, fields = root / home / "pre_submit_review.json", ("reviewer", "verdict", "reviewed_commit", "frozen_source_sha256")
+    record = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    ancestor = lambda c: subprocess.run(["git", "-C", str(root), "merge-base", "--is-ancestor", c, head]).returncode == 0
+    if (type(record) is not dict or any(not record.get(f) for f in fields)
+            or record["frozen_source_sha256"] != frozen or not ancestor(record["reviewed_commit"])):
+        raise ValueError(f"Write {home}/pre_submit_review.json with {', '.join(fields)} (reviewed_commit: HEAD or an "
+                         f"ancestor; frozen_source_sha256 must be {frozen}), commit it, then submit again")
+    if record["verdict"] not in REVIEW_VERDICTS:
+        raise ValueError(f"{home}/pre_submit_review.json verdict is {record['verdict']!r}; submitting needs one of {', '.join(REVIEW_VERDICTS)}")
+    return {"required": True, "reviewer": record["reviewer"], "verdict": record["verdict"]}
+
+
 def _workflow_checks(spec, repo_root, inputs):
     from .experiment_execution import training_adapter
     def manifest_bindings():
@@ -357,7 +388,8 @@ def _workflow_checks(spec, repo_root, inputs):
     observations, blockers = {}, []
     for name, check in (("family_recipes", lambda: check_family_recipes(spec, repo_root, inputs["recipes"])),
                         ("dataset_manifests", manifest_bindings),
-                        ("prospective", lambda: check_prospective(spec, Path(repo_root).absolute()))):
+                        ("prospective", lambda: check_prospective(spec, Path(repo_root).absolute())),
+                        ("pre_submit_review", lambda: check_pre_submit_review(spec, Path(repo_root).absolute(), inputs.get("source_files", ())))):
         try:
             observations[name] = check()
         except (ValueError, TypeError, RuntimeError, OSError) as error:
@@ -405,6 +437,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
               "spec_identity": spec.identity, "submitted": False, "stages": [],
+              "pre_submit_review": observations["pre_submit_review"],
               "prospective_published": False, "publication_intent": False,
               "timings": {"input_validation_seconds": perf_counter() - started}}
     phase_started = perf_counter()

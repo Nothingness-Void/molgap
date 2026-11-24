@@ -44,25 +44,6 @@ REPO_CONTROL_DOCS = {
     "ROADMAP.md",
     "TRACKS.md",
 }
-LOCAL_LINK_SUFFIXES = (
-    ".csv",
-    ".ipynb",
-    ".jpeg",
-    ".jpg",
-    ".json",
-    ".md",
-    ".parquet",
-    ".pdf",
-    ".png",
-    ".pt",
-    ".py",
-    ".svg",
-    ".toml",
-    ".tsv",
-    ".txt",
-    ".yaml",
-    ".yml",
-)
 TOP_LEVEL_POINTER_DOCS = (
     "AGENTS.md",
     "CURRENT_STATE.md",
@@ -113,32 +94,6 @@ def active_python_files() -> list[Path]:
                 continue
             files.append(path)
     return sorted(files)
-
-
-def active_markdown_files() -> list[Path]:
-    files = [
-        REPO_ROOT / name
-        for name in (
-            "AGENTS.md",
-            "ARCHITECTURE.md",
-            "CURRENT_STATE.md",
-            "NAMING.md",
-            "README.md",
-            "ROADMAP.md",
-            "TRACKS.md",
-        )
-    ]
-    # Experiment navigation uses the index and owner README. Nested records and
-    # dated STATUS histories may refer to retired source on their archive branch.
-    for root in ACTIVE_ROOTS:
-        directory = REPO_ROOT / root
-        candidates = ([directory / "README.md", *directory.glob("*/README.md")]
-                      if root == "experiments" else directory.rglob("README.md"))
-        for path in candidates:
-            if EXCLUDED_PARTS.intersection(path.relative_to(REPO_ROOT).parts):
-                continue
-            files.append(path)
-    return sorted(set(files))
 
 
 def argparse_clis() -> list[Path]:
@@ -198,35 +153,6 @@ def test_top_level_document_pointers_exist() -> None:
             if not (REPO_ROOT / pointer).exists():
                 failures.append(f"{relative}: {match.group(1)}")
     assert not failures, "missing top-level document pointers:\n" + "\n".join(failures)
-
-
-def test_active_markdown_links_resolve() -> None:
-    failures: list[str] = []
-    for document in active_markdown_files():
-        text = document.read_text(encoding="utf-8", errors="ignore")
-        for raw_target in MARKDOWN_LINK.findall(text):
-            target = raw_target.strip()
-            if target.startswith("<") and target.endswith(">"):
-                target = target[1:-1]
-            if target.startswith(("#", "http://", "https://", "mailto:")):
-                continue
-            target = target.split("#", maxsplit=1)[0]
-            if not target:
-                continue
-            normalized = target.replace("\\", "/")
-            first = normalized.split("/", maxsplit=1)[0]
-            looks_local = (
-                target.startswith(("./", "../"))
-                or first in REPO_POINTER_ROOTS
-                or normalized in REPO_CONTROL_DOCS
-                or normalized.lower().endswith(LOCAL_LINK_SUFFIXES)
-            )
-            if not looks_local:
-                continue
-            resolved = resolve_doc_pointer(document, target)
-            if resolved is not None and not resolved.exists():
-                failures.append(f"{document.relative_to(REPO_ROOT)}: {raw_target}")
-    assert not failures, "broken active Markdown links:\n" + "\n".join(failures)
 
 
 def test_cli_aliases_are_complete_and_importable() -> None:

@@ -27,6 +27,9 @@ SCOPES = {
     "accept": (
         "tests/test_run_acceptance_integration.py::test_top_level_execute_restores_frozen_generated_metadata",
         _PLATFORM_ROUNDTRIP,
+        *("tests/test_documentation_navigation.py::" + n for n in (  # durable doc checks
+            "test_local_navigation_links_resolve", "test_lifecycle_map_commands_exist",
+            "test_pages_use_no_absolute_paths_or_copied_facts")),
     ),
     "resume": (
         _TRAIN_RECOVERY,

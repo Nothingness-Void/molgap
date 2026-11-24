@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import subprocess, sys
 
 from molgap.constants import REPO_ROOT
 
@@ -20,13 +21,13 @@ from .portability import (
 
 
 def _root(value: str | None) -> Path:
-    return Path(value).resolve() if value else Path(REPO_ROOT).resolve()
+    top = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True).stdout.strip()
+    return Path(value or top or REPO_ROOT).resolve()
 
 
-def main(argv: list[str] | None = None) -> None:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m molgap.research_memory")
-    parser.add_argument("--repo-root", help="default: the checkout holding the imported molgap package "
-                        "(the primary checkout under .venv, not a worktree); lookup/cards/gaps read only that")
+    parser.add_argument("--repo-root", help="default: the git root of the current directory")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("validate")
     commands.add_parser("rebuild")
@@ -58,6 +59,9 @@ def main(argv: list[str] | None = None) -> None:
                       help="one line per item: sparse | family | counts, or contradiction | arm | a vs b")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
+    doctor.add_argument("--clean-staging", action="store_true", help="list terminal_staging of unclosed arms; --apply removes them")
+    doctor.add_argument("--apply", action="store_true")
+    doctor.add_argument("--run-id", help="with --clean-staging --apply: the one run to clean")
     check = commands.add_parser("check")
     check.add_argument("--frozen", action="store_true", required=True)
     check.add_argument("--portable", action="store_true")
@@ -94,7 +98,12 @@ def main(argv: list[str] | None = None) -> None:
     policy = commands.add_parser("backtest-policy")
     policy.add_argument("--policy-id")
     policy.add_argument("--policy-version")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = build_parser().parse_args(argv)
+    getattr(sys.stdout, "reconfigure", lambda **_: None)(encoding="utf-8")
     root = _root(args.repo_root)
 
     if args.command == "terminal-rebuild":
@@ -225,21 +234,17 @@ def main(argv: list[str] | None = None) -> None:
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"
-        if not path.is_file():
-            raise SystemExit("research summary is missing; run rebuild")
+        path.is_file() or sys.exit("research summary is missing; run rebuild")
         print(path.read_text(encoding="utf-8"), end="")
         return
     if args.command == "doctor":
-        report = json.loads(
-            (root / "research_memory" / "derived" / "completeness_report.json").read_text(
-                encoding="utf-8"
-            )
-        )
-        print(json.dumps(report, indent=2))
+        if args.clean_staging:
+            from molgap.experiment_terminal_staging import clean_unclosed_staging
+            return print(json.dumps(clean_unclosed_staging(root, args.apply, args.run_id), indent=2))
+        report = json.loads((root / "research_memory/derived/completeness_report.json").read_text(encoding="utf-8"))
+        print(json.dumps({**report, "molgap_imported_from": __file__}, indent=2))
         failing = {"ERROR"} | ({"WARN"} if args.strict else set())
-        if any(issue["severity"] in failing for issue in report["issues"]):
-            raise SystemExit(1)
-        return
+        sys.exit(any(issue["severity"] in failing for issue in report["issues"]))
     validated = validate_repository_records(root)
     records = validated["records"]
     if args.command in {"replay-pool", "backtest-policy"}:

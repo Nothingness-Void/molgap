@@ -134,7 +134,7 @@ retirement receipts, then verify the candidate bytes before using them. The
 existing read-only lookup accepts an original absolute path or SHA:
 
 ```powershell
-& ./.venv/Scripts/python.exe D:/molgap-cleanup-retained-20261017/payload-retirement/resolve-local-availability.py <original-path-or-sha256>
+& ./.venv/Scripts/python.exe <cleanup-root>/payload-retirement/resolve-local-availability.py <original-path-or-sha256>
 ```
 
 Its index and the custody journal are hash-bound by this document's linked

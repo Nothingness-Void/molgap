@@ -9,6 +9,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .cards import families_pages
 from .backtest import build_screening_backtest
 from .backtest import build_policy_backtests
 from .policy import load_policy_registry
@@ -24,17 +25,16 @@ from .paths import repo_local_path
 
 DERIVED_FILENAMES = (
     "trajectory_index.json",
-    "trajectory_graph.json",
     "cost_ledger.json",
     "role_reuse_index.json",
     "reference_reuse_index.json",
-    "ready_for_desktop_index.json",
     "screening_backtest.json",
     "replay_pool.json",
     "policy_backtest.json",
     "completeness_report.json",
     "research_summary.json",
     "research_summary.md",
+    "families.md",
 )
 
 
@@ -108,65 +108,9 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
         ],
     }
 
-    edges = []
-    for item in sorted(trajectories, key=lambda row: row["trajectory_id"]):
-        target = item["trajectory_id"]
-        for parent in item["state_at_start"]["parent_trajectory_ids"]:
-            edges.append({"type": "parent_trajectory", "source": parent, "target": target})
-        for prior in item["state_at_start"]["prior_evidence_ids"]:
-            edges.append({"type": "prior_evidence", "source": prior, "target": target})
-        for reference in item["state_at_start"]["reference_ids"]:
-            edges.append({"type": "reference_used", "source": reference, "target": target})
-        for action in item["actions"]:
-            for evidence_ref in action["evidence_refs"]:
-                edges.append(
-                    {
-                        "type": "action_produced_evidence",
-                        "source": f"{target}:{action['action_id']}",
-                        "target": evidence_ref,
-                    }
-                )
-    for package in ready:
-        edges.append(
-            {
-                "type": "trajectory_produced_READY",
-                "source": package["trajectory_id"],
-                "target": package["package_id"],
-            }
-        )
-    trajectory_graph = {
-        "format": "molgap-rml-trajectory-graph-v1",
-        "nodes": sorted(
-            [
-                {"id": item["trajectory_id"], "type": "trajectory"}
-                for item in trajectories
-            ]
-            + [{"id": item["evidence_id"], "type": "evidence"} for item in evidence]
-            + [{"id": item["package_id"], "type": "ready_package"} for item in ready],
-            key=lambda node: (node["type"], node["id"]),
-        ),
-        "edges": sorted(edges, key=lambda edge: (edge["type"], edge["source"], edge["target"])),
-    }
-
     cost_ledger = build_cost_ledger(costs)
     role_index = build_role_reuse_index(roles, evidence)
     reference_index = build_reference_reuse_index(evidence, trajectories)
-    ready_index = {
-        "format": "molgap-rml-ready-for-desktop-index-v1",
-        "valid": [
-            {
-                "package_id": item["package_id"],
-                "trajectory_id": item["trajectory_id"],
-                "path": item["_path"],
-                "status": "valid_unconsumed",
-            }
-            for item in sorted(ready, key=lambda row: row["package_id"])
-        ],
-        "invalid": [],
-        "superseded": [],
-        "consumed": [],
-        "blocked": [],
-    }
     backtest = build_screening_backtest(traces)
     replay_pool = build_replay_pool(root, records, manifests=traces)
     policy_backtest = build_policy_backtests(load_policy_registry(root), replay_pool)
@@ -294,11 +238,9 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
 
     derived_objects = {
         "trajectory_index.json": trajectory_index,
-        "trajectory_graph.json": trajectory_graph,
         "cost_ledger.json": cost_ledger,
         "role_reuse_index.json": role_index,
         "reference_reuse_index.json": reference_index,
-        "ready_for_desktop_index.json": ready_index,
         "screening_backtest.json": backtest,
         "replay_pool.json": replay_pool,
         "policy_backtest.json": policy_backtest,
@@ -312,6 +254,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
     payloads.update({
         "research_summary.md": render_summary_markdown(summary).encode("utf-8"),
     })
+    payloads.update(families_pages(root, trajectory_index))
     return payloads
 
 
@@ -319,10 +262,13 @@ def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
     payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = repo_local_path(root, "research_memory/derived")
-    output_root.mkdir(parents=True, exist_ok=True)
+    (output_root / "families").mkdir(parents=True, exist_ok=True)
+    for stale in (output_root / "families").glob("*.md"):
+        if f"families/{stale.name}" not in payloads:
+            stale.unlink()
     for name, payload in sorted(payloads.items()):
         target = repo_local_path(root, output_root / name)
-        with tempfile.NamedTemporaryFile(dir=output_root, delete=False) as handle:
+        with tempfile.NamedTemporaryFile(dir=target.parent, delete=False) as handle:
             temporary = Path(handle.name)
             handle.write(payload)
         temporary.replace(target)
@@ -336,8 +282,9 @@ def frozen_differences(repo_root: str | Path) -> list[str]:
     payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = root / "research_memory" / "derived"
     differences = []
-    for name in DERIVED_FILENAMES:
+    stray = {f"families/{p.name}" for p in (output_root / "families").glob("*.md")} - set(payloads)
+    for name in [*DERIVED_FILENAMES, *sorted(payloads.keys() - set(DERIVED_FILENAMES)), *sorted(stray)]:
         path = output_root / name
-        if not path.is_file() or path.read_bytes() != payloads[name]:
+        if not path.is_file() or path.read_bytes() != payloads.get(name):
             differences.append(name)
     return differences

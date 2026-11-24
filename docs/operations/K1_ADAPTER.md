@@ -43,7 +43,7 @@ No training recipe, loader, dataset identity, or output location is embedded.
 ## Migration provenance
 
 Extracted from
-`D:/文档/molgap-exp/k1-pair-value-100k/src/molgap/k1_pair_token.py`,
+`src/molgap/k1_pair_token.py` in the `k1-pair-value-100k` worktree,
 source branch `codex/exp/k1-pair-value-100k`, inspected HEAD
 `6859c2ffde1b906c3087edf2e1d29bab59b15873`.
 The tracked source file had no working-tree modifications at inspection.

@@ -18,11 +18,29 @@ Apply these Orwell-inspired rules to responses and project documentation:
 Lead with the answer. State a limitation once when it affects the decision;
 avoid repetitive disclaimers. Be concise without hiding uncertainty or results.
 
+## Read Routes by Role
+
+Start from the row for the task. Each route goes to the
+[lifecycle map](docs/operations/LIFECYCLE_MAP.md), then
+[families.md](research_memory/derived/families.md) (closed and open items per model
+family), then the family page and the last page named.
+
+| Role | Then read |
+|---|---|
+| Retrieve, accept, close a run | platform skill in `skills/`, then [RML interfaces](docs/operations/RML_INTERFACES.md) (closure format) |
+| Plan research | [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md), then RML interfaces (planning section) |
+| Change infrastructure | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md), then the [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) |
+| Look up past notes | [vault](docs/operations/VAULT.md) (a view, never an authority) |
+
+Changing a command means changing its row in the lifecycle map; the documentation navigation test
+checks it and runs in the `accept` scope of `molgap.local_testing`.
+
 ## Reuse First
 
 For routine operations on an already declared, authorized run, start with the
 platform skill and supplied run contract. Read only the instructions relevant to
 that operation. For infrastructure changes, start with the
+[lifecycle map](docs/operations/LIFECYCLE_MAP.md) and the
 [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
 Use the [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
 [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
@@ -141,6 +159,10 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   system Python. Reuse the primary checkout environment across temporary worktrees;
   do not reinstall editable from a temporary checkout and redirect its shared import.
   Install editable from the primary checkout with that environment's `pip install -e .`.
+  The editable `.pth` holds only the ASCII path `C:\molgap-src`, a junction to the primary
+  `src` (non-ASCII paths crash under GBK or `-X utf8`). `pip install -e .` rewrites it; rebuild with
+  `cmd /c mklink /J C:\molgap-src <primary checkout>\src` and put that one line back in
+  `.venv\Lib\site-packages\__editable__.molgap-0.1.0.pth`. `doctor` prints `molgap_imported_from`.
 - **Targets:** `homo`, `lumo`, `gap` in eV under applicable PubChemQC /
   B3LYP Kohn-Sham contracts; no experimental or alternate target substitution.
 - **Geometry:** generated-3D training/inference contracts must be compatible.
@@ -183,7 +205,7 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 - **Infrastructure budget:** `.venv\Scripts\python.exe platforms/local/infra_budget.py` compares
   `src/molgap`, `tests` and `docs/operations` size with
   [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json) and exits 1 when over.
-  No flow runs it; run it before an infrastructure commit. Requested bug fixes with
+  No flow runs it; run it and `tests/test_documentation_navigation.py` before an infrastructure commit. Requested bug fixes with
   total net source growth of at most 20 lines are preapproved for measured source-line
   limit adjustments; count the whole fix, not individual commits. Other increases need
   explicit approval. This allowance excludes rewrites and unrequested features.
@@ -297,5 +319,6 @@ experiment records. Comments explain why, not what.
 Basic install/inference: [README](README.md); shipping: [production](production/README.md).
 Remote routing: [platforms](platforms/README.md); closed evidence: [experiments](experiments/README.md).
 Detailed research checklists: [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md).
-Historical branch audits: [Branch History](docs/operations/BRANCH_HISTORY.md).
+Docs map and archived pages: [docs/README.md](docs/README.md).
+Project skills live in [skills/](skills/README.md); that copy is the authority and the user directory only links to it. Read `kaggle-molgap-workloads`, `ims-molgap-workloads` or `scnet-bw-dcu-molgap` for the platform before submit, retrieve or close.
 Obtain the minimum new evidence needed for the next justified decision, not busy GPUs.
