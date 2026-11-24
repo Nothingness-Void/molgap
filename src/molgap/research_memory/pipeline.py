@@ -23,8 +23,8 @@ def refresh_vault(root: Path) -> str:
     if os.environ.get("MOLGAP_VAULT_AUTOREFRESH") == "0" or not script.is_file(): return "skipped"
     start, status = time.monotonic(), "ok"
     try:
-        subprocess.run([sys.executable, "-X", "utf8", "-B", str(script)], capture_output=True, text=True, check=True,
-                       errors="replace", encoding="utf-8", timeout=300, env={**os.environ, "MOLGAP_REPO_ROOT": str(root)})
+        subprocess.run([sys.executable, "-B", str(script)], capture_output=True, text=True, check=True,
+                       errors="replace", encoding="utf-8", timeout=300, env={**os.environ, "MOLGAP_REPO_ROOT": str(root), "PYTHONIOENCODING": "utf-8"})
     except Exception as exc:
         status = f"failed: {getattr(exc, 'stderr', None) or exc}"[:300]
     return f"{status} ({time.monotonic() - start:.0f}s)"
