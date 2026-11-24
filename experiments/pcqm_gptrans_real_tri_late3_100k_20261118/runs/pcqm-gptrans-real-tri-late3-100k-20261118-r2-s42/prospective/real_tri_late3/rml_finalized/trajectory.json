@@ -1,0 +1,131 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3-planned",
+        "cost-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3-0",
+        "cost-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/generated/5463027cd41e1b25b51a7d69f607afc05c47dbb12b44929e1ffb0a4ef606d2a9/real_tri_late3/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42:real_tri_late3:downstream"
+      ],
+      "source_commit": "edaa6ac62a5f89ad40435c98ee9f1d301e884dc0",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/strict_qualification/5a6e1c665952a1ce7b89/real_tri_late3/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+    "facts": {
+      "ci_meV": [
+        0.1344755027294159,
+        1.8910953541994073
+      ],
+      "effect_meV": 1.0217399501800537,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/closure_v1/measured_pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/generated/5463027cd41e1b25b51a7d69f607afc05c47dbb12b44929e1ffb0a4ef606d2a9/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/rml_decision_snapshots/67136f6fce4a4fb470d07a7a2554f2602acdea18a91c687c04b3c0cc70b372ab.json",
+    "snapshot_sha256": "67136f6fce4a4fb470d07a7a2554f2602acdea18a91c687c04b3c0cc70b372ab",
+    "state_timestamp": "2026-11-18T13:00:00+09:00"
+  },
+  "family_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Early triangle contraction at layers 2 and 4 is helpful rather than premature",
+      "Mid-late 3-layer triangle contraction adds pair capacity without clearing the 3 meV gate",
+      "Effect is indistinguishable from zero"
+    ],
+    "changed_mechanism": "gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealTriLate3 from identical gptrans.pt initialization.",
+    "decision_changed_if_negative": "Close this mid-late 3-layer real-atom triangle pair intervention without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3",
+    "observed_deficiency": "Five-layer real-atom triangle updates at layers 2, 4, 6, 8, and 10 improved 100K development MAE by -1.667 meV at +19.4% wall overhead, but early gains faded in late training. Whether restricting triangle contraction to mid-late layers 6, 8, and 10 after local bond context matures prevents premature contraction overfitting and lowers wall overhead to ~1.116x is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does pruning the asymmetric low-rank real-atom triangle multiplicative pair update to mid-late layers 6, 8, and 10 only reduce late-horizon overfitting and improve matched 100K development MAE on the accepted BondLocal+PairNorm GPTrans-T parent?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm-5a6e1c665952a1ce7b89",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/real_tri_late3/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/generated/5463027cd41e1b25b51a7d69f607afc05c47dbb12b44929e1ffb0a4ef606d2a9/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/generated/5463027cd41e1b25b51a7d69f607afc05c47dbb12b44929e1ffb0a4ef606d2a9/real_tri_late3/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "real_tri_late3",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "576f7c2b5f931ed6ef8e15718addeb9bb5ffee19c5cd828073f22cad4ffdf279"
+    },
+    "source_commit": "edaa6ac62a5f89ad40435c98ee9f1d301e884dc0",
+    "source_config_identity": "31db67fdf741deb14e63fdbac85a5180e74777f9bb86db514d56f5c8142942a8"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3"
+}

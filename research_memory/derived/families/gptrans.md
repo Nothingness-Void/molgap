@@ -1,16 +1,16 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 86, 16 are CLOSED reference arms):
+Last closed (of 88, 17 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
-Open (ACTIVE) 6: T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm, +3 more
+Open (ACTIVE) 8: T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm, T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm, +5 more
 Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / a separate training prospective and explicit launch authorization
 src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, gptrans_screen_workflow.py, gptrans_variants.py, +3 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +29 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +30 more
 
-## Closed (86)
+## Closed (88)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
@@ -75,6 +75,8 @@ TB-chemical-aux-fixed-train-cache-20260930 | NO_TRAIN | gptrans-clean-chemical-a
 TB-chemical-aux-component-cache-retry2-20260930 | NO_TRAIN | gptrans-clean-chemical-aux-cache | existing-pcqm-topology-parser-descriptor-only | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | -0.62 | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | +0.65 | -
+T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | +1.02 | below_gate
+T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm | CLOSED | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
 T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6 | POSITIVE_UNDER_CONTRACT | pcqm-gptrans-query-readout-bc-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | -4.21 | -
 T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6 | CLOSED | pcqm-gptrans-query-readout-bc-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | null | -
 T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-query-readout-ad-100k-20261105 | propagation-depth-and-dynamic-molecular-query-readout | +1.49 | -
@@ -98,7 +100,9 @@ T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm | POSITIVE_UNDER_CON
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local | CLOSED | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | null | -
 T-gptrans-chemical-aux-feasibility | INCONCLUSIVE | gptrans-clean-chemical-aux | clean-input-graph-level-descriptor-and | null | -
 
-## Open (6)
+## Open (8)
+T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm | ACTIVE | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
+T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3 | ACTIVE | pcqm-gptrans-real-tri-late3-100k-20261118 | gptrans-real-atom-asymmetric-low-rank-triangle-pair-update-late3 | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
 T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm | ACTIVE | pcqm-gptrans-triplet-norm-100k-20261104 | triplet-return-normalization-order | null | -
@@ -229,6 +233,9 @@ src/molgap/pcqm_k1_gptrans_fusion.py
 - experiments/pcqm_gptrans_query_readout_bc_100k_20261105: scripts -
   - trace experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/rml_finalized/trace.json
+- experiments/pcqm_gptrans_real_tri_late3_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/real_tri_late3/rml_finalized/trace.json
 - experiments/pcqm_gptrans_t_100k_v4: scripts accept_result.py, run.py
 - experiments/pcqm_gptrans_t_500k: scripts -
 - experiments/pcqm_gptrans_triplet_norm_100k_20261104: scripts -

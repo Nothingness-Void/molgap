@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "87ece16c67d1e1027b497185eacee31ddfa51e63e61343161d9d0c50e281781d",
+  "source_digest": "8c5e5a72354991c673c9e72a34c9df038e5e6573ce3503d8535a60841f128e9a",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -385,6 +385,66 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42/prospective/real_tri_late3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-late3-100k-20261118",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_late3_100k_20261118/runs/pcqm-gptrans-real-tri-late3-100k-20261118-s42/prospective/real_tri_late3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3"
     },
     {
       "completeness_status": "complete",

@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 239,
+    "trajectories_total": 243,
     "with_complete_native_measurement": 37,
-    "with_cost_event": 228,
-    "with_incomplete_native_measurement": 191,
+    "with_cost_event": 232,
+    "with_incomplete_native_measurement": 195,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,10 +15,12 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 116,
+      "count": 118,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-dft-distance-aux-20261121",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -165,7 +167,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 191,
+      "count": 195,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
@@ -191,6 +193,10 @@
         "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4",
         "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
         "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-r2-s42-real_tri_late3",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -381,9 +387,11 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 55,
+      "count": 57,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -443,8 +451,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 20,
+      "count": 22,
       "items": [
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm",
+        "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
