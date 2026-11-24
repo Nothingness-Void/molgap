@@ -8,7 +8,7 @@ description: Prepare, submit, reconcile, retrieve and accept a MolGap Kaggle run
 Run in the owning checkout with its already authorized, committed `experiment.json`.
 `$experiment`, `$profile`, `$credentials` are the input JSON, machine profile and
 external credential file. Default `$profile` is `D:/molgap-machine-profile.json`;
-account keys sit under `D:/下载/Key` ([account-and-cli](references/account-and-cli.md)). Use `D:/文档/molgap/.venv/Scripts/python.exe` as `$python`.
+account key locations are in [account-and-cli](references/account-and-cli.md). Use `D:/文档/molgap/.venv/Scripts/python.exe` as `$python`.
 These commands handle the declared run; they grant no new training, retry, role
 access or promotion. Pass credential files by path; never print their contents.
 Routine operation needs this page and the run's supplied records, not a full
