@@ -2,8 +2,7 @@
 
 New cross-scale declarations use `gptrans_t/2` through the
 [shared family session](FAMILY_TRAINING_CORE.md). Its additional execution
-controls and verification limits are owned by the
-[shared refinement record](GPTRANS_EXECUTION_REFINEMENT.md).
+controls and verification limits are below ([refinements](#shared-refinements)).
 
 The legacy registered `gptrans_t/1` workflow automatically uses accelerated execution
 for both native preflight and training. Do not wrap entrypoints in
@@ -69,3 +68,34 @@ optimizer arm. The registered desktop core integration is CPU/synthetic-tested,
 not independently native-performance-qualified. No universal GPU/500K/full
 gain is claimed. Server terminal training RML finalization remains blocked for
 the noncausal same-run delivery experiment; do not label it replay-ready.
+
+## Shared refinements
+
+Execution maintenance on the family core. No model, objective, precision, batch,
+sampler, schedule, EMA decay or checkpoint cadence changes. New registered source
+packages inherit them; historical payloads keep their frozen code. New source
+and native qualification stay mandatory.
+
+| Change | Owner and invariant |
+|---|---|
+| Scoped GPTrans training safety-fill suppression | `family_training_kernel.py` reuses `deterministic_memory_fill_context`; deterministic algorithms stay on and the previous setting is restored on every exit. Evaluation and checkpoint validation keep their normal policy. |
+| Native fill-on reference | `family_training_runner.py` adds one two-update training-only scratch reference (`fill-enabled.pt`). Its state fingerprint must match the accelerated repeat; a renamed, missing or changed file blocks training. No slow fallback. |
+| In-place local-bond accumulation | `gptrans_bond_local.py` accumulates into its own zeroed buffer. Directed edges and reduction order are unchanged. |
+| One complete producer validation | `write_resume_state` validates the complete payload once (optimizer, EMA, scheduler, cursor, RNG). No caller-supplied validation flag. |
+| One evaluation weight view | `FamilyKernel.evaluate(..., on_evaluation=...)` selects while the live/EMA view is installed and restores live state on failure. |
+| Profiling continuity | `family_execution_profile.py` adds a `finite_validation` range. |
+
+Not changed on purpose: the shortest-path/degree cache, QKV/1x1-convolution
+fusion, FlashAttention, AMP/TF32, fused optimizer, bucketing and fewer
+evaluations. Each needs a bounded native probe first.
+
+## Verification boundary
+
+`tests/test_gptrans_execution_refine.py` covers synthetic CPU values, gradients,
+optimizer/EMA/RNG equality, empty/repeated-target bonds and tampered references;
+the same cases run on CUDA with `MOLGAP_EXECUTION_TEST_DEVICE=cuda`. CPU success
+is not native GPU qualification, and no dataset-level throughput was measured.
+Checkpoint finite checks now sit in the producer's publication interval, so
+compare whole transactions, not one renamed timing component. For another
+timing diagnostic reuse the [shared profiler](FAMILY_EXECUTION_PROFILE.md) and
+publish its prospective scope first.

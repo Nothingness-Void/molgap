@@ -11,8 +11,8 @@ They provide local diagnostics/source preparation, not submission authority.
 
 Cross-scale K1/GPTrans `prepare-family-training` staging is described in
 [Shared Family Training Core](FAMILY_TRAINING_CORE.md). It prepares source and
-inputs, not submission/full admission/scientific acceptance. See
-[CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
+inputs, not submission/full admission/scientific acceptance. CPU acceptance is
+not native qualification.
 
 Run from the selected checkout's root with the primary checkout's `.venv`
 interpreter, not system Python. In a worktree, use the

@@ -134,8 +134,6 @@ requires owning acceptance and budget checks, not a sandbox green light.
 ## Desktop integration boundary
 
 This reusable port originates from server `938ddc11`, reviewed at `ded33bea`.
-The [desktop acceptance record](MODULAR_RUNTIME_DESKTOP_ACCEPTANCE.md) owns
-executed checks and unchanged baseline failures.
 It retains desktop K1/GPTrans accelerated trainers, scientific modes, target
 bindings, runtime checks and V5/RML gates. It does not import server research,
 control, campaign transport or queue state.
@@ -158,8 +156,7 @@ The generic screen has a bounded local-CPU/Kaggle-T4 execution policy, not an
 IMS/DCU/full-data trainer. Cross-scale K1/GPTrans continue through the existing
 family sessions and their owning platform skills.
 
-The [shared-core adoption](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md) connects
-ordered slots to the accelerated forward and optimizer. Explicit `clean_bn`
+The shared core connects ordered slots to the accelerated forward and optimizer. Explicit `clean_bn`
 recipes retain Clean state in session checkpoints and select/evaluate it through
 the same lifecycle; no calibration is enabled by default. Use the
 [two-family examples](FAMILY_TRAINING_EXAMPLES.md), not a copied legacy runner.

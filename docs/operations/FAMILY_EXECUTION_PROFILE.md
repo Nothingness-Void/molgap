@@ -58,7 +58,7 @@ Phases include loader wait, layout/transfer, forward, backward, clipping,
 optimizer, EMA, metrics, pass-end, checkpoint-state construction and publication.
 Complete-state finite checking has a separate `finite_validation` range. The
 registered builder route constructs its state inside publication; see the
-[refinement timing boundary](GPTRANS_EXECUTION_REFINEMENT.md#verification-boundary)
+[refinement timing boundary](GPTRANS_EXECUTION.md#verification-boundary)
 before comparing these components with older profiles.
 GPTrans shortest-path construction has its own range. Optional module ranges
 show individual layers. Existing evaluation is observed only if the admitted
