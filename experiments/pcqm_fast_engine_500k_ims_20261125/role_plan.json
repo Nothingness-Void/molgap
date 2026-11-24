@@ -1,0 +1,17 @@
+{
+  "development": "500K development rows 500000..549999. Report only: the job evaluates the EMA weights on it every pass and the live weights every 10th pass; selection is final-ema, so it never picks a checkpoint.",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "held_out": "tail_holdout_v1 untouched by training; scored offline once from the retrieved selected EMA weights with platforms/local/pcqm_tail_holdout_eval.py",
+  "roles": [
+    {
+      "role": "train",
+      "rows": "0..499999"
+    },
+    {
+      "role": "development",
+      "rows": "500000..549999"
+    }
+  ]
+}

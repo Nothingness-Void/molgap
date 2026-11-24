@@ -1,0 +1,14 @@
+{
+ "format": "molgap-ims-family-serial-v1",
+ "items": [
+  {
+   "name": "fast-500k-s42",
+   "recipe": "experiments/pcqm_fast_engine_500k_ims_20261125/fast_s42/recipe.json",
+   "recipe_sha256": "1faa32bc35d2b663933a38b9d5bf8b23fcd9527d448f8419365f3adef3c58963",
+   "execution_policy": "fast_amp_nondeterministic",
+   "budget_s": 30000,
+   "initial_state": "experiments/pcqm_gptrans_dft_distance_aux_20261121/init/s44.pt",
+   "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573"
+  }
+ ]
+}
