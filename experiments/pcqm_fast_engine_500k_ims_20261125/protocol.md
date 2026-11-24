@@ -51,3 +51,12 @@ time, evaluation precision (engine AMP, scorer FP32).
 
 No batch-size 256/512 probe: the run contract pins `physical_batch_per_device: 128` for the whole job, so such an item would
 misstate it. The job reads no official valid, test or tail row.
+
+## Local rehearsal (2026-11-25, RTX 5060, eager: no Triton on Windows)
+
+`family_serial_rehearsal.py spec` on the committed tree (HEAD 073303964), record in `local_rehearsal_record.json`: spec checks,
+start-of-job check on the real spec, 20 real steps, kill after a checkpoint, resume at step 128, one-pass chain COMPLETE. One pass
+took 280 s of training (about 72 ms/step; the 5060 FP32 baseline is about 330 s per pass, but one pass is not a speed claim:
+one pass, eager), evaluation 11 s. The saved `selected_model.pt` loads strictly into the family model and gives dev MAE 0.227502 eV in FP32,
+against 0.227494 eV logged by the engine in AMP. The inverse key layout reproduces the init state sha ff949650... exactly.
+Not rehearsed: `torch.compile` (needs Triton), the Linux memory probes, the A100 name check.
