@@ -488,7 +488,7 @@ def _dispatch(args) -> tuple[dict, int]:
                         result = accept_run_workflow(*original, **options)
                     except ValueError as exc:
                         text = next(iter(args.repo_root.glob(f"experiments/*/runs/{args.run_id}")), None)
-                        text = text and (text.parents[1] / "protocol.md").read_text(encoding="utf-8")
+                        text = text and (text.parents[1] / "protocol.md").is_file() and (text.parents[1] / "protocol.md").read_text(encoding="utf-8")
                         if "Strict comparison remains blocked" in str(exc) and text and re.search(r"(?i)acceptance path.*pre-?registered", text):
                             raise ValueError(str(exc) + ": the protocol pre-registered a non-strict path; drop --strict") from exc
                         raise

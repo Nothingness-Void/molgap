@@ -316,7 +316,7 @@ def test_closure_housekeeping_on_real_layout(tmp_path, capsys):
     (closed_arm / "rml_finalized").mkdir()
     (exp / "STATUS.md").write_text("# Status\n\nPending\n")
     assert [(r["state"]) for r in clean_unclosed_staging(tmp_path)["others"]] == ["remove"]
-    clean_unclosed_staging(tmp_path, apply=True)
+    clean_unclosed_staging(tmp_path, apply=True, run_id="r1")
     assert not (open_arm / "terminal_staging").exists() and (closed_arm / "terminal_staging").exists()
     assert fill_status_placeholder(tmp_path, "r1").startswith("replaced 1")
     (exp / "STATUS.md").write_text("Pending\n")  # a record that names this file's hash keeps it as written

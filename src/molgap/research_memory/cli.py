@@ -61,6 +61,7 @@ def build_parser() -> argparse.ArgumentParser:
     doctor.add_argument("--strict", action="store_true")
     doctor.add_argument("--clean-staging", action="store_true", help="list terminal_staging of unclosed arms; --apply removes them")
     doctor.add_argument("--apply", action="store_true")
+    doctor.add_argument("--run-id", help="with --clean-staging --apply: the one run to clean")
     check = commands.add_parser("check")
     check.add_argument("--frozen", action="store_true", required=True)
     check.add_argument("--portable", action="store_true")
@@ -239,7 +240,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.command == "doctor":
         if args.clean_staging:
             from molgap.experiment_terminal_staging import clean_unclosed_staging
-            return print(json.dumps(clean_unclosed_staging(root, args.apply), indent=2))
+            return print(json.dumps(clean_unclosed_staging(root, args.apply, args.run_id), indent=2))
         report = json.loads((root / "research_memory/derived/completeness_report.json").read_text(encoding="utf-8"))
         print(json.dumps({**report, "molgap_imported_from": __file__}, indent=2))
         failing = {"ERROR"} | ({"WARN"} if args.strict else set())
