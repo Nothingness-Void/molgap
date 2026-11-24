@@ -475,8 +475,7 @@ def _dispatch(args) -> tuple[dict, int]:
                     if args.arm_facts_ref is not None:
                         options["facts_ref"] = _bindings(args.arm_facts_ref)
                     if args.role_audit is not None:
-                        args.role_audit = _local(str(args.repo_root / args.role_audit))  # absolute paths stay as given
-                        audit = _json(args.role_audit)
+                        args.role_audit = _local(str(args.repo_root / args.role_audit)); audit = _json(args.role_audit)  # absolute stays
                         options["role_audit"] = (args.role_audit if "context" in audit
                             or all(isinstance(value, dict) for value in audit.values()) else audit)
                     if args.dry_run:
