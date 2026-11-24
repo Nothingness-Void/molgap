@@ -883,13 +883,13 @@ def test_genuine_no_trace_experiment_legally_unavailable(tmp_path):
 # =========================================================================
 def test_multi_arm_independent_finalizations(tmp_path, monkeypatch):
     setup_mock_repo(tmp_path)
-    # A failing vault validator is reported but never changes closure status.
+    # A failing vault refresh is reported but never changes closure status.
     scripts = tmp_path / "vault" / "_scripts"
     scripts.mkdir(parents=True)
-    (scripts / "build_vault.py").write_text(
-        "import os, pathlib\n"
-        "pathlib.Path(__file__).with_name('seen').write_text(os.environ['MOLGAP_REPO_ROOT'])\n")
-    (scripts / "validate_vault.py").write_text("raise SystemExit(1)\n")
+    (scripts / "refresh_vault.py").write_text(
+        "import os, pathlib, sys\n"
+        "pathlib.Path(__file__).with_name('seen').write_text(os.environ['MOLGAP_REPO_ROOT'])\n"
+        "sys.exit('validate_vault.py exit 1: bad')\n")
     monkeypatch.setenv("MOLGAP_VAULT_AUTOREFRESH", "1")
     monkeypatch.setenv("MOLGAP_VAULT_ROOT", str(tmp_path / "vault"))
 
