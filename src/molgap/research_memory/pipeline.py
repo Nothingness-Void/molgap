@@ -1,11 +1,7 @@
 """Controller-neutral terminal handoff; never dispatches a successor."""
 from __future__ import annotations
 
-import json
-import logging
-import os
-import subprocess
-import sys
+import json, os, subprocess, sys, time
 from pathlib import Path
 from typing import Any
 
@@ -23,26 +19,22 @@ def terminal_handoff(result: dict[str, Any]) -> dict[str, Any]:
 
 
 def refresh_vault(root: Path) -> str:
-    """Regenerate the Obsidian vault from this checkout's RML. Never raises: closure must not depend on it."""
-    if os.environ.get("MOLGAP_VAULT_AUTOREFRESH") == "0":
-        return "skipped: MOLGAP_VAULT_AUTOREFRESH=0"
+    """Rebuild the Obsidian vault from this checkout. Best effort: the result is only reported."""
     scripts = Path(os.environ.get("MOLGAP_VAULT_ROOT") or "D:/molgap-artifacts/molgap-vault") / "_scripts"
-    if not (scripts / "build_vault.py").is_file():
-        return "skipped: vault not found"
-    env = {**os.environ, "MOLGAP_REPO_ROOT": str(root), "PYTHONIOENCODING": "utf-8"}
-    for name in ("build_vault.py", "validate_vault.py"):
-        try:
-            done = subprocess.run([sys.executable, "-B", str(scripts / name)], env=env, capture_output=True,
-                                  text=True, encoding="utf-8", errors="replace", timeout=600)
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            status = f"failed: {name}: {exc}"
-        else:
-            if not done.returncode:
-                continue
-            status = f"failed: {name} exit {done.returncode}: {(done.stdout + done.stderr).strip()[-400:]}"
-        logging.warning("vault refresh %s", status)
-        return status
-    return "ok"
+    if os.environ.get("MOLGAP_VAULT_AUTOREFRESH") == "0" or not (scripts / "build_vault.py").is_file():
+        return "skipped"
+    start, status = time.monotonic(), "ok"
+    try:  # one 300 s budget for both scripts
+        for name in ("build_vault.py", "validate_vault.py"):
+            done = subprocess.run([sys.executable, "-X", "utf8", "-B", str(scripts / name)], capture_output=True,
+                                  env={**os.environ, "MOLGAP_REPO_ROOT": str(root)}, text=True, errors="replace",
+                                  timeout=max(1.0, 300 - (time.monotonic() - start)), encoding="utf-8")
+            if done.returncode:
+                status = f"failed: {name} exit {done.returncode}: {(done.stdout + done.stderr).strip()[-300:]}"
+                break
+    except Exception as exc:
+        status = f"failed: {type(exc).__name__}: {exc}"[:300]
+    return f"{status} ({time.monotonic() - start:.0f}s)"
 
 
 def rebuild_terminal_handoffs(repo_root: str | Path, handoffs: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -65,15 +57,18 @@ def rebuild_terminal_handoffs(repo_root: str | Path, handoffs: list[dict[str, An
         old = {(p["policy_id"], p["policy_version"]): p for p in previous_reports["reports"]}
         candidates = [p for p in reports["reports"] if p["policy_status"] == "candidate"
                       and old.get((p["policy_id"], p["policy_version"])) != p]
-        vault = refresh_vault(root)
         for item in completed:
             item.update(validation_status="VALID", replay_pool_delta=delta,
-                        candidate_policy_deltas=candidates, pipeline_status="COMPLETE", vault_refresh=vault)
+                        candidate_policy_deltas=candidates, pipeline_status="COMPLETE")
     except (ValueError, OSError) as exc:
         for item in completed:
             item.update(pipeline_status="DERIVED_UPDATE_FAILED", validation_status="FAILED",
                         error=str(exc), recovery_action="terminal-rebuild",
                         canonical_finalization_preserved=True)
+    else:  # outside the try: a vault problem can never turn a closed run into DERIVED_UPDATE_FAILED
+        vault = refresh_vault(root)
+        for item in completed:
+            item["vault_refresh"] = vault
     return handoffs
 
 
