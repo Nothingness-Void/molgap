@@ -53,6 +53,9 @@ For a bound run, optional status (no downloads or submission):
 
 Use the run/attempt from the experiment input or original receipt. No separate
 status call is required before retrieval; it checks unfinished remote work itself.
+A kernel pushed without a run (no run-id) uses the same script with
+`-- --kernel owner/slug --credentials FILE [--version N] [--destination DIR]`: status only,
+or once COMPLETE, download plus sha256 list in `DIR/kernel_retrieval.json`. It never closes a run.
 Kaggle status is latest-only: the result labels its scope and observed latest
 version separately from the receipt version. Artifact downloads pin the receipt version.
 

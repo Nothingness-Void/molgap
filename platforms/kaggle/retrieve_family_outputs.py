@@ -463,12 +463,54 @@ def _retrieve_all_arms(argv, *, status_only=False):
     return code
 
 
+def _retrieve_kernel(argv):
+    """Kernel-only mode: scheduler status, or with --destination the latest output files and their sha256."""
+    import json
+    from datetime import datetime, timezone
+    from types import SimpleNamespace
+    from molgap.common.kaggle import kernel_source
+    from molgap.kaggle_output_retrieval import _list_selected_urls
+    from molgap.kaggle_submission import connect_kaggle
+    from molgap.research_memory.trace import atomic_write
+    parser = _FiniteParser(allow_abbrev=False)
+    parser.add_argument("--kernel", required=True)
+    parser.add_argument("--credentials", type=Path, required=True)
+    parser.add_argument("--version", type=int)
+    parser.add_argument("--destination", type=Path)
+    try:
+        args = parser.parse_args(argv)
+        owner = args.kernel.partition("/")[0]
+        api = connect_kaggle(args.credentials)
+        meta = kernel_source(api, args.kernel).metadata
+        status = api.kernels_status(args.kernel)
+        result = {"kernel": args.kernel, "scheduler_status": str(status.status).split(".")[-1],
+                  "failure_message": status.failure_message, "latest_version": meta.current_version_number, "scope": "latest", "scientific_acceptance": False,
+                  "observed_at": datetime.now(timezone.utc).isoformat()}
+        if args.destination is not None:
+            version = args.version or meta.current_version_number
+            if result["scheduler_status"] != "COMPLETE":
+                raise ValueError("Kernel is not COMPLETE")
+            context = SimpleNamespace(account=owner, run_reference=args.kernel, platform_version=version)
+            names = _list_selected_urls(api, context, None)
+            files = retrieve_pinned_exact_files(api, context=context, remote_manifest_path="log",
+                files={name: (name, None) for name in names}, destination=args.destination, observe=True)["files"]
+            result.update(version=version, files=files, destination=str(args.destination))
+            atomic_write(args.destination / "kernel_retrieval.json", json.dumps(result, indent=1, sort_keys=True).encode())
+    except Exception as error:
+        print(json.dumps({"status": "BLOCKED", "error": type(error).__name__}))
+        return 2
+    print(json.dumps(result, sort_keys=True))
+    return 0
+
+
 def main(argv=None, *, _verification=None):
     """Validate an original run locally, or explicitly retrieve its pinned files."""
     from contextlib import redirect_stderr, redirect_stdout
     import io
     import sys
     requested = list(sys.argv[1:] if argv is None else argv)
+    if "--kernel" in requested:
+        return _retrieve_kernel(requested)
     if ("--all-arms" in requested or "--status" in requested
             or (any(flag in requested for flag in ("-h", "--help")) and "--arm" not in requested)):
         return _retrieve_all_arms([item for item in requested if item not in {"--all-arms", "--status"}],
