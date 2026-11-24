@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "94b43664a38fd85a87fb5e97a0abad75b623e8739ea7ab26ccffd458adbe917d",
+  "source_digest": "f6e1ebcf2fddd43147d8015b1011cdda4414d7a105bd117c8e66464c80577291",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -633,6 +633,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/decision.md",
+      "family_id": "pcqm-gptrans-split-ensemble-500k-20261112",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s43/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/decision.md",
+      "family_id": "pcqm-gptrans-split-ensemble-500k-20261112",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s44/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44"
     },
     {
       "completeness_status": "complete",

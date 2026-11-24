@@ -1,0 +1,136 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-split-ensemble-500k-20261112-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43-planned",
+        "cost-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43-0",
+        "cost-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_split_ensemble_500k_20261112/generated/e18b56593a4ea29d53eca266f8beceb36dd75d0929149a3595354e1e98b85ec9/split_s43/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-split-ensemble-500k-20261112-s42:split_s43:downstream"
+      ],
+      "source_commit": "e41bdb6a1f2d958ab33b7967336ff84256717f25",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-gptrans-split-ensemble-500k-20261112",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/rml_decision_snapshots/46450826e2db392c5f7414fb8bf17353a8cddb881d2fa3ca6c9a01d6d6ddbff0.json",
+    "snapshot_sha256": "46450826e2db392c5f7414fb8bf17353a8cddb881d2fa3ca6c9a01d6d6ddbff0",
+    "state_timestamp": "2026-11-12T09:00:00+00:00"
+  },
+  "family_id": "pcqm-gptrans-split-ensemble-500k-20261112",
+  "hypothesis": {
+    "alternative_explanations": [
+      "A 30-pass schedule costs one model more than the ensemble gain, so the split loses (K1 100K reference: +4.54 meV)",
+      "Short members are more diverse and the split wins",
+      "The two are equivalent within the 3 meV margin"
+    ],
+    "changed_mechanism": "equal-compute-two-member-ensemble-30-vs-60-pass",
+    "cheapest_falsifier": "Mean 30-pass tail MAE of the two members and their equal-weight mean, against the four retained 60-pass singles (mean 107.94 meV, SD about 0.47).",
+    "decision_changed_if_negative": "Any outcome closes this question. A second pair (init 45/46) is a separate submission only when 1.5 <= |delta| <= 4.5 meV. No full training, adoption or retry.",
+    "decision_changed_if_positive": "Frozen in experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md: delta = tail MAE of the equal-weight 2-member mean minus 107.94 meV (mean of four 60-pass singles). delta <= -3 meV: split wins; delta >= +3 meV: split loses; otherwise equivalent. Nothing is adopted.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
+    "observed_deficiency": "Same-recipe 5-member ensembling gains 4.51 meV at 60 passes per member, but costs N times the training. No compute-matched split exists at 500K, so the value of two short members against one long member is unknown.",
+    "related_closed_family_ids": [
+      "gptrans-pair-norm-500k",
+      "gptrans-noisy-pair-norm-500k",
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+    ]
+  },
+  "owner": "desktop",
+  "question": "At equal training compute, does the equal-weight mean of two independently initialized 30-pass GPTrans BondLocal+PairNorm 500K models beat one 60-pass model on the tail_holdout_v1 rows?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s43/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/generated/e18b56593a4ea29d53eca266f8beceb36dd75d0929149a3595354e1e98b85ec9/split_s43/recipe.json",
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/split_s43/data_declaration.json",
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "split_s43",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-gptrans-split-ensemble-500k-20261112-s42",
+      "reference_arm_id": "split_s43",
+      "reference_trajectory_id": "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/runs/pcqm-gptrans-split-ensemble-500k-20261112-s42/prospective/split_s43/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "e3122c083288b81ab156a9279021b5c9df367ae2658606b2892ea79af5d9d3a9"
+    },
+    "source_commit": "e41bdb6a1f2d958ab33b7967336ff84256717f25",
+    "source_config_identity": "c9d037f3707804d1db7ad9698c3bbbeacc397d626dc15af9d2998561f5501bbf"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43"
+}

@@ -1,0 +1,24 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "nvoid912",
+  "arms": [
+    "split_s43",
+    "split_s44"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "split_s43",
+  "allocated_t4_hours_ceiling": 13,
+  "allocation_wall_limit_seconds": 23400,
+  "cleanup_reserve_seconds": 180,
+  "automatic_retry": false,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authorized_at": "2026-11-12T09:00:00+09:00",
+  "protocol_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md",
+  "reference_semantics": "split_s43 is the same-run reference by role only; both arms use the 30-pass recipe and differ only in initial weights (torch seed 43 and 44). The 60-pass comparator is the four retained init-noise singles, not re-run.",
+  "scope": "one 500K two-arm 30-pass kernel on kaggle3; no retry, continuation, extra seed, full training or adoption",
+  "authority": "User authorized direct submission on 2026-11-12."
+}
