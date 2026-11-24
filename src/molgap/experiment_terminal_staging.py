@@ -812,3 +812,23 @@ def clean_unclosed_staging(repo_root, apply=False):
         rows.append({"path": staging.relative_to(root).as_posix(), "state": state})
     return {"kept_finalized": sum(r["state"] == "kept_finalized" for r in rows),
             "others": [r for r in rows if r["state"] != "kept_finalized"]}
+
+
+_STATUS_PLACEHOLDER = re.compile(r"(?mi)^(\s*(?:[-*]\s*|status:\s*)?)(?:not submitted|pending)\.?[ \t]*(?=\r?$)")
+
+
+def fill_status_placeholder(repo_root, run_id):
+    """After closure, replace the fixed 'Not submitted'/'Pending' lines of STATUS.md, unless a record binds its hash."""
+    root = Path(repo_root).resolve()
+    home = next(iter(root.glob(f"experiments/*/runs/{run_id}")), None)
+    status = home and home.parents[1] / "STATUS.md"
+    if not status or not status.is_file():
+        return "no STATUS.md"
+    digest = hashlib.sha256(status.read_bytes()).hexdigest()
+    if any(digest in p.read_text(encoding="utf-8", errors="replace") for p in home.parents[1].rglob("*")
+           if p.suffix in {".json", ".md"} and p != status):
+        return "kept: hash-bound"
+    text, count = _STATUS_PLACEHOLDER.subn(r"\1CLOSED; see decision.md", status.read_bytes().decode("utf-8"))
+    if count:
+        status.write_bytes(text.encode("utf-8"))
+    return f"replaced {count} placeholder line(s)"

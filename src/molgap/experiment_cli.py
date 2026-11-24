@@ -483,6 +483,9 @@ def _dispatch(args) -> tuple[dict, int]:
                     finally:
                         for path in (made() - before if args.dry_run else ()):
                             shutil.rmtree(path)
+                    if any(r.get("pipeline_status") == "COMPLETE" for r in result.get("results", [])):
+                        from .experiment_terminal_staging import fill_status_placeholder
+                        result["status_md"] = fill_status_placeholder(args.repo_root, args.run_id)
                     return result, 0 if result["status"] in _SUCCESS else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
@@ -705,7 +708,7 @@ def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
         "executed", "closure_complete", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
-        "strict_mode", "physical_allocation_costs") if key in result}
+        "strict_mode", "physical_allocation_costs", "status_md") if key in result}
     if "results" in result:
         summary["closure"] = [{key: row[key] for key in
             ("trajectory_id", "trajectory", "pipeline_status", "finalization_status", "error") if key in row}

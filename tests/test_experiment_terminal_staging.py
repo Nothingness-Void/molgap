@@ -302,10 +302,10 @@ def test_cost_conversion_requires_measured_native_hardware_and_exact_semantics()
 
 
 def test_closure_housekeeping_on_real_layout(tmp_path, capsys):
-    """Unclosed staging rollback and evidence import share one experiment layout."""
+    """Unclosed staging rollback, STATUS placeholder and evidence import share one experiment layout."""
     import subprocess
     from molgap import experiment_cli
-    from molgap.experiment_terminal_staging import clean_unclosed_staging
+    from molgap.experiment_terminal_staging import clean_unclosed_staging, fill_status_placeholder
     git = lambda *a: subprocess.run(["git", "-C", str(tmp_path), "-c", "user.email=a@b", "-c", "user.name=a", *a],
                                     check=True, capture_output=True)
     exp = tmp_path / "experiments/e1"
@@ -314,9 +314,14 @@ def test_closure_housekeeping_on_real_layout(tmp_path, capsys):
         (arm / "terminal_staging/v1").mkdir(parents=True)
         (arm / "terminal_staging/v1/terminal.json").write_text("{}")
     (closed_arm / "rml_finalized").mkdir()
+    (exp / "STATUS.md").write_text("# Status\n\nPending\n")
     assert [(r["state"]) for r in clean_unclosed_staging(tmp_path)["others"]] == ["remove"]
     clean_unclosed_staging(tmp_path, apply=True)
     assert not (open_arm / "terminal_staging").exists() and (closed_arm / "terminal_staging").exists()
+    assert fill_status_placeholder(tmp_path, "r1").startswith("replaced 1")
+    (exp / "STATUS.md").write_text("Pending\n")  # a record that names this file's hash keeps it as written
+    (exp / "bound.json").write_text(json.dumps(file_digest(exp / "STATUS.md")))
+    assert fill_status_placeholder(tmp_path, "r1") == "kept: hash-bound"
     git("init", "-b", "main")
     git("add", "-A")
     git("commit", "-m", "base")
