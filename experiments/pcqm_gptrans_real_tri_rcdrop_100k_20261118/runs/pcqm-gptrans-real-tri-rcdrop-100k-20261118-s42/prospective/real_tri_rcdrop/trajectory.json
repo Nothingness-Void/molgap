@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/generated/0b9304e02d27207d9659216093759ea0fb5b6c73f071680ee8d31de50acf552e/real_tri_rcdrop/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:real_tri_rcdrop:downstream"
+      ],
+      "source_commit": "e2a6aaeeccf05d3dfe74393d7b3ff0cf1594bfba",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/generated/0b9304e02d27207d9659216093759ea0fb5b6c73f071680ee8d31de50acf552e/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/runs/pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42/prospective/rml_decision_snapshots/3e391dbcd091b018f43907888da8671d29a89ff4643201e31776cc9bf2aa81cd.json",
+    "snapshot_sha256": "3e391dbcd091b018f43907888da8671d29a89ff4643201e31776cc9bf2aa81cd",
+    "state_timestamp": "2026-11-18T13:07:00+09:00"
+  },
+  "family_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Row/column dropout weakens triangle pair representation without improving generalization",
+      "Late-horizon fade is driven by 100K sample size rather than triangle branch overfitting",
+      "Effect is below the 3 meV material gate"
+    ],
+    "changed_mechanism": "gptrans-real-atom-triangle-pair-post-gate-row-col-dropout-p20",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealAtomTriangleRCDrop from identical gptrans.pt initialization.",
+    "decision_changed_if_negative": "Close this structured-dropout triangle pair intervention without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop",
+    "observed_deficiency": "Unregularized real-atom triangle multiplicative updates achieved -1.667 meV overall (with -4.628 meV mid-training lead) but faded to -1.050 meV in late passes while widening the dev-minus-train gap. Whether structured row/column dropout on the post-gate triangle residual preserves the mid-training gain through pass 60 is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does applying structured row/column dropout (p=0.20, row at layers 2,6,10 and col at layers 4,8) after the gated real-atom triangle pair update reduce late-horizon overfitting and improve matched 100K development MAE on BondLocal+PairNorm GPTrans-T?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/generated/0b9304e02d27207d9659216093759ea0fb5b6c73f071680ee8d31de50acf552e/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/generated/0b9304e02d27207d9659216093759ea0fb5b6c73f071680ee8d31de50acf552e/real_tri_rcdrop/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "real_tri_rcdrop",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/runs/pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "36ef975b30d478d6c8982a7760316410de4faa25d704ade7dda6466b0ebc3893"
+    },
+    "source_commit": "e2a6aaeeccf05d3dfe74393d7b3ff0cf1594bfba",
+    "source_config_identity": "1eefb1b6a178f5529478c67857ad0f9c667b9a2d767ddd6228b2661b5c328678"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-real_tri_rcdrop"
+}

@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "pair_update_norm",
+    "arm_identity": "4993d8c7ace6ba56db41afffd09ca4ea115ec34d757922749e8442b46c2b2648",
+    "experiment_id": "pcqm_gptrans_real_tri_rcdrop_100k_20261118",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42",
+    "package_identity": "c141127bee42e3f4fa980abf5c10fa0dcf93a5d76c1465fa9e9730ce39598f6d",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-gptrans-real-tri-rcdrop-100k-20261118-s42",
+    "source_archive_sha256": "5b2f3634ef68d57ab2dfda7747abd25e83f08afb29b22884709a081bea12bf62",
+    "source_commit": "e2a6aaeeccf05d3dfe74393d7b3ff0cf1594bfba",
+    "spec_identity": "36ef975b30d478d6c8982a7760316410de4faa25d704ade7dda6466b0ebc3893",
+    "training_recipe_sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "c5ea4f46eee6376db3ee5a4b6ba23eca4ad65c82eb6d8cacb5532854bcfd7260"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 c5ea4f46eee6376db3ee5a4b6ba23eca4ad65c82eb6d8cacb5532854bcfd7260, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_real_tri_rcdrop_100k_20261118/closure_v1/roles_pair_update_norm.json",
+      "role_event_id": "role-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-real-tri-rcdrop-100k-20261118-s42-pair_update_norm"
+    }
+  ]
+}
