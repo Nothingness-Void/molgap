@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-query-readout-bc-100k-20261105-s42-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6-allocation-0",
+  "evidence_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/terminal_staging/v1/ae0e92375b7d2edd/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 2.540601910789445
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-query-readout-bc-100k-20261105-s42:full6:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6"
+}

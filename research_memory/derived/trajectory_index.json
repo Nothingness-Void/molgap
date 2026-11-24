@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "5f1b0c2df30f755495dba53553d8104a088cdeb5616206b609757cd1f2a8b96b",
+  "source_digest": "87ece16c67d1e1027b497185eacee31ddfa51e63e61343161d9d0c50e281781d",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -353,6 +353,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/decision.md",
+      "family_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/decision.md",
+      "family_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
     },
     {
       "completeness_status": "complete",
