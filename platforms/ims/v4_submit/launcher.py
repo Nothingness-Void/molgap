@@ -41,6 +41,7 @@ WALL_MARGIN_S = 120
 # The manual never mentions mem=, so chain mode sets none. Decimal GB (the smaller reading) keeps the gate conservative.
 MEM_PER_CORE_BYTES = 1_875_000_000
 GPU_CORES_PER_GPU = 16
+EXECUTION_POLICIES = {"fp32_deterministic": "fp32", "fast_amp_nondeterministic": "amp-fp16"}  # chain mode only for the second
 
 
 def sha256_file(path: Path) -> str:
@@ -169,8 +170,9 @@ def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
     contract = spec.get("contract", {})
     if contract.get("physical_batch_per_device") != 128:
         raise RuntimeError("V4 requires physical batch 128")
-    if contract.get("precision") != "fp32" or contract.get("tf32") is not False:
-        raise RuntimeError("V4 requires strict FP32 with TF32 disabled")
+    policy = contract.get("execution_policy", "fp32_deterministic")  # named policies and the precision each declares
+    if contract.get("precision") != EXECUTION_POLICIES.get(policy) or contract.get("tf32") is not False or (policy != "fp32_deterministic" and not chain):
+        raise RuntimeError("V4 requires strict FP32 with TF32 disabled, or, in chain mode, a named execution_policy with its declared precision and TF32 off")
     if contract.get("tail_batch_policy") != "drop_last":
         raise RuntimeError("V4 requires drop_last")
     if not SHA256.fullmatch(str(contract.get("sha256", ""))):
@@ -202,6 +204,8 @@ def validate_spec(spec: dict, datasets: dict, runtimes: dict) -> None:
         if not spec["run_id"][0].isalpha():
             raise RuntimeError("Chain run_id must start with a letter (it becomes the PBS job name)")
         args = spec.get("stages", {}).get("train", {}).get("args", [])
+        if policy != "fp32_deterministic" and (args.count("--execution-policy") != 1 or args[args.index("--execution-policy") + 1:args.index("--execution-policy") + 2] != [policy]):
+            raise RuntimeError("Chain train args must pass --execution-policy equal to contract.execution_policy")
         for flag, token in (("--wall-s", "{train_wall_s}"), ("--memory-limit-bytes", "{mem_bytes}")):
             if args.count(flag) != 1 or args[args.index(flag) + 1:args.index(flag) + 2] != [token]:
                 raise RuntimeError(f"Chain train args must pass {flag} {token}; do not type the number")

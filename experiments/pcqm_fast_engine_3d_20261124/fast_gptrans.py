@@ -324,7 +324,19 @@ class FastBondLocalPairNormGPTrans(nn.Module):
 
     def load_from_gptrans_checkpoint(self, ckpt_path: Path) -> None:
         raw = torch.load(Path(ckpt_path), map_location="cpu", weights_only=False)
-        sd = raw.get("model_state_dict", raw.get("state_dict", raw.get("model", raw)))
+        self.load_family_state(raw.get("model_state_dict", raw.get("state_dict", raw.get("model", raw))))
+
+    @staticmethod
+    def family_state_dict(state: dict) -> dict:
+        """Inverse of the NHWC mapping in load_family_state: the layout the family scorer loads strictly."""
+        return {
+            k: (v.permute(0, 3, 1, 2).contiguous() if k == "virtual_pair"
+                else v.unsqueeze(-1).unsqueeze(-1).contiguous()
+                if k.endswith(("attention.pair_to_attention.weight", "attention.attention_to_pair.weight")) else v)
+            for k, v in state.items()
+        }
+
+    def load_family_state(self, sd: dict) -> None:
         mapped = {}
         for k, v in sd.items():
             if k == "virtual_pair" and v.ndim == 4:

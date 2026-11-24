@@ -516,20 +516,22 @@ def rehearse_spec(a) -> int:
     res = run["resources"]
     wall = launcher.walltime_seconds(res["train_walltime"]) - launcher.WALL_MARGIN_S
     context = {"dataset_root": str(fixed), "source_commit": "0" * 40, "train_wall_s": str(wall), "mem_bytes": str(res["ncpus"] * launcher.MEM_PER_CORE_BYTES)}
-    problems = fsr.validate_spec(serial, wall, 1800.0)
+    targs = run["stages"]["train"]["args"]
+    policy = targs[targs.index("--execution-policy") + 1] if "--execution-policy" in targs else fsr.DEFAULT_POLICY
+    problems = fsr.validate_spec(serial, wall, 1800.0, policy)
     record("serial spec passes the driver's own validation (wall from the run spec)", not problems, problems=problems)
     # which items can run here? Each is checked alone against the local fixed root.
     wanted = set(a.items.split(",")) if a.items else {i["name"] for i in serial["items"]}
     usable, missing = [], {}
     for it in serial["items"]:
-        found = fsr.check_inputs({"format": fsr.FORMAT, "items": [it]}, repo, fixed, None, None)
+        found = fsr.check_inputs({"format": fsr.FORMAT, "items": [it]}, repo, fixed, None, None, policy)
         if found:
             missing[it["name"]] = found
         if it["name"] in wanted and not found:
             usable.append(it["name"])
         elif it["name"] in wanted:
             record(f"not rehearsable locally: {it['name']}", True, reason=found[:2])
-    full = fsr.check_inputs(serial, repo, fixed, None, None)
+    full = fsr.check_inputs(serial, repo, fixed, None, None, policy)
     unexplained = [p for p in full if not any(p.startswith(n + ":") for n in missing)]
     record("start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
            not unexplained, problems=full, unexplained=unexplained)

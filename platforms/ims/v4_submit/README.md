@@ -117,6 +117,7 @@ another through `run_family_training.py`.
 - `dataset_ids` (a list) replaces `dataset_id`; each recipe names its own manifest.
   The serial spec is the run contract: its hash is bound at staging.
 - The maintenance guard (first Sunday, first Monday) runs before staging.
+- Execution policy: default `fp32_deterministic`. Chain mode also accepts the named `fast_amp_nondeterministic` (AMP FP16, non-deterministic kernels, `platforms/ims/fast_recipe_run.py`): the run contract declares `execution_policy` with `precision` `amp-fp16`, the train args pass `--execution-policy`, every serial item and its recipe's `execution_policy.name` must agree, or exit 3.
 - Do not type the wall or memory numbers. The train args must carry
   `--wall-s {train_wall_s}` (walltime seconds minus 120) and
   `--memory-limit-bytes {mem_bytes}`.

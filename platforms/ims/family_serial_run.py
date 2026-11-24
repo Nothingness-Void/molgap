@@ -9,7 +9,7 @@ Every outcome goes to one summary JSON written atomically.
 Spec (JSON, committed and bound by the launcher as the run contract):
   {"format": "molgap-ims-family-serial-v1",
    "items": [{"name", "recipe", "recipe_sha256", "initial_state"?, "initial_state_sha256"?, "budget_s",
-              "extra_args"?, "gate"?}]}
+              "extra_args"?, "gate"?, "execution_policy"?}]}
 Paths are relative to --code-root. "gate" is optional and sits on the item it may skip; it may only name items that
 come earlier in the list:
   "dev_delta": {"a": item, "b": item, "max_delta_meV": -3.0}   skip unless (MAE_a - MAE_b) * 1000 <= max_delta
@@ -53,7 +53,9 @@ NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{1,47}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 # Flags this driver sets for every child; an item must not override them.
 DRIVER_FLAGS = {"--device", "--recipe", "--input-root", "--output", "--phase", "--no-preflight-receipt", "--source-commit", "--cpus",
-                "--training-workers", "--wall-s", "--initial-state", "--accelerator", "--ogb-zip", "--preflight"}
+                "--training-workers", "--wall-s", "--initial-state", "--accelerator", "--ogb-zip", "--preflight", "--execution-policy"}
+DEFAULT_POLICY = "fp32_deterministic"  # an item may declare "fast_amp_nondeterministic" (the job must pass the same --execution-policy)
+RECIPE_POLICY = {DEFAULT_POLICY: "shared-family-accelerated", "fast_amp_nondeterministic": "fast_amp_nondeterministic"}  # recipe execution_policy.name each one runs
 
 
 def now() -> str:
@@ -64,7 +66,7 @@ def number(value, *, positive=True) -> bool:
     return type(value) in (int, float) and (value > 0 if positive else True)
 
 
-def validate_spec(spec, wall_s: float, reserve_s: float) -> list[str]:
+def validate_spec(spec, wall_s: float, reserve_s: float, policy: str = DEFAULT_POLICY) -> list[str]:
     """Shape, types and references of the serial spec. Returns the problems found."""
     if not isinstance(spec, dict) or spec.get("format") != FORMAT or not isinstance(spec.get("items"), list) or not spec["items"]:
         return ["spec: needs format and a non-empty items list"]
@@ -87,6 +89,8 @@ def validate_spec(spec, wall_s: float, reserve_s: float) -> list[str]:
                     and SHA256.fullmatch(item["initial_state_sha256"]) and not Path(item["initial_state"]).is_absolute()
                     and ".." not in Path(item["initial_state"]).parts):
                 problems.append(f"{label}: initial_state needs a relative path and initial_state_sha256 together")
+        if item.get("execution_policy", DEFAULT_POLICY) != policy or policy not in RECIPE_POLICY:
+            problems.append(f"{label}: execution_policy {item.get('execution_policy', DEFAULT_POLICY)!r} differs from the job's --execution-policy {policy!r}")
         budget = item.get("budget_s")
         if not number(budget):
             problems.append(f"{label}: budget_s is required and must be a positive number")
@@ -122,7 +126,7 @@ def validate_spec(spec, wall_s: float, reserve_s: float) -> list[str]:
     return problems
 
 
-def check_inputs(spec: dict, code_root: Path, input_root: Path, ogb_zip: Path | None, accelerator: str | None) -> list[str]:
+def check_inputs(spec: dict, code_root: Path, input_root: Path, ogb_zip: Path | None, accelerator: str | None, policy: str = DEFAULT_POLICY) -> list[str]:
     """Cheap identity and presence checks for every item, before any child runs. Returns the problems found."""
     problems: list[str] = []
     records: dict[str, dict] = {}
@@ -147,6 +151,9 @@ def check_inputs(spec: dict, code_root: Path, input_root: Path, ogb_zip: Path | 
                 problems.append(f"{name}: recipe missing or its sha256 differs from the spec")
                 continue
             record = records[name] = json.loads(recipe.read_text(encoding="utf-8"))
+            if record["execution_policy"]["name"] != RECIPE_POLICY[policy]:
+                problems.append(f"{name}: recipe execution_policy {record['execution_policy']['name']!r} is not the job's {policy!r}")
+                continue
             relative = record["dataset"]["manifest"]
             manifest_path = input_root / relative
             if not manifest_path.is_file() or sha256_file(manifest_path) != record["dataset"]["manifest_sha256"]:
@@ -279,6 +286,7 @@ def main(argv=None) -> int:
     ap.add_argument("--source-commit", required=True)
     ap.add_argument("--cpus", type=int, required=True)
     ap.add_argument("--accelerator")
+    ap.add_argument("--execution-policy", default=DEFAULT_POLICY)
     ap.add_argument("--ogb-zip", type=Path)
     ap.add_argument("--device", type=int, default=0)
     ap.add_argument("--training-workers", type=int, default=1, help="0 on Windows rehearsals")
@@ -296,9 +304,9 @@ def main(argv=None) -> int:
         spec = json.loads(a.spec.read_text(encoding="utf-8"))
     except (OSError, ValueError) as error:
         return reject(root, [f"spec: cannot read: {error}"])
-    problems = validate_spec(spec, a.wall_s, a.reserve_s) if a.memory_limit_bytes > 0 else ["--memory-limit-bytes must be positive"]
+    problems = validate_spec(spec, a.wall_s, a.reserve_s, a.execution_policy) if a.memory_limit_bytes > 0 else ["--memory-limit-bytes must be positive"]
     if not problems:
-        problems = check_inputs(spec, code_root, input_root, a.ogb_zip, a.accelerator)
+        problems = check_inputs(spec, code_root, input_root, a.ogb_zip, a.accelerator, a.execution_policy)
     if problems:
         return reject(root, problems)
     root.mkdir(parents=True, exist_ok=True)
@@ -365,6 +373,8 @@ def main(argv=None) -> int:
                    "--training-workers", str(a.training_workers), "--wall-s", str(max(left - a.reserve_s, 1))]
         if item.get("initial_state"):
             command += ["--initial-state", str(code_root / item["initial_state"])]
+        if a.execution_policy != DEFAULT_POLICY:
+            command += ["--execution-policy", a.execution_policy]
         if a.accelerator:
             command += ["--accelerator", a.accelerator]
         if a.ogb_zip:

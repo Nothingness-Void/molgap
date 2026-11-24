@@ -12,6 +12,9 @@ def main(argv=None):
     if any(not value.strip() or value != value.strip() for value in assigned) or not 0 <= args.device < len(assigned):
         raise ValueError("IMS requires an explicit index within scheduler CUDA_VISIBLE_DEVICES")
     os.environ["CUDA_VISIBLE_DEVICES"] = assigned[args.device]
+    if "--execution-policy" in worker_args:  # a named non-default policy (the serial driver passes it); the default path is below
+        from fast_recipe_run import main as fast_worker
+        return fast_worker(worker_args)
     if "--recipe" in worker_args:  # frozen-recipe route for standalone models; returns 2 when paused
         from family_recipe_run import main as recipe_worker
         return recipe_worker(worker_args)
