@@ -64,7 +64,10 @@ for shape, not for truth.
    do not copy a gate from an older run.
 2. **Pre-submit review.** A reviewer writes `pre_submit_review.json` (reviewer,
    verdict, reviewed commit, frozen source hash) after reading the frozen
-   source. The submitter checks the hash and the commit, not the verdict's quality.
+   source. The hash covers the frozen `.py` files and `experiment.json`. The Kaggle
+   submitter accepts the verdicts `APPROVE` and `APPROVE_WITH_CHANGES` only and checks
+   the hash and commit, not the review's quality. This gate covers Kaggle only; the
+   IMS submit script builds from a run template and does not read the record.
 3. **Outcome and reason.** Choose each arm's outcome from the diagnosis and the
    gate, and write the decision file before `accept_run.py --closure-input`.
    Do not edit the decision after closure.
