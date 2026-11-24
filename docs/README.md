@@ -36,5 +36,6 @@ Each fact below lives on one page only; a test fails if another page repeats it.
 Old audit, handoff and acceptance pages (dated, or about one finished
 migration) were removed from the tree. They are in git tag
 `docs-archive-20261124`. Read one with
-`git show docs-archive-20261124:docs/operations/<NAME>.md`. Paths quoted inside
+`git show docs-archive-20261124:docs/operations/<NAME>.md`. The old pages are also
+in git history (commits before 982aaac61), so a clone without the tag still has them. Paths quoted inside
 experiment records may point to them; those records stay unchanged.

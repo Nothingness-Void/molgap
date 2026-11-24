@@ -129,6 +129,10 @@ def test_lifecycle_map_commands_exist():
     named = set(re.findall(r"`(?:rml |cli )?([a-z][a-z-]+)", text))
     missing = [f"{tool} {name}" for tool, names in _subcommands().items() for name in names if name not in named]
     assert not missing, f"commands with no lifecycle map row: {missing}"
+    # The "Other ..." lines may skip the table only if the command is documented elsewhere.
+    reference = "".join(_read(p) for p in ("docs/operations/EXPERIMENT_CLI.md", "docs/operations/RML_INTERFACES.md", "docs/operations/RESEARCH_PROTOCOL.md", "AGENTS.md"))
+    for line in re.findall(r"^Other `\w+` commands.*$", text, re.MULTILINE):
+        assert all(name in reference for name in re.findall(r"`([a-z][a-z-]+)`", line.split(":", 1)[-1])), line
 
 
 @pytest.mark.parametrize("relative", DOCUMENTS)

@@ -32,7 +32,8 @@ family), then the family page and the last page named.
 | Change infrastructure | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md), then the [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) |
 | Look up past notes | [vault](docs/operations/VAULT.md) (a view, never an authority) |
 
-Changing a command means changing its row in the lifecycle map; a test enforces it.
+Changing a command means changing its row in the lifecycle map; the documentation navigation test
+checks it and runs in the `accept` scope of `molgap.local_testing`.
 
 ## Reuse First
 
@@ -200,7 +201,7 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 - **Infrastructure budget:** `.venv\Scripts\python.exe platforms/local/infra_budget.py` compares
   `src/molgap`, `tests` and `docs/operations` size with
   [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json) and exits 1 when over.
-  No flow runs it; run it before an infrastructure commit. Requested bug fixes with
+  No flow runs it; run it and `tests/test_documentation_navigation.py` before an infrastructure commit. Requested bug fixes with
   total net source growth of at most 20 lines are preapproved for measured source-line
   limit adjustments; count the whole fix, not individual commits. Other increases need
   explicit approval. This allowance excludes rewrites and unrequested features.

@@ -6,7 +6,7 @@ Five stages: research, plan, propose, accept, archive. The archive feeds the
 next round of research. This page owns the command order. Flags live in the
 [CLI reference](EXPERIMENT_CLI.md); gates and attribution live in the
 [research protocol](RESEARCH_PROTOCOL.md). A command change must change its row
-here (the test above enforces it).
+here (the documentation navigation test above checks it; it runs in the `accept` scope of `molgap.local_testing`).
 
 ## Where to start
 
