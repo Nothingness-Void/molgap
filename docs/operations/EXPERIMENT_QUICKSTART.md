@@ -13,7 +13,7 @@ Set these once per PowerShell session, in the experiment worktree root. Use
 ```powershell
 $python = 'D:/文档/molgap/.venv/Scripts/python.exe'
 $profilePath = 'D:/molgap-machine-profile.json'
-$credentials = 'D:/下载/Key/.kaggle3_cli/kaggle.json'   # the account named in authority.account
+$credentials = '<credential file>'   # see the Kaggle skill; the account named in authority.account
 $experiment = 'experiments/<experiment_id>/experiment.json'
 $runId = '<logical_run_id>'; $attemptId = 'v1'
 $rml = @('platforms/local/run.py','--profile',$profilePath,'--module','molgap.research_memory','--','--repo-root','.')
@@ -130,7 +130,7 @@ allocation_wall_limit_seconds / 3600)` before publication and the POST.
   (scopes `runtime`, `package`, `prepare`, `train`, `submit`, `accept`, `resume`; `--list` shows
   node IDs; `--repo-root . --package <empty dir>` writes a source bundle for another machine).
   The [verification conventions](INFRASTRUCTURE_VERIFICATION.md) own the boundaries.
-- Local single-GPU exercise: `prepare-family-training`, then `platforms/local/train.py --prepared P --repo-root . --data-root D:/molgap-data --output O`.
+- Local single-GPU exercise: `prepare-family-training`, then `platforms/local/train.py --prepared P --repo-root . --data-root <data-root> --output O`.
   Close it with `--accept-only --closure-input FILE --execute` (one arm, `INFRASTRUCTURE_ONLY`).
   Run-keyed `accept_run.py` and `draft-closure` need `input_binding.json`, absent here.
 

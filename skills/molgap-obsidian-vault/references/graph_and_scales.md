@@ -6,7 +6,7 @@ Never subtract, convert, or merge MAE values across these four scales:
 
 | Field | Dataset / Scope | Rule |
 |---|---|---|
-| `tail_mae_mev` | `tail_holdout_v1` (rows 3,250,000..3,378,605; 128,606 mols) | Unified cross-run benchmark. Rejected if `train_rows > 3,250,000` (`overlaps_tail`). Runs ~7-8 meV higher than 50K dev for the same model. |
+| `tail_mae_mev` | `tail_holdout_v1` (rows 3,250,000..3,378,605) | Unified cross-run benchmark. Rejected if `train_rows > 3,250,000` (`overlaps_tail`). Runs ~7-8 meV higher than 50K dev for the same model. |
 | `dev_mae_mev` | Internal 50K Dev (`ema_0.999`, `ema_0.9999`, or `live`) | Valid only for matched paired A/B comparisons within the same split and `dev_metric_kind`. |
 | `official_valid_mev` | OGB-LSC PCQM4Mv2 `valid` (73,545 mols) | Report-only after candidate freeze. Never use for tuning or checkpoint selection. |
 | `ext_3target_mae_mev` | Track A External 1,973 B3LYP (HOMO/LUMO/Gap avg) | Track A production scale only; completely separate from Track B PCQM4Mv2 single-Gap models. |

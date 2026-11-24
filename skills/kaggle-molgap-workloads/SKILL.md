@@ -147,7 +147,8 @@ must be retrieved and accepted with `--strict`.
   `& $python platforms/local/run.py --profile $profile --module molgap.research_memory -- --repo-root . terminal-rebuild --trajectory <t>`.
   Do not call `python -m molgap.research_memory` directly.
 - `$credentials` is a path, never printed. Kaggle keys live in
-  `D:/下载/Key/<account folder>/kaggle.json` (for example `.kaggle1_cli`); the
+  `<account folder>/kaggle.json` in the credential inventory (see
+  [account-and-cli](references/account-and-cli.md)); the
   machine profile maps account names to files in `kaggle_credentials`. If the
   profile has no entry for the run's account, retrieval cannot find a key: pass
   `--credentials <path>` explicitly, or add the entry to the profile. The account

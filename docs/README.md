@@ -21,6 +21,16 @@ calibration contracts are `production/05_delta_gw/METHOD.md` and
 `production/06_uq/METHOD.md`; the phase 8 timeline is
 `experiments/_closed/PHASE8_TIMELINE.md`.
 
+## One owner per fact
+
+Each fact below lives on one page only; a test fails if another page repeats it.
+
+| Fact | Owner |
+|---|---|
+| Infrastructure budget command and limits | `AGENTS.md` |
+| Tail holdout size and rule | `AGENTS.md` |
+| Kaggle credential directory | `skills/kaggle-molgap-workloads/references/account-and-cli.md` |
+
 ## Archived pages
 
 Old audit, handoff and acceptance pages (dated, or about one finished

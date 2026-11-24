@@ -190,7 +190,7 @@ the explicit `NvidiaTeslaT4` allocation only.
     "arm_id": "<Spec arm id>",
     "device": 0,
     "recipe": "experiments/<question>/training_contract.json",
-    "initial_state": "D:/frozen/<arm>-initial-state.pt"
+    "initial_state": "<frozen-dir>/<arm>-initial-state.pt"
   }],
   "acceptance_plan": "experiments/<question>/family_acceptance_plan.json",
   "kaggle": {

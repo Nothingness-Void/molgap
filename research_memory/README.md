@@ -84,9 +84,7 @@ mismatch inside its own experiment, and only for `validate`. When `validate` and
 strict recheck disagree, strict recheck holds for replay. The formats, the
 planning recipe, the limits and the verifier order are in the
 [interface reference](../docs/operations/RML_INTERFACES.md#data-contracts).
-The infrastructure size check is `python platforms/local/infra_budget.py`; it
-prints each metric against `docs/operations/INFRA_BUDGET.json` and exits 1 when
-any metric is over its limit.
+The infrastructure size check and its limits are owned by [AGENTS.md](../AGENTS.md).
 
 ## Research workflow
 
