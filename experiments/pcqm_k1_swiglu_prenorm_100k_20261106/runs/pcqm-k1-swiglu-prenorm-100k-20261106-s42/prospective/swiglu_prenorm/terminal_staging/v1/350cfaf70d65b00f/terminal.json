@@ -1,0 +1,264 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/authority.json": "cb911509a61968fe82f65027c8c20b09414918978a2aaf9f28adabfad4f5957b",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json": "ff5cedaedd1fafd865b42a136946fe2fa8b555dfd394b8451fd82127366fe642",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/acceptance.json": "f6967e6995c99cc03dee2149ecbdc32de7b711b1cde268ce004207345f36161e",
+    "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/observed.json": "e99c4c2f0e24ff7db7c785034174a98002087f0928e5a83132c289deb2fd0c8e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "64ff41a6b21ffa76406672a1137850dde77b4ddac9156a456a309cb70cf04ac4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/swiglu_prenorm/allocation_ledger.json": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json": "65fdda11adce2cf33ef19a9739f19d7617cfc872a538977f4f415d37d3f15eb2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json.context.json": "f1a89598b86379ffacdac1324d463857c1e6223de864160bed50af431e382442",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/data_open_provenance.json": "4b6f5c456e1b1b116c73485c3de7dcb2c038eeef45854bc354a6880bececeb92",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/development_predictions.pt": "8b680ed584eb5b9861bc9da66655ae9308b770556da5bb21ac44cd99be394de9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/last_checkpoint.pt": "146419b9265b8113fe27c124409869c0d3d9d21312bd141da81981712f129abe",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/output_manifest.json": "f1d8abd3d7efba0f3c0b63e8987fa64b05ce1f346072ec8e880717b65f22e850",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/selected_model.pt": "1a839ebbab9636d57deb8d7dc26c65c39f06a5abe01bc61016a2f1b10a80e40d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/training_contract.json": "ff5cedaedd1fafd865b42a136946fe2fa8b555dfd394b8451fd82127366fe642",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/reports/diagnostic_21c83bb61ea6d1ddde0f695bdf0894726bfb1552ce78b0939069f48c7f2519e1.json": "0f882e6c2eb13f567268e8549b68a1b9d79b18cf1fb2220acea21ee0dadcaa22"
+  },
+  "closure_blockers": [
+    "explicit_outcome_and_decision_ref_required",
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "swiglu_prenorm-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-0",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.368605649726389
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "swiglu_prenorm-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.4540549145144446
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+    }
+  ],
+  "decision": {
+    "decision_ref": null,
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "64ff41a6b21ffa76406672a1137850dde77b4ddac9156a456a309cb70cf04ac4"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/_execution/swiglu_prenorm/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "21350b494c88893b325a1ef5df5ad0a6f82af0399db586456458e19565313762"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/training_contract.json",
+        "name": "contract",
+        "sha256": "ff5cedaedd1fafd865b42a136946fe2fa8b555dfd394b8451fd82127366fe642"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "4b6f5c456e1b1b116c73485c3de7dcb2c038eeef45854bc354a6880bececeb92"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "8b680ed584eb5b9861bc9da66655ae9308b770556da5bb21ac44cd99be394de9"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "146419b9265b8113fe27c124409869c0d3d9d21312bd141da81981712f129abe"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "1a839ebbab9636d57deb8d7dc26c65c39f06a5abe01bc61016a2f1b10a80e40d"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "65fdda11adce2cf33ef19a9739f19d7617cfc872a538977f4f415d37d3f15eb2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "f1a89598b86379ffacdac1324d463857c1e6223de864160bed50af431e382442"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/observed.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.1420404841130972,
+      "missing_reason": null,
+      "selected_optimizer_step": 31240,
+      "selected_weights": "live",
+      "source_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-06T11:22:53.145730+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": null,
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+    "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/350cfaf70d65b00f/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-swiglu-prenorm-100k-20261106-s42/v1/version1/swiglu_prenorm/canonical_trace.json",
+    "trace_artifact_sha256": "65fdda11adce2cf33ef19a9739f19d7617cfc872a538977f4f415d37d3f15eb2",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+}

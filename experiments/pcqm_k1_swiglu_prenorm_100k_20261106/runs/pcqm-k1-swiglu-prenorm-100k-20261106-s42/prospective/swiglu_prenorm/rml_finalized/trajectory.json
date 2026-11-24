@@ -1,0 +1,109 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "swiglu_prenorm-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-planned",
+        "cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-0",
+        "cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream"
+      ],
+      "source_commit": "a5487541696c0f94746670b2fadad8ad7c3bf886",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/decision_runtime_inconclusive.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-swiglu-prenorm-100k-20261106",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/rml_decision_snapshots/169a4be14c2e5e36a1aa1e4cd1bf204d6b38d0a93095d62f415cbfd62fdcf3f1.json",
+    "snapshot_sha256": "169a4be14c2e5e36a1aa1e4cd1bf204d6b38d0a93095d62f415cbfd62fdcf3f1",
+    "state_timestamp": "2026-11-06T08:03:17.743549+00:00"
+  },
+  "family_id": "pcqm-k1-swiglu-prenorm-100k-20261106",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Input scaling does not prevent the evaluation failure",
+      "Stable SwiGLU has no material accuracy benefit",
+      "An endpoint difference reflects one initialization or training realization"
+    ],
+    "changed_mechanism": "affine-free-prenorm-node-swiglu-ffn",
+    "cheapest_falsifier": "One40-pass stabilized SwiGLU candidate versus the retained original K1, after the existing sandbox; no baseline retraining.",
+    "decision_changed_if_negative": "Close without adoption, blind seed/width/WD grid or automatic successor.",
+    "decision_changed_if_positive": "Nominate only delta<=-3meV with paired95%CI upper<0 and strict qualification; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
+    "observed_deficiency": "The original SwiGLU attempt produced nonfinite evaluation predictions; the real checkpoint diagnostic observed multiplicative amplification under fixed BN statistics.",
+    "related_closed_family_ids": [
+      "pcqm-k1-message-droppath-100k",
+      "K1-normalization-exposure160pass",
+      "pcqm-k1-swiglu-100k-20261106"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can affine-free input LayerNorm stabilize matrix-budget-matched K1 SwiGLU and improve the retained original K1 at fixed100K?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/generated/c5a531aaa55d40b9fae16541b87d953a488c11412f03e7a31518808624dc9966/swiglu_prenorm/recipe.json",
+      "experiments/pcqm_k1_swiglu_100k_20261106/data_declaration.json",
+      "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/protocol.md"
+    ],
+    "source_commit": "a5487541696c0f94746670b2fadad8ad7c3bf886",
+    "source_config_identity": "808e13727e174e7c7d4eeb255378c38be656bedea8b2f174dd334bafe903babf"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+}
