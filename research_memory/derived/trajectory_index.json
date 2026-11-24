@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "9fec8d8b88eed02c21b8cadf39cf2d4da175ca2ff22424923040e69c65cd8dd5",
+  "source_digest": "ba28245d5d2598fe8b91e178c7915e0fad8cf90b5183b376b504bd2cd46081b3",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1897,6 +1897,22 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_swiglu_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-swiglu-100k-20261106",
+      "outcome": "INCONCLUSIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
     },
     {
       "completeness_status": "complete",
