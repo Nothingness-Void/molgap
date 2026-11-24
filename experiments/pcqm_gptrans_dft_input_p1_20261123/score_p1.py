@@ -5,7 +5,7 @@ local dev sidecar for the 3D modes only). Never reads tail_holdout_v1, data.csv.
 graphs that carry no coordinate field and never opens a sidecar. Truth is `g.y`; normalisation comes from the frozen recipe.
 
 Usage: score_p1.py --retrieved DIR --fixed-root DIR --dev-sidecar DIR --out DIR [--limit N] [--items a,b]
-  DIR/training/<item>/{selected_model.pt,train_log.jsonl}; --limit scores the first N dev rows (local checks only).
+  DIR[/training]/<item>/{selected_model.pt,train_log.jsonl}; --limit scores the first N dev rows (local checks only).
 """
 import argparse
 import json
@@ -106,6 +106,8 @@ def main(argv=None):
     parser.add_argument("--limit", type=int, default=50_000)
     parser.add_argument("--items")
     args = parser.parse_args(argv)
+    retrieved = Path(args.retrieved)
+    retrieved = retrieved / "training" if (retrieved / "training").is_dir() else retrieved  # layouts of both retrievers
     from molgap.training_reproducibility import configure_fp32_determinism
     from pcqm_tail_holdout_eval import gptrans_scorer
     configure_fp32_determinism(0)  # as in training: deterministic kernels, no TF32
@@ -121,7 +123,7 @@ def main(argv=None):
     for name in args.items.split(",") if args.items else ITEMS:
         folder, seed, arm = ITEMS[name]
         load, _, recipe = gptrans_scorer(HERE / folder / "recipe.json", INITS[seed], "model")
-        checkpoint = Path(args.retrieved) / "training" / name / "selected_model.pt"
+        checkpoint = retrieved / name / "selected_model.pt"
         model = load(checkpoint, device)
         entry = {"checkpoint_sha256": sha256_file(checkpoint), "mae_eV": {}}
         errors[name] = {}
@@ -130,9 +132,9 @@ def main(argv=None):
             errors[name][mode] = (pred - truth).abs().numpy()
             entry["mae_eV"][mode] = float(errors[name][mode].mean())
             print(name, mode, entry["mae_eV"][mode], flush=True)
-        log = Path(args.retrieved) / "training" / name / "train_log.jsonl"
+        log = retrieved / name / "train_log.jsonl"
         entry["step_time"] = step_time(log) if log.is_file() else "evidence missing: no train_log.jsonl"
-        summary = Path(args.retrieved) / "training" / "serial_summary.json"
+        summary = retrieved / "serial_summary.json"
         attempts = json.loads(summary.read_text(encoding="utf-8"))["items"][name]["attempts"] if summary.is_file() else None
         entry["wall_s_all_attempts"] = sum(x["wall_s"] for x in attempts) if attempts else "evidence missing: no serial_summary.json"
         result["items"][name] = entry
