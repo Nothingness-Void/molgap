@@ -8,7 +8,7 @@ TB-pcqm-expert-oracle-feasibility-20260930 | NO_TRAIN | pcqm-prediction-disagree
 Open (ACTIVE) 0: -
 Reopen: new_accepted_pretraining_artifacts_and_independently_qualified_role / New input features or independent role with separately prospective authorization
 src (src/molgap/): conservative_fusion_payload.py, conservative_fusion_runner.py, fusion.py, hierarchical_fusion.py, multi2d.py, multi2d_router_fusion.py, pcqm_expert.py, pcqm_k1_gptrans_fusion.py, pcqm_route_b_fusion.py, qm9_fusion.py, +3 more
-Experiments: multi2d_experts, pcqm_expert_oracle_feasibility, pcqm_full_minus_tail_fusion_20261113, pcqm_gine_expert, pcqm_k1_consistency_fusion_transfer, pcqm_k1_fusion_distillation, pcqm_k1_gptrans_full_fusion, pcqm_k1_gptrans_pairnorm_fusion_500k, pcqm_k1_hop_fusion_qualification, pcqm_pairnorm_prediction_router_500k
+Experiments: multi2d_experts, pcqm_expert_oracle_feasibility, pcqm_full_minus_tail_fusion_20261113, pcqm_gine_expert, pcqm_k1_consistency_fusion_transfer, pcqm_k1_fusion_distillation, pcqm_k1_gptrans_full_fusion, pcqm_k1_gptrans_pairnorm_fusion_500k, pcqm_k1_hop_fusion_qualification, pcqm_k1_muon_gptrans_fusion_500k_20261108, +1 more
 
 ## Closed (3)
 TB-route-b-four-encoder-specialist | POSITIVE_UNDER_CONTRACT | gps-schnet-bounded-fusion | gps9-gps11-160-and-dual-schnet | null | -
@@ -54,4 +54,5 @@ src/molgap/router_sampling.py
 - experiments/pcqm_k1_gptrans_full_fusion: scripts accept_gptrans_full.py, run_fusion_study.py, run_gptrans_full.py
 - experiments/pcqm_k1_gptrans_pairnorm_fusion_500k: scripts analyze.py, close.py, prepare.py
 - experiments/pcqm_k1_hop_fusion_qualification: scripts run.py
+- experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108: scripts run.py
 - experiments/pcqm_pairnorm_prediction_router_500k: scripts analyze.py, close.py, prepare.py

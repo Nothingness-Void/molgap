@@ -1,16 +1,16 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 103, 25 are CLOSED reference arms):
+Last closed (of 104, 25 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
 Open (ACTIVE) 10: T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm, T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3, T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-pair_update_norm, +7 more
 Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / a separate training prospective and explicit launch authorization
 src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, gptrans_screen_workflow.py, gptrans_variants.py, +3 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +38 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +39 more
 
-## Closed (103)
+## Closed (104)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
@@ -19,6 +19,7 @@ TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance | NO_TRAIN | pcqm-gptran
 TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2 | CLOSED | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
 TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local | NO_TRAIN | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
 TB-pcqm-gptrans-full-wd-c4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-full-wd-c4 | adamw-weight-decay-0-05-0 | +0.26 | below_gate
+TB-k1-muon-gptrans-fusion-500k-20261108 | NO_TRAIN | pcqm-k1-muon-gptrans-fusion-500k | fixed-float64-averaging-of-accepted-batched | null | -
 TB-k1-gptrans-pairnorm-fusion-500k-20261027 | NO_TRAIN | pcqm-k1-gptrans-pairnorm-fusion-500k | fixed-averaging-of-saved-model-predictions | null | comparator_missing
 TB-k1-gptrans-full-fusion-r3 | NEGATIVE_UNDER_CONTRACT | k1-gptrans-fusion | fixed-k1-and-gptrans-t-prediction | null (see experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md) | -
 TB-gptrans-t-500k-bridge | CLOSED | gptrans-t-500k-bridge | compact-node-all-pairs-propagation-core | null | -
@@ -159,6 +160,7 @@ Only a new decision-relevant question under a separately frozen prospective cont
 Only a newly frozen plan with a replay-qualified reference binding.
 a newly authorized matched V4 contract with the same target-scale comparator
 Separately authorized prospective independent evaluation
+Separately authorized independent full-scale validation plan with frozen full reference, role authority and native-cost contract; this closure launches no training
 A different weight-decay value, a second init, or a new frozen protocol; this endpoint is scored once.
 New explicit authorization; no automatic successor
 New explicitly authorized decision-relevant question
@@ -283,3 +285,4 @@ src/molgap/pcqm_k1_gptrans_fusion.py
   - trace experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/rml_finalized/trace.json
 - experiments/pcqm_k1_gptrans_full_fusion: scripts accept_gptrans_full.py, run_fusion_study.py, run_gptrans_full.py
 - experiments/pcqm_k1_gptrans_pairnorm_fusion_500k: scripts analyze.py, close.py, prepare.py
+- experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108: scripts run.py

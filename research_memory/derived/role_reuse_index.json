@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1112,
+  "ambiguous_historical_role_record_count": 1120,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -3307,6 +3307,62 @@
     },
     {
       "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -7786,7 +7842,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1045,
+  "explicit_role_event_count": 1047,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -14524,6 +14580,22 @@
         "trajectory_id": "TB-pcqm-pairnorm-residual-2d-p0"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-muon-gptrans-fusion-500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-muon-gptrans-fusion-500k-20261108"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-muon-gptrans-fusion-500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-muon-gptrans-fusion-500k-20261108"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:fixed50k_development": [
       {
         "access_kind": "labels_read",
@@ -15463,6 +15535,7 @@
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-hop-fusion-qualification-100k-evidence",
+      "k1-muon-gptrans-fusion-500k-20261108-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -15710,6 +15783,7 @@
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-hop-fusion-qualification-100k-evidence",
+      "k1-muon-gptrans-fusion-500k-20261108-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
