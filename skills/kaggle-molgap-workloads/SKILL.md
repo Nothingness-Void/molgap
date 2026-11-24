@@ -7,7 +7,8 @@ description: Prepare, submit, reconcile, retrieve and accept a MolGap Kaggle run
 
 Run in the owning checkout with its already authorized, committed `experiment.json`.
 `$experiment`, `$profile`, `$credentials` are the input JSON, machine profile and
-external credential file. Use `D:/文档/molgap/.venv/Scripts/python.exe` as `$python`.
+external credential file. Default `$profile` is `D:/molgap-machine-profile.json`;
+account keys sit under `D:/下载/Key` ([account-and-cli](references/account-and-cli.md)). Use `D:/文档/molgap/.venv/Scripts/python.exe` as `$python`.
 These commands handle the declared run; they grant no new training, retry, role
 access or promotion. Pass credential files by path; never print their contents.
 Routine operation needs this page and the run's supplied records, not a full
@@ -94,6 +95,9 @@ when the protocol pre-registers another value):
 ```
 
 Exit 1 with `STAGED_DRAFT` is the expected unclosed state, not a failure.
+The report is `diagnosis` in the output and `reports/diagnostic_<hash>.json` in the run
+directory. Confidence intervals are `comparisons.<arm>.primary_comparison.lower_95_eV` and
+`upper_95_eV` (null when bootstrap is 0); `primary_ema_decay` names the EMA behind `ema_dev_metric`.
 The scientific outcome is your judgement from this diagnosis and the protocol
 gate; mechanical verification is already done by the command. Mechanism readouts
 that no helper exposes are experiment-specific analysis, not acceptance glue.
@@ -153,10 +157,8 @@ must be retrieved and accepted with `--strict`.
   profile has no entry for the run's account, retrieval cannot find a key: pass
   `--credentials <path>` explicitly, or add the entry to the profile. The account
   must be the one named in `authority.account`.
-- The "read-only" strict recheck (`accept_run.py --strict` on a closed run) is not
-  fully read-only today: it can write files in the repository or artifact tree.
-  A separate branch is fixing this. Until it lands, run it only in a worktree you
-  can discard, and check `git status` afterward.
+- Recheck a closed run with `--strict --dry-run` (read-only: no closure, new
+  qualification records are removed). Plain `--strict` on a closed run can write files.
 
 ## Only when needed
 
