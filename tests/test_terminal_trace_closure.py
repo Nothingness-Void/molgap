@@ -881,8 +881,17 @@ def test_genuine_no_trace_experiment_legally_unavailable(tmp_path):
 # =========================================================================
 # Test E: Multi-arm independent closures (conditional-flow pattern)
 # =========================================================================
-def test_multi_arm_independent_finalizations(tmp_path):
+def test_multi_arm_independent_finalizations(tmp_path, monkeypatch):
     setup_mock_repo(tmp_path)
+    # A failing vault refresh is reported but never changes closure status.
+    scripts = tmp_path / "vault" / "_scripts"
+    scripts.mkdir(parents=True)
+    (scripts / "refresh_vault.py").write_text(
+        "import os, pathlib, sys\n"
+        "pathlib.Path(__file__).with_name('seen').write_text(os.environ['MOLGAP_REPO_ROOT'])\n"
+        "sys.exit('validate_vault.py exit 1: bad')\n")
+    monkeypatch.setenv("MOLGAP_VAULT_AUTOREFRESH", "1")
+    monkeypatch.setenv("MOLGAP_VAULT_ROOT", str(tmp_path / "vault"))
 
     # Create two arms: readback and recurrence
     arm1 = create_candidate_arm(
@@ -923,6 +932,8 @@ def test_multi_arm_independent_finalizations(tmp_path):
     assert len(results) == 2
     assert results[0]["pipeline_status"] == "COMPLETE"
     assert results[1]["pipeline_status"] == "COMPLETE"
+    assert results[0]["vault_refresh"].startswith("failed: validate_vault.py exit 1")
+    assert (scripts / "seen").read_text() == str(tmp_path.resolve())
 
     # Verify Arm 1
     dir1 = arm1["exp_dir"] / "rml_finalized"
