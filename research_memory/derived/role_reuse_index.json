@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1129,
+  "ambiguous_historical_role_record_count": 1135,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2628,6 +2628,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -7905,7 +7947,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1062,
+  "explicit_role_event_count": 1072,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -10153,6 +10195,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-baseline-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -11400,6 +11498,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "training_membership",
@@ -15683,6 +15795,8 @@
       "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
       "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
       "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
+      "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+      "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -15934,6 +16048,8 @@
       "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
       "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
       "ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
+      "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+      "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -18276,6 +18392,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "labels_read",
@@ -23617,6 +23789,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-baseline-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -24818,6 +25046,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
       },
       {
         "access_kind": "training_membership",

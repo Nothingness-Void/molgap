@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "ff873511172146691b5c1efe350313bbdc0fa0361d013dcb96cc8507b3cebf35",
+  "source_digest": "3ad88a5168ec980bfb0b2e1fe60ef582f843d48bdedcdc675e6fca0c609b62d6",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1673,6 +1673,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "family_id": "pcqm-k1-read-calibration-100k-20261107",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "family_id": "pcqm-k1-read-calibration-100k-20261107",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
     },
     {
       "completeness_status": "complete",

@@ -1,17 +1,17 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 250
+- Validated V5 evidence: 252
 - Evidence without trajectory: 0
 
 ## Trajectories
 - ACTIVE: 13
-- CLOSED: 61
+- CLOSED: 62
 - INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
 - NEGATIVE_UNDER_CONTRACT: 80
 - NO_TRAIN: 61
-- POSITIVE_BELOW_GATE: 10
+- POSITIVE_BELOW_GATE: 11
 - POSITIVE_UNDER_CONTRACT: 11
 - STOP_FOR_COST: 4
 
@@ -21,8 +21,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 1062
-- Coarse historical role records: 1129
+- Explicit role events: 1072
+- Coarse historical role records: 1135
 - Repeatedly selected role identities: 50
 
 ## Cost
@@ -182,10 +182,10 @@
 - RTX5060 device_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
 - RTX5060 queue_hours: not applicable (2 records); measurement_missing=0
 - RTX5060 wall_hours: measured=0.089502 (1 measured record), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
-- Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=239, not_applicable=0
-- Tesla T4 device_hours: measured=433.809082 (119 measured records), estimated=55.000000 (8 estimated records), measurement_missing=112, not_applicable=0
-- Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=239, not_applicable=0
-- Tesla T4 wall_hours: measured=521.998254 (115 measured records), estimated=55.000000 (8 estimated records), measurement_missing=116, not_applicable=0
+- Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=243, not_applicable=0
+- Tesla T4 device_hours: measured=440.813187 (121 measured records), estimated=55.000000 (8 estimated records), measurement_missing=114, not_applicable=0
+- Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=243, not_applicable=0
+- Tesla T4 wall_hours: measured=528.686655 (117 measured records), estimated=55.000000 (8 estimated records), measurement_missing=118, not_applicable=0
 - Tesla T4 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
 - Tesla T4 FP32 device_hours: measured=unknown (0 measured records), estimated=155.200000 (10 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
@@ -298,10 +298,10 @@
 - Tesla T4x2 FP32/noTF32, one freshly trained arm per device device_hours: measured=unknown (0 measured records), estimated=16.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4x2 FP32/noTF32, one freshly trained arm per device queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4x2 FP32/noTF32, one freshly trained arm per device wall_hours: measured=unknown (0 measured records), estimated=8.000000 (2 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4x2 FP32/noTF32, one newly trained model per device cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- Tesla T4x2 FP32/noTF32, one newly trained model per device device_hours: measured=unknown (0 measured records), estimated=58.000000 (8 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4x2 FP32/noTF32, one newly trained model per device queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- Tesla T4x2 FP32/noTF32, one newly trained model per device wall_hours: measured=unknown (0 measured records), estimated=29.000000 (8 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32/noTF32, one newly trained model per device cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
+- Tesla T4x2 FP32/noTF32, one newly trained model per device device_hours: measured=unknown (0 measured records), estimated=74.000000 (10 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32/noTF32, one newly trained model per device queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
+- Tesla T4x2 FP32/noTF32, one newly trained model per device wall_hours: measured=unknown (0 measured records), estimated=37.000000 (10 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4x2 FP32/noTF32,one arm per device,single forward cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
 - Tesla T4x2 FP32/noTF32,one arm per device,single forward device_hours: measured=unknown (0 measured records), estimated=96.000000 (2 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4x2 FP32/noTF32,one arm per device,single forward queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
@@ -354,18 +354,18 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 599
-- Cost-event coverage: 263/274 trajectories; incomplete native measurement=225
+- Measurement-missing cost events: 605
+- Cost-event coverage: 265/276 trajectories; incomplete native measurement=227
 
 ## Screening Backtest
 - Status: available
-- Eligible traces: 104
+- Eligible traces: 106
 - Excluded traces: 47
 
 ## Memory Gaps
 - [INFO] trace_unavailable_for_backtest: 123
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 225
+- [WARN] incomplete_native_cost_measurement: 227
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 59
 - [WARN] trajectory_without_v5_evidence: 24
