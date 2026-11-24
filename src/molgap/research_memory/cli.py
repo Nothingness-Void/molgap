@@ -25,7 +25,7 @@ def _root(value: str | None) -> Path:
     return Path(value or top or REPO_ROOT).resolve()
 
 
-def main(argv: list[str] | None = None) -> None:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m molgap.research_memory")
     parser.add_argument("--repo-root", help="default: the git root of the current directory")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -97,7 +97,11 @@ def main(argv: list[str] | None = None) -> None:
     policy = commands.add_parser("backtest-policy")
     policy.add_argument("--policy-id")
     policy.add_argument("--policy-version")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = build_parser().parse_args(argv)
     getattr(sys.stdout, "reconfigure", lambda **_: None)(encoding="utf-8")
     root = _root(args.repo_root)
 

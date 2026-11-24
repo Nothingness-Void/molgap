@@ -10,11 +10,9 @@ from .schemas import validate_id
 
 EXPECTED_FORMATS = {
     "trajectory_index.json": "molgap-rml-trajectory-index-v1",
-    "trajectory_graph.json": "molgap-rml-trajectory-graph-v1",
     "cost_ledger.json": "molgap-rml-cost-ledger-v1",
     "role_reuse_index.json": "molgap-rml-role-reuse-index-v1",
     "reference_reuse_index.json": "molgap-rml-reference-reuse-index-v1",
-    "ready_for_desktop_index.json": "molgap-rml-ready-for-desktop-index-v1",
     "screening_backtest.json": "molgap-rml-screening-backtest-v1",
     "replay_pool.json": "molgap-rml-replay-pool-v1",
     "policy_backtest.json": "molgap-rml-policy-backtest-v1",
@@ -168,18 +166,6 @@ def validate_derived_outputs(outputs: Mapping[str, Any]) -> None:
         )
         validate_id(row["trajectory_id"], "derived trajectory_id")
 
-    graph = outputs["trajectory_graph.json"]
-    _exact_keys(graph, {"format", "nodes", "edges"}, "trajectory graph")
-    node_ids = set()
-    for node in _array(graph["nodes"], "trajectory graph nodes"):
-        node = _object(node, "trajectory graph node")
-        _keys(node, {"id", "type"}, "trajectory graph node")
-        validate_id(node["id"], "derived graph node ID")
-        if node["id"] in node_ids:
-            raise ValueError(f"duplicate derived graph node ID: {node['id']}")
-        node_ids.add(node["id"])
-    _array(graph["edges"], "trajectory graph edges")
-
     cost_ledger = outputs["cost_ledger.json"]
     _exact_keys(
         cost_ledger,
@@ -241,12 +227,6 @@ def validate_derived_outputs(outputs: Mapping[str, Any]) -> None:
         reference_index,
         {"references", "missing_reference_ids", "missing_reference_policy"},
         "reference reuse index",
-    )
-    ready = outputs["ready_for_desktop_index.json"]
-    _exact_keys(
-        ready,
-        {"format", "valid", "invalid", "superseded", "consumed", "blocked"},
-        "READY index",
     )
     backtest = outputs["screening_backtest.json"]
     _exact_keys(

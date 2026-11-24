@@ -552,9 +552,9 @@ Limits (`validate._load_errata`):
 ### Derived indexes
 
 `research_memory/derived/` contains generated files that you must never edit:
-`trajectory_index.json`, `trajectory_graph.json`, `cost_ledger.json`,
+`trajectory_index.json`, `cost_ledger.json`,
 `role_reuse_index.json`, `reference_reuse_index.json`,
-`ready_for_desktop_index.json`, `screening_backtest.json`, `replay_pool.json`,
+`screening_backtest.json`, `replay_pool.json`,
 `policy_backtest.json`, `completeness_report.json`, `research_summary.json` and
 `research_summary.md`.
 

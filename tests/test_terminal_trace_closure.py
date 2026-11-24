@@ -1290,7 +1290,6 @@ def test_unreferenced_two_arm_trace_custody_preserves_inputs_and_excludes_replay
     assert all("missing_frozen_reference" in item["reasons"] for item in screening["excluded_traces"])
     assert outputs["replay_pool.json"]["entries"] == []
     assert outputs["replay_pool.json"]["action_entries"] == []
-    assert outputs["ready_for_desktop_index.json"]["valid"] == []
 
     # Even a caller bypassing schema validation cannot group null references.
     forged = copy.deepcopy(manifests)
