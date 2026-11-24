@@ -309,12 +309,13 @@ def families_pages(repo_root, index) -> dict[str, bytes]:
     Open = ACTIVE, the only non-terminal outcome; every other outcome is terminal and counts as closed
     (CLOSED = reference arms, counted and named separately). Lists keep trajectory_index order.
     """
+    from contextlib import suppress
     from fnmatch import fnmatchcase
-    root = Path(repo_root)
+    root, files = Path(repo_root), []  # files: tracked only, so pages match in every checkout; no git = empty lists
     fams = json.loads((root / "research_memory/families.json").read_text(encoding="utf-8"))["families"]
     hit = lambda text, pats: any(fnmatchcase(text.lower(), p.lower()) for p in pats)  # noqa: E731
     cards, taken, pages, rows = build_cards(root, index=index), set(), {}, []
-    src = sorted(p.relative_to(root / "src/molgap").as_posix() for p in (root / "src/molgap").rglob("*.py"))
+    with suppress(ValueError, OSError): files = sorted(_git(root, "ls-files", "-z", "--", "src/molgap", "experiments").split("\0"))
     for f in fams:
         mine = [c for c in cards if c["trajectory_id"] not in taken and hit(c["family_id"], f["family_id"])]
         taken |= {c["trajectory_id"] for c in mine}
@@ -322,8 +323,8 @@ def families_pages(repo_root, index) -> dict[str, bytes]:
         closed = [c for c in mine if c["outcome"] != "ACTIVE"]
         reopen = list(dict.fromkeys(r for c in closed for r in c["reopen_conditions"] or []))
         nxt = list(dict.fromkeys(str(c["next_candidates"]) for c in mine if c.get("next_candidates")))
-        mods = [f"src/molgap/{p}" for p in src if hit(p, f["src"])]
-        dirs = sorted(d.name for d in (root / "experiments").iterdir() if d.is_dir() and hit(d.name, f["experiments"]))
+        mods = [x for x in files if x.endswith(".py") and x.startswith("src/molgap/") and hit(x.removeprefix("src/molgap/"), f["src"])]
+        dirs = sorted({x.split("/")[1] for x in files if x.startswith("experiments/") and x.count("/") > 1 and hit(x.split("/")[1], f["experiments"])})
         more = lambda xs, n: ", ".join(xs[:n]) + (f", +{len(xs) - n} more" if len(xs) > n else "") or "-"  # noqa: E731
         out = [f"# {f['name']} ({', '.join(f['aliases'])})", "", "## Quick answer", f"Last closed (of {len(closed)}, {sum(c['outcome'] == 'CLOSED' for c in closed)} are CLOSED reference arms):",
                *map(compact_line, [c for c in closed if c["outcome"] != "CLOSED"][-3:][::-1]), f"Open (ACTIVE) {len(open_)}: " + more([c["trajectory_id"] for c in open_], 3),
@@ -334,10 +335,9 @@ def families_pages(repo_root, index) -> dict[str, bytes]:
                "## Levers (first 10)", *levers(mine, "*")[:11], "", "## Reopen conditions", *reopen,
                *(["", "## Next candidates", *nxt] if nxt else []), "", "## src", *mods, "", "## Experiments"]
         for d in dirs:
-            base = root / "experiments" / d
-            scripts = sorted(p.name for p in base.glob("*.py"))
-            traces = sorted(p.relative_to(root).as_posix() for p in base.rglob("trace.json"))
-            out += [f"- experiments/{d}: scripts {', '.join(scripts) or '-'}", *[f"  - trace {t}" for t in traces]]
+            own = [x for x in files if x.startswith(f"experiments/{d}/")]
+            out += [f"- experiments/{d}: scripts {', '.join(x.rsplit('/', 1)[1] for x in own if x.count('/') == 2 and x.endswith('.py')) or '-'}",
+                    *[f"  - trace {t}" for t in own if t.endswith("/trace.json")]]
         pages[f"families/{f['name']}.md"] = "\n".join([*out, ""]).encode("utf-8")
         rows.append(f"- [{f['name']}](families/{f['name']}.md) ({', '.join(f['aliases'])}): closed {len(closed)}, open {len(open_)}")
     rest = sorted({c["family_id"] for c in cards if c["trajectory_id"] not in taken})
