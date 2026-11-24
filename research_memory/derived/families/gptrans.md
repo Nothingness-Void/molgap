@@ -1,16 +1,16 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 80, 13 are CLOSED reference arms):
+Last closed (of 82, 14 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
 Open (ACTIVE) 6: T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm, T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm, +3 more
 Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / a separate training prospective and explicit launch authorization
 src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, gptrans_screen_workflow.py, gptrans_variants.py, +3 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +26 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +27 more
 
-## Closed (80)
+## Closed (82)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
@@ -87,6 +87,8 @@ T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44 | NEGATIVE_UNDER_CONTRACT |
 T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-pairnorm-init-noise-500k | initialization-seed-noise | null (see experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md) | -
 T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema | CLOSED | pcqm-gptrans-norm-ema-100k-20261104 | normalization-affine-decay-and-same-trajectory-ema-timescale | null | -
 T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-norm-ema-100k-20261104 | normalization-affine-decay-and-same-trajectory-ema-timescale | +1.77 | -
+T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | null | -
+T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | +10.71 | below_gate
 T-pcqm-gptrans-dft-distance-aux-20261121 | INCONCLUSIVE | pcqm-gptrans-dft-distance-aux-20261121 | train-only-pair-state-head-regressing-dft-heavy-atom-distances-pure-2d-inference | -0.14 | -
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm | POSITIVE_UNDER_CONTRACT | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | -3.14 | boundary_pass
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local | CLOSED | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | null | -
@@ -180,6 +182,9 @@ src/molgap/pcqm_k1_gptrans_fusion.py
 - experiments/pcqm_gptrans_geometry_channels_100k_kaggle1: scripts -
   - trace experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_angle/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_geometry_channels_100k_kaggle1/prospective_attempt_002/distance_only/rml_finalized/trace.json
+- experiments/pcqm_gptrans_hl_gauss_100k_20261118: scripts -
+  - trace experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/hl_gauss_512/rml_finalized/trace.json
+  - trace experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trace.json
 - experiments/pcqm_gptrans_input_init_100k: scripts -
 - experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1: scripts -
   - trace experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/prospective_attempt_002/rwse16/rml_finalized/trace.json

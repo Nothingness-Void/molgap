@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-hl-gauss-100k-20261118-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/hl_gauss_512/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-hl-gauss-100k-20261118-s42:hl_gauss_512:downstream"
+      ],
+      "source_commit": "b7ec45911db1fd83cdb35d67e0b96f039a2fde0f",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-hl-gauss-100k-20261118",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_hl_gauss_100k_20261118/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/rml_decision_snapshots/e942523636b3d81263fc7bbd9e559f6ce4169cfcff39ac270bd86ac34677e72c.json",
+    "snapshot_sha256": "e942523636b3d81263fc7bbd9e559f6ce4169cfcff39ac270bd86ac34677e72c",
+    "state_timestamp": "2026-11-18T04:10:00+09:00"
+  },
+  "family_id": "pcqm-gptrans-hl-gauss-100k-20261118",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Scalar L1 already captures the conditional median accurately",
+      "512-bin quantization and Gaussian smoothing add variance or bias",
+      "Effect is below the 3 meV material gate"
+    ],
+    "changed_mechanism": "hl-gauss-512-bin-distributional-readout-cdf-median-decode",
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+HLGauss512 from identical gptrans.pt initialization.",
+    "decision_changed_if_negative": "Close this HL-Gauss readout intervention without hyperparameter grids or automatic retries.",
+    "decision_changed_if_positive": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512",
+    "observed_deficiency": "Scalar L1 regression directly on normalized Gap can suffer from gradient saturation and unimodal point-estimate bias. Whether a 512-bin HL-Gauss cross-entropy objective with CDF median inference improves generalization over the retained BondLocal+PairNorm parent under strict same-job initialization parity is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does replacing the scalar linear readout of BondLocal+PairNorm GPTrans-T with a 512-bin HL-Gauss distributional head and CDF median decode improve matched 100K development MAE?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/hl_gauss_512/recipe.json",
+      "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "experiments/pcqm_gptrans_hl_gauss_100k_20261118/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_hl_gauss_100k_20261118/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "hl_gauss_512",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42",
+      "reference_arm_id": "pair_update_norm",
+      "reference_trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "bc70b1b9a3148a67c230dc2f882a9eb2ee2e932562201a9d3ac7ca177bd13d3e"
+    },
+    "source_commit": "b7ec45911db1fd83cdb35d67e0b96f039a2fde0f",
+    "source_config_identity": "c7cbed6a016c342da1f195bddff4d5836534dd881319493d133e361bd47f2b4b"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512"
+}

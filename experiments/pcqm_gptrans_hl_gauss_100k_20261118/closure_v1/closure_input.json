@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "pair_update_norm": {
+      "decision_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/closure_v1/closure_facts_pair_update_norm.json",
+      "outcome": "CLOSED"
+    },
+    "hl_gauss_512": {
+      "decision_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/closure_v1/closure_facts_hl_gauss_512.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    }
+  },
+  "role_audit": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/closure_v1/audit_map.json"
+}

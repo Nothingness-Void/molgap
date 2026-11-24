@@ -1,0 +1,289 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/authority.json": "11cb964757281ad701eac393afac38c63a605538970c34607f612e7bcc3d8404",
+    "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/pair_update_norm/recipe.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/acceptance.json": "9700a2f9558090a3971e844f8eb500b27cba690a75201fb55da3c678500b0ad6",
+    "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/observed.json": "c4f6b6195fd85def07cd5faca69d649bb1c62bda46adb4bf227a2a377f125d17",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/allocation_ledger.json": "e8a465ac4ec709b62b8306dc3988a76e4810d66897b79ac39eb7bae25bb63c23",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/execution_retention.json": "0e907d117622221c2d418624c15d3b8c412154aaeb9063b536d7cc6fa77909d2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/pair_update_norm/allocation_ledger.json": "e8a465ac4ec709b62b8306dc3988a76e4810d66897b79ac39eb7bae25bb63c23",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json": "a25bcd9caffc15d33ca5aad7db548eae32533bdfdacfbc1e88b5a20e9668e699",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json": "d05047bfe8b1754553954a0393429105c9e707d19a054b9b4908eb952b8db258",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json": "41fbec0b35486e95125e5e7361e19007d54fd3869e06fde419f7eba427261226",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions.pt": "3b4df32ca5240416b1eed61824da284d561fccb4697f2413d82d85fd233db6c3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions_ema0.9999.pt": "49d4e4487b999bd2e65d7e063a8aec44b5d8626ad9810a0d7c5483e978e1c491",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/last_checkpoint.pt": "6db1db69f6e43cead333860118b4b2dd00bd6ec2165cf78db1cb068e623d310f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/output_manifest.json": "cb0a0f52035537f77d56e0d809984719d5d157e4903530168809adbd95bb2122",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/selected_model.pt": "b84508bcfeb0508f443f9ec18a795cd2cebae49eb42530d60fd0ef0ebe552518",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/selected_model_ema0.9999.pt": "d03038590e6473578e5b74940d40e0ceee3f905c1895a3300c648b11a4424dc2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/reports/terminal_diagnostic_e391df7415d160174d40a67908dc6833f82ba485c37f7d17b94766e81f4f6313.json": "69b7306ecaf5a20bb03cd403f0acd59e833e3e8381b334a63309c0eafe2ac5f4"
+  },
+  "closure_blockers": [
+    "explicit_outcome_and_decision_ref_required",
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm-0",
+      "evidence_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.947621647409167
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.091701333801389
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm"
+    }
+  ],
+  "decision": {
+    "decision_ref": null,
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "0e907d117622221c2d418624c15d3b8c412154aaeb9063b536d7cc6fa77909d2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "e8a465ac4ec709b62b8306dc3988a76e4810d66897b79ac39eb7bae25bb63c23"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/_execution/pair_update_norm/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "e8a465ac4ec709b62b8306dc3988a76e4810d66897b79ac39eb7bae25bb63c23"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json",
+        "name": "contract",
+        "sha256": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "41fbec0b35486e95125e5e7361e19007d54fd3869e06fde419f7eba427261226"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "3b4df32ca5240416b1eed61824da284d561fccb4697f2413d82d85fd233db6c3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions_ema0.9999.pt",
+        "name": "predictions_ema_0p9999",
+        "sha256": "49d4e4487b999bd2e65d7e063a8aec44b5d8626ad9810a0d7c5483e978e1c491"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "6db1db69f6e43cead333860118b4b2dd00bd6ec2165cf78db1cb068e623d310f"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "b84508bcfeb0508f443f9ec18a795cd2cebae49eb42530d60fd0ef0ebe552518"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/selected_model_ema0.9999.pt",
+        "name": "selected_model_ema_0p9999",
+        "sha256": "d03038590e6473578e5b74940d40e0ceee3f905c1895a3300c648b11a4424dc2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "a25bcd9caffc15d33ca5aad7db548eae32533bdfdacfbc1e88b5a20e9668e699"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "d05047bfe8b1754553954a0393429105c9e707d19a054b9b4908eb952b8db258"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/observed.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/pair_update_norm/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.13944019207894803,
+      "missing_reason": null,
+      "selected_optimizer_step": 32802,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-18T02:52:23.925369+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": null,
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42-v1",
+    "logical_run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-gptrans-hl-gauss-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "b7ec45911db1fd83cdb35d67e0b96f039a2fde0f",
+    "source_package_sha256": "8250b8aab34ad072626b5ef55e83985103b895c0b5c0bf8147efc77e8635bf73",
+    "spec_identity": "bc70b1b9a3148a67c230dc2f882a9eb2ee2e932562201a9d3ac7ca177bd13d3e"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/pair_update_norm/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/generated/cc07cea524d88058a709ed782b837859b2adf23cb22b3ab72fb8fdd3067a7f86/pair_update_norm/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
+    "run_id": "pcqm-gptrans-hl-gauss-100k-20261118-s42:pair_update_norm:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_hl_gauss_100k_20261118/runs/pcqm-gptrans-hl-gauss-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/cfdd700e671204a2/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-hl-gauss-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json",
+    "trace_artifact_sha256": "a25bcd9caffc15d33ca5aad7db548eae32533bdfdacfbc1e88b5a20e9668e699",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm"
+}
