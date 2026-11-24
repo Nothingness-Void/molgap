@@ -1,0 +1,148 @@
+{
+  "submitted_at_utc": "2026-11-24T14:43:20.263251+00:00",
+  "dry_run": false,
+  "jobs": [
+    {
+      "label": "kaggle1",
+      "account": "nothingnessvoid",
+      "mode": "wave1_kaggle1",
+      "datasets": [
+        "nothingnessvoid/molgap-fast-engine-w1-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": {
+        "dataset": "nothingnessvoid/molgap-fast-engine-w1-src",
+        "action": "created",
+        "version": 1,
+        "hashes": {
+          "fast_gptrans.py": "704461d5002ccf28065ffc9d2cfdbe0f802a16a34d5927e1b2de972596c72f16",
+          "fast_demol_cin.py": "0bd09d1389cd2f2b6e1f7320d39da316cf242148a83d4b32aa8d02b93ea7e3ca",
+          "run_kaggle_fast.py": "0cfd041535342d6fd71c0795e6791c89035b16edb39e0f916742863f29957eb7",
+          "gptrans.pt": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320"
+        }
+      },
+      "push_result": {
+        "status": "submitted",
+        "requested_kernel": "nothingnessvoid/molgap-fast-w1-speed-parity-100k",
+        "kernel": "nothingnessvoid/molgap-fast-w1-speed-parity-100k",
+        "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-fast-w1-speed-parity-100k",
+        "version_number": 1,
+        "script_version_id": null,
+        "kernel_id": 147144978,
+        "identity_conflicts": [],
+        "accelerator": "NvidiaTeslaT4",
+        "invalid_dataset_sources": [],
+        "invalid_kernel_sources": [],
+        "invalid_model_sources": [],
+        "invalid_competition_sources": [],
+        "reconciliation_required": false,
+        "release_binding": null,
+        "platform_response": {
+          "ref": "/code/nothingnessvoid/molgap-fast-w1-speed-parity-100k",
+          "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-fast-w1-speed-parity-100k",
+          "versionNumber": 1,
+          "kernelId": 147144978,
+          "invalidDatasetSources": [],
+          "invalidKernelSources": [],
+          "invalidModelSources": [],
+          "invalidCompetitionSources": []
+        }
+      }
+    },
+    {
+      "label": "kaggle2",
+      "account": "kaseichou",
+      "mode": "wave1_kaggle2",
+      "datasets": [
+        "kaseichou/molgap-fast-engine-w1-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": {
+        "dataset": "kaseichou/molgap-fast-engine-w1-src",
+        "action": "created",
+        "version": 1,
+        "hashes": {
+          "fast_gptrans.py": "704461d5002ccf28065ffc9d2cfdbe0f802a16a34d5927e1b2de972596c72f16",
+          "fast_demol_cin.py": "0bd09d1389cd2f2b6e1f7320d39da316cf242148a83d4b32aa8d02b93ea7e3ca",
+          "run_kaggle_fast.py": "0cfd041535342d6fd71c0795e6791c89035b16edb39e0f916742863f29957eb7",
+          "gptrans.pt": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320"
+        }
+      },
+      "push_result": {
+        "status": "submitted",
+        "requested_kernel": "kaseichou/molgap-fast-w1-200ep-demolreg-100k",
+        "kernel": "kaseichou/molgap-fast-w1-200ep-demolreg-100k",
+        "url": "https://www.kaggle.com/code/kaseichou/molgap-fast-w1-200ep-demolreg-100k",
+        "version_number": 1,
+        "script_version_id": null,
+        "kernel_id": 147145060,
+        "identity_conflicts": [],
+        "accelerator": "NvidiaTeslaT4",
+        "invalid_dataset_sources": [],
+        "invalid_kernel_sources": [],
+        "invalid_model_sources": [],
+        "invalid_competition_sources": [],
+        "reconciliation_required": false,
+        "release_binding": null,
+        "platform_response": {
+          "ref": "/code/kaseichou/molgap-fast-w1-200ep-demolreg-100k",
+          "url": "https://www.kaggle.com/code/kaseichou/molgap-fast-w1-200ep-demolreg-100k",
+          "versionNumber": 1,
+          "kernelId": 147145060,
+          "invalidDatasetSources": [],
+          "invalidKernelSources": [],
+          "invalidModelSources": [],
+          "invalidCompetitionSources": []
+        }
+      }
+    },
+    {
+      "label": "kaggle3",
+      "account": "nvoid912",
+      "mode": "wave1_kaggle3",
+      "datasets": [
+        "nvoid912/molgap-fast-engine-w1-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-pos-v1"
+      ],
+      "source_dataset": {
+        "dataset": "nvoid912/molgap-fast-engine-w1-src",
+        "action": "created",
+        "version": 1,
+        "hashes": {
+          "fast_gptrans.py": "704461d5002ccf28065ffc9d2cfdbe0f802a16a34d5927e1b2de972596c72f16",
+          "fast_demol_cin.py": "0bd09d1389cd2f2b6e1f7320d39da316cf242148a83d4b32aa8d02b93ea7e3ca",
+          "run_kaggle_fast.py": "0cfd041535342d6fd71c0795e6791c89035b16edb39e0f916742863f29957eb7",
+          "gptrans.pt": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320"
+        }
+      },
+      "push_result": {
+        "status": "submitted",
+        "requested_kernel": "nvoid912/molgap-fast-w1-etkdg3d-100k",
+        "kernel": "nvoid912/molgap-fast-w1-etkdg3d-100k",
+        "url": "https://www.kaggle.com/code/nvoid912/molgap-fast-w1-etkdg3d-100k",
+        "version_number": 1,
+        "script_version_id": null,
+        "kernel_id": 147145126,
+        "identity_conflicts": [],
+        "accelerator": "NvidiaTeslaT4",
+        "invalid_dataset_sources": [],
+        "invalid_kernel_sources": [],
+        "invalid_model_sources": [],
+        "invalid_competition_sources": [],
+        "reconciliation_required": false,
+        "release_binding": null,
+        "platform_response": {
+          "ref": "/code/nvoid912/molgap-fast-w1-etkdg3d-100k",
+          "url": "https://www.kaggle.com/code/nvoid912/molgap-fast-w1-etkdg3d-100k",
+          "versionNumber": 1,
+          "kernelId": 147145126,
+          "invalidDatasetSources": [],
+          "invalidKernelSources": [],
+          "invalidModelSources": [],
+          "invalidCompetitionSources": []
+        }
+      }
+    }
+  ]
+}
