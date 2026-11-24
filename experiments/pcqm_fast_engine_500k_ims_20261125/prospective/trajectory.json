@@ -1,0 +1,124 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "fast-500k-local-rehearsal-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-fast-engine-500k-ims-20261125-fast-500k-local-rehearsal-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md"
+      ],
+      "run_ids": [
+        "fast-500k-local-rehearsal-v1"
+      ],
+      "source_commit": "114e3affc4e5205ebd0cf8903dc2af3629295073",
+      "type": "diagnostic"
+    },
+    {
+      "action_id": "A002",
+      "attempt_ids": [
+        "fastpn-500k-20261125-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-fast-engine-500k-ims-20261125-fastpn-500k-20261125-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md"
+      ],
+      "run_ids": [
+        "fastpn-500k-20261125"
+      ],
+      "source_commit": "114e3affc4e5205ebd0cf8903dc2af3629295073",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md",
+    "next_allowed_actions": [
+      "local rehearsal of the serial chain (no scheduler)",
+      "one IMS single-item job only after an Opus pre-submit review finds no blocker and the main session submits"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "LOCAL_REHEARSAL",
+      "RUN_FAST_ENGINE_500K_IMS_JOB",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md",
+    "chosen_action": "LOCAL_REHEARSAL",
+    "policy_id": "pcqm-fast-engine-500k-ims-20261125",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_fast_engine_500k_ims_20261125/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_decision_snapshots/2acd0e463dd4d1f52d08c299d2755a02effbc63d6a459dc941d1ec92b4dc077b.json",
+    "snapshot_sha256": "2acd0e463dd4d1f52d08c299d2755a02effbc63d6a459dc941d1ec92b4dc077b",
+    "state_timestamp": "2026-11-25T12:00:00+09:00"
+  },
+  "family_id": "pcqm-fast-engine-500k-ims-20261125",
+  "hypothesis": {
+    "alternative_explanations": [
+      "AMP FP16 rounding changes the optimum",
+      "Non-deterministic kernels and a different batch order act as extra seed noise",
+      "Fused versus foreach AdamW rounding",
+      "One run cannot split precision from non-determinism"
+    ],
+    "changed_mechanism": "execution-engine-only: AMP FP16 autocast, non-deterministic kernels, fused AdamW, GPU-resident static-bucket batches, pinned torch.compile mode; model, init, seed, data, schedule and optimizer constants unchanged",
+    "cheapest_falsifier": "Selected-EMA tail MAE outside the seven same-contract references (107.27-108.36 meV, range 1.08, init-noise SD 0.52) flags an accuracy cost; no speed gain flags a host-bound step the engine does not remove. No fixed gate: read against noise.",
+    "decision_changed_if_negative": "Do not use the fast engine for 500K or larger runs; a second condition (FP32 non-deterministic, buckets kept) may split precision from non-determinism.",
+    "decision_changed_if_positive": "The engine may serve later 500K and full-scale runs after the main session decides; nothing is adopted by this job.",
+    "expected_native_cost_ref": "cost-T-pcqm-fast-engine-500k-ims-20261125-fastpn-500k-20261125-planned",
+    "historical_unknowns": [
+      "Fast engine s/pass on A100 is unmeasured; local RTX 5060 eager is about 71 ms/step",
+      "torch.compile path cannot be rehearsed on Windows (no Triton)",
+      "Reference tail runs are FP32 deterministic on T4 and A100; the speed baseline is ctl-500k-s42 (466.6 s/pass, passes 3-60)"
+    ],
+    "hypothesis_id": "H-T-pcqm-fast-engine-500k-ims-20261125",
+    "observed_deficiency": "The IMS A100 step is host bound (0.120 s/step at batch 128) and slower than a local RTX 5060; the FP32 deterministic CPU-loader path leaves the GPU idle.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the fast engine (AMP FP16, non-deterministic kernels, fused AdamW, GPU-resident batches, compile where available) train the same 500K GPT-T BondLocal + PairNorm recipe to a tail MAE inside the existing noise range and at a lower seconds per pass than the FP32 deterministic baseline?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_fast_engine_500k_ims_20261125/protocol.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_fast_engine_500k_ims_20261125/role_plan.json"
+    ],
+    "source_commit": "114e3affc4e5205ebd0cf8903dc2af3629295073",
+    "source_config_identity": "1faa32bc35d2b663933a38b9d5bf8b23fcd9527d448f8419365f3adef3c58963"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+}
