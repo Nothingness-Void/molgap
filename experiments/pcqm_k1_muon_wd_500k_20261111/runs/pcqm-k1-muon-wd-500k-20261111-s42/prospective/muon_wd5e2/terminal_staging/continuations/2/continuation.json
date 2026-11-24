@@ -1,0 +1,71 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s42/v1/version2/_resume_preflight/muon_wd5e2/actual_resume_certificate.json",
+    "sha256": "b1f84102f28461908997c941d2e72380aa2b6fcd87284ea5d1cd2137a50bcd5b"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_muon_wd_500k_20261111/resume_to_pass60.json",
+    "sha256": "f07713029b0ebb1feb2acd19b323f41021f6ab2a4fe2a22c7a70a991be7faa07"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s42/v2/prepared/source_dataset/resume/muon_wd5e2/files/last_checkpoint.pt",
+    "sha256": "446d493d6d61a37df90f4e156252d8676886b3973145c4bba3a973de397eed9d"
+  },
+  "continued": {
+    "attempt_id": "pcqm-k1-muon-wd-500k-20261111-s42-v2",
+    "logical_run_id": "pcqm-k1-muon-wd-500k-20261111-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-muon-wd-500k-20261111-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "be1af9ea532bfa2b2d5100ef69d2738ad49a98a0",
+    "source_package_sha256": "df8f7b824fbdaae510dc4ee1f3c7d54da3d28060ce8c28c180a308dcb4e16470",
+    "spec_identity": "98ba0dd062a2fcdcc981eb910e71a684422d99a23d99c729e265771b83fa8ffe"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s42/v1/version2/muon_wd5e2/output_manifest.json",
+    "sha256": "380d0ab80c99199340358a7a5a0ed33bbe5c3ad9896878bb03f64ea7e2de90a5"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s42/v2/operations/launch_receipt.json",
+    "sha256": "7e31bd6c1fa0bc1698ed7460b431fdb8baa3a46564f2a50dce2ead32d77bbb87"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s42/v1/version2/muon_wd5e2/canonical_trace.json",
+    "sha256": "5be4ff190a96c8c1aa2aceb23068df6d710609336733ddb2c2aba6f9f2b5a271"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-wd-500k-20261111-s42/v1/version2/_resume_preflight/muon_wd5e2/runtime_certificate.json",
+    "sha256": "450bd623c5b9942e31f974c6ef1522db366d169e4d8bd15750939e06cc3d94b6"
+  },
+  "origin": {
+    "attempt_id": "pcqm-k1-muon-wd-500k-20261111-s42-v1",
+    "logical_run_id": "pcqm-k1-muon-wd-500k-20261111-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-muon-wd-500k-20261111-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "be1af9ea532bfa2b2d5100ef69d2738ad49a98a0",
+    "source_package_sha256": "df8f7b824fbdaae510dc4ee1f3c7d54da3d28060ce8c28c180a308dcb4e16470",
+    "spec_identity": "98ba0dd062a2fcdcc981eb910e71a684422d99a23d99c729e265771b83fa8ffe"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-wd-500k-20261111-s42/v1/operations/launch_receipt.json",
+    "sha256": "d3d77e38b608b551f603a57ea9f8473a787093c48530f355b7805bc1b740220a"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s42/v2/prepared/source_dataset/resume/muon_wd5e2/resume_bundle.json",
+    "sha256": "a23a1ab75be6632a7fea42348ff030ec3c9e12197f84438b0e79786f263b3fe6"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s42/v2/prepared/source_dataset/resume/muon_wd5e2/files/canonical_trace.json.context.json",
+    "sha256": "6adfb27ccc3f385e14335abd4ded159e4bb7213620c89da01627b3e5aa7da9f0"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-wd-500k-20261111-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "62270d3974b1c62bf5d73b497bd336e37c01c2e870ed8329825f716c177101df"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-wd-500k-20261111-s42/v2/prepared/source_dataset/resume/muon_wd5e2/files/canonical_trace.json",
+    "sha256": "b2bdeead67788c2f2ee2a295eaaf537fa76e9a8be2d887eb656c8b01cee64806"
+  }
+}

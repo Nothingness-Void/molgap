@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-muon-wd-500k-20261111-s42\\v1\\version2\\muon_wd1e5\\development_predictions.pt",
+      "sha256": "2dba42bbe3c1e744ac74e28ee8fa7583c84252ae3a0089cf86e1bc49be872b60"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-muon-wd-500k-20261111-s42\\v1\\version2\\muon_wd5e2\\development_predictions.pt",
+      "sha256": "0503e41028b796b4c0d8a140767a6a9e083a8f3c2ec7bd20c7743e640485e96e"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.3913701486587513,
+    "ensemble_gain_meV": 4.60014303684234,
+    "ensemble_mae_meV": 96.56786633729935,
+    "fit": null,
+    "m_meV": -1.3913701486587524,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "muon_wd5e2",
+        "ci95": [
+          -2.0153369659185407,
+          -0.774724938631058
+        ],
+        "delta": -1.3913701486587524,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "reference": "muon_wd1e5",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "muon_wd1e5": 101.86369444847107,
+      "muon_wd5e2": 100.47232429981231
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+}

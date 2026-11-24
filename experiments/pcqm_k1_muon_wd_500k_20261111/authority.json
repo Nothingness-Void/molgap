@@ -1,0 +1,37 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "kaseichou",
+  "arms": [
+    "muon_wd1e5",
+    "muon_wd5e2"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "muon_wd1e5",
+  "allocated_t4_hours_ceiling": 36,
+  "allocation_wall_limit_seconds": 32400,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authority": "User approved on 2026-11-11 (sleeping; no questions) designing then executing the K1 batched-Muon weight-decay pair on Kaggle1 and Kaggle2, all slots of those two accounts, Opus design with Fable adjudication.",
+  "scope": "Exactly two fresh models (muon_wd1e5, muon_wd5e2), TRAIN/internal-development only, initialization seed42 state, sampler/dropout seed 42; at most 2 physical T4x2 sessions, 9h/session, 18h cumulative entry wall and 36 T4-device-hours. Planned pause at step 187488 (pass 48), exact wall-limited continuation to terminal 234360 (pass 60). No protected roles, extra seed, weight-decay value, full, adoption or source/recipe change.",
+  "continuation": {
+    "logical_attempt": "v1",
+    "maximum_physical_sessions": 2,
+    "cumulative_pass_boundaries": [
+      48,
+      60
+    ],
+    "cumulative_optimizer_step_boundaries": [
+      187488,
+      234360
+    ],
+    "total_entry_wall_hours_ceiling": 18,
+    "total_allocated_t4_device_hours_ceiling": 36,
+    "quota_policy": "Recheck actual kaseichou quota before publication and continuation; retain account and cumulative ceiling.",
+    "recovery_rule": "Wall-limited exact-state continuation only, retaining optimizer/scheduler/RNG/EMA/counters and all receipts. Subtract elapsed entry wall and allocated device costs from total budget.",
+    "operator": "Desktop owner when active; no new polling or unattended service."
+  }
+}
