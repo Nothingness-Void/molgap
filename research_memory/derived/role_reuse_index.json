@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1073,
+  "ambiguous_historical_role_record_count": 1076,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1284,6 +1284,27 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -7513,7 +7534,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 980,
+  "explicit_role_event_count": 985,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -8918,6 +8939,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
       },
       {
         "access_kind": "labels_read",
@@ -10462,6 +10511,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
       },
       {
         "access_kind": "training_membership",
@@ -14659,6 +14715,7 @@
       "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
       "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
       "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44",
+      "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
@@ -14893,6 +14950,7 @@
       "ev-terminal-T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn",
       "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s43",
       "ev-terminal-T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44",
+      "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
       "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-grit-spse-100k-20261118-r2-s42-grit_spse",
@@ -16434,6 +16492,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
       },
       {
         "access_kind": "labels_read",
@@ -21327,6 +21413,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -22822,6 +22936,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-rrwp-pairffn-100k-20261118-s42-rrwp_pairffn"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
       },
       {
         "access_kind": "training_membership",

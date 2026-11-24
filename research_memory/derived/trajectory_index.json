@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "f6e1ebcf2fddd43147d8015b1011cdda4414d7a105bd117c8e66464c80577291",
+  "source_digest": "34645082623ff838c66d59fc90cc4a22a0570e1ff67a9c6141d3eb1bbb252370",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -665,6 +665,22 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-split-ensemble-500k-20261112-s42-split_s44"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/decision.md",
+      "family_id": "pcqm-gptrans-tokengt-100k-20261113",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_PAIRED_100K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-gptrans-tokengt-100k-20261113"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Single local RTX 5060 (8123 MiB VRAM); native GPU wall time measured directly; queue not applicable."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "a12c723704c8570506e5558d1b0e36f37c89f3d9033a32f0508e7f1ffc96bc0f",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-gptrans-tokengt-100k-20261113",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

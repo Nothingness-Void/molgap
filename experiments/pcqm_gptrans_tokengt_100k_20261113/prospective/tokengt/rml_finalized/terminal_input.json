@@ -1,0 +1,127 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/closure_v1/closure_facts_tokengt.json": "508899d7a52c9d1ced59e061b58f6de5b8fa6553ef625aecdcfc8c992e146eee",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/closure_v1/roles_tokengt.json": "5ffa937a0241493967fd5074391467338b9319a637ea4aa252084fdee223b7d4",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/decision.md": "eb2cafb701d8d88a3c90058a1f62d5d9730b125c107e5461c387dd866cb5ef5b",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/acceptance.json": "d1d4304e033626b2e1f135e7d0ebb9d511315cf6f89796d95dbf2c8fede76e28",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/observed.json": "56f70d40a29fcc076cf5e5b3d8f3c4a0cac6490a11fcc9550cce44075e101cd2",
+    "experiments/pcqm_gptrans_tokengt_100k_20261113/runs/pcqm-gptrans-tokengt-100k-20261113-s42/reports/terminal_diagnostic_e563232409537614.json": "17284b4e207267d310a0779fd955d3ab222836ce9ddb58e8b04fb6263219c273",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/canonical_trace.json": "66512237c8a5cb3f3b243deccc6ca17ef55e1cbbfa020c00150f5830739f121a",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/canonical_trace.json.context.json": "60f4211a077e1cabdda7c8f236205cc95269aefb769222e03bd33eb68c767e13",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/data_open_provenance.json": "718af3f45b813278a639360a74ff4c5ea2db29b1e8dc7006ccd026af4af9cfc4",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/development_predictions.pt": "d22e7428fe7a53cbed0d2f44ec19d5d95879cf2c589f8692fa65d63ae2624c4a",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/last_checkpoint.pt": "f3afbd30f3fb4a58a3997abd2d1a472fe8532f0202eceb4970935f54eb56096b",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/output_manifest.json": "e501e9ece9186ab0f93ebf9db9a8be333fc9b38438596e341b3cfc3c15610662",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/selected_model.pt": "2dee80d2d913ef6806c05cd5600fbb9a6a15a9d8dd0d254c599e772ab28fd2f9",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/training_contract.json": "85a9eecf52603b41e30e89e5bd2a0e60b22a7673848032e23df4d7a47b8680f4"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-13T13:54:05.828842+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-0.json",
+        "sha256": "d555c04cf7254fa2f60d1c6861a07465852d21e287107495796d8c45939a2b75"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "12162eaf9c0cee2cc5ce9fd64a4b3b46d0075db241a83fee56a5c039779a8dfd"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "76358dd15a318dbe588ac6491ca01b82284883919cd64fc2f4164a220de68547"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-train-training_membership.json",
+        "sha256": "5bfb9fe586b8d50cd5b4a2d30063867496a7008a6137b5711f9b13fa3601c916"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-prediction_input.json",
+        "sha256": "e14945159312f8f50078af86622d0dfdd78446d871e3cf17b4cc82337580d20b"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-labels_read.json",
+        "sha256": "52ed7cbad493f036a5f6213ad2d9dee51b817a3ef55c9b827d68ecba491ab7d7"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-metric_computed.json",
+        "sha256": "c66d0b898b5f6eca2dcc1ffe1cd2cc260aa474b95f4e1f5a61fbfc4b486dde8e"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-development-selection_used.json",
+        "sha256": "8f1c03bb7d3625b57235a747da9bcbc3ee2b2d6dfb5acbb070b08b73fff504e8"
+      }
+    ]
+  },
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+    "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/runs/pcqm-gptrans-tokengt-100k-20261113-s42/v1/tokengt/canonical_trace.json",
+    "trace_artifact_sha256": "66512237c8a5cb3f3b243deccc6ca17ef55e1cbbfa020c00150f5830739f121a",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+}

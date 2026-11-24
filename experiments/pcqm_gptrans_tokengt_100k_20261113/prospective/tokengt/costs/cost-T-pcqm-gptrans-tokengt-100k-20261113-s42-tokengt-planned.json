@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "tokengt-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/authority.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local",
+  "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+}

@@ -1,0 +1,140 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "tokengt-v1",
+      "category": "training",
+      "cost_event_id": "cost-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-planned",
+      "evidence_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/authority.json",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local",
+      "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "pcqm-gptrans-tokengt-100k-20261113",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_tokengt_100k_20261113/protocol.md",
+      "experiments/pcqm_gptrans_tokengt_100k_20261113/role_plan.json"
+    ],
+    "source_commit": "60e2c68f7f6802a61b453cd0a290ffc608bb0345",
+    "state_timestamp": "2026-11-13T10:48:51.552806+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "tokengt-v1"
+        ],
+        "cost_event_ids": [
+          "cost-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-planned"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_tokengt_100k_20261113/recipe.json"
+        ],
+        "run_ids": [
+          "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream"
+        ],
+        "source_commit": "60e2c68f7f6802a61b453cd0a290ffc608bb0345",
+        "type": "training"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/decision.md",
+      "next_allowed_actions": [
+        "one authorized local 60-pass RTX 5060 100K screen"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "pcqm-gptrans-tokengt-100k-20261113",
+    "hypothesis": {
+      "alternative_explanations": [
+        "Chebyshev N+E TokenGT attention overfits 100K molecules without shortest-path/bond-local inductive bias",
+        "AdamW lr 1e-3 / EMA 0.999 under- or over-regularizes TokenGT within 60 passes",
+        "Fresh tokengt.pt initialization and RTX 5060 / PyTorch 2.7.1 runtime differ from Kaggle T4 PyTorch 2.11.0 OGBGPTransTiny baseline"
+      ],
+      "changed_mechanism": "tokengt-chebyshev-node-edge-token-transformer",
+      "cheapest_falsifier": "One local RTX 5060 60-pass 100K run on pcqm_fixed_100k_v1 reusing retained uniform_wd_multi_ema baseline offline without retraining.",
+      "decision_changed_if_negative": "Close TokenGT-GPTrans NEGATIVE_UNDER_CONTRACT on pcqm_fixed_100k_v1 with terminal attribution; no retry or scale-up.",
+      "decision_changed_if_positive": "Nominate delta <= -3.0 meV (paired 95% CI < 0) for runtime-parity check and replication/500K authorization only; no automatic promotion.",
+      "expected_native_cost_ref": "cost-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "observed_deficiency": "Standard GPTrans operates solely on node tokens with pairwise spatial/bond biases and lacks explicit edge tokens and orthonormal-basis graph tokenization.",
+      "related_closed_family_ids": [
+        "pcqm-gptrans-norm-ema-100k-20261104",
+        "pcqm-gptrans-bondlocal-pairnorm-100k"
+      ],
+      "supporting_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      ]
+    },
+    "owner": "desktop",
+    "question": "Does TokenGTGPTrans (gptrans_tokengt/1) lower 50K dev Gap MAE under GPTrans 100K against ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/authority.json",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_tokengt_100k_20261113/recipe.json",
+        "experiments/pcqm_gptrans_tokengt_100k_20261113/protocol.md",
+        "experiments/pcqm_gptrans_tokengt_100k_20261113/README.md"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      ],
+      "prior_trajectory_ids": [],
+      "reference_ids": [
+        "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_tokengt_100k_20261113/protocol.md",
+        "experiments/pcqm_gptrans_tokengt_100k_20261113/role_plan.json"
+      ],
+      "source_commit": "60e2c68f7f6802a61b453cd0a290ffc608bb0345",
+      "source_config_identity": "c721cc0e8860bb0ef2e624f373edf8a5679619e2f390eb32fe7473079e37b87f"
+    },
+    "track": "B",
+    "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+  }
+}
