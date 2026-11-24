@@ -464,7 +464,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
 
 
 def _retrieve_kernel(argv):
-    """Kernel-only mode: scheduler status, or with --destination the latest output files and their sha256."""
+    """Kernel-only mode: scheduler status, or with --destination (new or empty) the latest output files and their sha256."""
     import json
     from datetime import datetime, timezone
     from types import SimpleNamespace
@@ -475,7 +475,6 @@ def _retrieve_kernel(argv):
     parser = _FiniteParser(allow_abbrev=False)
     parser.add_argument("--kernel", required=True)
     parser.add_argument("--credentials", type=Path, required=True)
-    parser.add_argument("--version", type=int)
     parser.add_argument("--destination", type=Path)
     try:
         args = parser.parse_args(argv)
@@ -487,15 +486,29 @@ def _retrieve_kernel(argv):
                   "failure_message": status.failure_message, "latest_version": meta.current_version_number, "scope": "latest", "scientific_acceptance": False,
                   "observed_at": datetime.now(timezone.utc).isoformat()}
         if args.destination is not None:
-            version = args.version or meta.current_version_number
-            if result["scheduler_status"] != "COMPLETE":
-                raise ValueError("Kernel is not COMPLETE")
+            version = meta.current_version_number
+            if result["scheduler_status"] in {"QUEUED", "RUNNING"}:
+                raise ValueError("Kernel is still queued or running")
+            if args.destination.exists() and next(args.destination.iterdir(), None) is not None:
+                raise ValueError("Destination must be new or empty")
             context = SimpleNamespace(account=owner, run_reference=args.kernel, platform_version=version)
             names = _list_selected_urls(api, context, None)
-            files = retrieve_pinned_exact_files(api, context=context, remote_manifest_path="log",
-                files={name: (name, None) for name in names}, destination=args.destination, observe=True)["files"]
+            if names.keys() & {"_kernel_retrieval.json", "_kernel_log.json"}:
+                raise ValueError("Remote output uses a reserved file name")
+            from kagglesdk.kernels.types.kernels_api_service import ApiListKernelSessionOutputRequest
+            request = ApiListKernelSessionOutputRequest()
+            request.user_name, request.kernel_slug, request.page_size = owner, args.kernel.split("/")[1], 1
+            with api.build_kaggle_client() as client:  # the scheduler log, the only output of a failed run
+                log = client.kernels.kernels_api_client.list_kernel_session_output(request).log or ""
+            args.destination.mkdir(parents=True, exist_ok=True)
+            atomic_write(args.destination / "_kernel_log.json", log.encode())
+            files = [{"path": "_kernel_log.json"}] + (retrieve_pinned_exact_files(api, context=context,
+                remote_manifest_path="log", files={name: (name, None) for name in names},
+                destination=args.destination, observe=True)["files"] if names else [])
+            for item in files:
+                item["sha256"] = file_digest(args.destination / item["path"])
             result.update(version=version, files=files, destination=str(args.destination))
-            atomic_write(args.destination / "kernel_retrieval.json", json.dumps(result, indent=1, sort_keys=True).encode())
+            atomic_write(args.destination / "_kernel_retrieval.json", json.dumps(result, indent=1, sort_keys=True).encode())
     except Exception as error:
         print(json.dumps({"status": "BLOCKED", "error": type(error).__name__}))
         return 2

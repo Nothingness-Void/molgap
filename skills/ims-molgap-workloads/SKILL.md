@@ -81,7 +81,7 @@ sends only the spec and launcher.
 
 Add --retrieve-to DIR to the original --spec or --payload to fetch completed
 V4 outputs with worker digests. Use the owning experiment's retrieval entry
-for older runs without worker digests (it writes `DIR/training/`, the layout scorers read), and its
+for older runs without worker digests (pass `--to DIR/training`; scorers read `DIR/training/<item>`), and its
 acceptance entry for closeout. `run.py --script` also runs committed `experiments/<name>/*.py` scripts.
 
 ## Scientific and hardware boundaries
