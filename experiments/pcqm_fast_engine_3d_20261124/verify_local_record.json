@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "test1_parity": {
+    "max_fwd_diff": 5.364418029785156e-07,
+    "max_grad_diff": 4.76837158203125e-07
+  },
+  "test2_amp": {
+    "fp16": {
+      "step0_loss": 0.9113964438438416,
+      "step49_loss": 1.1675183773040771
+    },
+    "bf16": {
+      "step0_loss": 0.9726799726486206,
+      "step49_loss": 0.8469035029411316
+    }
+  },
+  "test3_3d_fallback": {
+    "init_diff": 0.0,
+    "invalid_geom_diff": 0.0,
+    "step19_3d_grad_norm": [
+      0.0004083389649167657,
+      0.19814027845859528
+    ]
+  },
+  "test4_demol": {
+    "demol_3d=False": {
+      "train_stoch_diff": 0.4185168147087097,
+      "eval_diff": 1.862645149230957e-07,
+      "step29_loss": 0.7593865990638733
+    },
+    "demol_3d=True": {
+      "train_stoch_diff": 0.3907536566257477,
+      "eval_diff": 1.7881393432617188e-07,
+      "step29_loss": 0.7963670492172241
+    }
+  },
+  "test5_guard": {
+    "protected_split_blocked": true
+  }
+}
