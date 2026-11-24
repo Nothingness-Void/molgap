@@ -795,6 +795,17 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"3e0aaf34b024f992e85a37cb519a33dadeadfdb577f8524d004e6cbb47b734d7\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"758052006725863105127b6b0b688bc5d73ac4f2bd94d5784c88da31bb65bb2f\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon\"}",
+      "run_ids": [
+        "pcqm-k1-read-batched-muon-500k-20261107-s42:current_read:downstream",
+        "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
+        "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\",\"lr_schedule_identity\":\"7e8709e0fe27aebbfe8cf43c1a8e81eefc38dfc670c2426d671d6cd5145a64f4\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-muon\\\",\\\"comparison_sha256\\\":\\\"c858d750c731b21d7c7e0d1ba3cd045d69fdcbe372eef87c439ab5c0f93c1850\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\",\\\"optimizer_mode\\\"],\\\"expected\\\":{\\\"optimizer_identity\\\":{\\\"candidate\\\":\\\"ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a\\\",\\\"reference\\\":\\\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\\\"},\\\"optimizer_mode\\\":{\\\"candidate\\\":\\\"k1-muon-adamw-fp32-v1\\\",\\\"reference\\\":\\\"native-adamw\\\"}},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"hidden-matrix-fp32-muon-optimizer-scale-transfer\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-adamw\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"acde5fd3bd0b09cbdf6a1182e4e722bad4f714ec51ce21facdbcaa30176091c8\\\",\\\"row_membership_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\",\\\"row_order_identity\\\":\\\"39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659\\\"}\",\"strict_identity_sha256\":\"0f41782f87a92c8079d1bcc2388f69871f66061fd5fdc6ddd5724558f1b10b2e\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a\\\",\\\"target_transform_identity\\\":\\\"2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":234360,\\\"sample_presentations\\\":29998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-adamw\"}",
       "run_ids": [
         "pcqm-k1-muon-500k-20261106-s42:adamw:downstream",
@@ -877,6 +888,8 @@
     "T-pcqm-k1-muon-100k-20261106-s42-muon",
     "T-pcqm-k1-muon-500k-20261106-s42-adamw",
     "T-pcqm-k1-muon-500k-20261106-s42-muon",
+    "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read",
+    "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
     "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -906,5 +919,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 108
+  "trace_count": 110
 }

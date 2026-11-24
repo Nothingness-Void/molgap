@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "muon",
+    "arm_identity": "6fc23817c63f6d15ff0e2b669f7ba8e9a69ed77e6e91700f9c64d0d370d337c5",
+    "experiment_id": "pcqm_k1_read_batched_muon_500k_20261107",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+    "package_identity": "8290b35ad86141d8e313ffdcb868bb9a0475f359209532c4faf1be82d67caa74",
+    "platform": "kaggle",
+    "platform_version": "2",
+    "run_reference": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+    "source_archive_sha256": "581796f208c3e8b0f482665fb649daa268cb882bf268f1e5a442ff262f94e861",
+    "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+    "spec_identity": "ec7c2c89fb0ba6b446d9760b8b5d9ac55118ef32404be5bc2130cd65e0f99a26",
+    "training_recipe_sha256": "67213cbce1261115a30446ee453e720d878c71a45bb21e63182247cb0be947a8"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "ba6d4980c943382295c0699b2ee965da8b8ca3bda25169188ace4542581527c0"
+    },
+    "status": "positive_control_failed",
+    "unobserved_earlier_invocation": true
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/roles_reviewed/roles_muon.json",
+      "role_event_id": "role-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/roles_reviewed/roles_muon.json",
+      "role_event_id": "role-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/roles_reviewed/roles_muon.json",
+      "role_event_id": "role-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/roles_reviewed/roles_muon.json",
+      "role_event_id": "role-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/roles_reviewed/roles_muon.json",
+      "role_event_id": "role-pcqm-k1-read-batched-muon-500k-20261107-s42-muon-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:muon:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-muon"
+    }
+  ]
+}

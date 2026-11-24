@@ -1,0 +1,35 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+  "records": [
+    {
+      "version": 1,
+      "arm": "muon",
+      "path": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/role_provenance/version1/muon/data_open_provenance.json",
+      "sha256": "163041b8ffbe0da172710d67953697fcfc054ecba8cad0c23d46bf035f711483",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 1,
+      "arm": "current_read",
+      "path": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/role_provenance/version1/current_read/data_open_provenance.json",
+      "sha256": "fce7d1ced5275712a40947ab84d15b36bab05a945782a82b35b1993b021f4b6c",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 2,
+      "arm": "muon",
+      "path": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/role_provenance/version2/muon/data_open_provenance.json",
+      "sha256": "ba6d4980c943382295c0699b2ee965da8b8ca3bda25169188ace4542581527c0",
+      "transport": "version_specific_manifest_pinned_files"
+    },
+    {
+      "version": 2,
+      "arm": "current_read",
+      "path": "experiments/pcqm_k1_read_batched_muon_500k_20261107/terminal_acceptance/role_provenance/version2/current_read/data_open_provenance.json",
+      "sha256": "49e8be63b6677ae38b0040ce9096bc20c95528b9e167daa33a252f2293035466",
+      "transport": "version_specific_manifest_pinned_files"
+    }
+  ],
+  "conclusion": "Both versions independently record all eleven selected train/development shards and manifest, no other dataset opens, false protected-role flags. Version1 starts without checkpoint; version2 resumes. Explicit untouched states follow these observations, not authority.",
+  "boundary": "Python dataset-manifest-directory opens; excludes native code, child processes and network."
+}

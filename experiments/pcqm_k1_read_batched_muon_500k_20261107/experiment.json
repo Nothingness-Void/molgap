@@ -1,0 +1,118 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_read_batched_muon_500k_20261107",
+  "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-07T04:19:03.757927+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-read-batched-muon-500k-20261107",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does the fixed current-layer associative side path improve original K1 under matched batched FP32 Muon execution at500K60passes?",
+    "deficiency": "Accepted100K same-job current_read gain2.376164meV is positive below the3meV gate; scale transfer and batched T4 native qualification remain unmeasured. The user explicitly authorizes this separate500K exploration.",
+    "changed_mechanism": "current-layer-normalized-associative-read-500k-under-shared-batched-muon",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "Larger cohort or full exposure contracts the gain",
+      "The fixed current-only side path retains a material500K gain",
+      "The result is specific to seed42 or this execution"
+    ],
+    "closed_families": [
+      "k1-associative-history-read",
+      "k1-extremal-readout",
+      "node-query-linear-global-exchange"
+    ],
+    "positive_decision": "Nominate only if selected current-minus-reference<=-3meV,paired2000-bootstrap95%upper<0,final and last-five matched-pass deltas<0,with strict native/replay acceptance. No automaticfull/adoption.",
+    "negative_decision": "Close this fixed500K exploration without recipe grids, extra seeds, history stacking or automatic successor.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32,one arm per device,single forward",
+    "estimated_device_hours": null,
+    "estimated_wall_hours": null,
+    "cheapest_falsifier": "One same-job original K1/current_read pair under identical registered batched Muon,500K60passes and complete matched exposure; no20/40pass planned pauses."
+  },
+  "authority_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/authority.json",
+  "monitor_paths": [
+    "experiments/pcqm_k1_read_batched_muon_500k_20261107/STATUS.md"
+  ],
+  "role_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/decision.md",
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "muon",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": []
+      },
+      "training": {}
+    },
+    {
+      "arm_id": "current_read",
+      "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
+        "addons": [
+          "k1_current_read"
+        ]
+      },
+      "training": {}
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon",
+    "target_manifest_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+      "title": "MolGap K1 Read Batched Muon 500K 20261107 S42",
+      "datasets": [
+        "nothingnessvoid/k1-read-batched-muon-500k-20261107-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/k1-read-batched-muon-500k-20261107-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 234360
+    }
+  }
+}
