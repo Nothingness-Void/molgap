@@ -1,0 +1,43 @@
+{
+  "op": "summary",
+  "role_id": "internal_development",
+  "inputs": [
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-pair-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions.pt",
+      "sha256": "1341abd3af6694754974277192d645c48bce0b4bacb5be9cf558603f08180019"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-pair-100k-20261118-s42/v1/version1/real_tri_pair/development_predictions.pt",
+      "sha256": "e0b75214437ff3860a17dcef600c76c4c473dbd505616eb3d05a2ec2467593c2"
+    }
+  ],
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "results": {
+    "singles_meV": {
+      "pair_update_norm": 139.44019207894803,
+      "real_tri_pair": 137.77272875726223
+    },
+    "n_inits": 2,
+    "D_meV": 1.6674633216858012,
+    "ensemble_mae_meV": 132.2207002943754,
+    "ensemble_gain_meV": 6.385760123729739,
+    "fit": null,
+    "pairs": [
+      {
+        "candidate": "real_tri_pair",
+        "reference": "pair_update_norm",
+        "delta": -1.667463321685791,
+        "ci95": [
+          -2.6150156844854355,
+          -0.7489352204799653
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 2000,
+        "seed": 42
+      }
+    ],
+    "m_meV": -1.667463321685791
+  },
+  "posthoc": true
+}

@@ -1,0 +1,129 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_real_tri_pair_100k_20261118",
+  "logical_run_id": "pcqm-gptrans-real-tri-pair-100k-20261118-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-18T04:08:00+09:00",
+  "role_ref": "experiments/pcqm_gptrans_real_tri_pair_100k_20261118/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_real_tri_pair_100k_20261118/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_real_tri_pair_100k_20261118/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-real-tri-pair-100k-20261118",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does adding an asymmetric low-rank real-atom triangle multiplicative pair update at layers 2, 4, 6, 8, and 10 improve matched 100K development MAE on the accepted BondLocal+PairNorm GPTrans-T parent?",
+    "deficiency": "In GPTrans-T, pair states update only via 1D outer-product projection from node attention without direct 2D path composition across real atoms. Whether asymmetric outgoing and incoming triangle multiplicative updates over real atoms 1..N_max at alternating layers improve over the retained BondLocal+PairNorm GPTrans-T parent under strict same-job initialization parity is unmeasured.",
+    "changed_mechanism": "gptrans-real-atom-asymmetric-low-rank-triangle-pair-update",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Node-to-pair outer-product updates already capture three-atom path geometry",
+      "Real-atom triangle contractions add pair capacity without improving generalization",
+      "Effect is below the 3 meV material gate"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "positive_decision": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "negative_decision": "Close this real-atom triangle pair intervention without hyperparameter grids or automatic retries.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7.5,
+    "estimated_wall_hours": 3.75,
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealAtomTrianglePair from identical gptrans.pt initialization."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "pair_update_norm",
+      "real_tri_pair"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pair_update_norm",
+    "allocated_t4_hours_ceiling": 9,
+    "user_notebook_wall_ceiling_seconds": 16200,
+    "allocation_wall_limit_seconds": 16200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User explicitly requested 100K real-atom triangle pair experiment submitted to Kaggle on 2026-11-18.",
+    "scope": "One 100K 60-pass T4x2 paired run on nvoid912; train and internal development only; no protected roles or automatic scale-up."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nvoid912",
+      "kernel": "nvoid912/molgap-gptrans-real-tri-pair-100k-20261118-s42",
+      "title": "MolGap GPTrans Real Tri Pair 100K 20261118 S42",
+      "datasets": [
+        "nvoid912/molgap-gptrans-real-tri-pair-100k-20261118-s42-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "nvoid912/molgap-gptrans-real-tri-pair-100k-20261118-s42-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 16200,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pair_update_norm"
+    },
+    {
+      "arm_id": "real_tri_pair",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_real_atom_triangle_pair"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pair_update_norm",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}
