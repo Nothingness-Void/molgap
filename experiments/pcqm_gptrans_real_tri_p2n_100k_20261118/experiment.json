@@ -1,0 +1,129 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_real_tri_p2n_100k_20261118",
+  "logical_run_id": "pcqm-gptrans-real-tri-p2n-100k-20261118-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-18T13:12:00+09:00",
+  "role_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-real-tri-p2n-100k-20261118",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does placing real-atom triangle multiplicative pair updates before GPA and adding real-atom Pair->Node vector feedback at layers 2/4/6/8/10 improve matched 100K development MAE on the accepted BondLocal+PairNorm GPTrans-T parent?",
+    "deficiency": "Post-GPA real-atom triangle updates only influence atom states in later layers after scalar attention bias, lacking direct pre-GPA vector-valued Pair->Node feedback.",
+    "changed_mechanism": "pre-gpa-real-atom-triangle-plus-pair-to-node-vector-feedback",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Scalar attention bias already suffices for pair-to-node communication",
+      "Vector Pair->Node feedback adds capacity without improving generalization",
+      "Effect is below the 3 meV material gate"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "positive_decision": "Nominate only for candidate-minus-reference selected EMA MAE <= -3.0 meV and paired 95% bootstrap CI upper bound < 0 under strict acceptance; no automatic scale-up.",
+    "negative_decision": "Close this pre-GPA real-atom triangle + Pair->Node intervention without hyperparameter grids or automatic retries.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7.64,
+    "estimated_wall_hours": 3.82,
+    "cheapest_falsifier": "One same-job 100K 60-pass T4x2 pair comparing retained BondLocal+PairNorm against BondLocal+PairNorm+RealTriP2N from identical gptrans.pt initialization."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "pair_update_norm",
+      "real_tri_p2n"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pair_update_norm",
+    "allocated_t4_hours_ceiling": 9.5,
+    "user_notebook_wall_ceiling_seconds": 16800,
+    "allocation_wall_limit_seconds": 16800,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User explicitly requested Wave-2 100K Real-Tri P2N experiment submitted to Kaggle 1 (nothingnessvoid) on 2026-11-18.",
+    "scope": "One 100K 60-pass T4x2 paired run on nothingnessvoid; train and internal development only; no protected roles or automatic scale-up."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-gptrans-real-tri-p2n-100k-20261118-s42",
+      "title": "MolGap GPTrans Real Tri P2N 100K 20261118 S42",
+      "datasets": [
+        "nothingnessvoid/molgap-gptrans-real-tri-p2n-100k-20261118-s42-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "nothingnessvoid/molgap-gptrans-real-tri-p2n-100k-20261118-s42-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 16800,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pair_update_norm"
+    },
+    {
+      "arm_id": "real_tri_p2n",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_real_tri_p2n"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pair_update_norm",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

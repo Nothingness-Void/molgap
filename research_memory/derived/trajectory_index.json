@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "8c5e5a72354991c673c9e72a34c9df038e5e6573ce3503d8535a60841f128e9a",
+  "source_digest": "39966d9a29160ef6dcbc99f3977fae45a1a9ccffb91cce5014671cfd7e5f27c5",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -445,6 +445,38 @@
       "result_evidence_ids": [],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-p2n-100k-20261118",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md",
+      "family_id": "pcqm-gptrans-real-tri-p2n-100k-20261118",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/real_tri_p2n/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-real_tri_p2n"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-real_tri_p2n"
     },
     {
       "completeness_status": "complete",

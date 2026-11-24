@@ -1,0 +1,147 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/c5505b862fee8480/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/closure_v1/closure_facts_pair_update_norm.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/closure_v1/roles_pair_update_norm.json": "f6be28c160d0248d6bc4c1df2c5adc2faafb9ddded4632a353fc714d5b225c1c",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/decision.md": "ae1452df4c2e9122b3e5e5fef09684ba30ba32379dfd56df5c40163974c075da",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/generated/16ae4b84458a5fdd8ec2e1a5742b93b4cc91c4276c0075c7d6b2f4b20423b838/authority.json": "e2abc5efa18cce1954dd69cc17c112d0a9d0609940646607ce5dd80b2bada29b",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/generated/16ae4b84458a5fdd8ec2e1a5742b93b4cc91c4276c0075c7d6b2f4b20423b838/pair_update_norm/recipe.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/c5505b862fee8480/acceptance.json": "d256d409074aefd95dfbe692d09700b632d7bfc9ef314ac8c870d682fa21af08",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/c5505b862fee8480/observed.json": "7ead19f3cae3fb78b5cb211b694d7a9715abf61ae57637fbe9034330da15e11c",
+    "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/strict_qualification/e5d4adba96c09e77de13/pair_update_norm/reference_bundle.json": "7778afdb70968d1bc9f8e74f8c7594450a53ffbf2f96be1552a35bb26f768ece",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/_execution/allocation_ledger.json": "fa175067afea62fbd9ed6ac840765851c207c94ca483f5eedd3b39366c6fd856",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/_execution/execution_retention.json": "3d725c2db041dea9bee19042562a40f2fc305a5c1752efa580ae470cad34a6d8",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/_execution/pair_update_norm/allocation_ledger.json": "fa175067afea62fbd9ed6ac840765851c207c94ca483f5eedd3b39366c6fd856",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json": "1e32e732774b4d2b704b9c14659bcb7421d00ffdcbe88f176be5ff087937d164",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json.context.json": "34e31e37424dacb770bc8e4f008ac15c7b924fa7bdaec00307f73cab76b16964",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/data_open_provenance.json": "c3633ac8ac2489046a7597208cf0a5605c33116da8726718f91b37b637bab959",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions.pt": "9f883d9d0bf622c42a1a561a1252c4787c27be0a0ecf8b8a0cdc13f9ee8d5608",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/development_predictions_ema0.9999.pt": "331d0e9fdebabafbe1139259b6f2ed9507b6d98da94662f5473b707d291a6c83",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/last_checkpoint.pt": "4a43a203bd6105af981a0456198ec365ab02e461dcb0f4f61c74a480e1e3bdec",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/output_manifest.json": "546f1df5b7b86f012ff52030d091194046f8329fe973bbcb368e7e823e991f6d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/selected_model.pt": "43df9aa9b6232832b7a5fa863345a602882c8b6239095bc04d28200ae9e3aa79",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/selected_model_ema0.9999.pt": "fde489ddb59767bb8d35e688aa5bbb4dac849c6a54fc334e455be1c7afb3d751",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/training_contract.json": "9650c5fba866e814b961a8ddd9138915953821f679b9f4a13733eec08d74d1b6",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/reports/diagnostic_69b474fa38084fd71366389b8ab6f6b5525d3868a3ac9a666398396d58630752.json": "f134865410351c2750e4d760f9291e756c63cb85406e70757582b38412571e61"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-18T08:02:47.901751+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-0.json",
+        "sha256": "f010410509e4cbf34b3ec6899d05f23ec0c183303ebf759d088f981edabd20b1"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-allocation-0.json",
+        "sha256": "67473c0430976da6998c759aefb265504582ca7bc872e3ead8bff3ffb6590f6f"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "2ba42274fbb995bcc19337f747e2c0db0460ab570637898ed9724b83ff4f7aa9"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "36605200ce2f537db24630fbcf07ae92e078fd05cdb777d1edfda50eaae26c42"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-train-training_membership.json",
+        "sha256": "841711cdd89465be8de3f84822acbb26c6ee605ed9d2627647daa76c1b46039f"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-development-prediction_input.json",
+        "sha256": "bb5b8e91e1e94e9915c379009e49823ddeed16cb64ddf32f8b54204e441f680d"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-development-labels_read.json",
+        "sha256": "22bedce770d8b18933b3201ce84b77d1706d0721901802d6dcd2c6e8a95c775d"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-development-metric_computed.json",
+        "sha256": "9d0d9395e9a1cf4df303204056691fe8bfcee4973c7643c027ff7741134711ce"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm-development-selection_used.json",
+        "sha256": "b4bbeee9f7d466e542e8b494710dba78bc5521d18d40bcb3cf8b95173bd5b140"
+      }
+    ]
+  },
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-real-tri-p2n-100k-20261118-s42:pair_update_norm:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gptrans-real-tri-p2n-100k-20261118-s42-v1",
+    "logical_run_id": "pcqm-gptrans-real-tri-p2n-100k-20261118-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-gptrans-real-tri-p2n-100k-20261118-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "aaeced3b845dc34ea931f13a6cb52438324d35b9",
+    "source_package_sha256": "31201f4db260e98ac0f202ea9c4c3280339848c5f308f013d38f470e6eb31b7c",
+    "spec_identity": "c467d0d34c18cadc4eb662b67be02cecb1b94e880de0932206943eb5a24b0aef"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/generated/16ae4b84458a5fdd8ec2e1a5742b93b4cc91c4276c0075c7d6b2f4b20423b838/pair_update_norm/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/generated/16ae4b84458a5fdd8ec2e1a5742b93b4cc91c4276c0075c7d6b2f4b20423b838/pair_update_norm/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm",
+    "run_id": "pcqm-gptrans-real-tri-p2n-100k-20261118-s42:pair_update_norm:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_real_tri_p2n_100k_20261118/runs/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/prospective/pair_update_norm/terminal_staging/v1/c5505b862fee8480/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-real-tri-p2n-100k-20261118-s42/v1/version1/pair_update_norm/canonical_trace.json",
+    "trace_artifact_sha256": "1e32e732774b4d2b704b9c14659bcb7421d00ffdcbe88f176be5ff087937d164",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-real-tri-p2n-100k-20261118-s42-pair_update_norm"
+}
