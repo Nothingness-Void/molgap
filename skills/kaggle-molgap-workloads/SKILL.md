@@ -97,7 +97,7 @@ when the protocol pre-registers another value):
 Exit 1 with `STAGED_DRAFT` is the expected unclosed state, not a failure.
 The report is `diagnosis` in the output and `reports/diagnostic_<hash>.json` in the run
 directory. Confidence intervals are `comparisons.<arm>.primary_comparison.lower_95_eV` and
-`upper_95_eV` (null when bootstrap is 0); `primary_ema_decay` names the EMA behind `ema_dev_metric`.
+`upper_95_eV` (null when bootstrap is 0); `primary_ema_decay` names the EMA behind `ema_dev_metric`. A re-diagnosis writes a new hash-named report; older reports stay.
 The scientific outcome is your judgement from this diagnosis and the protocol
 gate; mechanical verification is already done by the command. Mechanism readouts
 that no helper exposes are experiment-specific analysis, not acceptance glue.
