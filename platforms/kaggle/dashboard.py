@@ -23,6 +23,7 @@ section{background:#1d3040;padding:1rem;margin:1rem 0;border-radius:.6rem}button
 <h1>Kaggle 看板</h1>
 <button id="refreshSnapshot">刷新快照</button>
 <button id="copySummary">复制摘要</button><span id="summaryFeedback" role="status"></span>
+<!-- dashboard-language -->
 <p id="dataAge">尚无快照</p>
 <div id="accounts"></div>
 <h2>任务</h2>
@@ -448,6 +449,7 @@ LIVE_PAGE = r"""<!doctype html>
       <button id="refreshBtn" class="primary">立即刷新</button>
       <button id="copySummary">复制摘要</button>
       <span id="summaryFeedback" role="status"></span>
+      <!-- dashboard-language -->
     </div>
   </header>
 
@@ -749,7 +751,7 @@ function render(d) {
   const pill = $('connPill');
   pill.className = 'pill ' + (d.error ? 'warn' : 'ok');
   pill.innerHTML = `<span class="pulse"></span>${d.stale ? '显示旧快照' : d.error ? '读取失败' : d.cached ? '缓存命中' : '实时在线'}`;
-  $('metaLine').textContent = `本地刷新 ${d.fetched_at_jst || '-'} · 接口耗时 ${d.latency_ms ?? '-'} ms · 扫描 D:/molgap-artifacts/runs`;
+  $('metaLine').textContent = `本地刷新 ${d.fetched_at_jst || '-'} · 接口耗时 ${d.latency_ms ?? '-'} ms`;
   if (!d.fetched_at_epoch && d.error) {
     $('quotaGrid').textContent = '暂无配额数据';
     $('kernelCards').textContent = '暂无作业数据';

@@ -1,10 +1,22 @@
 # Always-on IMS dashboard
 
-The supplied services run the full IMS dashboard from a Linux host. The collector uses the server's SSH identity to read scheduler and V4 status. The web service reads the resulting file. The page shows job names, progress, queue and quota details, and the original scheduler output.
+The supplied services run the IMS dashboard from a Linux host. The collector uses the server's SSH identity to read scheduler and V4 status. The web service reads the resulting file. Choose 中文 or EN in the header.
+
+## Personal profile
+
+Copy [profile.example.json](profile.example.json) to `/etc/ims-dashboard/profile.json`. Put the key file next to it or enter its absolute path. Copy [options.example](options.example) to `/etc/ims-dashboard/options` for systemd to load the profile.
+
+| Setup | `user` | `key` | `remote_root` |
+| --- | --- | --- | --- |
+| Shared account and shared key | Shared login | Shared key file | Your assigned folder below the shared login home |
+| Shared account and personal key | Shared login | Your key file | Your assigned folder below the shared login home |
+| Personal account and key | Your login | Your key file | Your account home or a folder below it |
+
+Use the resolved `/lustre/home/users/<user>/...` path. The jobs list matches the folder in scheduler Workdir; submit jobs from that folder or below it. The progress view reads `molgap-v4-submit/runs` inside that folder when present. The Queue H totals, account quotas and group points retain the scheduler's scope. The configured polling interval is 60–120 seconds (default 90); `host` and `ssh_port` are optional. If changing the profile's account or folder, stop both services and move the previous snapshot aside before starting. The files and credentials for one Windows or Linux installation can be set up independently.
 
 ## Install on the selected host after approval
 
-Use Linux with systemd, OpenSSH client and Python 3.10+ at /usr/bin/python3. Python uses only its standard library. IMS needs bash, realpath, python3 and its scheduler utilities. Create a locked system account and group named ims-dashboard. Install the reviewed check_queue.py in a root-owned versioned release directory under /opt/ims-dashboard/releases and link /opt/ims-dashboard/current to that directory. Record its SHA256. Create /etc/ims-dashboard mode 0750 root:ims-dashboard. Have the owner provision a dedicated IMS-approved identity there at id_ed25519 (0600 owned by ims-dashboard). Install the independently verified IMS host key in /etc/ssh/ssh_known_hosts. Keep credentials outside releases. Use a separate restricted account for the reader (ims-dashboard-web, group ims-dashboard).
+Use Linux with systemd, OpenSSH client and Python 3.10+ at /usr/bin/python3. IMS needs bash, realpath, python3 and its scheduler utilities. Create a locked system account and group named ims-dashboard. Copy `check_queue.py` and `dashboard/en.json` with that relative layout into the versioned release directory under /opt/ims-dashboard/releases, then link /opt/ims-dashboard/current to it. Create /etc/ims-dashboard mode 0750 root:ims-dashboard. Provision the profile and chosen key there (key mode 0600, owned by ims-dashboard). Install the verified IMS host key in /etc/ssh/ssh_known_hosts. Use ims-dashboard-web with group ims-dashboard for the reader. An existing installation without the options file continues to use its original account and directory defaults.
 
 Install both adjacent .service files into /etc/systemd/system. Check them with `systemd-analyze verify /etc/systemd/system/ims-dashboard-*.service`, then `systemctl daemon-reload` and `systemctl enable --now ims-dashboard-web ims-dashboard-collector`. Only the collector starts SSH. One query times out after 45 seconds. After success it waits 90 seconds, after failure it doubles the delay up to 900 seconds. The reader marks data older than 240 seconds stale even if the collector stops. Confirm `ss -ltn` shows 127.0.0.1:8765 and open the page. Confirm that pressing Refresh reads the existing snapshot and shows its age. An upgrade from the reduced format needs one successful collection before the new page has data.
 
@@ -17,6 +29,6 @@ For Agent access, first demonstrate the actual client can send both custom heade
 ## Acceptance and rollback
 
 1. With Windows powered off, use a phone on mobile data. In a private browser verify both / and /api/status redirect to login or deny access without returning dashboard data. A different identity must be denied. Sign in as the permitted viewer and verify last-success time advances across collections.
-2. Check job names, progress, queue totals, and points on the page. Multiple refreshes should leave the same observation time until the next scheduled collection.
+2. Check that your job names and progress appear, that jobs in a sibling folder are absent, and that the first cards show free A100s and queued jobs. Switch to EN to verify the language file. Multiple refreshes should leave the same observation time until the next scheduled collection.
 3. Temporarily block only the collector host’s IMS egress. Confirm the last successful rows and timestamp remain and the dashboard reports stale with an SSH fault. Restore egress and wait through backoff. Restart services and verify recovery from disk.
 4. For upgrades, stage another versioned release, verify checksum and offline test first. Keep the previous release, unit files and status.json. Stop both services, switch current to the reviewed release, install matching units, daemon-reload and restart. Repeat acceptance. To roll back, stop services, restore the previous symlink, units and snapshot, reload and start.

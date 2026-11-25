@@ -18,6 +18,7 @@ PrivateTmp=true
 UMask=0027
 StateDirectory=ims-dashboard
 Environment=HOME=/etc/ims-dashboard
+EnvironmentFile=-/etc/ims-dashboard/options
 ReadWritePaths=/var/lib/ims-dashboard
 
 [Install]

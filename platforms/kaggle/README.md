@@ -184,5 +184,6 @@ On Windows, double-click [open_kaggle_dashboard.bat](open_kaggle_dashboard.bat)
 for the local live dashboard. Search bound runs by ID, kernel, or account and
 combine the search with the status filter. The header shows the age of the
 displayed data. Copy Summary includes anonymous quota balances and status counts.
+Choose 中文 or EN in the header. Task names and logs keep their original text.
 
 [Server dashboard: GPU quota and selected kernel states](dashboard/README.md).
