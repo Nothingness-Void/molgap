@@ -1,0 +1,24 @@
+[Unit]
+Description=IMS read-only dashboard collector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ims-dashboard
+Group=ims-dashboard
+WorkingDirectory=/opt/ims-dashboard/current
+ExecStart=/usr/bin/python3 -S /opt/ims-dashboard/current/check_queue.py --collect /var/lib/ims-dashboard/status.json --full-snapshot --interval 90 --key /etc/ims-dashboard/id_ed25519
+Restart=on-failure
+RestartSec=30
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+UMask=0027
+StateDirectory=ims-dashboard
+Environment=HOME=/etc/ims-dashboard
+ReadWritePaths=/var/lib/ims-dashboard
+
+[Install]
+WantedBy=multi-user.target

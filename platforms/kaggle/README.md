@@ -179,3 +179,10 @@ Kaggle3 also holds the reusable source layer
 `platforms/_records/kaggle/molgap_v5_desktop_runtime_kaggle3_v1/`. The Kaggle3
 batch API did not allocate TPU v5e-8 despite correct remote metadata; TPU
 remains gated by an interactive hardware and framework preflight.
+
+On Windows, double-click [open_kaggle_dashboard.bat](open_kaggle_dashboard.bat)
+for the local live dashboard. Search bound runs by ID, kernel, or account and
+combine the search with the status filter. The header shows the age of the
+displayed data. Copy Summary includes anonymous quota balances and status counts.
+
+[Server dashboard: GPU quota and selected kernel states](dashboard/README.md).

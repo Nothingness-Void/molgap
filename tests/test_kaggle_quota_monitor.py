@@ -50,3 +50,51 @@ def test_parse_quota_payload_and_table_formatting():
         mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)
     payload["gpuQuota"]["timeUsed"] = {"seconds": 0}
     assert mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)["used_hours"] == 0
+
+
+def test_dashboard_snapshot_and_http(tmp_path, monkeypatch):
+    import json
+    import threading
+    import urllib.request
+    directory = Path(__file__).resolve().parents[1] / "platforms/kaggle"
+    monkeypatch.syspath_prepend(str(directory))
+    import dashboard
+    import check_quota
+    import check_logs
+    quota = dict(username="hidden", remaining_hours=12, total_hours=30, used_hours=17,
+                 reserved_hours=1, refresh_time_utc="2026-11-26 00:00 UTC")
+    monkeypatch.setattr(check_quota, "fetch_account_quota", lambda *args: quota)
+    monkeypatch.setattr(check_logs, "_query_scheduler", lambda *args: ("RUNNING", "secret"))
+    path = tmp_path / "status.json"
+    accounts = [("Account 1", tmp_path / "unused")]
+    dashboard.collect(path, accounts, ["hidden/example"])
+    state = dashboard.Reader(path)
+    with dashboard.ThreadingHTTPServer(("127.0.0.1", 0), dashboard.make_handler(state)) as server:
+        thread = threading.Thread(target=server.serve_forever); thread.start()
+        try:
+            url = f"http://127.0.0.1:{server.server_port}"
+            assert b"Kaggle" in urllib.request.urlopen(url).read()
+            body = urllib.request.urlopen(url + "/api/status?refresh=1").read()
+            assert b"hidden" not in body and b"secret" not in body
+            assert json.loads(body)["kernels"][0]["status"] == "RUNNING"
+        finally:
+            server.shutdown(); thread.join()
+    def failed(*args):
+        raise TimeoutError()
+    monkeypatch.setattr(check_quota, "fetch_account_quota", failed)
+    dashboard.collect(path, accounts, [])
+    assert state.get()["stale"] and state.get()["accounts"][0]["remaining_hours"] == 12
+
+    kernel = {"run": "experiment-name", "kernel": "owner/experiment", "arms": [{"completed_passes": 8}]}
+    live = {"fetched_at_epoch": 1760000000, "summary": {"accounts_ok": 1}, "kernels": [kernel]}
+    monkeypatch.setattr(dashboard, "fetch_live_snapshot", lambda **kwargs: live)
+    dashboard.collect_full(path)
+    reader = dashboard.SnapshotState(path, full=True)
+    assert reader.get(force=True)["kernels"] == [kernel]
+
+    def full_failed(**kwargs):
+        raise TimeoutError()
+
+    monkeypatch.setattr(dashboard, "fetch_live_snapshot", full_failed)
+    dashboard.collect_full(path)
+    assert reader.get()["error"] == "collector" and reader.get()["kernels"] == [kernel]
