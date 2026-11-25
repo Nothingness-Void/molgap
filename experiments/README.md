@@ -169,6 +169,8 @@ Track C.
 | Does MC-dropout or snapshot averaging (C3) improve 500K GPT-T checkpoints? | MC-dropout K=32 passes on dev rows; snapshot averaging cancelled (snapshots not retained); closed NO_TRAIN | `pcqm_c3_checkpoint_space/` |
 | Does C3 MC-dropout hold at full scale on the tail holdout? | NO EFFECT: 4-model ensemble 0.208 meV better, below the 1.0 meV bar; not adopted | `pcqm_c3_full_tail_20261123/` |
 | Does a GPS++ MPNN match the 100K reference? | NEGATIVE_UNDER_CONTRACT: 3.09 meV worse than the frozen reference; no retry | `pcqm_gpspp_mpnn_100k_20261124/` |
+| Does the fast AMP engine (3D-era sandbox) keep GPT-T accuracy at lower cost? | Engine code used by the fast IMS jobs; see its own notes | `pcqm_fast_engine_3d_20261124/` |
+| Does the fast engine train 500K GPT-T (60 passes) inside the FP32 noise range, faster? | Ran on IMS A100 (192.7 s/pass vs 466.6 s FP32); tail 107.52 meV | `pcqm_fast_engine_500k_ims_20261125/` |
 | Does a 200-pass cosine fast GPT-T beat the 60-pass fast GPT-T (tail 107.52 meV)? | PREPARED, not submitted: read final EMA tail once; longer helps only if tail <= 106.02 meV | `pcqm_fast_engine_200ep_ims_20261126/` |
 | Does a DFT distance auxiliary label (2D inference) help GPT-T? | Positive at 100K; INCONCLUSIVE at 500K (-0.14 meV), so nothing adopted and no tail score | `pcqm_gptrans_dft_distance_aux_20261121/` |
 | Does full-scale weight decay 0.022 (C4) beat 0.05 on the tail holdout? | NO EFFECT: +0.256 meV (slightly worse), interval crosses zero | `pcqm_gptrans_full_wd_c4_20261123/` |
