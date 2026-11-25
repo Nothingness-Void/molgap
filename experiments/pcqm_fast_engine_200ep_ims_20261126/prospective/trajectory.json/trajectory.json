@@ -1,0 +1,122 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "fast-200ep-local-rehearsal-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-fast-engine-200ep-ims-20261126-fast-200ep-local-rehearsal-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md"
+      ],
+      "run_ids": [
+        "fast-200ep-local-rehearsal-v1"
+      ],
+      "source_commit": "06d18e80fd6a92363f156108dab51953d99fb702",
+      "type": "diagnostic"
+    },
+    {
+      "action_id": "A002",
+      "attempt_ids": [
+        "fastpn-200ep-20261126-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md"
+      ],
+      "run_ids": [
+        "fastpn-200ep-20261126"
+      ],
+      "source_commit": "06d18e80fd6a92363f156108dab51953d99fb702",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md",
+    "next_allowed_actions": [
+      "local rehearsal of the serial chain (no scheduler)",
+      "one IMS single-item job only after an Opus pre-submit review finds no blocker and the main session submits"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "LOCAL_REHEARSAL",
+      "RUN_FAST_ENGINE_200EP_IMS_JOB",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md",
+    "chosen_action": "LOCAL_REHEARSAL",
+    "policy_id": "pcqm-fast-engine-200ep-ims-20261126",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_fast_engine_200ep_ims_20261126/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/prospective/rml_decision_snapshots/cd9a7c8e45acfd9616d49c12469bc5fac7654da83159a2c9436c9dd6f2a588e0.json",
+    "snapshot_sha256": "cd9a7c8e45acfd9616d49c12469bc5fac7654da83159a2c9436c9dd6f2a588e0",
+    "state_timestamp": "2026-11-26T12:00:00+09:00"
+  },
+  "family_id": "pcqm-fast-engine-200ep-ims-20261126",
+  "hypothesis": {
+    "alternative_explanations": [
+      "One seed: noise can hide or fake a 1.5 meV gap",
+      "Longer cosine also lowers the late-stage lr, so passes and schedule shape are not separated",
+      "Non-deterministic kernels add run noise"
+    ],
+    "changed_mechanism": "pass count only: 200 cosine passes (781,200 steps) instead of 60, warmup stays 4 passes; model, init, seed, data, optimizer and execution policy unchanged",
+    "cheapest_falsifier": "Final-EMA tail MAE above 106.02 meV (less than 1.5 meV below 107.52, within the 1.08 meV spread of the baselines) means no detectable change from longer training.",
+    "decision_changed_if_negative": "Do not spend more passes on this 500K recipe; look at other levers.",
+    "decision_changed_if_positive": "Longer fast schedules become the default 500K recipe after the main session decides; nothing is adopted by this job.",
+    "expected_native_cost_ref": "cost-T-pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126-planned",
+    "historical_unknowns": [
+      "Time for 200 passes is extrapolated from 60 (192.7 s/pass, A100)",
+      "Whether 200 passes overfit 500K rows is unmeasured"
+    ],
+    "hypothesis_id": "H-T-pcqm-fast-engine-200ep-ims-20261126",
+    "observed_deficiency": "The 60-pass fast run reached tail 107.52 meV, no better than the seven 60-pass FP32 baselines (107.27-108.36); the fast engine makes a longer schedule affordable (192.7 s/pass on A100).",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a 200-pass cosine fast GPT-T beat the 60-pass fast GPT-T (tail 107.52 meV, seed 42)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_fast_engine_200ep_ims_20261126/protocol.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_fast_engine_200ep_ims_20261126/role_plan.json"
+    ],
+    "source_commit": "49cab94e9cb807b964348015182dabf3dc731a52",
+    "source_config_identity": "c26ca850dbc85d373beb7bc0642a239b791d03f47a1154a9f6862c70db624e51"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-fast-engine-200ep-ims-20261126"
+}
