@@ -837,7 +837,7 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
     points = parse_showlim_c(sec["SHOWLIM_C"])
     invalid = []
     for index, name in enumerate(("JOBINFO_C", "JOBINFO_M", "JOBINFO_W")):
-        if sec[name] and "Job Status at" not in sec[name]:
+        if sec[name] and "Job Status at" not in sec[name] and not re.search(r"Queue\s+Job\s+ID", sec[name]):
             fields = ["", "", ""]
             fields[index] = sec[name]
             if not parse_jobinfo_cmw(*fields, remote_root=remote_root)[0]:
@@ -993,7 +993,9 @@ def public_snapshot(snap: dict) -> dict:
         items = []
         for i in r.get("items", []):
             item = numbers(i, ("total_passes", "eta_s", "s_per_epoch"))
-            item["status"] = i.get("status") if i.get("status") in {"RUNNING", "COMPLETE", "PENDING", "FAILED", "SKIPPED"} else "UNKNOWN"
+            item["status"] = i.get("status") if i.get("status") in {
+                "RUNNING", "COMPLETE", "PENDING", "FAILED", "SKIPPED", "NOT_STARTED", "SKIPPED_FOR_TIME"
+            } else "UNKNOWN"
             item["epoch"] = numbers(i.get("last_log") or i, ("epoch",)).get("epoch")
             items.append(item)
         runs.append({"job_id": job(r)["job_id"], "items": items})
@@ -1316,6 +1318,7 @@ HTML_PAGE = r"""<!doctype html>
       </div>
       <div id="predResult" class="pred-res"><div style="color:var(--muted)">等待数据加载...</div></div>
     </div>
+    <div class="pred-f" id="pointForecast"></div>
     <div id="predFactors" class="pred-factors"></div>
     <details id="waitHistDetails">
       <summary id="waitHistSummary">查看 chou 历史排队实测记录</summary>
@@ -1727,6 +1730,18 @@ function renderWaitPredictor(d) {
     : ((qs.within_week || []).find(r => r.job_type === 'cpu') || {});
   const pool = reqGpu > 0 ? gPool : cpuPool;
 
+  // https://ccportal.ims.ac.jp/manual/queues — ordinary core, vnode, and GPU jobs.
+  const validShape = reqGpu ? reqCpu <= 16 * reqGpu : reqCpu < 64 || reqCpu % 64 === 0;
+  const rate = reqGpu ? reqCpu + 60 * reqGpu : reqCpu < 64 ? reqCpu : 45 * reqCpu / 64;
+  const remaining = d.points?.group?.remaining;
+  $('pointForecast').textContent = !validShape ? '这组 CPU / GPU 配置不符合普通作业规格，请调整核数。'
+    : `按所选单任务：${rate} 点/小时，跑满 ${wallH} 小时需 ${fmtNum(rate * wallH)} 点。组余额` +
+      (Number.isFinite(remaining) ? `可再跑约 ${(remaining / rate).toLocaleString('zh-CN',{maximumFractionDigits:1})} 小时（假设没有其他任务同时扣点）。` : '未知。');
+  if (!validShape || !Number.isFinite(pool.jobs_waiting) || (reqGpu ? !Number.isFinite(pool.free_gpus) : !Number.isFinite(pool.free_cores))) {
+    $('predResult').textContent = validShape ? '缺少所选队列的供需数据，暂无法估计等待。' : '请先调整资源配置。';
+    $('predFactors').textContent = '';
+    return;
+  }
   const freeG = gPool.free_gpus ?? 0, waitJobs = pool.jobs_waiting ?? 0, reqPoolG = gPool.req_gpus ?? 0;
   const freeC = pool.free_cores ?? 0, reqPoolC = pool.req_cores ?? 0;
 
@@ -1754,11 +1769,11 @@ function renderWaitPredictor(d) {
   let minH = 0.05, maxH = 0.5, cls = '', badgeTxt = '建议提交', tipTxt = '';
   const pressure = reqGpu > 0 ? (reqPoolG / Math.max(1, freeG)) : (reqPoolC / Math.max(1, freeC));
 
-  if (reqGpu > gLim) {
+  if (Number.isFinite(gGpu.limit) && reqGpu > gLim) {
     cls = 'bad'; minH = 999; maxH = 999;
     badgeTxt = `超出 ${d.user_group_stat?.group||'ew6'} 组并发上限 (${gLim} 卡)`;
     tipTxt = `ew6 组最多同时跑 ${gLim} 张 A100，无法单次申请超过 ${gLim} 卡。`;
-  } else if (reqGpu > 0 && reqGpu > gHeadroom) {
+  } else if (Number.isFinite(gGpu.limit) && Number.isFinite(gGpu.run) && reqGpu > 0 && reqGpu > gHeadroom) {
     cls = 'warn';
     const needRelease = reqGpu - gHeadroom;
     const chouRunning = (d.chou_runs || []).filter(r => r.live_job && r.live_job.status === 'Run');
@@ -1817,6 +1832,19 @@ function renderWaitPredictor(d) {
     }
   }
 
+  // Compare only first submissions with the same resources and requested walltime.
+  const similar = hist.filter(h => h.kind === 'initial' && h.gpus === reqGpu && h.cpus === reqCpu &&
+    typeof h.walltime === 'string' && /^\d+:\d{2}:\d{2}$/.test(h.walltime) &&
+    h.walltime.split(':').reduce((seconds, part) => seconds * 60 + Number(part), 0) === wallH * 3600 &&
+    Number.isFinite(h.wait_s) && h.wait_s >= 0);
+  if (similar.length >= 3 && reqGpu <= gHeadroom && wallH < hoursToMaint - 1) {
+    const middle = medWait(similar) / 3600;
+    // Keep live congestion in the estimate; historical waits can widen the window.
+    minH = Math.min(minH, middle);
+    maxH = Math.max(maxH, middle);
+    tipTxt += ` 同配置首次提交 ${similar.length} 次，历史中位等待 ${fmtDur(middle * 3600)}。`;
+  }
+  if (d.public) tipTxt = '按此快照中的空闲资源和排队需求估计；不含组内并发余量及历史样本。';
   const fmtSpan = h => h >= 999 ? '不可行' : (h < 1 ? `${Math.max(1, Math.round(h * 60))} 分钟` : `${h.toFixed(h < 10 ? 1 : 0)} 小时`);
   const rangeStr = maxH >= 999 ? '超出组上限，无法调度' : `${fmtSpan(minH)} ~ ${fmtSpan(maxH)}`;
   const startClock = maxH >= 999 ? '-' : fmtJstClockRange(nowEpoch, minH, maxH);
@@ -1852,15 +1880,31 @@ function render(d) {
     $('errBox').textContent = '旧数据不可视为当前队列；刷新只读取快照，不连接 IMS。';
     $('heroBar').style.display = 'block';
     $('heroBar').textContent = !d.available ? '队列未知' : d.jobs.length ? `自己的作业: ${d.jobs.length}` : '最后成功采集时队列为空';
-    $('kpiGrid').innerHTML = !d.available ? '' : d.chou_runs.map(r => `<div class="card">Job ${esc(r.job_id || '-')}<br>${r.items.map(i => `${esc(i.status)} · Epoch ${i.epoch ?? '-'} / ${i.total_passes ?? '-'} · ETA ${fmtDur(i.eta_s)}`).join('<br>')}</div>`).join('');
-    $('jobsTbl').innerHTML = !d.available ? '' : d.jobs.map(j => `<tr><td>${esc(j.job_id)}</td><td>${esc(j.status)}</td><td>${j.gpus ?? '-'} A100</td></tr>`).join('');
-    $('queueTbl').innerHTML = !d.available ? '' : Object.entries(d.summary).map(([period, row]) =>
-      `<tr><th>${period === 'gpu_within_week' ? '≤ 7 天' : '> 7 天'}</th><td>空闲 A100: ${row.free_gpus ?? '-'}</td><td>排队作业: ${row.jobs_waiting ?? '-'}</td><td>请求 A100: ${row.req_gpus ?? '-'}</td></tr>`).join('');
-    $('ugTbl').textContent = !d.available ? '' : '配额汇总: ' + JSON.stringify(d.points);
+    $('kpiGrid').innerHTML = !d.available ? '' : d.chou_runs.map(r => `<div class="card"><div class="kpi-top"><span class="kpi-title">Job ${esc(r.job_id || '-')}</span><span class="pill info">远端脱敏快照</span></div><div style="margin-top:8px;font-size:13px">${r.items.map(i => `<div><span class="pill ${i.status==='COMPLETE'?'ok':(i.status==='RUNNING'?'info':'')}" style="font-size:11px;padding:1px 7px">${esc(i.status)}</span> <span class="mono">Ep ${i.epoch ?? '-'} / ${i.total_passes ?? '-'}</span> · ETA ${fmtDur(i.eta_s)}</div>`).join('')}</div></div>`).join('');
+    $('tabJobsCnt').textContent = `(${(d.jobs || []).length})`;
+    $('jobsTbl').innerHTML = `<thead><tr><th>Job ID</th><th>状态</th><th>资源</th></tr></thead><tbody>` +
+      (!d.available ? `<tr><td colspan="3" style="color:var(--muted)">暂无快照数据</td></tr>`
+       : (d.jobs.length ? d.jobs.map(j => `<tr><td class="mono">${esc(j.job_id || '-')}</td><td><span class="pill ${j.status==='Run'?'ok':'warn'}">${esc(j.status)}</span></td><td>${j.cpus ?? '-'} CPU + ${j.gpus ?? 0} A100</td></tr>`).join('')
+          : `<tr><td colspan="3" style="color:var(--muted)">本人当前无在跑或排队作业</td></tr>`)) + `</tbody>`;
+    const sumObj = (d.summary && typeof d.summary === 'object') ? d.summary : {};
+    $('queueTbl').innerHTML = `<thead><tr><th>时段</th><th>空闲 A100</th><th>排队作业</th><th>申请 A100</th></tr></thead><tbody>` +
+      (!d.available ? `<tr><td colspan="4" style="color:var(--muted)">暂无队列数据</td></tr>`
+       : Object.entries(sumObj).map(([period, row]) =>
+           `<tr><th>${period === 'gpu_within_week' ? '≤ 7 天' : '> 7 天'}</th><td>${row?.free_gpus ?? '-'} 卡</td><td>${row?.jobs_waiting ?? '-'}</td><td>${row?.req_gpus ?? '-'} 卡</td></tr>`).join('')) + `</tbody>`;
+    const ptsObj = (d.points && typeof d.points === 'object') ? d.points : {};
+    $('ugTbl').innerHTML = `<thead><tr><th>配额维度</th><th>已用</th><th>运行中</th><th>剩余</th><th>上限</th></tr></thead><tbody>` +
+      (!d.available ? `<tr><td colspan="5" style="color:var(--muted)">暂无配额数据</td></tr>`
+       : [['user', '账号 (own)'], ['group', '组 (group)']].map(([k, lbl]) => {
+           const pt = ptsObj[k] || {};
+           return `<tr><td><b>${lbl}</b></td><td class="mono">${fmtNum(pt.total_use)}</td><td class="mono">${fmtNum(pt.running_job)}</td><td class="mono">${fmtNum(pt.remaining)}</td><td class="mono">${fmtNum(pt.limit)}</td></tr>`;
+         }).join('')) + `</tbody>`;
+    $('ownerBar').style.display = 'none';
+    document.querySelectorAll('[data-tab="history"], [data-tab="raw"]').forEach(el => el.style.display = 'none');
     document.querySelectorAll('details').forEach(e => e.style.display = 'none');
-    $('predResult').closest('.pred-card')?.style.setProperty('display', 'none');
-    $('predResult').parentElement.style.display = 'none';
-    $('chouRuns').textContent = '';
+    latestSnap = d;
+    renderWaitPredictor(d);
+    $('predFactors').style.display = 'none';
+    $('chouRuns').innerHTML = '<div class="card" style="color:var(--muted)">当前为远端脱敏快照模式（零自由文本出站）；详细信息请在受信任本机查看。</div>';
     return;
   }
   if (!d.fetched_at_epoch) {

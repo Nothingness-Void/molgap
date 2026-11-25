@@ -320,7 +320,7 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
         "JOBINFO_W": 'Job Status at 2026-11-24 12:00:00\nH 123 model Run "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/example"',
         "JOBINFO_S": "Job Status at 2026-11-24 12:00:00\nUser/Group Stat:\nuser(sm2) group(ew6)\nGPUs | 1/0/0/6 | 1/0/0/6\nQueue Status (H)\nJobs within a week\ngpu | 2 | 32(2) | 3 | 48(3)",
         "SHOWLIM_C": "CPU resource information: Group=ew6\nTOTAL 1000 100 50 50",
-        "CHOU_RUNS": '{"runs": []}',
+        "CHOU_RUNS": '{"runs": [{"training_job": "123", "items": {"a": {"status": "NOT_STARTED"}, "b": {"status": "SKIPPED_FOR_TIME"}}}]}',
     }
     calls = []
     def ssh(*args, **kwargs):
@@ -337,6 +337,7 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     result = reader.get()
     assert result["summary"]["gpu_within_week"]["jobs_waiting"] == 3
     assert result["jobs"][0]["job_id"] == "123" and not result["stale"]
+    assert [i["status"] for i in result["chou_runs"][0]["items"]] == ["NOT_STARTED", "SKIPPED_FOR_TIME"]
     assert not any(secret in path.read_text() for secret in ["node-secret", "sm2", "ew6", "/lustre", "raw", "workdir"])
     server = dashboard.ThreadingHTTPServer(("127.0.0.1", 0), dashboard.make_handler(reader))
     worker = threading.Thread(target=server.serve_forever, daemon=True); worker.start()
