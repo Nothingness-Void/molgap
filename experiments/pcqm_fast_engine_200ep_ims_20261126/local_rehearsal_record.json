@@ -1,0 +1,89 @@
+{
+ "date": "2026-11-26",
+ "results": [
+  {
+   "check": "no modified tracked files under the experiment directory",
+   "passed": true,
+   "modified": []
+  },
+  {
+   "check": "code root built from git archive HEAD of --repo",
+   "passed": true,
+   "head": "d96b61b32e5883d5caeae9cb80a7a3e6d3403290"
+  },
+  {
+   "check": "run spec validates against the repo's dataset and runtime registries",
+   "passed": true,
+   "run_id": "fastpn-200ep-20261126",
+   "items": [
+    "fast-500k-s42-e200"
+   ]
+  },
+  {
+   "check": "serial spec passes the driver's own validation (wall from the run spec)",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "check": "start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
+   "passed": true,
+   "problems": [],
+   "unexplained": []
+  },
+  {
+   "check": "every rehearsable item took 20 real steps (real recipe bytes + --max-steps)",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "fast-500k-s42-e200": "PAUSED"
+   },
+   "steps": {
+    "fast-500k-s42-e200": 20
+   },
+   "peak_handles": 1795,
+   "peak_ws_gib": 3.25
+  },
+  {
+   "check": "kill while an item is RUNNING with a checkpoint on disk",
+   "passed": true,
+   "victim": "fast-500k-s42-e200",
+   "done_before_kill": []
+  },
+  {
+   "check": "rerun resumes the killed item from its checkpoint; finished items are not redone",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ]
+  },
+  {
+   "check": "shrunk chain ends with every item COMPLETE or gate-skipped (real gate thresholds)",
+   "passed": true,
+   "exit": 0,
+   "states": {
+    "fast-500k-s42-e200": "COMPLETE"
+   },
+   "force_gates": false
+  },
+  {
+   "check": "ScheduleSpec of the real 200-pass recipe, lr at pass 1, 4, 100, 200 (peak 1e-3, minimum 1e-6, warmup 4)",
+   "passed": true,
+   "lr": {
+    "1": 0.00025,
+    "4": 0.001,
+    "100": 0.0005206128370846529,
+    "200": 1e-06
+   }
+  },
+  {
+   "check": "selected_model.pt of the shrunk chain loads strictly in FP32 into the family model (pcqm_tail_holdout_eval.gptrans_scorer, P1 ctl_s42 recipe, s44.pt)",
+   "passed": true,
+   "dtype": "float32",
+   "params": 5871201
+  },
+  {
+   "check": "not covered here: state identity after resume (rehearsal checks only the resume step 128); no Triton/torch.compile; no A100 name check; early exits fire only in unit test tests/test_fast_recipe_early_exit.py",
+   "passed": true
+  }
+ ]
+}
