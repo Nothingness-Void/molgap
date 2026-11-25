@@ -36,4 +36,8 @@ Read-only IMS queue, point-limit, and `chou` V4 training monitor (strictly under
 - Agent JSON: `.venv\Scripts\python.exe -S platforms\ims\check_queue.py --json`
 - Local web dashboard (`127.0.0.1` only): double-click `platforms\ims\open_ims_dashboard.bat` or run `.venv\Scripts\python.exe -S platforms\ims\check_queue.py --web --open`
 
+Search by job ID or name, then narrow the list by status. The snapshot view
+searches job IDs. The header shows the age of the displayed data and can copy
+a summary of queue demand and remaining group points.
+
 Always-on snapshot deployment, access controls and rollback: [deployment guide](dashboard/README.md).

@@ -19,18 +19,84 @@ JST = timezone(timedelta(hours=9))
 
 PAGE = """<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <title>Kaggle 看板</title><style>body{font:16px system-ui;background:#101923;color:#edf5fa;max-width:55rem;margin:5vh auto;padding:1rem}
-section{background:#1d3040;padding:1rem;margin:1rem 0;border-radius:.6rem}button{padding:.5rem}#health{color:#ffcf79}</style>
-<h1>Kaggle 看板</h1><button onclick="refresh()">刷新快照</button><p id="health"></p><main></main>
-<script>async function refresh(){const h=document.querySelector('#health'),m=document.querySelector('main');try{
-const d=await (await fetch('/api/status',{cache:'no-store'})).json();m.replaceChildren();
-for(const r of d.accounts){const e=document.createElement('section');e.textContent=r.account+' · '+(r.at?'剩余 '+r.remaining_hours+' / '+r.total_hours+' GPU 小时，已用 '+r.used_hours+'，预留 '+r.reserved_hours+'，重置 '+r.refresh_time_utc:'尚无配额快照')+(r.at?' · '+new Date(r.at*1000).toLocaleString():'')+(r.error?' · 配额读取失败':'');m.append(e)}
-for(const k of d.kernels){const e=document.createElement('section');e.textContent=k.label+' · '+k.status;m.append(e)}
-h.textContent=(d.stale?'已过期或部分数据不可用':'快照正常')+' · 最近采集 '+(d.at?new Date(d.at*1000).toLocaleString():'尚无可用快照');
-}catch{h.textContent='读取失败，显示的数据可能已过期'}}refresh();setInterval(refresh,30000)</script></html>"""
+section{background:#1d3040;padding:1rem;margin:1rem 0;border-radius:.6rem}button{padding:.5rem}#dataAge{color:#ffcf79}</style>
+<h1>Kaggle 看板</h1>
+<button id="refreshSnapshot">刷新快照</button>
+<button id="copySummary">复制摘要</button><span id="summaryFeedback" role="status"></span>
+<p id="dataAge">尚无快照</p>
+<div id="accounts"></div>
+<h2>任务</h2>
+<label>搜索 <input id="kernelSearch" type="search" placeholder="任务编号或状态"></label>
+<div id="kernels"></div>
+<script>
+let snapshot;
+function addSnapshotRow(container, text) {
+  const row = document.createElement('section');
+  row.textContent = text;
+  container.append(row);
+}
+function renderSnapshotKernels() {
+  const container = document.getElementById('kernels');
+  const query = document.getElementById('kernelSearch').value;
+  const jobs = snapshot?.kernels || [];
+  const shown = jobs.filter(k => dashboardMatches(query, k.label, k.status));
+  container.replaceChildren();
+  for (const k of shown) addSnapshotRow(container, k.label + ' · ' + k.status);
+  if (!shown.length) addSnapshotRow(container, jobs.length ? '没有匹配任务' : '暂无任务状态');
+}
+async function refresh() {
+  const button = document.getElementById('refreshSnapshot');
+  if (button.disabled) return;
+  button.disabled = true;
+  try {
+    const response = await fetch('/api/status', {cache: 'no-store'});
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    snapshot = await response.json();
+    const container = document.getElementById('accounts');
+    container.replaceChildren();
+    for (const r of snapshot.accounts) {
+      const quota = r.at ? '剩余 ' + r.remaining_hours + ' / ' + r.total_hours + ' GPU 小时，已用 ' + r.used_hours +
+        '，预留 ' + r.reserved_hours + '，重置 ' + r.refresh_time_utc + ' · ' + new Date(r.at * 1000).toLocaleString()
+        : '尚无配额快照';
+      addSnapshotRow(container, r.account + ' · ' + quota + (r.error ? ' · 配额读取失败' : ''));
+    }
+    dashboardObserved(snapshot.at, 300, snapshot.partial ? '部分数据不可用' : '');
+    renderSnapshotKernels();
+  } catch {
+    dashboardFetchFailed();
+  } finally {
+    button.disabled = false;
+  }
+}
+document.getElementById('kernelSearch').oninput = renderSnapshotKernels;
+document.getElementById('refreshSnapshot').onclick = refresh;
+bindDashboardSummary(() => snapshot?.at ? kaggleSummary(snapshot.accounts, snapshot.kernels.map(k => k.status)) : []);
+refresh();setInterval(refresh,30000);
+</script></html>"""
+
+KAGGLE_SUMMARY = r"""
+function kaggleSummary(accounts, statuses) {
+  const lines = ['Kaggle'];
+  accounts.forEach((a, index) => {
+    if (Number.isFinite(a.remaining_hours)) {
+      lines.push(`账号 ${index + 1} · 剩余 ${a.remaining_hours} GPU 小时${a.error ? '（旧数据）' : ''}`);
+    } else {
+      lines.push(`账号 ${index + 1} · 配额不可用`);
+    }
+  });
+  const counts = statuses.reduce((c, s) => {
+    const key = ['RUNNING', 'QUEUED', 'COMPLETE', 'ERROR', 'CANCELLED', 'PENDING'].includes(s) ? s : 'UNKNOWN';
+    c[key] = (c[key] || 0) + 1;
+    return c;
+  }, {});
+  if (statuses.length) lines.push(Object.entries(counts).map(([s, n]) => `${s} ${n}`).join(' · '));
+  return lines;
+}
+"""
 
 
 class Reader:
-    page = PAGE
+    page = PAGE.replace("<script>", "<script>\n" + KAGGLE_SUMMARY, 1)
 
     def __init__(self, path: Path):
         self.path = path
@@ -353,6 +419,7 @@ LIVE_PAGE = r"""<!doctype html>
     <div>
       <h1><span class="logo-dot"></span>Kaggle 多账号配额与实验监控看板 <span id="connPill" class="pill">连接中</span></h1>
       <div style="font-size:12px;color:var(--muted);margin-top:4px" id="metaLine">正在通过 Kaggle API 与本地 run 绑定日志拉取实时状态...</div>
+      <div id="dataAge" style="font-size:12px;color:var(--muted);margin-top:4px">尚无快照</div>
     </div>
     <div class="controls">
       <a class="btn-link" href="http://127.0.0.1:8765/" target="_blank" rel="noopener">前往 IMS 看板</a>
@@ -367,6 +434,8 @@ LIVE_PAGE = r"""<!doctype html>
       </label>
       <span id="countdown" class="mono" style="font-size:12px"></span>
       <button id="refreshBtn" class="primary">立即刷新</button>
+      <button id="copySummary">复制摘要</button>
+      <span id="summaryFeedback" role="status"></span>
     </div>
   </header>
 
@@ -390,6 +459,8 @@ LIVE_PAGE = r"""<!doctype html>
 
   <div id="tab-all" class="tab-pane active">
     <div id="statusFilterBar" class="filter-bar"></div>
+    <div class="filter-bar"><label>搜索任务 <input id="kernelSearch" type="search" placeholder="Run ID、Kernel 或账号"></label>
+      <span id="kernelMatches" role="status"></span></div>
     <div class="card" style="padding:0;overflow:auto"><table id="allTbl"></table></div>
   </div>
 
@@ -639,16 +710,17 @@ function renderAllTable(d) {
   const counts = {};
   rows.forEach(r => { counts[r.scheduler] = (counts[r.scheduler] || 0) + 1; });
   const statuses = Object.keys(counts);
-  if (selectedFilter !== 'ALL' && !counts[selectedFilter]) selectedFilter = 'ALL';
-
   $('statusFilterBar').innerHTML = `<span style="font-size:12px;color:var(--muted)">按状态筛选：</span>` +
     `<button class="chip-btn${selectedFilter==='ALL'?' active':''}" data-st="ALL">全部 (${rows.length})</button>` +
-    statuses.map(st => `<button class="chip-btn${selectedFilter===st?' active':''}" data-st="${esc(st)}">${esc(st)} (${counts[st]})</button>`).join('');
+    [...new Set([...statuses, ...(selectedFilter === 'ALL' ? [] : [selectedFilter])])].map(st => `<button class="chip-btn${selectedFilter===st?' active':''}" data-st="${esc(st)}">${esc(st)} (${counts[st] || 0})</button>`).join('');
   document.querySelectorAll('.chip-btn[data-st]').forEach(b => {
     b.onclick = () => { selectedFilter = b.dataset.st; renderAllTable(latestSnap); };
   });
 
-  const shown = selectedFilter === 'ALL' ? rows : rows.filter(r => r.scheduler === selectedFilter);
+  const query = $('kernelSearch').value;
+  const shown = rows.filter(r => (selectedFilter === 'ALL' || r.scheduler === selectedFilter)
+    && dashboardMatches(query, r.run, r.kernel, r.account));
+  $('kernelMatches').textContent = `${shown.length} / ${rows.length} 项`;
   $('allTbl').innerHTML = `<thead><tr><th>Logical Run ID</th><th>账号</th><th>状态</th><th>Kaggle Kernel</th><th>备注</th></tr></thead><tbody>` +
     (shown.length ? shown.map(r => `<tr><td class="mono"><b>${esc(r.run)}</b></td><td class="mono">${esc(r.account)}</td><td><span class="pill ${schedPill(r.scheduler)}">${esc(r.scheduler)}</span></td><td><a class="klink mono" href="https://www.kaggle.com/code/${esc(r.kernel)}" target="_blank" rel="noopener">${esc(r.kernel)} ↗</a></td><td style="color:var(--muted);font-size:12px">${esc(r.failure_message || '-')}</td></tr>`).join('')
       : `<tr><td colspan="5" style="color:var(--muted)">暂无匹配的绑定任务</td></tr>`) + `</tbody>`;
@@ -656,13 +728,15 @@ function renderAllTable(d) {
 
 function render(d) {
   latestSnap = d;
+  dashboardObserved(d.fetched_at_epoch, 300, d.stale ? '刷新失败，显示上次数据'
+    : d.error ? '读取失败，暂无快照' : (d.accounts || []).some(a => a.error) ? '部分配额不可用' : '');
   const errBox = $('errBox');
   if (d.error) { errBox.style.display = 'block'; errBox.textContent = '拉取提示: ' + d.error; }
   else { errBox.style.display = 'none'; }
 
   const pill = $('connPill');
   pill.className = 'pill ' + (d.error ? 'warn' : 'ok');
-  pill.innerHTML = `<span class="pulse"></span>${d.cached ? '缓存命中' : '实时在线'}`;
+  pill.innerHTML = `<span class="pulse"></span>${d.stale ? '显示旧快照' : d.error ? '读取失败' : d.cached ? '缓存命中' : '实时在线'}`;
   $('metaLine').textContent = `本地刷新 ${d.fetched_at_jst || '-'} · 接口耗时 ${d.latency_ms ?? '-'} ms · 扫描 D:/molgap-artifacts/runs`;
 
   const s = d.summary || {};
@@ -707,8 +781,9 @@ async function pull(force) {
     if (!data.cached && data.min_interval_s) cooldownUntil = Date.now() + data.min_interval_s * 1000;
     else if (data.cooldown_remaining_s) cooldownUntil = Date.now() + data.cooldown_remaining_s * 1000;
     render(data);
-    if (force && !data.cached) showToast('已从 Kaggle 刷新最新配额与日志');
+    if (force && !data.cached && !data.error) showToast('已从 Kaggle 刷新最新配额与日志');
   } catch (e) {
+    dashboardFetchFailed();
     $('errBox').style.display = 'block';
     $('errBox').textContent = '本机服务请求失败: ' + e;
   } finally {
@@ -735,6 +810,9 @@ function setupTimer() {
 
 $('refreshBtn').onclick = () => pull(true);
 $('autoSec').onchange = setupTimer;
+$('kernelSearch').oninput = () => { if (latestSnap) renderAllTable(latestSnap); };
+bindDashboardSummary(() => latestSnap?.fetched_at_epoch
+  ? kaggleSummary(latestSnap.accounts || [], (latestSnap.discovered || []).map(k => k.scheduler)) : []);
 pull(false);
 </script>
 </body>
@@ -743,7 +821,7 @@ pull(false);
 
 
 class LiveState:
-    page = LIVE_PAGE
+    page = LIVE_PAGE.replace("<script>", "<script>\n" + KAGGLE_SUMMARY, 1)
 
     def __init__(self, *, key_dir: Path, cred_overrides: list[str] | None, explicit_targets: list[str] | None,
                  attempt_id: str, scan_limit: int, read_timeout: float, min_interval: float) -> None:
@@ -788,7 +866,8 @@ class LiveState:
                 self._last_fetch = time.monotonic()
                 payload = {**fresh, "cached": False, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval, "error": None}
             elif self._snapshot is not None:
-                payload = {**self._snapshot, "cached": True, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval, "error": err}
+                self._snapshot = {**self._snapshot, "error": err, "stale": True}
+                payload = {**self._snapshot, "cached": True, "min_interval_s": self.min_interval}
             else:
                 payload = {"accounts": [], "kernels": [], "discovered": [], "error": err or "Unknown error", "cached": False, "min_interval_s": self.min_interval}
             self._cond.notify_all()

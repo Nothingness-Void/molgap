@@ -1105,11 +1105,56 @@ class MonitorState:
                 self._last_fetch = time.monotonic()
                 payload = {**fresh, "cached": False, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval}
             elif self._snapshot is not None:
-                payload = {**self._snapshot, "cached": True, "cooldown_remaining_s": self.min_interval, "min_interval_s": self.min_interval, "error": err}
+                self._snapshot = {**self._snapshot, "error": err, "stale": True}
+                payload = {**self._snapshot, "cached": True, "min_interval_s": self.min_interval}
             else:
                 payload = {"error": err or "Unknown error", "cached": False, "min_interval_s": self.min_interval}
             self._cond.notify_all()
             return payload
+
+
+DASHBOARD_UI = r"""
+let dashboardReading = {at: null, maxAge: 0, warning: ''};
+function dashboardAge() {
+  const {at, maxAge, warning} = dashboardReading;
+  if (!Number.isFinite(at)) return warning || '尚无快照';
+  const seconds = Math.max(0, Math.floor(Date.now() / 1000 - at));
+  const age = seconds < 60 ? `${seconds} 秒` : seconds < 3600
+    ? `${Math.floor(seconds / 60)} 分钟` : `${Math.floor(seconds / 3600)} 小时`;
+  const prefix = warning || (seconds > maxAge ? '快照已过期' : '');
+  return `${prefix ? prefix + ' · ' : ''}采集于 ${age}前`;
+}
+function updateDashboardAge() {
+  document.getElementById('dataAge').textContent = dashboardAge();
+}
+function dashboardObserved(at, maxAge, warning = '') {
+  dashboardReading = {at, maxAge, warning};
+  updateDashboardAge();
+}
+function dashboardFetchFailed() {
+  dashboardReading.warning = dashboardReading.at ? '刷新失败，显示上次数据' : '刷新失败，暂无快照';
+  updateDashboardAge();
+}
+setInterval(updateDashboardAge, 1000);
+
+function dashboardMatches(query, ...fields) {
+  const text = fields.filter(v => v != null).join(' ').toLowerCase();
+  return query.trim().toLowerCase().split(/\s+/).every(term => text.includes(term));
+}
+function bindDashboardSummary(makeLines) {
+  document.getElementById('copySummary').onclick = async () => {
+    const feedback = document.getElementById('summaryFeedback');
+    const lines = makeLines();
+    if (!lines.length) { feedback.textContent = '暂无可复制数据'; return; }
+    try {
+      await navigator.clipboard.writeText([...lines, dashboardAge()].join('\n'));
+      feedback.textContent = '已复制摘要';
+    } catch {
+      feedback.textContent = '复制失败，请检查浏览器剪贴板权限';
+    }
+  };
+}
+"""
 
 
 HTML_PAGE = r"""<!doctype html>
@@ -1241,6 +1286,7 @@ HTML_PAGE = r"""<!doctype html>
     <div>
       <h1><span class="logo-dot"></span>分子研 IMS/RCCS 调度与实验看板 <span id="connPill" class="pill">连接中</span></h1>
       <div style="font-size:12px;color:var(--muted);margin-top:4px" id="metaLine">正在通过只读 SSH 拉取实时队列与实验状态...</div>
+      <div id="dataAge" style="font-size:12px;color:var(--muted);margin-top:4px">尚无快照</div>
     </div>
     <div class="controls">
       <button id="themeBtn" title="切换深浅色主题">☀️ 浅色</button>
@@ -1254,6 +1300,8 @@ HTML_PAGE = r"""<!doctype html>
       </label>
       <span id="countdown" class="mono" style="font-size:12px"></span>
       <button id="refreshBtn" class="primary">立即刷新</button>
+      <button id="copySummary">复制摘要</button>
+      <span id="summaryFeedback" role="status"></span>
     </div>
   </header>
 
@@ -1334,6 +1382,14 @@ HTML_PAGE = r"""<!doctype html>
   </div>
 
   <div id="tab-jobs" class="tab-pane active">
+    <div class="owner-bar">
+      <label>搜索作业 <input id="jobSearch" type="search" placeholder="Job ID 或名称"></label>
+      <label>状态 <select id="jobStatus">
+        <option value="">全部</option><option value="Run">运行中</option><option value="Que">排队中</option>
+        <option value="other">其他</option>
+      </select></label>
+      <span id="jobMatches" role="status"></span>
+    </div>
     <div id="ownerBar" class="owner-bar"></div>
     <div class="card" style="padding:0;overflow:auto"><table id="jobsTbl"></table></div>
   </div>
@@ -1677,6 +1733,22 @@ function renderRunsSection(d) {
   bindChartTooltips();
 }
 
+function matchingImsJobs(jobs) {
+  const status = $('jobStatus').value;
+  const query = $('jobSearch').value;
+  const shown = jobs.filter(j => (!status || (status === 'other' ? !['Run', 'Que'].includes(j.status) : j.status === status))
+    && dashboardMatches(query, j.job_id, j.name, j.owner));
+  $('jobMatches').textContent = `${shown.length} / ${jobs.length} 项`;
+  return shown;
+}
+
+function renderPublicJobs(d) {
+  const shown = matchingImsJobs(d.jobs || []);
+  $('jobsTbl').innerHTML = `<thead><tr><th>Job ID</th><th>状态</th><th>资源</th></tr></thead><tbody>` +
+    (shown.length ? shown.map(j => `<tr><td class="mono">${esc(j.job_id || '-')}</td><td><span class="pill ${j.status==='Run'?'ok':'warn'}">${esc(j.status)}</span></td><td>${j.cpus ?? '-'} CPU + ${j.gpus ?? 0} A100</td></tr>`).join('')
+      : `<tr><td colspan="3" style="color:var(--muted)">${!d.available ? '暂无快照数据' : (d.jobs.length ? '没有匹配作业' : '本人当前无在跑或排队作业')}</td></tr>`) + `</tbody>`;
+}
+
 function renderJobsSection(d) {
   const jobs = d.jobs || [];
   $('tabJobsCnt').textContent = `(${jobs.length})`;
@@ -1701,7 +1773,8 @@ function renderJobsSection(d) {
     btn.onclick = () => { selectedOwnerFilter = btn.dataset.owner; renderJobsSection(latestSnap); };
   });
 
-  const shown = selectedOwnerFilter === 'ALL' ? jobs : jobs.filter(j => (j.owner || (j.is_chou ? 'chou' : 'sm2')) === selectedOwnerFilter);
+  const ownerJobs = selectedOwnerFilter === 'ALL' ? jobs : jobs.filter(j => (j.owner || (j.is_chou ? 'chou' : 'sm2')) === selectedOwnerFilter);
+  const shown = matchingImsJobs(ownerJobs);
   $('jobsTbl').innerHTML = `<thead><tr><th>Job ID</th><th>名称</th><th>状态</th><th>资源</th><th>已运行</th><th>节点 / 原因</th><th>内存使用</th><th>归属 (Workdir)</th><th>Workdir</th></tr></thead><tbody>` +
     (shown.length ? shown.map(j => {
       const cls = j.is_chou ? 'chou-row' : 'other-row';
@@ -1872,6 +1945,8 @@ function renderWaitPredictor(d) {
 }
 
 function render(d) {
+  dashboardObserved(d.last_success_epoch ?? d.fetched_at_epoch, 240,
+    d.stale ? '数据已过期' : d.error ? '部分数据不可用' : '');
   if (d.public) {
     $('connPill').textContent = !d.available ? 'UNKNOWN / 从未成功或快照损坏' : d.stale ? 'STALE / 数据已过期' : '快照正常';
     $('connPill').className = 'pill ' + (d.stale ? 'bad' : 'ok');
@@ -1882,10 +1957,8 @@ function render(d) {
     $('heroBar').textContent = !d.available ? '队列未知' : d.jobs.length ? `自己的作业: ${d.jobs.length}` : '最后成功采集时队列为空';
     $('kpiGrid').innerHTML = !d.available ? '' : d.chou_runs.map(r => `<div class="card"><div class="kpi-top"><span class="kpi-title">Job ${esc(r.job_id || '-')}</span><span class="pill info">远端脱敏快照</span></div><div style="margin-top:8px;font-size:13px">${r.items.map(i => `<div><span class="pill ${i.status==='COMPLETE'?'ok':(i.status==='RUNNING'?'info':'')}" style="font-size:11px;padding:1px 7px">${esc(i.status)}</span> <span class="mono">Ep ${i.epoch ?? '-'} / ${i.total_passes ?? '-'}</span> · ETA ${fmtDur(i.eta_s)}</div>`).join('')}</div></div>`).join('');
     $('tabJobsCnt').textContent = `(${(d.jobs || []).length})`;
-    $('jobsTbl').innerHTML = `<thead><tr><th>Job ID</th><th>状态</th><th>资源</th></tr></thead><tbody>` +
-      (!d.available ? `<tr><td colspan="3" style="color:var(--muted)">暂无快照数据</td></tr>`
-       : (d.jobs.length ? d.jobs.map(j => `<tr><td class="mono">${esc(j.job_id || '-')}</td><td><span class="pill ${j.status==='Run'?'ok':'warn'}">${esc(j.status)}</span></td><td>${j.cpus ?? '-'} CPU + ${j.gpus ?? 0} A100</td></tr>`).join('')
-          : `<tr><td colspan="3" style="color:var(--muted)">本人当前无在跑或排队作业</td></tr>`)) + `</tbody>`;
+    $('jobSearch').placeholder = 'Job ID';
+    renderPublicJobs(d);
     const sumObj = (d.summary && typeof d.summary === 'object') ? d.summary : {};
     $('queueTbl').innerHTML = `<thead><tr><th>时段</th><th>空闲 A100</th><th>排队作业</th><th>申请 A100</th></tr></thead><tbody>` +
       (!d.available ? `<tr><td colspan="4" style="color:var(--muted)">暂无队列数据</td></tr>`
@@ -1920,7 +1993,7 @@ function render(d) {
 
   const pill = $('connPill');
   pill.className = 'pill ' + (d.error ? 'warn' : 'ok');
-  pill.innerHTML = `<span class="pulse"></span>${d.cached ? '缓存命中' : '实时在线'}`;
+  pill.innerHTML = `<span class="pulse"></span>${d.stale ? '显示旧快照' : d.error ? '部分数据' : d.cached ? '缓存命中' : '实时在线'}`;
   $('metaLine').textContent = `本地刷新 ${d.fetched_at_jst || '-'} · 调度器 ${d.scheduler_timestamp || '-'} · SSH 耗时 ${d.ssh_latency_ms ?? '-'} ms · 边界 ${d.remote_root || '-'}`;
 
   const s = d.summary || {};
@@ -2038,8 +2111,9 @@ async function pull(force) {
     if (!data.cached && data.min_interval_s) cooldownUntil = Date.now() + data.min_interval_s * 1000;
     else if (data.cooldown_remaining_s) cooldownUntil = Date.now() + data.cooldown_remaining_s * 1000;
     render(data);
-    if (force && !data.public && !data.cached) showToast('已从分子研刷新最新状态');
+    if (force && !data.public && !data.cached && !data.error) showToast('已从分子研刷新最新状态');
   } catch (e) {
+    dashboardFetchFailed();
     $('connPill').textContent = 'STALE / 网页读取失败';
     $('connPill').className = 'pill bad';
     $('errBox').style.display = 'block';
@@ -2062,6 +2136,24 @@ $('predGpu').onchange = () => {
 };
 $('predCpu').onchange = () => renderWaitPredictor(latestSnap);
 $('predWall').onchange = () => renderWaitPredictor(latestSnap);
+
+function updateImsJobs() {
+  if (!latestSnap) return;
+  if (latestSnap.public) renderPublicJobs(latestSnap);
+  else renderJobsSection(latestSnap);
+}
+$('jobSearch').oninput = updateImsJobs;
+$('jobStatus').onchange = updateImsJobs;
+bindDashboardSummary(() => {
+  const d = latestSnap;
+  if (!d || !d.fetched_at_epoch) return [];
+  const lines = ['IMS / Queue H'];
+  for (const [label, row] of [['1 周内', d.summary?.gpu_within_week], ['超 1 周', d.summary?.gpu_over_week]]) {
+    if (row) lines.push(`${label} · 空闲 A100 ${fmtNum(row.free_gpus)} · 排队 ${fmtNum(row.jobs_waiting)} · 申请 A100 ${fmtNum(row.req_gpus)}`);
+  }
+  lines.push(`组剩余点数 ${fmtNum(d.points?.group?.remaining)}`);
+  return lines;
+});
 
 function setupTimer() {
   clearInterval(timerId); clearInterval(tickId);
@@ -2106,6 +2198,8 @@ def make_handler(state: MonitorState):
                     page = page.replace("chou", "own").replace("sm2", "account").replace("ew6", "group")
                     page = page.replace("d.own_runs", "d.chou_runs")
                     page = page.replace("pull(false);", "pull(false); setInterval(() => pull(false), 30000);")
+                if 'id="dataAge"' in page:
+                    page = page.replace("<script>", "<script>\n" + DASHBOARD_UI, 1)
                 self._send(HTTPStatus.OK, "text/html; charset=utf-8", page.encode("utf-8"))
                 return
             if parsed.path == "/api/status":
