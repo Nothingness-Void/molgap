@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-fast-engine-200ep-ims-20261126",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "local_rehearsal_passed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-fast-engine-200ep-ims-20261126"
+  },
+  "action_rule": {
+    "action": "RUN_FAST_ENGINE_200EP_IMS_JOB",
+    "field": "local_rehearsal_passed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "c26ca850dbc85d373beb7bc0642a239b791d03f47a1154a9f6862c70db624e51"
+}

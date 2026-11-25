@@ -169,6 +169,7 @@ Track C.
 | Does MC-dropout or snapshot averaging (C3) improve 500K GPT-T checkpoints? | MC-dropout K=32 passes on dev rows; snapshot averaging cancelled (snapshots not retained); closed NO_TRAIN | `pcqm_c3_checkpoint_space/` |
 | Does C3 MC-dropout hold at full scale on the tail holdout? | NO EFFECT: 4-model ensemble 0.208 meV better, below the 1.0 meV bar; not adopted | `pcqm_c3_full_tail_20261123/` |
 | Does a GPS++ MPNN match the 100K reference? | NEGATIVE_UNDER_CONTRACT: 3.09 meV worse than the frozen reference; no retry | `pcqm_gpspp_mpnn_100k_20261124/` |
+| Does a 200-pass cosine fast GPT-T beat the 60-pass fast GPT-T (tail 107.52 meV)? | PREPARED, not submitted: read final EMA tail once; longer helps only if tail <= 106.02 meV | `pcqm_fast_engine_200ep_ims_20261126/` |
 | Does a DFT distance auxiliary label (2D inference) help GPT-T? | Positive at 100K; INCONCLUSIVE at 500K (-0.14 meV), so nothing adopted and no tail score | `pcqm_gptrans_dft_distance_aux_20261121/` |
 | Does full-scale weight decay 0.022 (C4) beat 0.05 on the tail holdout? | NO EFFECT: +0.256 meV (slightly worse), interval crosses zero | `pcqm_gptrans_full_wd_c4_20261123/` |
 | Does the chemistry correction repay the 6K rows it costs (H1)? | FAIL: 94K plus chemistry is worse than the raw backbone; closed NEGATIVE_UNDER_CONTRACT | `pcqm_h1_heldout_budget/` |

@@ -1,0 +1,72 @@
+{
+ "format": "molgap-ims-v4-run-v1",
+ "mode": "serial_chain",
+ "run_id": "fastpn-200ep-20261126",
+ "model_id": "serial-chain",
+ "dataset_ids": [
+  "ogb-train-500k-scnet-v1"
+ ],
+ "runtime_id": "ims-a100-torch271-v1",
+ "source": {
+  "commit": "filled-by-submit-helper",
+  "archive_sha256": "filled-by-submit-helper"
+ },
+ "contract": {
+  "path": "experiments/pcqm_fast_engine_200ep_ims_20261126/serial_spec.json",
+  "sha256": "filled-by-submit-helper",
+  "physical_batch_per_device": 128,
+  "precision": "amp-fp16",
+  "tf32": false,
+  "tail_batch_policy": "drop_last",
+  "execution_policy": "fast_amp_nondeterministic"
+ },
+ "resources": {
+  "queue": "H",
+  "ncpus": 16,
+  "ompthreads": 4,
+  "ngpus": 1,
+  "train_walltime": "15:00:00"
+ },
+ "stages": {
+  "train": {
+   "entrypoint": "platforms/ims/family_serial_run.py",
+   "args": [
+    "--spec",
+    "{code_root}/experiments/pcqm_fast_engine_200ep_ims_20261126/serial_spec.json",
+    "--code-root",
+    "{code_root}",
+    "--input-root",
+    "{dataset_root}",
+    "--output-root",
+    "{training_output}",
+    "--source-commit",
+    "{source_commit}",
+    "--cpus",
+    "16",
+    "--accelerator",
+    "A100",
+    "--ogb-zip",
+    "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip",
+    "--wall-s",
+    "{train_wall_s}",
+    "--memory-limit-bytes",
+    "{mem_bytes}",
+    "--execution-policy",
+    "fast_amp_nondeterministic"
+   ],
+   "required_outputs": [
+    "training/serial_summary.json",
+    "training/fast-500k-s42-e200/selected_model.pt",
+    "training/fast-500k-s42-e200/train_log.jsonl",
+    "training/fast-500k-s42-e200/completion_manifest.json",
+    "training/fast-500k-s42-e200/run_provenance.json",
+    "training/fast-500k-s42-e200/selected_eval.json"
+   ]
+  }
+ },
+ "sealed_roles": {
+  "official_validation_read": false,
+  "test_dev_read": false,
+  "test_challenge_read": false
+ }
+}

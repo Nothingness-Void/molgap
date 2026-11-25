@@ -22,6 +22,22 @@ from family_recipe_run import PAUSED, START, TAIL_START, sha256
 
 POLICY = "fast_amp_nondeterministic"
 ENGINE = Path(__file__).resolve().parents[2] / "experiments/pcqm_fast_engine_3d_20261124"
+MAX_SKIP_FRACTION = 0.01  # GradScaler skips in one pass, as a fraction of its steps
+SLOW_PASS_S, SLOW_PASSES = 1.5 * 192.7, 3  # 192.7 s is the mean A100 pass of the 60-pass run (passes 3..60); pass 1 holds the compile
+
+
+def early_exit_reason(rows: list, per_pass: int) -> str | None:
+    """Why the job should stop now, from the logged pass rows (the last row is the newest). Resume-safe: it reads only the log."""
+    row = rows[-1]
+    if not all(math.isfinite(row.get(k, 0.0)) for k in ("train_mae_eV", "ema_dev_mae_eV", "dev_mae_eV")):
+        return f"non-finite loss or dev MAE in pass {row['epoch']}"
+    skips = row["scaler_skips"] - (rows[-2]["scaler_skips"] if len(rows) > 1 else 0)
+    if skips > MAX_SKIP_FRACTION * per_pass:
+        return f"{skips} GradScaler skips in pass {row['epoch']} (limit {MAX_SKIP_FRACTION * per_pass:.0f})"
+    recent = [r for r in rows if r["epoch"] >= 2][-SLOW_PASSES:]
+    if len(recent) == SLOW_PASSES and all(r["pass_s"] > SLOW_PASS_S for r in recent):
+        return f"{SLOW_PASSES} passes in a row slower than {SLOW_PASS_S:.0f} s (last {row['pass_s']} s)"
+    return None
 
 
 def main(argv=None) -> int:
@@ -221,6 +237,9 @@ def main(argv=None) -> int:
         with log.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps(row) + "\n")
         print("[pass]", json.dumps(row), flush=True)
+        reason = early_exit_reason([json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()], per_pass)
+        if reason:
+            raise ValueError(f"Early exit: {reason}")
     selected = {"model": FastBondLocalPairNormGPTrans.family_state_dict({n: s.detach().cpu() for n, s in zip(names, shadow)}),
                 "weights": "ema", "optimizer_step": st["step"]}
     atomic_torch_save(out / "selected_model.pt", selected)
