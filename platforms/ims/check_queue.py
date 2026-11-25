@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone, timedelta
+from functools import lru_cache
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
@@ -37,7 +38,7 @@ _SECTIONS = (
 
 _REMOTE_SCRIPT = r"""set -u
 BOUNDARY="$(realpath -e -- "__BOUNDARY__")" || exit 2
-case "$BOUNDARY" in /lustre/home/users/sm2/chou|/lustre/home/users/sm2/chou/*) ;; *) exit 2;; esac
+case "$BOUNDARY" in "__AUTHORIZED__"|"__AUTHORIZED__"/*) ;; *) exit 2;; esac
 cd "$BOUNDARY" 2>/dev/null || exit 2
 echo "===__SEC_JOBINFO_C__==="
 jobinfo -c 2>&1
@@ -262,6 +263,38 @@ def resolve_ssh_key(key_arg: Path | None) -> Path:
     raise FileNotFoundError(f"IMS SSH key not found. Checked: {checked}. Pass --key or set MOLGAP_IMS_SSH_KEY.")
 
 
+def validate_remote_root(user: str, root: str, *, personal: bool) -> str:
+    if not re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_-]*", user):
+        raise ValueError("Invalid IMS login account")
+    base = f"/lustre/home/users/{user}" if personal else REMOTE_BOUNDARY
+    if not re.fullmatch(re.escape(base) + r"(?:/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*", root):
+        raise ValueError(f"IMS directory must be {base} or a directory below it")
+    return root if personal else base
+
+
+def load_profile(path: Path) -> dict:
+    profile = json.loads(path.read_text(encoding="utf-8-sig"))
+    if not isinstance(profile, dict) or set(profile) - {"user", "remote_root", "key", "host", "ssh_port", "interval"}:
+        raise ValueError("Unknown IMS profile field")
+    user = profile["user"]
+    root = profile["remote_root"].rstrip("/")
+    validate_remote_root(user, root, personal=True)
+    host = profile.get("host", DEFAULT_HOST)
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]*", host):
+        raise ValueError("Invalid IMS SSH hostname")
+    key = path.parent / Path(profile["key"]).expanduser()
+    if not key.is_file():
+        raise ValueError("IMS profile key file does not exist")
+    port = profile.get("ssh_port", DEFAULT_SSH_PORT)
+    interval = profile.get("interval", 90)
+    if type(port) is not int or not 1 <= port <= 65535:
+        raise ValueError("IMS SSH port must be between 1 and 65535")
+    if type(interval) not in (int, float) or not 60 <= interval <= 120:
+        raise ValueError("IMS collector interval must be 60 to 120 seconds")
+    return {"host": host, "port": port, "user": user, "key_path": key.resolve(),
+            "remote_root": root, "personal": True, "interval": interval}
+
+
 def _to_int(text: str | None) -> int | None:
     if text is None:
         return None
@@ -298,6 +331,8 @@ def _is_chou_workdir(workdir: str | None, remote_root: str) -> bool:
     if not workdir:
         return False
     norm = workdir.strip().strip('"').strip("'").rstrip("/")
+    if ".." in norm.split("/"):
+        return False
     bases = {remote_root.rstrip("/")}
     if remote_root.startswith("/lustre/home/"):
         bases.add(remote_root[len("/lustre"):].rstrip("/"))
@@ -808,10 +843,9 @@ def _compute_queue_wait_history(chou_runs: list[dict], now_epoch: float) -> list
     return records[:20]
 
 
-def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_root: str) -> dict:
-    if not re.fullmatch(r"/lustre/home/users/sm2/chou(?:/[A-Za-z0-9_-]+)*", remote_root):
-        raise ValueError("Refusing remote root outside /lustre/home/users/sm2/chou")
-    script = _REMOTE_SCRIPT.replace("__BOUNDARY__", remote_root)
+def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_root: str, personal: bool = False) -> dict:
+    authorized = validate_remote_root(user, remote_root, personal=personal)
+    script = _REMOTE_SCRIPT.replace("__BOUNDARY__", remote_root).replace("__AUTHORIZED__", authorized)
     t0 = time.monotonic()
     cmd = [
         "ssh", "-T", "-o", "BatchMode=yes", "-o", "ConnectTimeout=15",
@@ -846,6 +880,10 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
         invalid.append("JOBINFO_S")
     if not any(points.values()):
         invalid.append("SHOWLIM_C")
+    if personal:
+        if jobs and not any(job.get("workdir") for job in jobs):
+            invalid.append("JOBINFO_W")
+        jobs = [job for job in jobs if job["is_chou"]]
     chou_runs = []
     if "CHOU_RUNS" not in failed:
         try:
@@ -871,6 +909,7 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
         "host": host,
         "user": user,
         "remote_root": remote_root,
+        "personal": personal,
         "summary": {
             "gpu_within_week": gpu_1w,
             "gpu_over_week": gpu_gt1w,
@@ -885,9 +924,7 @@ def fetch_snapshot(*, host: str, port: int, user: str, key_path: Path, remote_ro
         "chou_runs": chou_runs,
         "queue_wait_history": queue_wait_history,
         "raw": {
-            "jobinfo_c": sec["JOBINFO_C"],
-            "jobinfo_m": sec["JOBINFO_M"],
-            "jobinfo_w": sec["JOBINFO_W"],
+            **({} if personal else {"jobinfo_c": sec["JOBINFO_C"], "jobinfo_m": sec["JOBINFO_M"], "jobinfo_w": sec["JOBINFO_W"]}),
             "jobinfo_s": sec["JOBINFO_S"],
             "showlim_c": sec["SHOWLIM_C"],
         },
@@ -941,7 +978,7 @@ def render_terminal(snap: dict) -> str:
         )
 
     lines.append("")
-    lines.append("[sm2 Active Jobs]")
+    lines.append("[Personal active jobs]" if snap.get("personal") else f"[{snap['user']} Active Jobs]")
     lines.append(f"  {'JobID':9s} {'St':4s} {'Res':6s} {'Elapsed':8s} {'Mem(MB)':13s} {'Node':8s} {'Owner':10s} {'Name / Workdir'}")
     for j in snap.get("jobs", []):
         res = f"{j['cpus']}c+{j['gpus']}g" if j.get("gpus") else f"{j['cpus']}c"
@@ -955,7 +992,7 @@ def render_terminal(snap: dict) -> str:
     active_runs = [r for r in snap.get("chou_runs", []) if r.get("live_job") or r.get("stage_train_status") == "running"]
     if active_runs:
         lines.append("")
-        lines.append("[Active chou V4 Runs]")
+        lines.append("[Active personal V4 runs]")
         for r in active_runs:
             live = r.get("live_job") or {}
             lines.append(f"  * {r['run_id']} (Job {r.get('job_id')} on {live.get('node_or_reason')}, {live.get('elapsed')})")
@@ -1061,6 +1098,9 @@ class SnapshotState:
 def collect_once(path: Path, *, full: bool = False, **connection) -> bool:
     prior = SnapshotState(path, full=full).get()
     last = prior if prior.get("available") else None
+    if full and last and (any(last.get(k) != connection.get(k) for k in ("host", "user", "remote_root"))
+                          or bool(last.get("personal")) != bool(connection.get("personal"))):
+        last = None
     try:
         raw = fetch_snapshot(**connection)
         if raw["error"]:
@@ -1077,12 +1117,8 @@ def collect_once(path: Path, *, full: bool = False, **connection) -> bool:
 
 
 class MonitorState:
-    def __init__(self, *, host: str, port: int, user: str, key_path: Path, remote_root: str, min_interval: float) -> None:
-        self.host = host
-        self.port = port
-        self.user = user
-        self.key_path = key_path
-        self.remote_root = remote_root
+    def __init__(self, *, min_interval: float, **connection) -> None:
+        self.connection = connection
         self.min_interval = max(5.0, float(min_interval))
         self._cond = threading.Condition()
         self._snapshot: dict | None = None
@@ -1103,10 +1139,7 @@ class MonitorState:
         err: str | None = None
         fresh: dict | None = None
         try:
-            fresh = fetch_snapshot(
-                host=self.host, port=self.port, user=self.user,
-                key_path=self.key_path, remote_root=self.remote_root,
-            )
+            fresh = fetch_snapshot(**self.connection)
         except Exception as exc:
             err = str(exc)
 
@@ -1167,6 +1200,50 @@ function bindDashboardSummary(makeLines) {
   };
 }
 """
+
+@lru_cache(maxsize=1)
+def dashboard_english():
+    path = Path(__file__).with_name("dashboard") / "en.json"
+    if not path.is_file():
+        return None, {}
+    terms = json.loads(path.read_text(encoding="utf-8"))
+    pattern = re.compile("|".join(map(re.escape, sorted(terms, key=len, reverse=True))))
+    return pattern, terms
+
+
+def dashboard_layout(page: str, english: bool) -> str:
+    pattern, terms = dashboard_english()
+    if english and pattern:
+        page = pattern.sub(lambda m: terms[m[0]], page)
+        page = re.sub(r'<html lang="[^"]+"', '<html lang="en"', page, count=1)
+        page = page.replace("'zh-CN'", "'en-US'")
+    if pattern:
+        active = 'en' if english else 'zh'
+        links = ''.join(f'<a href="?lang={code}"{" aria-current=page" if active == code else ""}>{label}</a>'
+                        for code, label in (("zh", "中文"), ("en", "EN")))
+        page = page.replace("<!-- dashboard-language -->", f'<nav class="dash-language" aria-label="Language">{links}</nav>')
+    return page.replace("</style>", """
+    .dash-language { display:inline-flex; gap:2px; padding:2px; border:1px solid var(--border,#394957);
+      border-radius:8px; vertical-align:middle; font:600 12px system-ui; }
+    .dash-language a { padding:5px 8px; color:inherit; text-decoration:none; border-radius:5px; }
+    .dash-language [aria-current] { color:var(--text,#edf5fa); background:var(--panel3,#344655); }
+    .controls { gap:8px; }
+    input[type=search] { max-width:100%; padding:7px 10px; border:1px solid var(--border,#394957);
+      border-radius:7px; background:var(--panel2,#172531); color:var(--text,#edf5fa); font:inherit; }
+    .grid4 .card, .grid3 .card { box-shadow:none; padding:14px; }
+    .kpi-val { font-variant-numeric:tabular-nums; }
+    #kpiGrid .card:first-child { border-top:2px solid var(--ok); }
+    #kpiGrid .card:nth-child(2) { border-top:2px solid var(--accent); }
+    #dataAge { font-variant-numeric:tabular-nums; }
+    @media (max-width:640px) {
+      .wrap { padding:12px 12px 28px; }
+      .grid4, .grid3 { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .kpi-top { align-items:flex-start; gap:3px; flex-wrap:wrap; }
+      .grid4 .card, .grid3 .card { min-width:0; padding:10px; overflow-wrap:anywhere; }
+      .grid4 .donut { display:none; }
+      .kpi-val { font-size:26px; }
+    }
+    </style>""", 1)
 
 
 HTML_PAGE = r"""<!doctype html>
@@ -1314,18 +1391,18 @@ HTML_PAGE = r"""<!doctype html>
       <button id="refreshBtn" class="primary">立即刷新</button>
       <button id="copySummary">复制摘要</button>
       <span id="summaryFeedback" role="status"></span>
+      <!-- dashboard-language -->
     </div>
   </header>
 
   <div id="errBox" class="banner-err"></div>
-  <div id="heroBar" class="hero" style="display:none"></div>
-
   <div class="grid4" id="kpiGrid">
     <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
   </div>
+  <div id="heroBar" class="hero" style="display:none"></div>
 
   <div class="sec-head">
-    <h2>chou 个人 V4 实验实时进度</h2>
+    <h2>个人 V4 实验进度</h2>
     <span style="font-size:12px;color:var(--muted)" id="chouSub"></span>
   </div>
   <div id="chouRuns"><div class="skel" style="height:190px"></div></div>
@@ -1333,8 +1410,7 @@ HTML_PAGE = r"""<!doctype html>
   <div class="pred-card" id="waitPredictor">
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px">
       <div>
-        <h2 style="margin:0;font-size:16px">A100 排队时间预测（交互试算）</h2>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">综合 Queue H 空闲/排队比、节点碎片与回填概率、ew6 并发配额、每月首周一 09:00 JST 维护窗口与 chou 历史实测</div>
+        <h2 style="margin:0;font-size:16px">排队与点数预测</h2>
       </div>
       <span class="pill info">启发式预估 · 非官方承诺</span>
     </div>
@@ -1381,13 +1457,13 @@ HTML_PAGE = r"""<!doctype html>
     <div class="pred-f" id="pointForecast"></div>
     <div id="predFactors" class="pred-factors"></div>
     <details id="waitHistDetails">
-      <summary id="waitHistSummary">查看 chou 历史排队实测记录</summary>
+      <summary id="waitHistSummary">查看历史排队记录</summary>
       <div style="overflow:auto;margin-top:10px"><table id="waitHistTbl"></table></div>
     </details>
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="jobs">sm2 作业列表 <span id="tabJobsCnt"></span></button>
+    <button class="tab-btn active" data-tab="jobs">作业列表 <span id="tabJobsCnt"></span></button>
     <button class="tab-btn" data-tab="queue">Queue H 全队列与配额</button>
     <button class="tab-btn" data-tab="history">历史 V4 记录 <span id="tabHistCnt"></span></button>
     <button class="tab-btn" data-tab="raw">原始调度输出</button>
@@ -1730,7 +1806,7 @@ function renderRunsSection(d) {
   };
 
   $('chouRuns').innerHTML = activeRuns.length ? activeRuns.map(r => renderRun(r, true)).join('')
-    : '<div class="card" style="color:var(--muted)">当前没有运行中的 chou V4 任务；请切换至「历史 V4 记录」查看已结束实验。</div>';
+    : '<div class="card" style="color:var(--muted)">目前没有运行中的 V4 任务。已结束任务在历史记录中。</div>';
   $('pastRuns').innerHTML = pastRuns.length ? pastRuns.map(r => renderRun(r, false)).join('')
     : '<div class="card" style="color:var(--muted)">暂无历史记录。</div>';
 
@@ -1833,6 +1909,7 @@ function renderWaitPredictor(d) {
   const ugRows = (d.user_group_stat && d.user_group_stat.rows) || [];
   const ugMap = Object.fromEntries(ugRows.map(r => [r.metric, r]));
   const gGpu = (ugMap.GPUs && ugMap.GPUs.group) || {};
+  const group = d.user_group_stat?.group || '组';
   const gRun = gGpu.run ?? 0, gLim = gGpu.limit ?? 6, gHeadroom = Math.max(0, gLim - gRun), gQueue = gGpu.queue ?? 0;
 
   const nowEpoch = d.fetched_at_epoch || (Date.now() / 1000);
@@ -1856,8 +1933,8 @@ function renderWaitPredictor(d) {
 
   if (Number.isFinite(gGpu.limit) && reqGpu > gLim) {
     cls = 'bad'; minH = 999; maxH = 999;
-    badgeTxt = `超出 ${d.user_group_stat?.group||'ew6'} 组并发上限 (${gLim} 卡)`;
-    tipTxt = `ew6 组最多同时跑 ${gLim} 张 A100，无法单次申请超过 ${gLim} 卡。`;
+    badgeTxt = `组并发上限 ${gLim} A100`;
+    tipTxt = `${group} · GPU ${gRun}/${gLim}`;
   } else if (Number.isFinite(gGpu.limit) && Number.isFinite(gGpu.run) && reqGpu > 0 && reqGpu > gHeadroom) {
     cls = 'warn';
     const needRelease = reqGpu - gHeadroom;
@@ -1872,7 +1949,7 @@ function renderWaitPredictor(d) {
     minH = Math.max(1, soonestChouEtaH < 50 ? Math.max(0.5, soonestChouEtaH * 0.8) : 2 * needRelease);
     maxH = Math.max(minH + 4, 8 * needRelease + gQueue * 3);
     badgeTxt = `需等组配额释放 (+${needRelease} 卡)`;
-    tipTxt = `ew6 组当前已用 ${gRun}/${gLim} 卡（仅剩 ${gHeadroom} 卡余量）。必须先等组内至少释放 ${needRelease} 卡后才会进入调度。`;
+    tipTxt = `${group} · GPU ${gRun}/${gLim} · 需释放 ${needRelease} A100`;
   } else if (wallH > hoursToMaint - 1) {
     cls = 'warn';
     minH = Math.max(2, hoursToMaint + 4);
@@ -1945,12 +2022,12 @@ function renderWaitPredictor(d) {
     <div style="font-size:12px;color:var(--muted);margin-top:6px">${esc(tipTxt)}</div>`;
 
   $('predFactors').innerHTML = `
-    <div class="pred-f"><div style="color:var(--muted)">① ew6 组并发余量</div><div style="font-weight:700;margin-top:2px">已跑 ${gRun}/${gLim} 卡 · 组排队 ${gQueue} · 剩余可并发 ${gHeadroom} 卡</div></div>
+    <div class="pred-f"><div style="color:var(--muted)">组并发余量</div><div style="font-weight:700;margin-top:2px">已跑 ${gRun}/${gLim} · 组排队 ${gQueue} · 可再用 ${gHeadroom}</div></div>
     <div class="pred-f"><div style="color:var(--muted)">② ${isOverWeek ? '>1周' : '1周内'} 池供需与碎片</div><div style="font-weight:700;margin-top:2px">空闲 ${freeG} 卡 (${fmtNum(freeC)} 核) / 等待 ${waitJobs} 作业 (${reqPoolG} 卡)</div></div>
     <div class="pred-f"><div style="color:var(--muted)">③ 月度维护窗口校验</div><div style="font-weight:700;margin-top:2px">下次 ${esc(maintJst)} JST · 距今 ${hoursToMaint.toFixed(0)} 小时</div></div>
-    <div class="pred-f"><div style="color:var(--muted)">④ chou 历史实测参考</div><div style="font-weight:700;margin-top:2px">首次中位 ${medInit!=null?fmtDur(medInit):'-'} (${initWaits.length}次) · 续跑中位 ${medRes!=null?fmtDur(medRes):'-'} (${resWaits.length}次)</div></div>`;
+    <div class="pred-f"><div style="color:var(--muted)">历史实测参考</div><div style="font-weight:700;margin-top:2px">首次中位 ${medInit!=null?fmtDur(medInit):'-'} (${initWaits.length}) · 续跑中位 ${medRes!=null?fmtDur(medRes):'-'} (${resWaits.length})</div></div>`;
 
-  $('waitHistSummary').textContent = `查看 chou 历史排队实测记录 (${hist.length} 条：由 staging_manifest/submission 与实际开跑时刻反推)`;
+  $('waitHistSummary').textContent = `查看历史排队记录 (${hist.length})`;
   $('waitHistTbl').innerHTML = `<thead><tr><th>Run ID</th><th>类型</th><th>Job ID</th><th>资源 / 墙钟</th><th>提交时刻 (JST)</th><th>上卡开跑 (JST)</th><th>实测排队</th></tr></thead><tbody>` +
     (hist.length ? hist.map(h => `<tr><td class="mono">${esc(h.run_id)}</td><td><span class="pill ${h.kind==='resume'?'info':''}">${h.kind==='resume'?'续跑':'首次'}</span></td><td class="mono">${esc(h.job_id||'-')}</td><td class="mono">${h.gpus ?? '-'}g ${h.cpus ?? '-'}c / ${esc(h.walltime||'-')}</td><td class="mono">${esc(h.submitted_jst||'-')}</td><td class="mono">${esc(h.started_jst||'-')}</td><td><b>${esc(fmtDur(h.wait_s))}</b></td></tr>`).join('')
       : `<tr><td colspan="7" style="color:var(--muted)">暂无足够历史排队时间记录</td></tr>`) + `</tbody>`;
@@ -1999,6 +2076,9 @@ function render(d) {
     return;
   }
   latestSnap = d;
+  if (d.personal) {
+    document.querySelector('[data-tab="raw"]').style.display = 'none';
+  }
   const errBox = $('errBox');
   if (d.error) { errBox.style.display = 'block'; errBox.textContent = '拉取提示: ' + d.error; }
   else { errBox.style.display = 'none'; }
@@ -2012,18 +2092,17 @@ function render(d) {
   const g1 = s.gpu_within_week || {}, g2 = s.gpu_over_week || {};
   const ugRows = (d.user_group_stat && d.user_group_stat.rows) || [];
   const ugMap = Object.fromEntries(ugRows.map(r => [r.metric, r]));
-  const gGpu = (ugMap.GPUs && ugMap.GPUs.group) || {}, uGpu = (ugMap.GPUs && ugMap.GPUs.user) || {};
-  const pts = d.points || {}, gp = pts.group || {}, up = pts.user || {};
+  const gGpu = (ugMap.GPUs && ugMap.GPUs.group) || {};
+  const gp = d.points?.group || {};
 
-  const free1w = g1.free_gpus ?? 0, wait1w = g1.jobs_waiting ?? 0, req1w = g1.req_gpus ?? 0;
-  const gRun = gGpu.run ?? 0, gLim = gGpu.limit ?? 6, gHeadroom = Math.max(0, gLim - gRun);
+  const free1w = g1.free_gpus, wait1w = g1.jobs_waiting;
+  const gRun = gGpu.run, gLim = gGpu.limit;
+  const gHeadroom = Number.isFinite(gRun) && Number.isFinite(gLim) ? Math.max(0, gLim - gRun) : null;
   const runs = d.chou_runs || [];
   const activeRuns = runs.filter(r => r.live_job || r.stage_train_status === 'running');
 
-  let qVerdict = free1w > 0
-    ? `1周内物理空闲 ${free1w} 卡，队列有 ${wait1w} 作业申请 ${req1w} 卡（因节点碎片/预留不等于全可秒排，短作业可吃回填）`
-    : '当前 1 周内无空闲 A100，预计排队较久';
-  if (gHeadroom === 0) qVerdict = `ew6 组已满并发 (${gRun}/${gLim} 卡)，新任务需先等组内释放卡位`;
+  let qVerdict = free1w == null ? '暂无队列数据' : free1w > 0 ? '有空闲卡，开工仍取决于任务规模' : '一周内池暂无空闲 A100';
+  if (gHeadroom === 0) qVerdict = `组 GPU 已满 (${gRun}/${gLim})`;
 
   const hero = $('heroBar');
   hero.style.display = 'flex';
@@ -2032,12 +2111,9 @@ function render(d) {
     const it = (r.items || []).find(x => x.status === 'RUNNING');
     const ep = it && it.last_log ? ` (${it.item_id} Ep ${it.last_log.epoch}${it.total_passes ? '/' + it.total_passes : ''})` : '';
     return `${r.run_id}${ep}`;
-  }).join('；') : '当前无在跑 chou 任务';
-  hero.innerHTML = `<div><b>排队结论：</b>${esc(qVerdict)}；<b>${esc(d.user_group_stat?.group||'ew6')}</b> 组还可并跑 <b>${gHeadroom}</b> 卡</div>
-                    <div class="pill info">chou 在跑：${esc(curSummary)}</div>`;
-
-  const dotsCount = Math.min(16, Math.max(8, free1w + req1w));
-  const dotsHtml = Array.from({length: dotsCount}, (_, i) => `<span class="slot-dot ${i < free1w ? '' : 'dim'}" title="${i < free1w ? '空闲 A100 卡槽' : '队列占用/申请中'}"></span>`).join('');
+  }).join('；') : '暂无运行中的 V4 实验';
+  hero.innerHTML = `<div><b>排队结论：</b>${esc(qVerdict)} · 组可再用 <b>${gHeadroom ?? '-'}</b> A100</div>
+                    <div class="pill info">在跑：${esc(curSummary)}</div>`;
 
   const ringPct = gLim > 0 ? Math.min(1, gRun / gLim) : 0;
   const circ = 2 * Math.PI * 24;
@@ -2051,21 +2127,20 @@ function render(d) {
 
   $('kpiGrid').innerHTML = `
     <div class="card">
-      <div class="kpi-top"><span class="kpi-title">A100 空闲卡数 (Queue H)</span><span class="pill ok">1周内</span></div>
-      <div class="kpi-val" style="color:var(--ok)">${g1.free_gpus ?? '-'} <span style="font-size:14px;font-weight:500;color:var(--muted)">张空闲</span></div>
-      <div class="kpi-sub">空闲 CPU ${fmtNum(g1.free_cores)} 核 · 超 1 周空闲 ${g2.free_gpus ?? '-'} 卡</div>
-      <div class="slots">${dotsHtml}</div>
+      <div class="kpi-top"><span class="kpi-title">空闲 A100</span><span class="pill" title="申请时长不超过 7 天">≤7d</span></div>
+      <div class="kpi-val" style="color:var(--ok)">${g1.free_gpus ?? '-'}</div>
+      <div class="kpi-sub">长作业池空闲 ${g2.free_gpus ?? '-'} · Queue H</div>
     </div>
     <div class="card">
-      <div class="kpi-top"><span class="kpi-title">A100 排队队列 (Queue H)</span><span class="pill ${wait1w>10?'warn':'info'}">${wait1w} 作业等待</span></div>
-      <div class="kpi-val">${g1.req_gpus ?? '-'} <span style="font-size:14px;font-weight:500;color:var(--muted)">张申请中</span></div>
-      <div class="kpi-sub">1 周内申请 ${fmtNum(g1.req_cores)} 核 · 超 1 周排队 ${g2.jobs_waiting ?? 0} 作业</div>
+      <div class="kpi-top"><span class="kpi-title">排队作业</span><span class="pill ${wait1w>10?'warn':'info'}" title="申请时长不超过 7 天">≤7d</span></div>
+      <div class="kpi-val">${g1.jobs_waiting ?? '-'}</div>
+      <div class="kpi-sub">申请 ${g1.req_gpus ?? '-'} 张 A100 · 长作业池 ${g2.jobs_waiting ?? '-'}</div>
     </div>
     <div class="card donut-wrap">
       <div>
-        <div class="kpi-title">${esc(d.user_group_stat?.group||'ew6')} 组 GPU 并发</div>
-        <div class="kpi-val">${gRun} <span style="font-size:16px;color:var(--muted)">/ ${gLim}</span></div>
-        <div class="kpi-sub">组排队 ${gGpu.queue ?? 0} · sm2 占 ${uGpu.run ?? 0} 卡 (chou ${s.chou_running_jobs ?? 0})</div>
+        <div class="kpi-title">${esc(d.user_group_stat?.group || '组')} GPU 并发</div>
+        <div class="kpi-val">${gRun ?? '-'} <span style="font-size:16px;color:var(--muted)">/ ${gLim ?? '-'}</span></div>
+        <div class="kpi-sub">组排队 ${gGpu.queue ?? '-'} · 本人运行 ${s.chou_running_jobs ?? '-'}</div>
       </div>
       <div class="donut">
         <svg width="64" height="64" viewBox="0 0 64 64">
@@ -2075,9 +2150,9 @@ function render(d) {
       </div>
     </div>
     <div class="card">
-      <div class="kpi-top"><span class="kpi-title">${esc(gp.name||'ew6')} 点数余量 (showlim -c)</span><span class="pill">${(pctEnded+pctRun).toFixed(1)}% 已用</span></div>
+      <div class="kpi-top"><span class="kpi-title">组剩余点数</span><span class="pill">${gp.limit == null ? '-' : `${(pctEnded+pctRun).toFixed(1)}% 已用`}</span></div>
       <div class="kpi-val">${fmtNum(gp.remaining)} <span style="font-size:13px;color:var(--muted);font-weight:500">剩余 pt</span></div>
-      <div class="kpi-sub">组用 ${fmtNum(gp.total_use)} / ${fmtNum(gp.limit)} · sm2 ${fmtNum(up.total_use)} (运行 ${fmtNum(up.running_job)})</div>
+      <div class="kpi-sub">组用 ${fmtNum(gp.total_use)} / ${fmtNum(gp.limit)}</div>
       <div class="bar"><div class="bar-seg-a" style="width:${pctEnded.toFixed(2)}%"></div><div class="bar-seg-b" style="width:${pctRun.toFixed(2)}%"></div></div>
     </div>`;
 
@@ -2211,12 +2286,14 @@ def make_handler(state: MonitorState):
                         page = page.replace("chou", "own").replace("sm2", "account").replace("ew6", "group")
                         page = page.replace("d.own_runs", "d.chou_runs")
                     page = page.replace("'实时在线'", "'后台快照'").replace('立即刷新', '刷新快照')
+                    page = page.replace("本地刷新", "采集时间")
                     page = page.replace("pull(false);", "pull(false); setInterval(() => pull(false), 30000);")
                     page = page.replace("() => pull(true)", "() => pull(false)")
                     page = page.replace("$('autoSec').onchange = setupTimer;", "$('autoSec').closest('label').style.display = 'none';")
                     page = page.replace("<script>", "<script>\ndocument.querySelectorAll('[data-local-only]').forEach(el => el.remove());", 1)
                 if 'id="dataAge"' in page:
                     page = page.replace("<script>", "<script>\n" + DASHBOARD_UI, 1)
+                    page = dashboard_layout(page, parse_qs(parsed.query).get("lang") == ["en"])
                 self._send(HTTPStatus.OK, "text/html; charset=utf-8", page.encode("utf-8"))
                 return
             if parsed.path == "/api/status":
@@ -2258,6 +2335,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ssh-port", type=int, default=DEFAULT_SSH_PORT)
     parser.add_argument("--user", default=DEFAULT_USER)
     parser.add_argument("--key", type=Path, help="Path to IMS SSH private key")
+    parser.add_argument("--config", type=Path, default=os.environ.get("IMS_DASHBOARD_PROFILE"),
+                        help="Load a personal IMS profile (see dashboard/profile.example.json)")
     parser.add_argument("--remote-root", default=REMOTE_BOUNDARY)
     parser.add_argument("--min-interval", type=float, default=DEFAULT_MIN_INTERVAL,
                         help="Minimum cooldown seconds between live SSH queries in web/watch mode")
@@ -2279,20 +2358,25 @@ def main(argv: list[str] | None = None) -> int:
         serve_web(SnapshotState(args.snapshot, full=args.full_snapshot), port=args.port or DEFAULT_WEB_PORT,
                   open_browser=args.open, explicit_port=args.port is not None)
         return 0
-    key_path = resolve_ssh_key(args.key)
+    if args.config:
+        try:
+            connection = load_profile(args.config)
+        except (OSError, KeyError, TypeError, AttributeError, ValueError) as exc:
+            parser.error(f"Invalid IMS profile: {exc}")
+        interval = connection.pop("interval")
+    else:
+        connection = dict(host=args.host, port=args.ssh_port, user=args.user, key_path=resolve_ssh_key(args.key),
+                          remote_root=args.remote_root, personal=False)
+        interval = args.interval
     if args.collect:
-        if args.web or args.watch or not 60 <= args.interval <= 120:
+        if args.web or args.watch or not 60 <= interval <= 120:
             parser.error("--collect needs interval 60..120 and cannot serve/watch")
-        delay = args.interval
+        delay = interval
         while True:
-            ok = collect_once(args.collect, full=args.full_snapshot, host=args.host, port=args.ssh_port, user=args.user,
-                              key_path=key_path, remote_root=args.remote_root)
-            delay = args.interval if ok else min(900, delay * 2)
+            ok = collect_once(args.collect, full=args.full_snapshot, **connection)
+            delay = interval if ok else min(900, delay * 2)
             time.sleep(delay)
-    state = MonitorState(
-        host=args.host, port=args.ssh_port, user=args.user,
-        key_path=key_path, remote_root=args.remote_root, min_interval=args.min_interval,
-    )
+    state = MonitorState(min_interval=args.min_interval, **connection)
 
     if args.web:
         serve_web(state, port=args.port or DEFAULT_WEB_PORT, open_browser=args.open, explicit_port=args.port is not None)
@@ -2302,8 +2386,7 @@ def main(argv: list[str] | None = None) -> int:
         interval = max(state.min_interval, float(args.watch))
         try:
             while True:
-                snap = fetch_snapshot(host=args.host, port=args.ssh_port, user=args.user,
-                                      key_path=key_path, remote_root=args.remote_root)
+                snap = fetch_snapshot(**connection)
                 os.system("cls" if os.name == "nt" else "clear")
                 print(render_terminal(snap))
                 print(f"\n(Refreshing every {interval:.0f}s; Ctrl+C to stop)")
@@ -2311,8 +2394,7 @@ def main(argv: list[str] | None = None) -> int:
         except KeyboardInterrupt:
             return 0
 
-    snap = fetch_snapshot(host=args.host, port=args.ssh_port, user=args.user,
-                          key_path=key_path, remote_root=args.remote_root)
+    snap = fetch_snapshot(**connection)
     if args.json:
         print(json.dumps(snap, indent=2, ensure_ascii=False))
     else:

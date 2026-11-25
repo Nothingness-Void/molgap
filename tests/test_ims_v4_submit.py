@@ -402,3 +402,18 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     monkeypatch.setattr(dashboard.subprocess, "run", timeout)
     assert not dashboard.collect_once(full_path, full=True, **conn)
     assert reader.get()["stale"] and reader.get()["jobs"] == result["jobs"]
+
+    monkeypatch.setattr(dashboard.subprocess, "run", ssh)
+    (tmp_path / "test-key").touch()
+    profile_file = tmp_path / "profile.json"
+    folder = "/lustre/home/users/team/account-a"
+    profile_file.write_text(json.dumps({"user": "team", "remote_root": folder, "key": "test-key"}))
+    profile = dashboard.load_profile(profile_file)
+    assert profile.pop("interval") == 90 and profile["key_path"] == tmp_path / "test-key"
+    sections["JOBINFO_W"] += f"\nH 123 mine Run {folder}/run\nH 456 sibling Que {folder}-other/run"
+    personal = dashboard.fetch_snapshot(**profile)
+    assert [job["job_id"] for job in personal["jobs"]] == ["123"]
+    assert "jobinfo_w" not in personal["raw"] and personal["points"]["group"]
+    assert f'"{folder}"|"{folder}"/*'.encode() in calls[-1]["input"]
+    with pytest.raises(ValueError):
+        dashboard.fetch_snapshot(**{**profile, "remote_root": "/lustre/home/users/other/run"})
