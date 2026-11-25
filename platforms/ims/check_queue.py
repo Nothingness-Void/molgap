@@ -1021,8 +1021,9 @@ class SnapshotState:
     """HTTP reader has no connection settings or collection capability."""
     min_interval = 90
 
-    def __init__(self, path: Path, stale_after: float = 240):
+    def __init__(self, path: Path, stale_after: float = 240, *, full: bool = False):
         self.path, self.stale_after = path, stale_after
+        self.full = full
 
     def get(self, *, force=False) -> dict:
         try:
@@ -1031,6 +1032,15 @@ class SnapshotState:
             failure = envelope.get("failure")
             if failure not in {None, "ssh_timeout", "ssh", "partial", "scheduler", "parse", "collector"}:
                 raise ValueError("invalid failure")
+            if self.full:
+                if envelope.get("full") is not True:
+                    raise ValueError("expected full snapshot")
+                stamp = snap.get("fetched_at_epoch") if isinstance(snap, dict) else None
+                if type(stamp) not in (float, int) or not math.isfinite(stamp) or stamp > time.time() + 60:
+                    return {"stale": True, "error": failure or "尚无采集数据"}
+                stale = bool(failure) or time.time() - stamp > self.stale_after
+                return {**snap, "available": True, "stale": stale,
+                        "error": failure or ("后台采集超时" if stale else snap.get("error"))}
             if snap is None:
                 return {"public": True, "available": False, "stale": True, "failure": failure or "never_succeeded"}
             if snap.get("public") is not True or not isinstance(snap["chou_runs"], list):
@@ -1043,24 +1053,26 @@ class SnapshotState:
             return {**clean, "available": True, "stale": bool(failure) or time.time() - stamp > self.stale_after,
                     "failure": failure or ("collector_overdue" if time.time() - stamp > self.stale_after else None), "last_success_epoch": stamp}
         except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            if self.full:
+                return {"stale": True, "error": "尚无可读快照，等待后台采集"}
             return {"public": True, "available": False, "stale": True, "failure": "snapshot_unreadable"}
 
 
-def collect_once(path: Path, **connection) -> bool:
-    prior = SnapshotState(path).get()
+def collect_once(path: Path, *, full: bool = False, **connection) -> bool:
+    prior = SnapshotState(path, full=full).get()
     last = prior if prior.get("available") else None
     try:
         raw = fetch_snapshot(**connection)
         if raw["error"]:
             raise RuntimeError(raw["error"])
-        snap = public_snapshot(raw)
+        snap = raw if full else public_snapshot(raw)
         failure = None
     except subprocess.TimeoutExpired:
         snap, failure = last, "ssh_timeout"
     except Exception as exc:
         category = str(exc).split(":", 1)[0]
         snap, failure = last, category if category in {"partial", "scheduler", "parse"} else "ssh"
-    atomic_snapshot(path, {"snapshot": snap, "failure": failure})
+    atomic_snapshot(path, {"snapshot": snap, "failure": failure, "full": full})
     return failure is None
 
 
@@ -2194,10 +2206,15 @@ def make_handler(state: MonitorState):
             if parsed.path in {"/", "/index.html"}:
                 page = getattr(state, "page", HTML_PAGE)
                 if isinstance(state, SnapshotState):
-                    # Keep the same page; replace account labels consistently in JS and DOM.
-                    page = page.replace("chou", "own").replace("sm2", "account").replace("ew6", "group")
-                    page = page.replace("d.own_runs", "d.chou_runs")
+                    if not state.full:
+                        # Keep the same page; replace account labels consistently in JS and DOM.
+                        page = page.replace("chou", "own").replace("sm2", "account").replace("ew6", "group")
+                        page = page.replace("d.own_runs", "d.chou_runs")
+                    page = page.replace("'实时在线'", "'后台快照'").replace('立即刷新', '刷新快照')
                     page = page.replace("pull(false);", "pull(false); setInterval(() => pull(false), 30000);")
+                    page = page.replace("() => pull(true)", "() => pull(false)")
+                    page = page.replace("$('autoSec').onchange = setupTimer;", "$('autoSec').closest('label').style.display = 'none';")
+                    page = page.replace("<script>", "<script>\ndocument.querySelectorAll('[data-local-only]').forEach(el => el.remove());", 1)
                 if 'id="dataAge"' in page:
                     page = page.replace("<script>", "<script>\n" + DASHBOARD_UI, 1)
                 self._send(HTTPStatus.OK, "text/html; charset=utf-8", page.encode("utf-8"))
@@ -2250,15 +2267,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--web", action="store_true", help="Start local 127.0.0.1 web dashboard")
     parser.add_argument("--port", type=int, default=None, help=f"Web port (default {DEFAULT_WEB_PORT})")
     parser.add_argument("--open", action="store_true", help="Open browser automatically with --web")
-    parser.add_argument("--snapshot", type=Path, help="Serve only sanitized snapshot; never SSH")
-    parser.add_argument("--collect", type=Path, help="Collect sanitized snapshots independently of HTTP")
+    parser.add_argument("--snapshot", type=Path, help="Serve a snapshot; never SSH")
+    parser.add_argument("--collect", type=Path, help="Collect snapshots independently of HTTP")
+    parser.add_argument("--full-snapshot", action="store_true", help="Use the full dashboard data in collect/snapshot mode")
     parser.add_argument("--interval", type=float, default=90, help="Collector interval 60..120 seconds; failure backoff up to 900")
     args = parser.parse_args(argv)
 
     if args.snapshot:
         if not args.web or args.collect:
             parser.error("--snapshot requires --web and cannot collect")
-        serve_web(SnapshotState(args.snapshot), port=args.port or DEFAULT_WEB_PORT,
+        serve_web(SnapshotState(args.snapshot, full=args.full_snapshot), port=args.port or DEFAULT_WEB_PORT,
                   open_browser=args.open, explicit_port=args.port is not None)
         return 0
     key_path = resolve_ssh_key(args.key)
@@ -2267,7 +2285,7 @@ def main(argv: list[str] | None = None) -> int:
             parser.error("--collect needs interval 60..120 and cannot serve/watch")
         delay = args.interval
         while True:
-            ok = collect_once(args.collect, host=args.host, port=args.ssh_port, user=args.user,
+            ok = collect_once(args.collect, full=args.full_snapshot, host=args.host, port=args.ssh_port, user=args.user,
                               key_path=key_path, remote_root=args.remote_root)
             delay = args.interval if ok else min(900, delay * 2)
             time.sleep(delay)

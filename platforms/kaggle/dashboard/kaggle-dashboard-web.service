@@ -4,7 +4,7 @@ Description=Read Kaggle dashboard snapshots
 [Service]
 User=kaggle-dashboard-web
 Group=kaggle-dashboard
-ExecStart=/usr/bin/python3 -S /opt/molgap/platforms/kaggle/dashboard.py web /var/lib/kaggle-dashboard/status.json
+ExecStart=/usr/bin/python3 -S /opt/molgap/platforms/kaggle/dashboard.py web /var/lib/kaggle-dashboard/status.json --full-snapshot
 Restart=on-failure
 RestartSec=10
 ProtectSystem=strict

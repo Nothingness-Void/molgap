@@ -390,3 +390,15 @@ def test_dashboard_snapshot_workflow(tmp_path, monkeypatch):
     with pytest.raises(ValueError):
         dashboard.fetch_snapshot(**{**conn, "remote_root": dashboard.REMOTE_BOUNDARY + "-other"})
     assert len(calls) == before
+    sections["JOBINFO_C"] += "\nH 123 example Run 16 sm2/ew6 1:00 node-name"
+    full_path = tmp_path / "full.json"
+    assert dashboard.collect_once(full_path, full=True, **conn)
+    reader = dashboard.SnapshotState(full_path, full=True)
+    before = len(calls)
+    result = reader.get(force=True)
+    assert result["jobs"][0]["name"] == "example"
+    assert "node-name" in result["raw"]["jobinfo_c"]
+    assert len(calls) == before
+    monkeypatch.setattr(dashboard.subprocess, "run", timeout)
+    assert not dashboard.collect_once(full_path, full=True, **conn)
+    assert reader.get()["stale"] and reader.get()["jobs"] == result["jobs"]

@@ -84,3 +84,17 @@ def test_dashboard_snapshot_and_http(tmp_path, monkeypatch):
     monkeypatch.setattr(check_quota, "fetch_account_quota", failed)
     dashboard.collect(path, accounts, [])
     assert state.get()["stale"] and state.get()["accounts"][0]["remaining_hours"] == 12
+
+    kernel = {"run": "experiment-name", "kernel": "owner/experiment", "arms": [{"completed_passes": 8}]}
+    live = {"fetched_at_epoch": 1760000000, "summary": {"accounts_ok": 1}, "kernels": [kernel]}
+    monkeypatch.setattr(dashboard, "fetch_live_snapshot", lambda **kwargs: live)
+    dashboard.collect_full(path)
+    reader = dashboard.SnapshotState(path, full=True)
+    assert reader.get(force=True)["kernels"] == [kernel]
+
+    def full_failed(**kwargs):
+        raise TimeoutError()
+
+    monkeypatch.setattr(dashboard, "fetch_live_snapshot", full_failed)
+    dashboard.collect_full(path)
+    assert reader.get()["error"] == "collector" and reader.get()["kernels"] == [kernel]

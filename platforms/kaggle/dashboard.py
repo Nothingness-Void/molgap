@@ -13,7 +13,7 @@ import webbrowser
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(Path(__file__).resolve().parent), str(ROOT / "platforms/ims")]
-from check_queue import atomic_snapshot, make_handler, ThreadingHTTPServer  # noqa: E402
+from check_queue import SnapshotState, atomic_snapshot, make_handler, ThreadingHTTPServer  # noqa: E402
 
 JST = timezone(timedelta(hours=9))
 
@@ -310,6 +310,18 @@ def fetch_live_snapshot(
     }
 
 
+def collect_full(path: Path, **settings) -> None:
+    try:
+        data = fetch_live_snapshot(**settings)
+        if not data["summary"]["accounts_ok"]:
+            raise RuntimeError("Kaggle quota unavailable")
+        atomic_snapshot(path, {"full": True, "snapshot": data, "failure": None})
+    except Exception:
+        prior = SnapshotState(path, 300, full=True).get()
+        atomic_snapshot(path, {"full": True, "snapshot": prior if prior.get("available") else None,
+                               "failure": "collector"})
+
+
 LIVE_PAGE = r"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -422,7 +434,7 @@ LIVE_PAGE = r"""<!doctype html>
       <div id="dataAge" style="font-size:12px;color:var(--muted);margin-top:4px">尚无快照</div>
     </div>
     <div class="controls">
-      <a class="btn-link" href="http://127.0.0.1:8765/" target="_blank" rel="noopener">前往 IMS 看板</a>
+      <a class="btn-link" href="http://127.0.0.1:8765/" target="_blank" rel="noopener" data-local-only>前往 IMS 看板</a>
       <button id="themeBtn" title="切换深浅色主题">☀️ 浅色</button>
       <label style="display:inline-flex;align-items:center;gap:6px">自动刷新
         <select id="autoSec">
@@ -738,6 +750,12 @@ function render(d) {
   pill.className = 'pill ' + (d.error ? 'warn' : 'ok');
   pill.innerHTML = `<span class="pulse"></span>${d.stale ? '显示旧快照' : d.error ? '读取失败' : d.cached ? '缓存命中' : '实时在线'}`;
   $('metaLine').textContent = `本地刷新 ${d.fetched_at_jst || '-'} · 接口耗时 ${d.latency_ms ?? '-'} ms · 扫描 D:/molgap-artifacts/runs`;
+  if (!d.fetched_at_epoch && d.error) {
+    $('quotaGrid').textContent = '暂无配额数据';
+    $('kernelCards').textContent = '暂无作业数据';
+    renderAllTable(d);
+    return;
+  }
 
   const s = d.summary || {};
   const hasActive = (s.running_kernels || 0) + (s.queued_kernels || 0) > 0;
@@ -887,17 +905,28 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--attempt-id", default="v1")
     p.add_argument("--read-timeout", type=float, default=2.5)
     p.add_argument("--min-interval", type=float, default=20.0)
+    p.add_argument("--full-snapshot", action="store_true", help="Use live dashboard data in collect/web mode")
     args = p.parse_args(argv)
 
     if args.mode in {"web", "collect"} and args.snapshot is None:
         p.error(f"{args.mode} requires snapshot path")
     if args.mode == "web":
-        with ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(Reader(args.snapshot))) as server:
+        if args.full_snapshot:
+            reader = SnapshotState(args.snapshot, 300, full=True)
+            reader.page = LiveState.page
+        else:
+            reader = Reader(args.snapshot)
+        with ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(reader)) as server:
             server.serve_forever()
     elif args.mode == "collect":
         if not args.credentials:
             p.error("collect requires at least one --credentials")
-        collect(args.snapshot, [(f"Account {i}", v) for i, v in enumerate(args.credentials, 1)], args.kernel)
+        if args.full_snapshot:
+            collect_full(args.snapshot, key_dir=args.key_dir or Path("."),
+                         cred_overrides=[str(p) for p in args.credentials], explicit_targets=args.kernel or None,
+                         attempt_id=args.attempt_id, scan_limit=args.scan_limit, read_timeout=args.read_timeout)
+        else:
+            collect(args.snapshot, [(f"Account {i}", v) for i, v in enumerate(args.credentials, 1)], args.kernel)
     else:
         from check_quota import DEFAULT_KEY_DIR
 

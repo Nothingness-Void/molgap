@@ -35,10 +35,10 @@ Who: M = machine does it, H = a person (or the reviewing agent) decides.
 | Research | `cli catalog` | M | addon catalog | stdout (usable addons) | the planner |
 | Plan | `cli freeze-input` | M | committed `experiment.json`, `protocol.md`, `decision.md` | frozen inputs under the artifact root, bound to HEAD | the submitter |
 | Plan | `cli check-workflow` | M | frozen spec, RML policy | stdout (blockers) | the planner |
-| Observe | `platforms/kaggle/check_quota.py` / `platforms/kaggle/dashboard.py live` / [snapshot dashboard](../../platforms/kaggle/dashboard/README.md) | M | accounts and bound kernels | stdout or read-only HTTP | the viewer |
+| Observe | `platforms/kaggle/check_quota.py` / `platforms/kaggle/dashboard.py live` / [collect and web with `--full-snapshot`](../../platforms/kaggle/dashboard/README.md) | M | accounts and bound kernels | stdout or read-only HTTP | the viewer |
 | Propose | `platforms/kaggle/submit_workflow.py` | M | frozen inputs, `pre_submit_review.json` | package, journal, prospective record | `retrieve_family_outputs.py` |
 | Propose | `platforms/ims/v4_submit/submit_from_windows.py` | M | run spec, payload | IMS job, payload store | the same script with `--retrieve-to` |
-| Observe | `platforms/ims/check_queue.py --collect` / `--web --snapshot` | M | scheduler and authorized V4 records / sanitized snapshot | atomic snapshot / read-only HTTP | [dashboard](../../platforms/ims/dashboard/README.md) |
+| Observe | `platforms/ims/check_queue.py --collect` / `--web --snapshot`, both with `--full-snapshot` for the server | M | scheduler and authorized V4 records / snapshot | atomic snapshot / read-only HTTP | [dashboard](../../platforms/ims/dashboard/README.md) |
 | Accept | `platforms/kaggle/check_logs.py` | M | live kernel log | stdout (progress) | the watcher |
 | Accept | `platforms/kaggle/retrieve_family_outputs.py` | M | receipt, remote outputs | retrieved arm files, `execution_root` | `accept_run.py` |
 | Accept | `rml analyze` | M | saved predictions | analysis files | the decision |
