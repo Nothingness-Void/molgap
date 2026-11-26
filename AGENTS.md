@@ -67,6 +67,8 @@ experiment contract / decision / acceptance -> canonical V5 / RML records ->
 - **Infrastructure budget & new experiments:** before an infrastructure commit, run
   `.venv\Scripts\python.exe platforms/local/infra_budget.py` (limits in [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json))
   and `tests/test_documentation_navigation.py`. Raise budget limits only with user approval (bug fixes <= 20 net lines preapproved).
+  For agent-facing docs, skills or CLI infrastructure changes, also run `platforms/local/agent_infra_bench.py`
+  (`--base HEAD --candidate WORKTREE --suite full`) and require an `IMPROVED` gate verdict (exit 0: zero regression + measurable quality or efficiency gain).
   A new experiment adds files under `experiments/<q>/`, one recipe/spec, and at most one self-contained addon module + catalog entry;
   it does not edit shared trainers, verifiers, `.gitattributes` or tests.
 

@@ -21,6 +21,7 @@ for workflow order read [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md) and
 | `platforms/local/run.py` | Selected-checkout launcher (uses worktree `src/` with primary `.venv`) |
 | `platforms/local/accept_run.py` | Local acceptance & `--closure-input` wrapper over `accept-workflow` |
 | `platforms/local/infra_budget.py` | Standalone infra size check against `docs/operations/INFRA_BUDGET.json` |
+| `platforms/local/agent_infra_bench.py` | Full 12-task agent infra A/B benchmark & `IMPROVED` gate (`--base` vs `--candidate`) |
 | `src/molgap/experiment_cli.py`, `src/molgap/experiment_input.py`, `src/molgap/experiment_run.py`, `src/molgap/local_runtime.py` | Unified local CLI ([EXPERIMENT_CLI.md](docs/operations/EXPERIMENT_CLI.md)), human-input freeze/compile, frozen-run lifecycle |
 | `src/molgap/experiment_workflow.py`, `src/molgap/kaggle_workflow.py`, `src/molgap/kaggle_submission.py` | Platform-neutral preparation, Kaggle release binding, journaled submission (`PHASE_NEXT`) |
 | `platforms/kaggle/submit_workflow.py`, `platforms/kaggle/retrieve_family_outputs.py` | Kaggle submission & exact-version selective retrieval (skills own routine commands) |
