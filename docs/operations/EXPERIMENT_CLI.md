@@ -81,9 +81,7 @@ override resolved pins with hand-built paths):
 - **`diagnose`:** directory mode (`--control` / `--candidate`) defaults to 10,000 bootstrap samples and descriptive
   thresholds; run mode (`--run-id`) defaults to 0 bootstrap samples and applies the frozen comparison policy. Missing
   cost stays `null`; shift/oracle-blend numbers are post-hoc descriptions, never promotion gates.
-- **`draft-closure`:** `--output-dir` must sit under `experiments/<experiment>/` (default `audit_closure`; root-level
-  paths fail with `FINALIZATION_FAILED` because `.gitattributes` preserves exact bytes under `experiments/`). Outputs are immutable;
-  rerunning with changed inputs requires a new `--output-dir`.
+- **`draft-closure`:** `--output-dir` must sit under `experiments/<experiment>/` (default `audit_closure`; repo-root paths fail with `FINALIZATION_FAILED` and exit `2` because `.gitattributes` preserves exact bytes under `experiments/`). Outputs are immutable; rerunning with changed inputs requires a new `--output-dir`.
 - **`prepare-resume`:** retains original source, config, prospective records, and producer context without registering a
   new attempt. Authorized infra-only `recovery_repair` overlays only reviewed transport/IO/runner paths, never editing
   the frozen archive or training semantics.
@@ -96,8 +94,8 @@ override resolved pins with hand-built paths):
   bytes). Older frozen runs lacking it stay mechanically inspectable, while strict qualification returns `BLOCKED`
   unless `--strict-inputs` binds a reviewed `molgap-target-transform-asset-v1`.
 - Same-run comparison reads declared `purpose` and `changed_mechanism` from the pinned input (`initialization_comparison`
-  allows only initial-state differences; legacy `single_module_ablation` maps to mechanism comparison). Environment-only
-  drift allows explicit `INCONCLUSIVE` closure, never strict comparison or replay-pool eligibility.
+  allows only initial-state differences; legacy `single_module_ablation` maps to mechanism comparison). Sole runtime-scope
+  drift allows only explicit `INCONCLUSIVE` closure (never `POSITIVE_UNDER_CONTRACT`, multi-field drift, strict comparison, or replay-pool eligibility).
 - Physical cost attribution uses either `--execution-root` + `--physical-observation PATH` (one job/version) or
   `--physical-runs PATH` (multiple jobs/failed attempts, counted once each); the two are mutually exclusive.
 - Retained Spec/recipe readers validate retired metadata independently of the current Addon catalog without importing
@@ -117,8 +115,7 @@ Spec and digest-checked training contracts:
 2. **Reviewed legacy packages (pre-recorder):** if `family_training_runner.py` and `family_training_data.py` match
    reviewed legacy blobs, the pinned dataset manifest under `data_root` has all protected-read flags false, and
    `kernel-metadata.json` mounts only the source dataset + fixed mirror, states are set to `structural_untouched`.
-3. **Otherwise:** states stay `unknown` (`recorder_expected_record_missing` when a recorder package lacks its record, or
-   for local-training drafts without `data_root`). Supply `--protected-role-use ROLE=STATE` only from observed facts.
+3. **Otherwise:** states stay `unknown` (blocking closure unless explicitly audited via `--protected-role-use ROLE=STATE` from observed facts). When a resumed run starts from a checkpoint without earlier invocation logs, `data_open_evidence` records `unobserved_earlier_invocation=true` (or `recorder_expected_record_missing` when a recorder package lacks its record).
 
 ### Internal / plumbing commands
 

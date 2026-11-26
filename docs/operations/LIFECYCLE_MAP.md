@@ -48,7 +48,7 @@ Who: M = machine does it, H = a person (or the reviewing agent) decides.
 | Archive | `rml check --frozen` | M | all RML records | stdout (pass or fail) | the committer |
 | Archive | `rml doctor` | M | derived indexes | `completeness_report.json` | the maintainer |
 | Archive | `cli import-closure` | M | experiment branch | evidence paths on the parent branch | the next planner |
-| Archive | `rml terminal-rebuild` | M | trajectory | derived RML (recovery only) | `rml check` |
+| Archive | `rml terminal-rebuild --trajectory PATH` | M | trajectory | derived RML (recovery only) | `rml check` |
 
 Stage 5 feeds stage 1: closure regenerates
 [families.md](../../research_memory/derived/families.md), so the next round starts

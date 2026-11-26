@@ -61,12 +61,16 @@ def run_model_smoke_tests(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--allow-cpu", action="store_true", help="Permit a local CPU-only check.")
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="Exits 0 only when all enabled checks pass (1 otherwise). "
+               "--skip-schnet does not qualify SchNet; --allow-cpu does not prove DCU execution.",
+    )
+    parser.add_argument("--allow-cpu", action="store_true", help="Permit a local CPU-only check (exits 0 if enabled model checks pass; not DCU evidence).")
     parser.add_argument(
         "--skip-schnet",
         action="store_true",
-        help="Validate the 2D GPS path only when torch-cluster is unavailable.",
+        help="Validate the 2D GPS path only when torch-cluster is unavailable (does not qualify SchNet).",
     )
     parser.add_argument("--output", type=Path, default=None, help="Optional JSON report path.")
     return parser.parse_args()

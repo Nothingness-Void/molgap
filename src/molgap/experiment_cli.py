@@ -119,7 +119,7 @@ def _parser() -> argparse.ArgumentParser:
     closure = commands.add_parser("draft-closure", help="Draft closure_input.draft.json, facts and role audit under experiments/<exp>/")
     for flag in ("--profile", "--repo-root"):
         closure.add_argument(flag, required=True, type=_local)
-    closure.add_argument("--output-dir", type=_local, help="Must be under experiments/<experiment>/ (default: audit_closure)")
+    closure.add_argument("--output-dir", type=_local, help="Must be under experiments/<experiment>/ (default: audit_closure; repo-root path exits 2)")
     closure.add_argument("--run-id", required=True)
     closure.add_argument("--attempt-id", required=True)
     closure.add_argument("--retrieved-root", type=_local)

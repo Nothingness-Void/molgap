@@ -303,7 +303,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
     parser.add_argument("--arm", action="append", default=[],
                         help="Retrieve only this arm (repeatable); a run that mixes paused and finished arms needs one call per kind. Skips the run-level execution retention")
     parser.add_argument("--paused", action="store_true",
-                        help="Retrieve a STOP_FOR_COST run's paused files; digests are observed at download")
+                        help="Retrieve a STOP_FOR_COST run's paused files (unstrict only, no bulk fallback; checks checkpoint_sha256 with digest basis observed_at_download, retains data_open_provenance.json, not scientific acceptance)")
     parser.add_argument("--execute", action="store_true",
                         help="Download missing manifests, arm outputs and execution costs; default is local planning")
     stage = "arguments"

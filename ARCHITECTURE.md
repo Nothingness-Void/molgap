@@ -9,7 +9,7 @@ for workflow order read [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md) and
 ## Core Boundaries
 
 - Reusable code lives in `src/molgap/`; `production/*/scripts/`, `experiments/*/`, and `platforms/local/` wrappers stay thin.
-- Evidence lives in `experiments/` and `platforms/_records/` and never supplies runtime logic.
+- Evidence lives in `experiments/` and `platforms/_records/` and never supplies runtime logic (never treat `experiments/_closed/` scripts as active CLI behavior).
 - Model assets live in `models/` (authoritative registry in `src/molgap/constants.py`); archived code lives on `archive` branch.
 - Active CLIs resolve paths from `constants.py` (`ACQUIRE_DIR`..`DATABASE_DIR`), never `Path(__file__).parents[n]` (`tests/test_repository_layout.py`).
 
@@ -23,9 +23,10 @@ for workflow order read [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md) and
 | `platforms/local/infra_budget.py` | Standalone infra size check against `docs/operations/INFRA_BUDGET.json` |
 | `platforms/local/agent_infra_bench.py` | Full 12-task agent infra A/B benchmark & `IMPROVED` gate (`--base` vs `--candidate`) |
 | `src/molgap/experiment_cli.py`, `src/molgap/experiment_input.py`, `src/molgap/experiment_run.py`, `src/molgap/local_runtime.py` | Unified local CLI ([EXPERIMENT_CLI.md](docs/operations/EXPERIMENT_CLI.md)), human-input freeze/compile, frozen-run lifecycle |
-| `src/molgap/experiment_workflow.py`, `src/molgap/kaggle_workflow.py`, `src/molgap/kaggle_submission.py` | Platform-neutral preparation, Kaggle release binding, journaled submission (`PHASE_NEXT`) |
-| `platforms/kaggle/submit_workflow.py`, `platforms/kaggle/retrieve_family_outputs.py` | Kaggle submission & exact-version selective retrieval (skills own routine commands) |
-| `platforms/kaggle/dashboard.py`, `platforms/ims/check_queue.py`, `platforms/ims/dashboard/en.json` | Bilingual read-only Kaggle & IMS status/quota dashboards |
+| `src/molgap/experiment_workflow.py`, `src/molgap/kaggle_workflow.py`, `src/molgap/kaggle_submission.py` | Platform-neutral preparation, Kaggle release binding, journaled submission state machine (`PHASE_NEXT`, `SUBMIT_UNKNOWN`) |
+| `platforms/kaggle/submit_workflow.py`, `platforms/kaggle/retrieve_family_outputs.py` | Kaggle submission & exact-version selective retrieval (`--all-arms`, `--strict`, `--paused`, role-history retention) |
+| `platforms/ims/check_queue.py`, `platforms/ims/dashboard/en.json`, `platforms/kaggle/dashboard.py` | IMS SSH snapshot collector / stale-snapshot HTTP dashboard (`failure_code`, `stale`) & Kaggle read-only quota dashboard |
+| `platforms/scnet/check_dcu_environment.py` | SCNet DTK/DCU & PyG/GPS/SchNet smoke checker (`--skip-schnet`, `--allow-cpu` exit & evidence semantics) |
 
 ### Model Registry, Active Backbones & Shared Training
 | Path | Owns |
@@ -40,8 +41,8 @@ for workflow order read [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md) and
 | Path | Owns |
 |---|---|
 | `src/molgap/research_memory/` | RML compiler & CLI ([RML_INTERFACES.md](docs/operations/RML_INTERFACES.md)): `cli.py`, `schemas.py` (`TRAJECTORY_OUTCOMES`, `FAILURE_MODES`, closure facts), `cards.py`, `saved_analysis.py`, `validate.py` |
-| `src/molgap/experiment_terminal_staging.py`, `src/molgap/experiment_run_acceptance.py`, `src/molgap/experiment_attribution.py` | `draft-closure` / role-audit drafting, closure-facts binding, run-ID strict acceptance, paired attribution |
-| `src/molgap/v5_common.py`, `src/molgap/v5_desktop.py`, `src/molgap/comparison_readiness.py`, `src/molgap/screen_policy.py`, `src/molgap/evidence_pointers.py` | V5 evidence envelopes, desktop durability/reconciliation gates, comparability & SHA pointer checks |
+| `src/molgap/experiment_terminal_staging.py`, `src/molgap/experiment_run_acceptance.py`, `src/molgap/experiment_attribution.py` | `draft-closure`, `data_open_evidence` / role-audit drafting (`unobserved_earlier_invocation`), strict acceptance & `INCONCLUSIVE`-only runtime-drift closure, attribution |
+| `src/molgap/v5_common.py`, `src/molgap/v5_desktop.py`, `src/molgap/comparison_readiness.py`, `src/molgap/screen_policy.py`, `src/molgap/evidence_pointers.py` | V5 evidence envelopes, desktop reconciliation gates, strict comparison / replay-pool eligibility under drift, SHA pointers |
 | `src/molgap/common/`, `src/molgap/compat/` | Cross-host identity/IO/path/spec/transport helpers and lazy legacy import aliases |
 
 ### Public Inference & Production (Track A)
