@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d98b656806632e7db3b5938d4623116cff18f7d8d3673d777724714e046ccdca",
+  "source_digest": "a5666da6d2f28c5e8feb47b6aaf87d4991282e1cd4062bc5b331eedc864d3e54",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/decision.md",
+      "family_id": "pcqm-demol-ring-identity-100k-20261125",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_mean/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/decision.md",
+      "family_id": "pcqm-demol-ring-identity-100k-20261125",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_specific/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific"
     },
     {
       "completeness_status": "complete",

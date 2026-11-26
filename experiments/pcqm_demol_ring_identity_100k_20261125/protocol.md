@@ -1,0 +1,7 @@
+# DeMol-CIN 100K ring-specific return
+
+Test the direct ring-to-atom and ring-to-bond signal described in the paper council plan. Both arms retain the same incidence, projected message shapes and parameter counts, ring updates, ring-to-global paths, and readout. The mean arm pools all real rings within each molecule and broadcasts that value only into direct ring return. For one ring this expression is identical and no-ring molecules skip it.
+
+Use the same fixed 100K train and 50K internal development, FP32, BS128, seed 42 as supported by the current shared declaration compiler, weight decay .05, main EMA .999, 60 passes, 46,860 steps, 5,998,080 rows presented. Cap 6 T4x2 wall h including cleanup. No protected roles. Retain selected checkpoint and trajectory through the standard strict pipeline. For the scientific endpoint use pass-60 EMA from both retained checkpoint files on the exact internal development rows via the existing shared scorer, verify matching trace MAEs, then paired 2,000 draws. Report full minus mean and the 95% interval. Support specifically identified ring return only at <= -3.0 meV and upper bound <0. Report predefined 0/1 and >=2 ring strata using the same fixed graph-to-cell extraction. The compiler's reference is the full arm, so reverse the sign of analyzer mean-minus-full when applying the science gate. No tranche or scale-up when the gate is missed.
+
+[CIN](https://proceedings.neurips.cc/paper_files/paper/2021/file/157792e4abb490f99dbd738483e0d2d4-Paper.pdf)
