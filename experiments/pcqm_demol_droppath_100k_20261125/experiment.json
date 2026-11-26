@@ -1,0 +1,99 @@
+{
+  "arms": [
+    {
+      "arm_id": "no_droppath"
+    },
+    {
+      "arm_id": "droppath010",
+      "model": {
+        "addons": [
+          "demol_cin_droppath"
+        ],
+        "family": "gptrans_t",
+        "version": "2"
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority": {
+    "account": "nvoid912",
+    "allocated_t4_hours_ceiling": 12,
+    "allocation_wall_limit_seconds": 21600,
+    "arms": [
+      "no_droppath",
+      "droppath010"
+    ],
+    "authority": "User authorized the three-account Kaggle batch on 2026-11-25; this is the paper-council pure-2D alternative for Kaggle3.",
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "format": "molgap-execution-authority-v1",
+    "protected_roles_authorized": [],
+    "same_run_reference_arm_id": "no_droppath",
+    "scope": "One fixed 100K FP32 T4x2 pair, seed 42, 60 passes; train and internal development only.",
+    "seeds": [
+      42
+    ],
+    "user_authorized": true,
+    "user_notebook_wall_ceiling_seconds": 21600
+  },
+  "experiment_id": "pcqm_demol_droppath_100k_20261125",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-demol-droppath-100k-20261125-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "Same-seed fixed 100K pair, common weight decay .05 and .10 per-molecule residual DropPath as the only delta.",
+    "estimated_device_hours": 10.8,
+    "estimated_wall_hours": 5.4,
+    "hardware": "Tesla T4x2 FP32",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "Late give-back primarily reflects other regularizers.",
+      "Residual dropping reduces fitting without improving development."
+    ],
+    "changed_mechanism": "demol_cin_graph_residual_stochastic_depth_p010",
+    "closed_families": [
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "pcqm-gptrans-triplet-norm-100k-20261104"
+    ],
+    "deficiency": "Wave 1 bundled DropPath with other changes and cannot explain the observed reduction in late give-back.",
+    "negative_decision": "Close this isolated stochastic-depth setting at the tested exposure.",
+    "policy_id": "pcqm-demol-droppath-100k-20261125",
+    "positive_decision": "Nominate only if the paired pass-60 delta is <= -3 meV with interval upper < 0 and give-back < 1 meV.",
+    "question": "Does per-molecule residual DropPath improve DeMol-CIN pass-60 MAE and reduce late give-back relative to no DropPath?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "no_droppath",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "data_ref": {
+      "arm_id": "demol_cin",
+      "spec_ref": "experiments/pcqm_demol_droppath_100k_20261125/data_declaration.json"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "model": {
+      "addons": [
+        "demol_cin"
+      ],
+      "family": "gptrans_t",
+      "version": "2"
+    },
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_demol_droppath_100k_20261125/recipe.json",
+    "training": {}
+  },
+  "timestamp": "2026-11-25T19:56:01.683917+09:00"
+}

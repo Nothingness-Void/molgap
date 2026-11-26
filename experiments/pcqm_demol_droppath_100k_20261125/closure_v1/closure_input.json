@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "droppath010": {
+      "decision_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/closure_facts_droppath010.json",
+      "outcome": "POSITIVE_UNDER_CONTRACT"
+    },
+    "no_droppath": {
+      "decision_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/closure_facts_no_droppath.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/audit_map.json"
+}

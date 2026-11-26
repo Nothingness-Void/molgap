@@ -1,0 +1,147 @@
+{
+  "acceptance_ref": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/terminal_staging/v1/d844b1a80da1e417/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/closure_facts_no_droppath.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md": "50f5b5208850114cb4a60cac468dc33671e4873d4f08da4bee381413de48a8cd",
+    "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json": "a751813986240480da035aa70ee4b10cbc3df12a71fbe9c41ef68741df7479ff",
+    "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/authority.json": "991e0122305e2f2898b92b62b7da368755c66f86a6ab89f9fcc4c37f1c760d30",
+    "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/no_droppath/recipe.json": "04945d1f0d360f61ada47e9177fb12683b3f9f94acfa5507c220a76891d4d83d",
+    "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/terminal_staging/v1/d844b1a80da1e417/acceptance.json": "ded1894d86296c0d72ce4f10b52433a09c6ed8b194c359dc731e738616bbfa04",
+    "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/terminal_staging/v1/d844b1a80da1e417/observed.json": "9d0728099750cd397198e3e72897627e2cb1af2f76ab64e83b48cc9ab9f6ebf3",
+    "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/strict_qualification/e31507ddba328df0292c/no_droppath/reference_bundle.json": "37c6cd788f3211ed9fa50805049d06af9ed809628c10670504bc1f1c92377682",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/_execution/allocation_ledger.json": "fb1794136208700e34a392937aebd6aec2bfa074de822da2315e289e8cca6d02",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/_execution/execution_retention.json": "83c561cff472ae149b96beee14d26efc0eb36ed1d1f19dfb34278745f78c7697",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/_execution/no_droppath/allocation_ledger.json": "fb1794136208700e34a392937aebd6aec2bfa074de822da2315e289e8cca6d02",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/canonical_trace.json": "4537999c9ff7fb5f26f8485ac3af2530d1b370b55677a130b9ac97328f9d87b6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/canonical_trace.json.context.json": "fd71f546b2e347aef3804121474f235385d9977c67b84b7505fcc40004063ec9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/data_open_provenance.json": "82b7897e0c66ddca7bef5734b59e1783685686efa58d412f868f6fbba8cd8a8b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/development_predictions.pt": "77e083f865843c1417fca45917489bf7f4578818986e03a3169ee1c0bf91ebba",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/development_predictions_ema0.9999.pt": "9b891b0c9c7fe28964639c3ec003acf15172a2c9d0424610c6ad71b9af7c2dfa",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/last_checkpoint.pt": "71fd31402ab6401a8afe7c30ce11d2f46b028e59e56fb362168137ad4b435a96",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/output_manifest.json": "08c36cc9df07f629dded93e95ac52763f770a0f4ba784301b9c1c92a04b7ceab",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/selected_model.pt": "3d60c0db41da1683234d64b96dd604a3d6e9ea41173bf997aae3ec3896b350cd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/selected_model_ema0.9999.pt": "7b64e1e6ea904ed4369bce84f65f51c450106e3b33d03464691eb3b945887d35",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/training_contract.json": "04945d1f0d360f61ada47e9177fb12683b3f9f94acfa5507c220a76891d4d83d",
+    "external:///D:/molgap-artifacts/runs/pcqm-demol-droppath-100k-20261125-s42/v1/reports/diagnostic_d8a55dafe3ea99232a8ef9da7d0b22205dfe31c668e0471a698a41bd458d2a16.json": "7be9d6fc4bc8b94f3ec640c18f2b5813e716e8b6409ca0ef274b2029935b4bef"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-11-26T01:50:54.208381+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-demol-droppath-100k-20261125-s42-no_droppath-0.json",
+        "sha256": "24d74b4d3fb806548bbf7b9c0fcddf829acd8fbcacb66acf68ee50237d03c73f"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-demol-droppath-100k-20261125-s42-no_droppath-allocation-0.json",
+        "sha256": "5cd2c5201d197b13fa4f759ab3be058ee7908e74d9d6c6fbf42d2b900bfa9333"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "d67d57c143820482f3d6b2304b014754d4efbbedcad339188a7cbb35d914ec17"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "81198fa32d20f1131a86717ff061fc667e51a263b0e82ff8780a422deb0b2ba4"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-train-training_membership.json",
+        "sha256": "01869b2a87ef0d34d988ba04c08decaf4e1664442baa2e8e4b68261b136e50f5"
+      },
+      {
+        "ref": "roles/role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-prediction_input.json",
+        "sha256": "fae9b1e692f58e81e09cd5ff55d2696a69fcdda3007297a356e8a45ad11ce694"
+      },
+      {
+        "ref": "roles/role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-labels_read.json",
+        "sha256": "e8a0dd62552781bec6fed6c68c4b8059197200bfc3dbf8f66d7fc77c7489b895"
+      },
+      {
+        "ref": "roles/role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-metric_computed.json",
+        "sha256": "613bf4a312d064fa3a1acd64f40ee55a6bc04d6f4170b523aa6313d3af1d2b86"
+      },
+      {
+        "ref": "roles/role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-selection_used.json",
+        "sha256": "a591f76b6947f10dca8793e0164eb2691df820024fc8832009ba028ed67cf729"
+      }
+    ]
+  },
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-demol-droppath-100k-20261125-s42-v1",
+    "logical_run_id": "pcqm-demol-droppath-100k-20261125-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-demol-droppath-100k-20261125-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "d85bcb56b32b0527c3df79a067efd2aa1663102e",
+    "source_package_sha256": "d3e466670e4c1df59e9ef964870e2d0c12e5871243bcca750c999acb3af5f1d0",
+    "spec_identity": "bb8fdc654fe7254eb64d4d325775de38e844ea331de3932188bc69e13244800d"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/no_droppath/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/no_droppath/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-no_droppath",
+    "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/terminal_staging/v1/d844b1a80da1e417/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-droppath-100k-20261125-s42/v1/version1/no_droppath/canonical_trace.json",
+    "trace_artifact_sha256": "4537999c9ff7fb5f26f8485ac3af2530d1b370b55677a130b9ac97328f9d87b6",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+}

@@ -1,0 +1,135 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-demol-droppath-100k-20261125-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-droppath-100k-20261125-s42-droppath010-planned",
+        "cost-terminal-T-pcqm-demol-droppath-100k-20261125-s42-droppath010-0",
+        "cost-terminal-T-pcqm-demol-droppath-100k-20261125-s42-droppath010-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/droppath010/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-demol-droppath-100k-20261125-s42:droppath010:downstream"
+      ],
+      "source_commit": "d85bcb56b32b0527c3df79a067efd2aa1663102e",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/strict_qualification/e31507ddba328df0292c/droppath010/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md",
+    "facts": {
+      "ci_meV": [
+        -4.263859890818596,
+        -2.637728516340256
+      ],
+      "effect_meV": -3.439736428260803,
+      "failure_mode": "boundary_pass",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "DeMol-CIN",
+        "DropPath",
+        "pass-60 EMA",
+        "late give-back"
+      ],
+      "source": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/measured_pcqm-demol-droppath-100k-20261125-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-demol-droppath-100k-20261125",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_droppath_100k_20261125/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/rml_decision_snapshots/471e466bf56da478d6768324ab39c44b8b7dc81bc53db0a523e66947bd849975.json",
+    "snapshot_sha256": "471e466bf56da478d6768324ab39c44b8b7dc81bc53db0a523e66947bd849975",
+    "state_timestamp": "2026-11-25T19:56:01.683917+09:00"
+  },
+  "family_id": "pcqm-demol-droppath-100k-20261125",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Late give-back primarily reflects other regularizers.",
+      "Residual dropping reduces fitting without improving development."
+    ],
+    "changed_mechanism": "demol_cin_graph_residual_stochastic_depth_p010",
+    "cheapest_falsifier": "Same-seed fixed 100K pair, common weight decay .05 and .10 per-molecule residual DropPath as the only delta.",
+    "decision_changed_if_negative": "Close this isolated stochastic-depth setting at the tested exposure.",
+    "decision_changed_if_positive": "Nominate only if the paired pass-60 delta is <= -3 meV with interval upper < 0 and give-back < 1 meV.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-droppath-100k-20261125-s42-droppath010-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-demol-droppath-100k-20261125-s42-droppath010",
+    "observed_deficiency": "Wave 1 bundled DropPath with other changes and cannot explain the observed reduction in late give-back.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "pcqm-gptrans-triplet-norm-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does per-molecule residual DropPath improve DeMol-CIN pass-60 MAE and reduce late give-back relative to no DropPath?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-no_droppath-e31507ddba328df0292c",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-droppath010"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/droppath010/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_demol_droppath_100k_20261125/generated/df2c4786acff61adb3209ecf8f879de7fc575e2e543ee1036d78236ae0076632/droppath010/recipe.json",
+      "experiments/pcqm_demol_droppath_100k_20261125/data_declaration.json",
+      "experiments/pcqm_demol_droppath_100k_20261125/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_droppath_100k_20261125/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "droppath010",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-demol-droppath-100k-20261125-s42",
+      "reference_arm_id": "no_droppath",
+      "reference_trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath",
+      "reference_trajectory_ref": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "bb8fdc654fe7254eb64d4d325775de38e844ea331de3932188bc69e13244800d"
+    },
+    "source_commit": "d85bcb56b32b0527c3df79a067efd2aa1663102e",
+    "source_config_identity": "d1567bb682eedd5a1d1e9518070e88e1f8ac15ff6e34e8fe8711ad66b8b30711"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-droppath010"
+}

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d98b656806632e7db3b5938d4623116cff18f7d8d3673d777724714e046ccdca",
+  "source_digest": "e761a501a417657cd7b1a16581e7a1e407d1d781d846a0f7f69bf09a981201fc",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md",
+      "family_id": "pcqm-demol-droppath-100k-20261125",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/droppath010/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-droppath010"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-droppath010"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/decision.md",
+      "family_id": "pcqm-demol-droppath-100k-20261125",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_droppath_100k_20261125/runs/pcqm-demol-droppath-100k-20261125-s42/prospective/no_droppath/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
     },
     {
       "completeness_status": "complete",
