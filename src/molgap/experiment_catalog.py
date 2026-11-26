@@ -51,6 +51,14 @@ FAMILIES = MappingProxyType({
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
     **{
+        (name, "1"): AddonContract(
+            "gptrans_t", "gated-diffusion-architecture", "molgap.gated_chebyshev",
+            family_versions=("2",), single_addon=True,
+            execution_modes=(("2", name),), policy_hook="molgap.gated_chebyshev:policy",
+        )
+        for name in ("gated_chebyshev4", "gated_local_matched")
+    },
+    **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",
             tuple(AddonConfigField(key, value=value) for key, value in (

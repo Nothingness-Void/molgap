@@ -1,0 +1,99 @@
+{
+  "arms": [
+    {
+      "arm_id": "local_filter"
+    },
+    {
+      "arm_id": "chebyshev4",
+      "model": {
+        "addons": [
+          "gated_chebyshev4"
+        ],
+        "family": "gptrans_t",
+        "version": "2"
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority": {
+    "account": "nvoid912",
+    "allocated_t4_hours_ceiling": 12,
+    "allocation_wall_limit_seconds": 21600,
+    "arms": [
+      "local_filter",
+      "chebyshev4"
+    ],
+    "authority": "User requested deployment on three Kaggle accounts on 2026-11-26; design reviewed by the paper-reading task.",
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "format": "molgap-execution-authority-v1",
+    "protected_roles_authorized": [],
+    "same_run_reference_arm_id": "local_filter",
+    "scope": "One paired 100K job, seed42, FP32, T4x2; train and internal development only; six-hour allocation.",
+    "seeds": [
+      42
+    ],
+    "user_authorized": true,
+    "user_notebook_wall_ceiling_seconds": 21600
+  },
+  "experiment_id": "pcqm_gated_chebyshev_100k_20261126",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-gated-chebyshev-100k-20261126-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "Equal-parameter fixed-exposure same-job pair differing only in the polynomial filter's maximum propagation distance.",
+    "estimated_device_hours": 10.8,
+    "estimated_wall_hours": 5.4,
+    "hardware": "Tesla T4x2 FP32",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "The local gated stack already covers relevant structure.",
+      "Four-hop mixing loses discriminative local signal."
+    ],
+    "changed_mechanism": "four-hop-sparse-chebyshev-taps-in-gated-mpnn",
+    "closed_families": [
+      "pcqm-gpspp-mpnn-100k-20261124",
+      "pcqm-gptrans-bondlocal-pairnorm-100k"
+    ],
+    "deficiency": "Prior pure-2D GPS++ did not beat the matched reference. It does not isolate learned sparse long-range diffusion from local messages.",
+    "negative_decision": "Close sparse four-hop response at fixed exposure if the preregistered gate is missed.",
+    "policy_id": "pcqm-gated-chebyshev-100k-20261126",
+    "positive_decision": "Nominate only when candidate-minus-control final EMA MAE is <= -3.0 meV and 95% paired upper <0.",
+    "question": "Can four-hop Chebyshev propagation improve a small bond-gated MPNN over matched local filtering at fixed 100K exposure?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "local_filter",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "data_ref": {
+      "arm_id": "pair_update_norm",
+      "spec_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/data_declaration.json"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "model": {
+      "addons": [
+        "gated_local_matched"
+      ],
+      "family": "gptrans_t",
+      "version": "2"
+    },
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/recipe.json",
+    "training": {}
+  },
+  "timestamp": "2026-11-26T11:07:21.215771+09:00"
+}
