@@ -1,0 +1,363 @@
+{
+  "acceptance_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/closure_facts_local_filter.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md": "547a4daa8011e854df5dfd59ec1c9b2ec353b5d9e289fbb0883d7562ccb29191",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json": "9f72f8f1e26f4de36896b8a5f48acc8de2aab2cf0586a488efbe60b5e884c132",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/authority.json": "4906b33a4084c1d4081ac25b1e3add8a92a54923de343e0580b1bcf8475351d1",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json": "caa9d3ae14989c3de8d99ed2dce7f160d86fe9da457a18779ec345b28a76a0a3",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/acceptance.json": "165dc0c0d166240b7f8b696c28200828e933758cbfeec1faaea791f82f37d936",
+    "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/observed.json": "a2eef1526f66614a8428e9792e1f43291576eadcc3c662eb60c9f1efa647e0ff",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/allocation_ledger.json": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/execution_retention.json": "6994e052d5adba2aedcf92e9eb11b4ac6b8319bf323ba99eb41d96a2c2d9129b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/local_filter/allocation_ledger.json": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/canonical_trace.json": "3e62b0ba8e870d97ae15313c7566ece9178a40e41d432e4d5bccc85db86c6032",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/canonical_trace.json.context.json": "38f5f7435d2df5e633342be2d9b448f12d79240a4c1eff3d4c1134fec6760399",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/data_open_provenance.json": "36a394bcc4528aa12806e6c10604e38886c26b25b2b17aa1921748c93af17106",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/development_predictions.pt": "c956c8db48725ef3a37d7df2ba5bc8e5434b3195301cd79d12250e92f7688b17",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/development_predictions_ema0.9999.pt": "e1c922f5e0a5bc8ec5b6f8ce5f6f0c90cf896f49f42ad28027c857bfbba23ee6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/last_checkpoint.pt": "d26c676c7a6bc3e10fe880af940ca927b6474565f0094cc4d959d3bad30bb7a2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/output_manifest.json": "4f9d302e7e54d8289420f6ab9cfe88a0a09c020645bbb29532df1bf26d3084a8",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/selected_model.pt": "99d8bf7e5f518fd90831f80385454957a42a1f7297b5ccb1c96d48dee600daed",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/selected_model_ema0.9999.pt": "75b498a053b4cf6488a05e14a628eb95ac8e882c06c6794763aba356fc853d69",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/training_contract.json": "caa9d3ae14989c3de8d99ed2dce7f160d86fe9da457a18779ec345b28a76a0a3",
+    "external:///D:/molgap-artifacts/runs/pcqm-gated-chebyshev-100k-20261126-s42/v1/reports/diagnostic_a09b87363a66ef8580f04118e786fe2aa4ea706846af5760dd93125fb24f812b.json": "33aaa893a29df8352c1e85fccd0a6bfe27994171219e78a443bb5b8b8e67be2f"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gated-chebyshev-100k-20261126-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-0",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.1281020323897222
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gated-chebyshev-100k-20261126-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-allocation-0",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.4070831897436111
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "6994e052d5adba2aedcf92e9eb11b4ac6b8319bf323ba99eb41d96a2c2d9129b"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/local_filter/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/training_contract.json",
+        "name": "contract",
+        "sha256": "caa9d3ae14989c3de8d99ed2dce7f160d86fe9da457a18779ec345b28a76a0a3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "36a394bcc4528aa12806e6c10604e38886c26b25b2b17aa1921748c93af17106"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "c956c8db48725ef3a37d7df2ba5bc8e5434b3195301cd79d12250e92f7688b17"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/development_predictions_ema0.9999.pt",
+        "name": "predictions_ema_0p9999",
+        "sha256": "e1c922f5e0a5bc8ec5b6f8ce5f6f0c90cf896f49f42ad28027c857bfbba23ee6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "d26c676c7a6bc3e10fe880af940ca927b6474565f0094cc4d959d3bad30bb7a2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "99d8bf7e5f518fd90831f80385454957a42a1f7297b5ccb1c96d48dee600daed"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/selected_model_ema0.9999.pt",
+        "name": "selected_model_ema_0p9999",
+        "sha256": "75b498a053b4cf6488a05e14a628eb95ac8e882c06c6794763aba356fc853d69"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "3e62b0ba8e870d97ae15313c7566ece9178a40e41d432e4d5bccc85db86c6032"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "38f5f7435d2df5e633342be2d9b448f12d79240a4c1eff3d4c1134fec6760399"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.1590739389127493,
+      "missing_reason": null,
+      "selected_optimizer_step": 29678,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "CLOSED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-26T09:05:04.987760+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json",
+      "role_event_id": "role-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json",
+      "role_event_id": "role-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json",
+      "role_event_id": "role-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json",
+      "role_event_id": "role-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/roles_local_filter.json",
+      "role_event_id": "role-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+    }
+  ],
+  "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gated-chebyshev-100k-20261126-s42-v1",
+    "logical_run_id": "pcqm-gated-chebyshev-100k-20261126-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-gated-chebyshev-100k-20261126-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "10bcc6c3938222e65ecb61b3a117781ab42a7f0c",
+    "source_package_sha256": "8060588e9957e0e6e9e7e132fbcf50c8043287c205bafbd5f570b33b3c6e8a9d",
+    "spec_identity": "7ba5770419f777ace57cb7fa3494f3573899fef473e0351c4705cb334d80869c"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+    "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/terminal_staging/v1/f5179f3602f18b27/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/local_filter/canonical_trace.json",
+    "trace_artifact_sha256": "3e62b0ba8e870d97ae15313c7566ece9178a40e41d432e4d5bccc85db86c6032",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+}

@@ -343,6 +343,44 @@
       "comparison_status": "NOT_EVALUATED",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-chebyshev4",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/chebyshev4/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
       "role_use": {
         "official_validation": "untouched",

@@ -1,3 +1,3 @@
 # Decision
 
-Pending strict acceptance and the frozen pass-60 comparison.
+See the [terminal decision](closure_v1/decision.md) and [attribution](closure_v1/attribution.md).

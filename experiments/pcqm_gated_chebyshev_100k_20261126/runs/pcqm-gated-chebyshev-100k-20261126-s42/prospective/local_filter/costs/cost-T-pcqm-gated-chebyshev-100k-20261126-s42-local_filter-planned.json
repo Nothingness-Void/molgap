@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gated-chebyshev-100k-20261126-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-planned",
+  "evidence_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 10.8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 5.4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+}

@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gated-chebyshev-100k-20261126-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gated-chebyshev-100k-20261126-s42:local_filter:downstream"
+      ],
+      "source_commit": "10bcc6c3938222e65ecb61b3a117781ab42a7f0c",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gated-chebyshev-100k-20261126",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gated_chebyshev_100k_20261126/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/rml_decision_snapshots/04bdfc9b5c88e6ef4ed2df3aabbd073aa7b4af8eea4aacc51d28657ed79eb0a5.json",
+    "snapshot_sha256": "04bdfc9b5c88e6ef4ed2df3aabbd073aa7b4af8eea4aacc51d28657ed79eb0a5",
+    "state_timestamp": "2026-11-26T11:07:21.215771+09:00"
+  },
+  "family_id": "pcqm-gated-chebyshev-100k-20261126",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The local gated stack already covers relevant structure.",
+      "Four-hop mixing loses discriminative local signal."
+    ],
+    "changed_mechanism": "four-hop-sparse-chebyshev-taps-in-gated-mpnn",
+    "cheapest_falsifier": "Equal-parameter fixed-exposure same-job pair differing only in the polynomial filter's maximum propagation distance.",
+    "decision_changed_if_negative": "Close sparse four-hop response at fixed exposure if the preregistered gate is missed.",
+    "decision_changed_if_positive": "Nominate only when candidate-minus-control final EMA MAE is <= -3.0 meV and 95% paired upper <0.",
+    "expected_native_cost_ref": "cost-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+    "observed_deficiency": "Prior pure-2D GPS++ did not beat the matched reference. It does not isolate learned sparse long-range diffusion from local messages.",
+    "related_closed_family_ids": [
+      "pcqm-gpspp-mpnn-100k-20261124",
+      "pcqm-gptrans-bondlocal-pairnorm-100k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can four-hop Chebyshev propagation improve a small bond-gated MPNN over matched local filtering at fixed 100K exposure?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/local_filter/recipe.json",
+      "experiments/pcqm_gated_chebyshev_100k_20261126/data_declaration.json",
+      "experiments/pcqm_gated_chebyshev_100k_20261126/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gated_chebyshev_100k_20261126/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "local_filter",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-gated-chebyshev-100k-20261126-s42",
+      "reference_arm_id": "local_filter",
+      "reference_trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
+      "reference_trajectory_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "7ba5770419f777ace57cb7fa3494f3573899fef473e0351c4705cb334d80869c"
+    },
+    "source_commit": "10bcc6c3938222e65ecb61b3a117781ab42a7f0c",
+    "source_config_identity": "186b233e3cbb8d1b00f21f4bd55aa769c0005c7d8470e44e9058a5dcb873e142"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+}

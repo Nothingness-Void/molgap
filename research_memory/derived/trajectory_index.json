@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d98b656806632e7db3b5938d4623116cff18f7d8d3673d777724714e046ccdca",
+  "source_digest": "e17eff3e89748f016006a1b658ed6f35da41ebce924844d7171025709116e8e9",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-gated-chebyshev-100k-20261126",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/chebyshev4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-chebyshev4"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-chebyshev4"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-gated-chebyshev-100k-20261126",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/local_filter/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter"
     },
     {
       "completeness_status": "complete",
