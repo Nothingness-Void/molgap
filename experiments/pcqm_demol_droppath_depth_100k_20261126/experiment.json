@@ -1,0 +1,97 @@
+{
+  "arms": [
+    {
+      "arm_id": "uniform010"
+    },
+    {
+      "arm_id": "depth_scaled010",
+      "model": {
+        "addons": [
+          "demol_cin_droppath_depth"
+        ],
+        "family": "gptrans_t",
+        "version": "2"
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority": {
+    "account": "nothingnessvoid",
+    "allocated_t4_hours_ceiling": 12,
+    "allocation_wall_limit_seconds": 21600,
+    "arms": [
+      "uniform010",
+      "depth_scaled010"
+    ],
+    "authority": "User requested deployment on three Kaggle accounts on 2026-11-26; design reviewed by the paper-reading task.",
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "format": "molgap-execution-authority-v1",
+    "protected_roles_authorized": [],
+    "same_run_reference_arm_id": "uniform010",
+    "scope": "One paired 100K job, seed42, FP32, T4x2; train and internal development only; six-hour allocation.",
+    "seeds": [
+      42
+    ],
+    "user_authorized": true,
+    "user_notebook_wall_ceiling_seconds": 21600
+  },
+  "experiment_id": "pcqm_demol_droppath_depth_100k_20261126",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-demol-droppath-depth-100k-20261126-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "One same-job fixed-exposure pair testing fixed-strength stochastic depth placement.",
+    "estimated_device_hours": 10.8,
+    "estimated_wall_hours": 5.4,
+    "hardware": "Tesla T4x2 FP32",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "The successful regularization requires protecting all layers equally.",
+      "Shifting perturbations to later layers hurts readout."
+    ],
+    "changed_mechanism": "depth-increasing-droppath-at-fixed-mean",
+    "closed_families": [
+      "pcqm-demol-droppath-100k-20261125"
+    ],
+    "deficiency": "The strict uniform 0.10 pair improved final MAE by 6.238 meV and lowered give-back to 0.992641 meV. Layer allocation is untested.",
+    "negative_decision": "Close depth allocation at this fixed strength if the gate is missed.",
+    "policy_id": "pcqm-demol-droppath-depth-100k-20261126",
+    "positive_decision": "Nominate only when final candidate-minus-control EMA MAE <= -3.0 meV, paired upper <0 and candidate give-back <1.0 meV.",
+    "question": "At equal expected retained depth, does back-loaded DropPath outperform uniform 0.10 in DeMol-CIN 100K?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-demol-droppath-100k-20261125-s42-droppath010"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "uniform010",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "data_ref": {
+      "arm_id": "droppath010",
+      "spec_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/data_declaration.json"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "model": {
+      "addons": [
+        "demol_cin_droppath"
+      ],
+      "family": "gptrans_t",
+      "version": "2"
+    },
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/recipe.json",
+    "training": {}
+  },
+  "timestamp": "2026-11-26T11:08:41.207470+09:00"
+}
