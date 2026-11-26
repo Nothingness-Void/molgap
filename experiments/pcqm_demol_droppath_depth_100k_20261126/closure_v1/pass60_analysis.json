@@ -1,0 +1,75 @@
+{
+  "arms": {
+    "depth_scaled010": {
+      "best_eV": 0.1341240555047989,
+      "best_pass": 42,
+      "checkpoint_sha256": "a3bb5160b93961328cdc4039b5be0a35e1974629f059b759f5192c9701e41dd7",
+      "endpoint_eV": 0.13524937629699707,
+      "giveback_meV": 1.1253207921981812,
+      "live_train_normalized_last": 0.044662642818559604,
+      "local_endpoint_eV": 0.13524937629699707,
+      "recipe_sha256": "0d572bff3fc7b79b2c46c4550bace6f3efe09a1eb05b5a346ebc248303b5426e",
+      "trace_sha256": "7b2c534462b60bcace8b7a965eaa7c37d21b5f02435a3743c27386fabc1c4849"
+    },
+    "uniform010": {
+      "best_eV": 0.13119548559188843,
+      "best_pass": 43,
+      "checkpoint_sha256": "f97f9655b4960d30f95215a414f00168327fb4d6c6962588981b59033a281458",
+      "endpoint_eV": 0.1321881264448166,
+      "giveback_meV": 0.9926408529281616,
+      "live_train_normalized_last": 0.05508108942670492,
+      "local_endpoint_eV": 0.1321881264448166,
+      "recipe_sha256": "039fa80b7cb80f8cdd58de302a1accac61d8b56e4f1bad6bd7f5c13fe7173f89",
+      "trace_sha256": "e65d82a786a3df3e2f70e727c2e0a03a0ad491e62f6a6e57b90e57d0edbeb5fc"
+    }
+  },
+  "development_shard_sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-demol-droppath-depth-100k-20261126-s42\\v1\\reports\\pass60_endpoint\\uniform010.pt",
+      "sha256": "9ec56e87f66b3e43f04db55a98b2999fe0a18fb3d2b1e21781dd2c3a7f808a90"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-demol-droppath-depth-100k-20261126-s42\\v1\\reports\\pass60_endpoint\\depth_scaled010.pt",
+      "sha256": "34fcbe31f6edcbe46d536ed30afc8998c1117ee01377814de94d471fdcb49c4a"
+    }
+  ],
+  "local_wall_seconds": 144.6456528000126,
+  "native_allocation": {
+    "allocated_device_seconds": 38707.9733323,
+    "allocation_wall_seconds": 19353.98666615,
+    "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-droppath-depth-100k-20261126-s42\\v1\\version1\\_execution\\allocation_ledger.json",
+    "sha256": "e4ae4960cd4b8a4813aab57ba24fbbdec83284ba5dfe1ebf00e4ef83f788310f"
+  },
+  "op": "paired",
+  "posthoc": true,
+  "receipt_identity": "e58823ab4c9b39368f6d3c3eaa6a70a9dc356473a87e7a8663d84618253c69e7",
+  "results": {
+    "candidates": {
+      "depth_scaled010": {
+        "ci95": [
+          2.1966672277450563,
+          3.947541792333126
+        ],
+        "delta": 3.0612447667121887,
+        "mae_meV": 135.24937462747096,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "seed": 42
+      }
+    },
+    "reference": "uniform010",
+    "reference_mae_meV": 132.18812986075878
+  },
+  "role_id": "internal-development-100k",
+  "row_count": 50000,
+  "runtime": {
+    "batch_size": 128,
+    "device": "NVIDIA GeForce RTX 5060",
+    "scorer_sha256": "874c25eef7a86599a20b0c508a2119ebae4b38701a0210ba82f0e2b69750f123",
+    "tf32": false,
+    "torch": "2.7.1+cu128"
+  },
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+}

@@ -1,0 +1,103 @@
+{
+  "arms": {
+    "self_ring": {
+      "best_eV": 0.13195912539958954,
+      "best_pass": 43,
+      "checkpoint_sha256": "7630b405288bd01eb57e8060beb4c1905440187b64a4bed800511d9ba27ecf71",
+      "endpoint_eV": 0.13244925439357758,
+      "giveback_meV": 0.4901289939880371,
+      "live_train_normalized_last": 0.05371033949789409,
+      "local_endpoint_eV": 0.13244925439357758,
+      "recipe_sha256": "b32e042f1647e33a0b084d7c19f0d3b89fa710889088dc1c1af6d8b59d447c77",
+      "trace_sha256": "3cfc4565c050843801fc145f281b53ffa659439ab8e054ee394dc852e3078697"
+    },
+    "shared_bond_ring": {
+      "best_eV": 0.13203278183937073,
+      "best_pass": 47,
+      "checkpoint_sha256": "de773844ff25aa93216b278ad479b400de0d982c0e2512647c1b4420f7c8b375",
+      "endpoint_eV": 0.1323620080947876,
+      "giveback_meV": 0.3292262554168701,
+      "live_train_normalized_last": 0.05350999567519382,
+      "local_endpoint_eV": 0.13236203789710999,
+      "recipe_sha256": "70c1865fa966275ce29e480d151db0b08ed3dfff2f88490f9924abdb114abd53",
+      "trace_sha256": "b6ff6085dcd199e67e6079b76770110b430bca7fc542777d79379622d76db005"
+    }
+  },
+  "development_shard_sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-demol-shared-bond-rings-100k-20261126-s42\\v1\\reports\\pass60_endpoint\\self_ring.pt",
+      "sha256": "cca9a089396dfb1920f80b76c2130aba49fbacb9ccc5b23ce4636bdcab680cdc"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-demol-shared-bond-rings-100k-20261126-s42\\v1\\reports\\pass60_endpoint\\shared_bond_ring.pt",
+      "sha256": "26adb799d174618b963458e2070a9f9c8def4a5edd5376987678c97fc5ae8505"
+    }
+  ],
+  "local_wall_seconds": 133.45485870000266,
+  "native_allocation": {
+    "allocated_device_seconds": 40091.223037652,
+    "allocation_wall_seconds": 20045.611518826,
+    "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-shared-bond-rings-100k-20261126-s42\\v1\\version1\\_execution\\allocation_ledger.json",
+    "sha256": "f73788b876db3a6e01e477583fc14fd66b0957d4763b74216b925b9fa5473162"
+  },
+  "op": "paired",
+  "posthoc": true,
+  "receipt_identity": "f242bf2c302cda6fcc24b3d676cd38350df018354af9af6bb91c1b48a32fa346",
+  "results": {
+    "candidates": {
+      "shared_bond_ring": {
+        "ci95": [
+          -0.9507480645179749,
+          0.6992195003032678
+        ],
+        "delta": -0.08722207069396973,
+        "mae_meV": 132.3620229524374,
+        "n_bootstrap": 2000,
+        "probability_better": 0.5655,
+        "seed": 42
+      }
+    },
+    "reference": "self_ring",
+    "reference_mae_meV": 132.44924502313137
+  },
+  "role_id": "internal-development-100k",
+  "row_count": 50000,
+  "runtime": {
+    "batch_size": 128,
+    "device": "NVIDIA GeForce RTX 5060",
+    "scorer_sha256": "874c25eef7a86599a20b0c508a2119ebae4b38701a0210ba82f0e2b69750f123",
+    "tf32": false,
+    "torch": "2.7.1+cu128"
+  },
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "strata": {
+    "shared_bond": {
+      "candidate_mae_meV": 125.86798376646668,
+      "ci95": [
+        -0.5569735866341549,
+        3.0683030298958998
+      ],
+      "delta": 1.277762546660173,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0815,
+      "reference_mae_meV": 124.59022121980652,
+      "rows": 9784,
+      "seed": 42
+    },
+    "without_shared_bond": {
+      "candidate_mae_meV": 133.9419334207967,
+      "ci95": [
+        -1.3584388716778841,
+        0.5043817295370308
+      ],
+      "delta": -0.4193040653277705,
+      "n_bootstrap": 2000,
+      "probability_better": 0.823,
+      "reference_mae_meV": 134.36123748612448,
+      "rows": 40216,
+      "seed": 42
+    }
+  },
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+}

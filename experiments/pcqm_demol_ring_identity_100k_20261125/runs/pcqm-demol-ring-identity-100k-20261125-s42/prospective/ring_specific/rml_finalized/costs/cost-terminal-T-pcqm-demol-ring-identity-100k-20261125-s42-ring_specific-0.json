@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-demol-ring-identity-100k-20261125-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific-0",
+  "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_specific/terminal_staging/v1/eed4d04c9087f3fc/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 5.119882108035278
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_specific:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific"
+}

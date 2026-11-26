@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-shared-bond-rings-100k-20261126-s42\\v1\\version1\\self_ring\\development_predictions.pt",
+      "sha256": "610a0dc82640b90eff7f743c18512a7e3c70db16a32c719334b718159f5f7439"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-shared-bond-rings-100k-20261126-s42\\v1\\version1\\shared_bond_ring\\development_predictions.pt",
+      "sha256": "dfadef60f1a1fe6c02dd5fbe90726848994dfca6ce312af51e8cfe5c8116c449"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 0.0736734724044652,
+    "ensemble_gain_meV": 4.098332653045631,
+    "ensemble_mae_meV": 127.89761250674725,
+    "fit": null,
+    "m_meV": 0.07367347240447998,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "shared_bond_ring",
+        "ci95": [
+          -0.743531145453453,
+          0.8044884951114654
+        ],
+        "delta": 0.07367347240447998,
+        "n_bootstrap": 2000,
+        "probability_better": 0.429,
+        "reference": "self_ring",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "self_ring": 131.95910842359066,
+      "shared_bond_ring": 132.03278189599513
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

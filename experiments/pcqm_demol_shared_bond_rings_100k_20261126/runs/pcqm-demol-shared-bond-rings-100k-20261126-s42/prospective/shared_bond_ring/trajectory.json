@@ -1,0 +1,109 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-demol-shared-bond-rings-100k-20261126-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/shared_bond_ring/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-demol-shared-bond-rings-100k-20261126-s42:shared_bond_ring:downstream"
+      ],
+      "source_commit": "e49fc55000653d1cce54a6a1ce2715d4e17d30e1",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-demol-shared-bond-rings-100k-20261126",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/rml_decision_snapshots/099ccd603fb387be0b975027b307f75e7827e8dee626b51fa60f4fb145a296f8.json",
+    "snapshot_sha256": "099ccd603fb387be0b975027b307f75e7827e8dee626b51fa60f4fb145a296f8",
+    "state_timestamp": "2026-11-26T11:08:41.209525+09:00"
+  },
+  "family_id": "pcqm-demol-shared-bond-rings-100k-20261126",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Existing ring-to-atom and ring-to-bond paths already propagate these signals.",
+      "The new update amplifies redundancy at fused rings."
+    ],
+    "changed_mechanism": "actual-neighbor-ring-state-vs-self-on-shared-bond-incidence",
+    "cheapest_falsifier": "One same-job fixed-exposure pair testing sharing states along common ring bonds.",
+    "decision_changed_if_negative": "Retain subgroup evidence and close if the full-cohort gate is missed.",
+    "decision_changed_if_positive": "Nominate only when endpoint candidate-minus-control <= -3.0 meV, paired upper <0, and the predeclared shared-bond stratum improves.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring",
+    "observed_deficiency": "The preceding intervention improved the 27,021 multi-ring development rows by 3.586 meV while missing the full-cohort gate. It did not test direct ring-to-ring communication over shared covalent bonds.",
+    "related_closed_family_ids": [
+      "pcqm-demol-ring-identity-100k-20261125"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does exchanging state between chordless rings that share an actual bond improve DeMol-CIN over a matched self-ring projection?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/shared_bond_ring/recipe.json",
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/data_declaration.json",
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "shared_bond_ring",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-demol-shared-bond-rings-100k-20261126-s42",
+      "reference_arm_id": "self_ring",
+      "reference_trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+      "reference_trajectory_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/self_ring/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "8ee9066866b85b2201c9d17390bf3650c1f798c61fca594bb125c12a76124df8"
+    },
+    "source_commit": "e49fc55000653d1cce54a6a1ce2715d4e17d30e1",
+    "source_config_identity": "f42e38e7477009a8599cd2fcc7764c42b504b9a3fabc324a41c0839c684f4e8a"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring"
+}

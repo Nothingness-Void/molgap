@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-droppath-depth-100k-20261126-s42\\v1\\version1\\uniform010\\development_predictions.pt",
+      "sha256": "2f6b1027443ae487ad2d9a4343ad2c906b3b8fb9f840ae83d6e8060e1eca1cfc"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-droppath-depth-100k-20261126-s42\\v1\\version1\\depth_scaled010\\development_predictions.pt",
+      "sha256": "08177dca6264db48bf46a98343ebd85fe9748293a8ea6dedd7ad0fbbe68a6be4"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 2.9285658597946167,
+    "ensemble_gain_meV": 4.8475999712944144,
+    "ensemble_mae_meV": 127.81216801583767,
+    "fit": null,
+    "m_meV": 2.9285658597946167,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "depth_scaled010",
+        "ci95": [
+          2.1333035579919812,
+          3.742860300302505
+        ],
+        "delta": 2.9285658597946167,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "reference": "uniform010",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "depth_scaled010": 134.1240509170294,
+      "uniform010": 131.19548505723478
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

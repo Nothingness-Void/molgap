@@ -1,0 +1,38 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-demol-droppath-depth-100k-20261126-s42-depth_scaled010",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-demol-droppath-depth-100k-20261126-s42:depth_scaled010:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/closure_v1/decision.md",
+    "facts": {
+      "ci_meV": [
+        2.1333035579919812,
+        3.742860300302505
+      ],
+      "effect_meV": 2.9285658597946167,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_demol_droppath_depth_100k_20261126/closure_v1/measured_pcqm-demol-droppath-depth-100k-20261126-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

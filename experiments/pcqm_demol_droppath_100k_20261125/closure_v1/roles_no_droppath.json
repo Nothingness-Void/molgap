@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "no_droppath",
+    "arm_identity": "ef57a8a5eed629a5c0d0a1411ed2c32a88475fa380a297996af83abd1488c8ae",
+    "experiment_id": "pcqm_demol_droppath_100k_20261125",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-demol-droppath-100k-20261125-s42",
+    "package_identity": "c09e012987711655cda6b781fe3083504a0aa592db62a9e7a8ebf513f09fa388",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-demol-droppath-100k-20261125-s42",
+    "source_archive_sha256": "d3e466670e4c1df59e9ef964870e2d0c12e5871243bcca750c999acb3af5f1d0",
+    "source_commit": "d85bcb56b32b0527c3df79a067efd2aa1663102e",
+    "spec_identity": "bb8fdc654fe7254eb64d4d325775de38e844ea331de3932188bc69e13244800d",
+    "training_recipe_sha256": "04945d1f0d360f61ada47e9177fb12683b3f9f94acfa5507c220a76891d4d83d"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "82b7897e0c66ddca7bef5734b59e1783685686efa58d412f868f6fbba8cd8a8b"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 82b7897e0c66ddca7bef5734b59e1783685686efa58d412f868f6fbba8cd8a8b, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json",
+      "role_event_id": "role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json",
+      "role_event_id": "role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json",
+      "role_event_id": "role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json",
+      "role_event_id": "role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_droppath_100k_20261125/closure_v1/roles_no_droppath.json",
+      "role_event_id": "role-pcqm-demol-droppath-100k-20261125-s42-no_droppath-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-droppath-100k-20261125-s42:no_droppath:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    }
+  ]
+}

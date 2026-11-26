@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gated-chebyshev-100k-20261126-s42\\v1\\version1\\local_filter\\development_predictions.pt",
+      "sha256": "c956c8db48725ef3a37d7df2ba5bc8e5434b3195301cd79d12250e92f7688b17"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gated-chebyshev-100k-20261126-s42\\v1\\version1\\chebyshev4\\development_predictions.pt",
+      "sha256": "c28adbffae3110ba2d0d511918462b42e3394c8a662207e271e8a55f750ac0dc"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.830302038192741,
+    "ensemble_gain_meV": 7.19653339385988,
+    "ensemble_mae_meV": 152.7925565379858,
+    "fit": null,
+    "m_meV": 1.830302038192749,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "chebyshev4",
+        "ci95": [
+          0.8280582667589188,
+          2.8227607281208034
+        ],
+        "delta": 1.830302038192749,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0005,
+        "reference": "local_filter",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "chebyshev4": 160.90424095094204,
+      "local_filter": 159.0739389127493
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

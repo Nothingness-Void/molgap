@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-demol-ring-identity-100k-20261125-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-0",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_mean/terminal_staging/v1/24f461707b64cc79/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 5.202975392836111
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-demol-ring-identity-100k-20261125-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-allocation-0",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_mean/terminal_staging/v1/24f461707b64cc79/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.32563067922139
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    }
+  ]
+}

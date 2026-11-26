@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-ring-identity-100k-20261125-s42\\v1\\version1\\ring_specific\\development_predictions.pt",
+      "sha256": "7698250a887c2c52f5a042b1bde0d2e3c7f6f30d96bab312b19642ed239afd07"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-demol-ring-identity-100k-20261125-s42\\v1\\version1\\ring_mean\\development_predictions.pt",
+      "sha256": "1d9119ef21433619db511235754fa4f92579139386019081cf2f67a88e6ca5c9"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 0.7791507387161403,
+    "ensemble_gain_meV": 4.613426470756508,
+    "ensemble_mae_meV": 130.4113703840971,
+    "fit": null,
+    "m_meV": 0.7791507387161255,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "ring_mean",
+        "ci95": [
+          0.010792106986045848,
+          1.5650921843051906
+        ],
+        "delta": 0.7791507387161255,
+        "n_bootstrap": 2000,
+        "probability_better": 0.024,
+        "reference": "ring_specific",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "ring_mean": 135.4143722242117,
+      "ring_specific": 134.63522148549555
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

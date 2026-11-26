@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "6994e052d5adba2aedcf92e9eb11b4ac6b8319bf323ba99eb41d96a2c2d9129b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/_execution/chebyshev4/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "c63b2278b6500762b112d5939232d9894822a591c3f44462db577b034d98e9bd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/training_contract.json",
+      "name": "contract",
+      "sha256": "53bbe538b6a95d795093577f9f4a93fc666320141e55d10fe54c3bee7094b758"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "1be52411febec31726b153eaebfc069ebfe041623fbc0489e47afef69152b5b8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "c28adbffae3110ba2d0d511918462b42e3394c8a662207e271e8a55f750ac0dc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/development_predictions_ema0.9999.pt",
+      "name": "predictions_ema_0p9999",
+      "sha256": "93871095e4041b0bfa672d8e78626e3506598366efe653b7a0c33b18ffe110f5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "3da7835151c7c31c38df019953a201c1dffd913baa17d6c899abfbc3a05b854c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "c38989ddfd81ba1f0fd2fc99df298fc9b9be12e2f0fa9829fe962bb45f2d98e7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/selected_model_ema0.9999.pt",
+      "name": "selected_model_ema_0p9999",
+      "sha256": "918ab3c2d0978eae3213dad92b78bd622cc7e8a9084e13fc113038a53f885fbf"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "02edc0593cff35d9c979f3723a291705102c132d885cc6fc204f78c177fbb95c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gated-chebyshev-100k-20261126-s42/v1/version1/chebyshev4/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "e33c6d3d97234d2b0baf108e5f54b19e0c7be7b43400cf1536769b0ddbdd0683"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-gated-chebyshev-100k-20261126-s42-chebyshev4",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gated_chebyshev_100k_20261126/generated/9ce2eed7a3acbf43038f157e81d0df8848bb24f93b0365a85dc5b19eeadd28e2/chebyshev4/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.16090424095094205,
+    "missing_reason": null,
+    "selected_optimizer_step": 28116,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/runs/pcqm-gated-chebyshev-100k-20261126-s42/prospective/chebyshev4/terminal_staging/v1/c3f1cdfe329f56c9/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

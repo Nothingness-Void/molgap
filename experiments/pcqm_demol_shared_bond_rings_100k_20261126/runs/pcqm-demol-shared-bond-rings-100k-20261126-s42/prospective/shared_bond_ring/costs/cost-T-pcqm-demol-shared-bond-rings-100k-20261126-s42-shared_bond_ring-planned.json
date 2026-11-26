@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-demol-shared-bond-rings-100k-20261126-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring-planned",
+  "evidence_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 10.8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 5.4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-demol-shared-bond-rings-100k-20261126-s42:shared_bond_ring:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring"
+}

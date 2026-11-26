@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "chebyshev4": {
+      "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/closure_facts_chebyshev4.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "local_filter": {
+      "decision_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/closure_facts_local_filter.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "experiments/pcqm_gated_chebyshev_100k_20261126/closure_v1/audit_map.json"
+}

@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "ring_mean": {
+      "decision_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/closure_facts_ring_mean.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "ring_specific": {
+      "decision_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/closure_facts_ring_specific.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/audit_map.json"
+}

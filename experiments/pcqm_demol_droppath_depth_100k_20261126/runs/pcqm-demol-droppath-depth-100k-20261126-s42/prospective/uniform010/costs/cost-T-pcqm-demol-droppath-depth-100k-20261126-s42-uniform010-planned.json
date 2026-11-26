@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-demol-droppath-depth-100k-20261126-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-demol-droppath-depth-100k-20261126-s42-uniform010-planned",
+  "evidence_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/generated/529f4398dec71a40481b9ac33f4828e2f57e1c010418b2f53038b3298972a872/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 10.8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 5.4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-demol-droppath-depth-100k-20261126-s42:uniform010:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-droppath-depth-100k-20261126-s42-uniform010"
+}

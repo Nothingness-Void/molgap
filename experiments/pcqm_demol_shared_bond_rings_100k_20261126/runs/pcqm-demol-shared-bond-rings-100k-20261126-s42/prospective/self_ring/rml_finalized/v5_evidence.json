@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "4a6a1157cdd4ee74aac8c5a8c1f083fb49bd2a648a15adf996ec38547c6d0f21"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "f73788b876db3a6e01e477583fc14fd66b0957d4763b74216b925b9fa5473162"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/_execution/self_ring/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "f73788b876db3a6e01e477583fc14fd66b0957d4763b74216b925b9fa5473162"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/training_contract.json",
+      "name": "contract",
+      "sha256": "b32e042f1647e33a0b084d7c19f0d3b89fa710889088dc1c1af6d8b59d447c77"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "3347a690d74006affef53f36170a1796085bb089e2a91e469c2e918ca52f2d0f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "610a0dc82640b90eff7f743c18512a7e3c70db16a32c719334b718159f5f7439"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/development_predictions_ema0.9999.pt",
+      "name": "predictions_ema_0p9999",
+      "sha256": "ce7bbe3112f6706d144ff0c55e27cb1f85c9a170f2e4e1e3ee509106dc6cd13d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "7630b405288bd01eb57e8060beb4c1905440187b64a4bed800511d9ba27ecf71"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "947dee761dda085391affcffaaa2f98f21b6eb525ab3cdf872bfe373b08daae4"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/selected_model_ema0.9999.pt",
+      "name": "selected_model_ema_0p9999",
+      "sha256": "33c215a0c405fa371a568242532d305a12cf48cecada1c90e3f08fdc47a92da9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "3cfc4565c050843801fc145f281b53ffa659439ab8e054ee394dc852e3078697"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "69165d48964b50e3a10d36fee2bed959a9882ecee8d1e0ef7dbf3f4652c32ec6"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/self_ring/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13195910842359065,
+    "missing_reason": null,
+    "selected_optimizer_step": 33583,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/self_ring/terminal_staging/v1/122b76078621f366/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ring_mean",
+    "arm_identity": "71fffb8033097dcfc48319f88ff7116c6a0a3ac22eb16c05670bbd9295e68fae",
+    "experiment_id": "pcqm_demol_ring_identity_100k_20261125",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-demol-ring-identity-100k-20261125-s42",
+    "package_identity": "79cd3df67618d5289f85f7e9647d88a12795fae4223fd9028b7e12f76929533d",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-demol-ring-identity-100k-20261125-s42",
+    "source_archive_sha256": "fa77d393b141920d4bbc7892337277c78c0dbe5d888c47b36d9b07f73617bb59",
+    "source_commit": "8696ebda2debad674c61921171301065f317273a",
+    "spec_identity": "804ad204d42f9d9156440d058f7c74b82244e978c9c34a50c92eb89d31397c49",
+    "training_recipe_sha256": "eca632ea2e0aa1da2b31024e90012da73ebbabe3e3fb623dc042315fb3792e3f"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "ac9a59693474e806c0cce131d452ea2df33ff98adc38c54aa5dc1b96d30db13a"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 ac9a59693474e806c0cce131d452ea2df33ff98adc38c54aa5dc1b96d30db13a, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/roles_ring_mean.json",
+      "role_event_id": "role-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/roles_ring_mean.json",
+      "role_event_id": "role-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/roles_ring_mean.json",
+      "role_event_id": "role-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/roles_ring_mean.json",
+      "role_event_id": "role-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/roles_ring_mean.json",
+      "role_event_id": "role-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    }
+  ]
+}

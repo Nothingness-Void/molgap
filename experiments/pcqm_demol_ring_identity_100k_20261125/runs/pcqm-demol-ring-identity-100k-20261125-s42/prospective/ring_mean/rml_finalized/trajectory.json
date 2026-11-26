@@ -1,0 +1,135 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-demol-ring-identity-100k-20261125-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-planned",
+        "cost-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-0",
+        "cost-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_ring_identity_100k_20261125/generated/87224c26ef42d72cb81e12553ee25d40fd030b12116c2bd3da2a2d81619ca3b4/ring_mean/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-demol-ring-identity-100k-20261125-s42:ring_mean:downstream"
+      ],
+      "source_commit": "8696ebda2debad674c61921171301065f317273a",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/strict_qualification/0b013246a4f5b83e1e2b/ring_mean/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/decision.md",
+    "facts": {
+      "ci_meV": [
+        0.010792106986045848,
+        1.5650921843051906
+      ],
+      "effect_meV": 0.7791507387161255,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "DeMol-CIN",
+        "ring identity",
+        "pass-60 EMA",
+        "late give-back"
+      ],
+      "source": "experiments/pcqm_demol_ring_identity_100k_20261125/closure_v1/measured_pcqm-demol-ring-identity-100k-20261125-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/generated/87224c26ef42d72cb81e12553ee25d40fd030b12116c2bd3da2a2d81619ca3b4/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-demol-ring-identity-100k-20261125",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_ring_identity_100k_20261125/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/rml_decision_snapshots/13d2638ecba88220bb609c8917fb6df9440e2182140730b674ccf434f9a85b11.json",
+    "snapshot_sha256": "13d2638ecba88220bb609c8917fb6df9440e2182140730b674ccf434f9a85b11",
+    "state_timestamp": "2026-11-25T19:53:40.567935+09:00"
+  },
+  "family_id": "pcqm-demol-ring-identity-100k-20261125",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Molecule-average ring context suffices.",
+      "Ring-specific gains are localized to sparse multi-ring structures."
+    ],
+    "changed_mechanism": "demol_cin_ring_identity_vs_molecule_average_direct_return",
+    "cheapest_falsifier": "One fixed-exposure same-seed dual arm with only the direct ring return signal averaged in the control.",
+    "decision_changed_if_negative": "Close direct return identity at this exposure if the frozen gate is missed.",
+    "decision_changed_if_positive": "Support ring-specific return only at fixed endpoint for full minus mean <= -3 meV and paired 95% upper < 0.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean",
+    "observed_deficiency": "DeMol-CIN bundles ring-specific local incidence, virtual updates and readout; the direct ring identity contribution is unmeasured.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "pcqm-gptrans-triplet-norm-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the exact ring identity in DeMol-CIN direct ring return improve fixed-exposure accuracy versus molecule-average ring signals?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific-0b013246a4f5b83e1e2b",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_mean/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/generated/87224c26ef42d72cb81e12553ee25d40fd030b12116c2bd3da2a2d81619ca3b4/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_demol_ring_identity_100k_20261125/generated/87224c26ef42d72cb81e12553ee25d40fd030b12116c2bd3da2a2d81619ca3b4/ring_mean/recipe.json",
+      "experiments/pcqm_demol_ring_identity_100k_20261125/data_declaration.json",
+      "experiments/pcqm_demol_ring_identity_100k_20261125/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_ring_identity_100k_20261125/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "ring_mean",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-demol-ring-identity-100k-20261125-s42",
+      "reference_arm_id": "ring_specific",
+      "reference_trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific",
+      "reference_trajectory_ref": "experiments/pcqm_demol_ring_identity_100k_20261125/runs/pcqm-demol-ring-identity-100k-20261125-s42/prospective/ring_specific/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "804ad204d42f9d9156440d058f7c74b82244e978c9c34a50c92eb89d31397c49"
+    },
+    "source_commit": "8696ebda2debad674c61921171301065f317273a",
+    "source_config_identity": "71fffb8033097dcfc48319f88ff7116c6a0a3ac22eb16c05670bbd9295e68fae"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+}

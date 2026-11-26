@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_46860",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/self_ring/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/generated/89094b73e66e16fdd4a944d1c3d92666a53e51fadf722f57c27ca27ef32f2179/self_ring/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+  "run_id": "pcqm-demol-shared-bond-rings-100k-20261126-s42:self_ring:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/self_ring/terminal_staging/v1/122b76078621f366/terminal.json",
+  "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-demol-shared-bond-rings-100k-20261126-s42/v1/version1/self_ring/canonical_trace.json",
+  "trace_artifact_sha256": "3cfc4565c050843801fc145f281b53ffa659439ab8e054ee394dc852e3078697",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "optimizer_steps"
+}

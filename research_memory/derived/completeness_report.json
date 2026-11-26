@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 285,
+    "trajectories_total": 295,
     "with_complete_native_measurement": 39,
-    "with_cost_event": 274,
-    "with_incomplete_native_measurement": 235,
+    "with_cost_event": 284,
+    "with_incomplete_native_measurement": 245,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -175,9 +175,19 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 235,
+      "count": 245,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-demol-droppath-100k-20261125-s42-droppath010",
+        "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath",
+        "T-pcqm-demol-droppath-depth-100k-20261126-s42-depth_scaled010",
+        "T-pcqm-demol-droppath-depth-100k-20261126-s42-uniform010",
+        "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean",
+        "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific",
+        "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+        "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring",
+        "T-pcqm-gated-chebyshev-100k-20261126-s42-chebyshev4",
+        "T-pcqm-gated-chebyshev-100k-20261126-s42-local_filter",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",

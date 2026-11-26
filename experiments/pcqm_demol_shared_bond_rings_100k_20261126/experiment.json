@@ -1,0 +1,97 @@
+{
+  "arms": [
+    {
+      "arm_id": "self_ring"
+    },
+    {
+      "arm_id": "shared_bond_ring",
+      "model": {
+        "addons": [
+          "demol_cin_shared_ring_exchange"
+        ],
+        "family": "gptrans_t",
+        "version": "2"
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority": {
+    "account": "kaseichou",
+    "allocated_t4_hours_ceiling": 12,
+    "allocation_wall_limit_seconds": 21600,
+    "arms": [
+      "self_ring",
+      "shared_bond_ring"
+    ],
+    "authority": "User requested deployment on three Kaggle accounts on 2026-11-26; design reviewed by the paper-reading task.",
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "format": "molgap-execution-authority-v1",
+    "protected_roles_authorized": [],
+    "same_run_reference_arm_id": "self_ring",
+    "scope": "One paired 100K job, seed42, FP32, T4x2; train and internal development only; six-hour allocation.",
+    "seeds": [
+      42
+    ],
+    "user_authorized": true,
+    "user_notebook_wall_ceiling_seconds": 21600
+  },
+  "experiment_id": "pcqm_demol_shared_bond_rings_100k_20261126",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-demol-shared-bond-rings-100k-20261126-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "One same-job fixed-exposure pair testing sharing states along common ring bonds.",
+    "estimated_device_hours": 10.8,
+    "estimated_wall_hours": 5.4,
+    "hardware": "Tesla T4x2 FP32",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "Existing ring-to-atom and ring-to-bond paths already propagate these signals.",
+      "The new update amplifies redundancy at fused rings."
+    ],
+    "changed_mechanism": "actual-neighbor-ring-state-vs-self-on-shared-bond-incidence",
+    "closed_families": [
+      "pcqm-demol-ring-identity-100k-20261125"
+    ],
+    "deficiency": "The preceding intervention improved the 27,021 multi-ring development rows by 3.586 meV while missing the full-cohort gate. It did not test direct ring-to-ring communication over shared covalent bonds.",
+    "negative_decision": "Retain subgroup evidence and close if the full-cohort gate is missed.",
+    "policy_id": "pcqm-demol-shared-bond-rings-100k-20261126",
+    "positive_decision": "Nominate only when endpoint candidate-minus-control <= -3.0 meV, paired upper <0, and the predeclared shared-bond stratum improves.",
+    "question": "Does exchanging state between chordless rings that share an actual bond improve DeMol-CIN over a matched self-ring projection?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "self_ring",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "data_ref": {
+      "arm_id": "droppath010",
+      "spec_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/data_declaration.json"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "model": {
+      "addons": [
+        "demol_cin_shared_ring_self"
+      ],
+      "family": "gptrans_t",
+      "version": "2"
+    },
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/recipe.json",
+    "training": {}
+  },
+  "timestamp": "2026-11-26T11:08:41.209525+09:00"
+}
