@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e761a501a417657cd7b1a16581e7a1e407d1d781d846a0f7f69bf09a981201fc",
+  "source_digest": "c7cdb6f0fda42f1ee32c523e41985a5b985d5ae539df501a737e89a4a54bcf52",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -49,6 +49,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-demol-droppath-100k-20261125-s42-no_droppath"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-demol-droppath-depth-100k-20261126",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_droppath_depth_100k_20261126/runs/pcqm-demol-droppath-depth-100k-20261126-s42/prospective/depth_scaled010/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-droppath-depth-100k-20261126-s42-depth_scaled010"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-droppath-depth-100k-20261126-s42-depth_scaled010"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_droppath_depth_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-demol-droppath-depth-100k-20261126",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_droppath_depth_100k_20261126/runs/pcqm-demol-droppath-depth-100k-20261126-s42/prospective/uniform010/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-droppath-depth-100k-20261126-s42-uniform010"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-droppath-depth-100k-20261126-s42-uniform010"
     },
     {
       "completeness_status": "complete",
