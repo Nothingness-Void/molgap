@@ -1,190 +1,70 @@
 # Architecture
 
-Repository and artifact names follow `NAMING.md`. This file owns placement and
-code boundaries; it does not duplicate naming rules.
-
 This file answers one question: **to change behavior X, which code owns it?**
-Model recommendations and job status belong in `CURRENT_STATE.md`.
-Track A/B/C ownership belongs in `TRACKS.md`.
+For live model recommendations and job status read [CURRENT_STATE.md](CURRENT_STATE.md);
+for tracks read [TRACKS.md](TRACKS.md); for naming read [NAMING.md](NAMING.md);
+for workflow order read [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md) and
+[EXPERIMENT_QUICKSTART.md](docs/operations/EXPERIMENT_QUICKSTART.md).
 
-## Reuse Entry Point
+## Core Boundaries
 
-Start with the [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
-The [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md)
-owns preparation, family dispatch, platform handoff and acceptance. The
-[addon reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) routes existing
-family trainers, checkpoint/inference, saved-prediction analysis and RML
-owners. The [local CLI](docs/operations/EXPERIMENT_CLI.md) exposes those local
-stages; it does not submit to a platform. The package map below is a code
-ownership index, not execution authority or a copy of scientific contracts.
+- Reusable code lives in `src/molgap/`; `production/*/scripts/`, `experiments/*/`, and `platforms/local/` wrappers stay thin.
+- Evidence lives in `experiments/` and `platforms/_records/` and never supplies runtime logic.
+- Model assets live in `models/` (authoritative registry in `src/molgap/constants.py`); archived code lives on `archive` branch.
+- Active CLIs resolve paths from `constants.py` (`ACQUIRE_DIR`..`DATABASE_DIR`), never `Path(__file__).parents[n]` (`tests/test_repository_layout.py`).
 
-## Boundary
+## Active Core Ownership
 
-- Reusable behavior lives in `src/molgap/`.
-- Stage `scripts/` under `production/`, experiment wrappers and `platforms/local/`
-  entry points parse arguments, call package code, and persist outputs.
-- Evidence lives in `experiments/` and `platforms/_records/` and never supplies
-  runtime logic.
-- `models/` contains assets; registration is explicit in `constants.py`.
-- Archived code lives on the `archive` branch and is not imported by supported
-  paths. Commit `9bd942fd` removed 28 files kept there (the in-package phase-8
-  archive plus `hybrid.py`, `late_router.py`, `schnetpack.py`, `visnet.py`).
-
-## Package Map
-
-| Module | Owns | Edit when |
-|---|---|---|
-| `experiment_catalog.py`, `experiment_execution.py` | Single family/addon declarations and derived execution adapters | Adding supported capabilities once, retaining explicit qualification limits |
-| `experiment_input.py`, `experiment_run.py`, `local_runtime.py` | Human input compilation, frozen-run lifecycle and selected-checkout execution | Changing preparation/recovery mechanics without changing scientific contracts |
-| `training/`, `data/`, `models/` under `src/molgap/` | Shared loop/state/session, packed/fixed records and model substrate | Existing top-level module aliases retain import and checkpoint compatibility |
-| `model_substrate.py`, `family_training_state.py`, `fast_sandbox.py`, `source_dependencies.py` | Reviewed addon slots, optional Live/Raw/Clean state, synthetic CPU checks and AST source closure | See [four-layer runtime and limitations](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md); existing accelerated sessions remain the default |
-| `shared_model_adapter.py`, `graph_screen_training.py`, `pcqm_graph_inputs.py` | Opt-in registered pure-2D graph factory ABI and bounded normalized-Gap lifecycle | Compatible new factories reuse this owner; registration is not native qualification or authority |
-| `family_training_*.py` | K1/GPTrans common loop, pinned recipe/data, accelerated family hooks, persistent loaders and resumable session | See [owners and migration status](docs/operations/FAMILY_TRAINING_CORE.md); public registration/native qualification and artifact acceptance remain explicit gates |
-| `family_model_ops.py`, `family_training_policy.py` | Shared leaf operations and registered lifecycle policy hooks | [Examples and extension boundary](docs/operations/FAMILY_TRAINING_EXAMPLES.md); no host-specific controller dependency |
-| `training_logging.py` | Fixed shared-session training summary and cadence; worker-line relay | See [training logging](docs/operations/TRAINING_LOGGING.md); reuse this for metric/state labels and epoch/seconds/batch output |
-| `gptrans_execution_backend.py`, `gptrans_execution_hotpath.py`, `gptrans_execution_tuning.py` | Automatic accelerated native training scopes, resource/cache settings, transfer/EMA reuse | Changing shared execution mechanics; see [default policy and evidence](docs/operations/GPTRANS_EXECUTION.md); no slow backend choice |
-| `experiment_workflow.py`, `kaggle_workflow.py` | Platform-neutral family preparation plus legacy Kaggle comparison lifecycle and release binding | Changing shared preparation or the legacy Kaggle adapter; workload skills own remote submission |
-| `execution_comparison.py`, `kaggle_submission.py` | Explicit comparison envelopes and journaled prepared-release platform operations | See [submission boundary](docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md); no trainer, scientific gate or implicit authority |
-| `experiment_execution.py`, `experiment_training_worker.py` | Static family/addon/mode dispatch and fixed per-arm training subprocess | Registering an executable family/mode or changing worker bindings |
-| `experiment_source_inventory.py` | Reviewed shared bootstrap paths; family serialized-module dependencies live in `experiment_execution.py` | Adding/removing a reviewed packaged dependency |
-| `kaggle_pair_runtime.py`, `platforms/kaggle/run_experiment.py` | Frozen Kaggle bootstrap and all-arm preflight barrier before training | Changing the generic Kaggle launch and phase barrier |
-| `experiment_family_workflow.py`, `experiment_family_artifacts.py` | Shared producer events, frozen-recipe output inspection and bridge to existing terminal closure | Adding a compatible family output profile; capability limits are in `docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md` |
-| `experiment_launch.py` | Verified local launch receipts and immutable byte publication | Changing launch binding or the shared atomic no-overwrite publisher |
-| `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
-| `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
-| `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
-| `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
-| `gps.py` | `GPSWrapper` and 2D encoding | Changing the 2D encoder |
-| `categorical_gps.py` | Desktop categorical and radical-context GPS encoders | Extending categorical features without modifying frozen K1 GPS source |
-| `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
-| `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing GPTrans node-to-node/node-to-pair/pair-to-node behavior |
-| `gptrans_bond_local.py` | Registered true-bond residual component on the GPTrans core | Changing local messages; the [shared session](docs/operations/FAMILY_TRAINING_CORE.md#addons-and-closure) still owns execution |
-| `pcqm_gptrans_v4.py` | V4-certified fixed-100K GPTrans reference runtime | Changing GPTrans baseline data, optimizer, determinism, recovery, or evidence contracts |
-| `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
-| `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
-| `qm9_screen.py` | Fixed QM9 splits, graph caches, encoder training, and embedding export | Changing architecture-screen data or encoder protocol |
-| `qm9_conformer.py` | Paired-conformer QM9 training and evaluation | Changing conformer-robust training experiments |
-| `qm9_payloads.py` | Cached embedding alignment and view combination | Changing architecture-screen payload operations |
-| `qm9_fusion.py` | Frozen embedding gates, residual heads, and routing | Changing QM9 fusion or route screens |
-| `conformer_ab.py` | Resumable paired ETKDG/MMFF timing and frozen bounded-fusion evaluation | Comparing conformer construction cost against final-model accuracy |
-| `pcqm_expert.py` | PCQM GINE graph contracts, packed scale-up, checkpoints, and artifact acceptance | Continuing or validating the benchmark-only PCQM Gap specialist |
-| `pcqm_gap_architecture.py` | Official OGB categorical Structural GPS and persistent EdgeState Gap-only candidates | Screening bounded pure-2D PCQM leaderboard architectures |
-| `edge_state_model_only_v1.py`, `edge_state_adapter.py` | Basic OGB EdgeState model construction and Spec-bound depth/K1 dispatch; no trainer | Declaring a new EdgeState architecture variant without changing frozen K1 sources |
-| `edge_state_training_core.py` | Spec-bound EdgeState train-target stats, epoch sampler, batch checks, normalized Gap step, development predictions, and checkpoint/resume; no science recipe or platform submitter | Reusing model-facing training logic for a new EdgeState experiment |
-| `pcqm_route_b.py` | Aligned expanded-2D and paired ETKDGv3+MMFF PCQM caches | Preparing the Track B PCQM precision experiment |
-| `ensemble_evaluation.py` | Identity-aligned equal-seed evaluation | Changing multi-seed accuracy-mode evidence |
-| `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing GPS7/GPS9 Router-label preparation |
-| `route_b_fusion.py` | Recoverable multi-expert bounded 2D+3D fusion | Changing minimal/cost/precision fusion candidates |
-| `hierarchical_fusion.py` | Frozen 2D identity plus bounded dual-SchNet correction | Changing staged 2D-to-3D Fusion behavior |
-| `conservative_fusion_payload.py` | Compact aligned frozen-2D/dual-SchNet training and external payloads | Changing the Drive handoff or scaffold-split contract for conservative Fusion |
-| `conservative_fusion_runner.py` | Resumable multi-seed conservative Fusion training, predictions, and external gate | Changing the Colab P1 execution or acceptance artifacts |
-| `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance contracts |
-| `hierarchical_external_eval.py` | Paired same-molecule external evaluation of the hierarchical Fusion | Changing how a hierarchical candidate is compared against its own 2D base |
-| `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set fed to a 3D encoder |
-| `model_reporting.py` | Evidence-backed comparison tables | Changing production-model reporting layout |
-| `fusion.py` | `FusionHead` | Changing embedding-level fusion |
-| `inference.py` | Model loading, batch prediction, routing, embeddings, UQ API | Changing prediction behavior |
-| `inference_benchmark.py` | Warm new-SMILES latency, throughput, and checkpoint-hash evidence | Changing how inference cost is measured |
-| `__init__.py` | Lazy package-level public exports | Changing the public import surface |
-| `multi2d.py` | Aligned experts, fixed ensembles, bootstrap/oracle metrics | Changing multi-expert evaluation or serving |
-| `multi2d_router_fusion.py` | Frozen-GPS dense gates and pre-dispatch target routers | Changing learned GPS7/GPS9/GPS11 prediction routing |
-| `data_repair.py` | Durable row ledgers, quality flags, identity reconciliation, and fixed-size repair manifests | Repairing a scaled B3LYP corpus without overwriting raw data |
-| `distillation.py` | Chunked teacher embeddings, soft targets, and fusion-compatible student exports | Changing multi-expert compression |
-| `hierarchical_oracle.py` | Budgeted expert-switch upper bounds and gain-label evidence | Changing hierarchical routing feasibility analysis |
-| `experiment_db.py` | Normalized model, evaluation-protocol, artifact, failure-cause, and reuse database builds | Changing cross-experiment inventory or comparison rules |
-| `retention.py` | Retention losses and replay weighting for controlled scale-up | Changing retention-aware encoder objectives |
-| `gap_specialization.py` | Gap-only graph caches, embedding parts, and specialist head training | Changing frozen-embedding Gap specialization |
-| `pubchemqc_architecture.py` | PubChemQC scaffold-screen SchNet training over one or two ETKDG views | Changing the 100K architecture-screen 3D protocol |
-| `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
-| `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
-| `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
-| `v5_common.py` | Machine-neutral V5 evidence-envelope and comparability exports shared by Desktop, Server, and RML | Changing shared V5 evidence semantics |
-| `comparison_readiness.py` | Fail-closed prelaunch/post-run comparison classes, reference bundles, role/trace applicability, and artifact bindings | Changing V5 comparability rules |
-| `evidence_pointers.py` | Safe repository pointer resolution and immutable artifact SHA verification | Changing repository evidence binding safety |
-| `v5_desktop.py` | Pure V5 desktop durability, reconciliation, ownership, role, and full-admission gates; re-exports shared evidence validation and delegates Desktop promotion comparison to `screen_policy.py` | Changing local desktop workflow decisions or pointer-only evidence migration without adding live orchestration |
-| `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation; `cards.py` (read-only `cards`/`lookup`/`gaps`), `saved_analysis.py` (post-hoc `analyze` over saved predictions), `schemas.py` (outcomes, closure facts, failure-mode enum), `validate.py` (catalog and errata) | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules; see the [interface reference](docs/operations/RML_INTERFACES.md) |
-| `experiment_cli.py`, `experiment_terminal_staging.py`, `experiment_run_acceptance.py`, `local_training.py` | Local experiment CLI, `draft-closure`/role-audit drafting, closure-facts binding, run-ID acceptance and local single-process training | Changing local closure/acceptance mechanics; see the [CLI reference](docs/operations/EXPERIMENT_CLI.md) |
-| `experiment_attribution.py` | Post-training diagnostic and failure-mode attribution helpers for family runs | Changing reusable attribution analysis |
-| `common/`, `compat/` under `src/molgap/` | Shared identity/IO/path/spec/transport mechanisms; lazy legacy import aliases | Changing a cross-host mechanism or retained public import |
-| `platforms/local/infra_budget.py` | Standalone infrastructure size report against `docs/operations/INFRA_BUDGET.json` | Changing a budget metric; no experiment flow calls it |
-| `v4_runtime.py` | Legacy-compatible Torch loading/statistics/optimizer setup, source bundle validation, and bounded numerical-repeatability certificates | Changing shared V4 runtime compatibility behavior |
-| `v4_bundle.py` | Deterministic, allowlisted, commit-bound minimal source archives | Changing V4 source packaging or reproducibility |
-| `v4_submission.py`, `v4_cli.py`, `v4_audit.py` | Run-spec identities, adapter dispatch, local preflight, and fail-closed static checks | Changing V4 preparation and submission checks |
-| `pcqm_route_b_search.py` | Nested resumable hyperparameter search over Route B encoders | Changing the Route B search protocol or its nested subsets |
-| `pcqm_route_b_acceptance.py` | Strict acceptance of completed Route B encoder outputs | Changing what makes an encoder output acceptable |
-| `pcqm_route_b_fusion.py` | Development-only PCQM Gap bounded fusion, identity A/B, and resumable seed training | Changing the Track B frozen-embedding fusion protocol |
-| `pcqm_route_b_evaluation.py` | Fixed official-valid graph replay, downloaded Fusion acceptance, deterministic inference, and Gap metrics | Evaluating a frozen Track B Fusion without reopening development selection |
-| `pcqm_official_edge_state.py` | Official PCQM4Mv2 split identity, train/valid graph shards, from-scratch EdgeState training, and OGB submission files | Running the isolated full-data Track B leaderboard attempt |
-| `pcqm_fixed_datasets.py` | Immutable OGB PCQM4Mv2 content store, nested scale manifests, and cross-platform identity acceptance | Freezing official 100K/500K/1M/full dataset infrastructure |
-| `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where the `torch_cluster` wheel is ABI-incompatible |
-| `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU-only clusters | Building conformer shards without PyG on the worker |
-| `repaired_2m_3d_colab.py` | Durable Colab repaired-2M graph shards and lightweight SchNet | Changing the remote repaired-2M 3D workflow |
-| `repaired_2m_schnet.py` | Shard-streamed primary and dual-conformer repaired-2M SchNet training | Training accepted repaired-2M 3D views without loading the full cache into RAM |
-| `residual_attribution.py` | Paired residual attribution and molecular descriptors | Changing model-versus-model residual diagnosis |
-| `pubchemqc.py` | PubChemQC streaming, filtering, identity normalization | Changing source acquisition |
-| `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |
-| `router_sampling.py` | Diverse selection and scaffold keys | Changing Router sampling |
-| `utils.py` | Shared splits, metrics, SMILES, fingerprints, and IO | Changing cross-cutting utilities |
-| `tensornet.py` | Vendored closed 3D A/B implementation | Reproducing `experiments/_closed/ab3d/comparison.md` only |
-
-## Loading Structure
-
-The September-2026 full-run line (K1 and GPTrans full runners, convergence,
-official scoring and full acceptance) is archived on `origin/archive` and is
-reference only; `experiments/pcqm_k1_gptrans_full_fusion/README.md` indexes its
-evidence. `pcqm_k1_gptrans_fusion.py` stays because canonical RML records bind it.
-Temporary worktree ownership is recorded only in `BRANCHES.md`.
-
-- `load_repaired_2m_2d(key=...)` loads a pure-2D multi-expert registry entry:
-  several direct-output GPS predictors plus either a dense soft gate
-  (`kind: multi2d_dense`) or a fixed equal average (`kind: multi2d_equal`). It
-  has no 3D or fusion component.
-- `load_hybrid(key=...)` loads one registry-defined 2D + 3D + fusion trio.
-- `load_routed_dual_gps_hybrid(key=...)` loads a routed hybrid registry entry.
-- `predict_smiles_batch_repaired_2m_2d()`, `predict_smiles_batch_hybrid()`, and
-  `predict_smiles_batch_routed_dual_gps()` are the corresponding batch paths.
-- The registry key recommended for use is intentionally not repeated here; read
-  `CURRENT_STATE.md`. A loader default is a component/compatibility choice and
-  does not imply the recommended predictor.
-- Registry entries flagged `artifact_retained: False` are provenance only; their
-  checkpoints are absent and loading them fails.
-- Registry structure and exact asset paths are authoritative in
-  `src/molgap/constants.py`.
-
-## Tree Map
-
-Three top-level trees, split by role rather than by calendar phase. A phase
-number ages; a role does not.
-
-| Tree | Answers | Entry point |
-|---|---|---|
-| `production/` | What ships, in data-flow order | `production/README.md` |
-| `experiments/` | One directory per open or closed question | `experiments/README.md` |
-| `platforms/` | How a run reaches a given compute environment | `platforms/README.md` |
-| `research_memory/` | What evidence-linked trajectories, reuse, cost, and completeness gaps exist | `research_memory/README.md` |
-
-Each production stage keeps its own `scripts/` for argument parsing and output
-persistence; the reusable behavior stays in `src/molgap/`. Stage roots are
-constants (`ACQUIRE_DIR` through `DATABASE_DIR`) so renaming a stage is a
-one-line change in `constants.py`.
-
-Every active CLI must resolve paths from those constants rather than from
-`Path(__file__).parents[n]`, because a depth-derived root breaks the moment a
-file moves. `tests/test_repository_layout.py` enforces this, checks the
-test-time CLI alias table still resolves, and runs `--help` on one CLI per tree.
-
-The frozen phase 1-7 line and retired production evidence are held on the
-repository's `archive` branch. Do not recreate retired production history
-directories on the desktop delivery branch. Historical model loading, when explicitly needed,
-uses the local assets under `models/archive/` and `data/cache/archive/`.
-
-## Asset Map
-
-| Path | Role |
+### Local CLI, Launchers, Platform Adapters & Dashboards
+| Path | Owns |
 |---|---|
-| `data/raw/` | Source tables and downloaded raw inputs |
-| `data/cache/` | Regenerable local graph/embedding caches |
-| `models/README.md` | Checkpoint asset map |
+| `platforms/local/run.py` | Selected-checkout launcher (uses worktree `src/` with primary `.venv`) |
+| `platforms/local/accept_run.py` | Local acceptance & `--closure-input` wrapper over `accept-workflow` |
+| `platforms/local/infra_budget.py` | Standalone infra size check against `docs/operations/INFRA_BUDGET.json` |
+| `src/molgap/experiment_cli.py`, `src/molgap/experiment_input.py`, `src/molgap/experiment_run.py`, `src/molgap/local_runtime.py` | Unified local CLI ([EXPERIMENT_CLI.md](docs/operations/EXPERIMENT_CLI.md)), human-input freeze/compile, frozen-run lifecycle |
+| `src/molgap/experiment_workflow.py`, `src/molgap/kaggle_workflow.py`, `src/molgap/kaggle_submission.py` | Platform-neutral preparation, Kaggle release binding, journaled submission (`PHASE_NEXT`) |
+| `platforms/kaggle/submit_workflow.py`, `platforms/kaggle/retrieve_family_outputs.py` | Kaggle submission & exact-version selective retrieval (skills own routine commands) |
+| `platforms/kaggle/dashboard.py`, `platforms/ims/check_queue.py`, `platforms/ims/dashboard/en.json` | Bilingual read-only Kaggle & IMS status/quota dashboards |
 
-Experiment method and conclusions live in each experiment's own decision record;
-follow `experiments/README.md` rather than restating them here.
+### Model Registry, Active Backbones & Shared Training
+| Path | Owns |
+|---|---|
+| `src/molgap/experiment_catalog.py`, `src/molgap/experiment_execution.py` | Single family/addon declarations, compiler runnable status, worker dispatch |
+| `src/molgap/gptrans.py`, `src/molgap/gptrans_bond_local.py`, `src/molgap/pcqm_gptrans_v4.py`, `src/molgap/gptrans_execution_*.py` | GPTrans-T node/pair core, true-bond residual addon, V4 100K reference, accelerated backend |
+| `src/molgap/categorical_gps.py`, `src/molgap/pair_gps_2d.py`, `src/molgap/pcqm_gap_architecture.py`, `src/molgap/edge_state_*.py` | K1 categorical GPS, PairGPS, OGB EdgeState models, adapters & training core |
+| `src/molgap/family_training_*.py`, `src/molgap/training/`, `src/molgap/data/`, `src/molgap/models/` | Shared K1/GPTrans training loop/state/loaders/policy, packed fixed records, model substrate |
+| `src/molgap/training_logging.py`, `src/molgap/model_substrate.py`, `src/molgap/fast_sandbox.py`, `src/molgap/source_dependencies.py` | Frozen training log cadence ([TRAINING_LOGGING.md](docs/operations/TRAINING_LOGGING.md)), addon slots, CPU sandbox, AST source closure |
+
+### Research Memory (RML), Acceptance & V5 Governance
+| Path | Owns |
+|---|---|
+| `src/molgap/research_memory/` | RML compiler & CLI ([RML_INTERFACES.md](docs/operations/RML_INTERFACES.md)): `cli.py`, `schemas.py` (`TRAJECTORY_OUTCOMES`, `FAILURE_MODES`, closure facts), `cards.py`, `saved_analysis.py`, `validate.py` |
+| `src/molgap/experiment_terminal_staging.py`, `src/molgap/experiment_run_acceptance.py`, `src/molgap/experiment_attribution.py` | `draft-closure` / role-audit drafting, closure-facts binding, run-ID strict acceptance, paired attribution |
+| `src/molgap/v5_common.py`, `src/molgap/v5_desktop.py`, `src/molgap/comparison_readiness.py`, `src/molgap/screen_policy.py`, `src/molgap/evidence_pointers.py` | V5 evidence envelopes, desktop durability/reconciliation gates, comparability & SHA pointer checks |
+| `src/molgap/common/`, `src/molgap/compat/` | Cross-host identity/IO/path/spec/transport helpers and lazy legacy import aliases |
+
+### Public Inference & Production (Track A)
+| Path | Owns |
+|---|---|
+| `src/molgap/inference.py`, `src/molgap/__init__.py` | Public lazy inference API (`load_repaired_2m_2d`, `load_hybrid`, `load_routed_dual_gps_hybrid`, batch predictors) |
+| `src/molgap/constants.py` | Repository paths, stage roots, hyperparameters, authoritative model registry |
+| `src/molgap/graphs.py`, `src/molgap/gps.py`, `src/molgap/schnet.py`, `src/molgap/gine.py`, `src/molgap/egnn.py`, `src/molgap/fusion.py`, `src/molgap/multi2d.py` | SMILES-to-2D/3D PyG graphs (ETKDG), core encoders, `FusionHead`, multi-2D ensembles |
+
+> Note: Recommended registry keys live only in `CURRENT_STATE.md`; `artifact_retained: False` entries are provenance-only and cannot be loaded.
+
+## Tree & Asset Map
+
+| Path | Owns | Entry point |
+|---|---|---|
+| `production/` | Shipping pipeline in data-flow order (`01_acquire`..`07_database`) | `production/README.md` |
+| `experiments/` | One directory per open or closed scientific question | `experiments/README.md` |
+| `platforms/` | Compute adapters, remote boundaries, dashboards, records | `platforms/README.md` |
+| `research_memory/` | RML schemas, lifecycle docs, generated derived indexes (`families.md`) | `research_memory/README.md` |
+| `data/raw/`, `data/cache/`, `models/README.md` | Raw source tables, regenerable caches, checkpoint asset map | `models/README.md` |
+
+## Specialized & Legacy Modules (`src/molgap/`)
+
+- **PCQM data & Route B:** `pcqm_fixed_datasets.py`, `pcqm_official_edge_state.py`, `pcqm_expert.py`, `pcqm_route_b*.py`, `pcqm_graph_inputs.py`, `pcqm_k1_gptrans_fusion.py` (kept for canonical RML bindings; Sep-2026 full runners live on `origin/archive`).
+- **QM9 & conformer screens:** `qm9_screen.py`, `qm9_conformer.py`, `qm9_payloads.py`, `qm9_fusion.py`, `conformer_ab.py`, `pubchemqc.py`, `pubchemqc_architecture.py`, `geometry_features.py`, `structural_encoding.py`, `etkdg_array.py`, `portable_radius.py`.
+- **Fusion, routing, data repair & reporting:** `hierarchical_fusion.py`, `hierarchical_external_eval.py`, `hierarchical_oracle.py`, `conservative_fusion_*.py`, `route_b_fusion.py`, `multi2d_router_fusion.py`, `router.py`, `router_sampling.py`, `oof_planning.py`, `ensemble_evaluation.py`, `data_repair.py`, `distillation.py`, `retention.py`, `gap_specialization.py`, `artifact_acceptance.py`, `residual_attribution.py`, `model_reporting.py`, `inference_benchmark.py`, `experiment_db.py`, `utils.py`, `tensornet.py`.
+- **V4 & packaging internals:** `v4_runtime.py`, `v4_bundle.py`, `v4_submission.py`, `v4_cli.py`, `v4_audit.py`, `experiment_package.py`, `experiment_preflight.py`, `experiment_launch.py`, `experiment_prospective.py`, `experiment_terminal.py`, `experiment_family_workflow.py`, `experiment_family_artifacts.py`, `experiment_source_inventory.py`, `kaggle_pair_runtime.py`, `training_reproducibility.py`, `execution_comparison.py`, `repaired_2m_*.py`.

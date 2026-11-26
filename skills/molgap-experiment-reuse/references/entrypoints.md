@@ -34,7 +34,7 @@ import an experiment-local implementation as a universal model adapter.
   `src/molgap/inference.py` route. `src/molgap/conformer_ab.py` has one specific
   accepted frozen-route example. Confirm checkpoint bytes, architecture,
   transform, role, and source-index semantics before an intervention.
-- `python -m molgap.experiment_cli run-diagnostic` and
+- `platforms/local/run.py -- run-diagnostic` and
   `src/molgap/experiment_runner.py:run_experiment` only probe metadata or
   construct a random model. They do not load a frozen checkpoint, perform a
   forward pass, or provide inference authority.
@@ -51,8 +51,8 @@ import an experiment-local implementation as a universal model adapter.
 
 ## Identity, package, preflight, and launch binding
 
-- Start at `docs/operations/EXPERIMENT_CLI.md`, then read only the relevant
-  detailed `EXPERIMENT_*` contract. Use `python -m molgap.experiment_cli`
+- Start at `docs/operations/EXPERIMENT_CLI.md` (and `<command> --help` for live flags), then read only the relevant
+  detailed `EXPERIMENT_*` contract. Use `platforms/local/run.py --`
   commands `validate-spec`, `plan-prospective`, `package`, `preflight`, and
   `launch-receipt` when their declared capability fits. `plan-prospective`
   publishes RML and may partially publish on failure; inspect its result.
@@ -79,13 +79,13 @@ import an experiment-local implementation as a universal model adapter.
   `platforms/local/train.py --accept-only` for a local single-model run. Read
   `research_memory/LIFECYCLE.md` when changing RML implementation. The adapter validates observed artifacts and exports the accepted
   evidence inputs; RML finalization does not rerun predictions.
-- `python -m molgap.experiment_cli terminal` translates a validated descriptor
+- `platforms/local/run.py -- terminal` translates a validated descriptor
   read-only by default. `--execute` invokes
   `src/molgap/experiment_terminal.py:execute_terminal_descriptor`, which uses
   `src/molgap/research_memory/terminal_wiring.py:close_terminal_multi_arm`.
   Translation is not an acceptance dry run. Inspect
   `tests/test_experiment_terminal.py` for the binding contract.
-- `python -m molgap.research_memory` exposes `recover-trace`,
+- `platforms/local/run.py --module molgap.research_memory --` exposes `recover-trace`,
   `terminal-pipeline`, `validate`, `rebuild`, `check --frozen`, and
   `replay-pool`. `research_memory/LIFECYCLE.md` owns their role, cost, trace,
   minimal-retention, and replay limits. Each arm needs its own accepted

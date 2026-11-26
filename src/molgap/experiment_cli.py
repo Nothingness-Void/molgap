@@ -21,9 +21,40 @@ from .experiment_workflow import check_experiment_preparation, prepare_experimen
 from .experiment_terminal import (
     TerminalDescriptor, execute_terminal_descriptor, translate_terminal_descriptor,
 )
+from .research_memory.schemas import TRAJECTORY_OUTCOMES
 
 
 _SUCCESS = {"COMPLETE", "MECHANICALLY_VERIFIED"}  # any other status exits 1
+_OUTCOMES = tuple(sorted(TRAJECTORY_OUTCOMES))
+_ROLE_HELP = "Observed truth ROLE=STATE (official_validation|test_dev|test_challenge = untouched|consumed|not_applicable|unknown)"
+_LOOP_HELP = {
+    "check-workflow": "Check frozen spec and RML policy blockers before submission",
+    "prepare-resume": "Stage continuation inputs from a paused retrieval directory",
+}
+_LOOP_DESC = {
+    "validate-spec": "Validate canonical ExperimentSpec JSON and print its spec identity.",
+    "package": "Build a deterministic commit-bound source package from allowlist or AST dependencies.",
+    "preflight": "Run local loader/model preflight against a pinned dataset shard manifest.",
+    "run-diagnostic": "Run adapter_probe or random-model construct check (not saved-prediction diagnosis).",
+    "launch-receipt": "Build or reconcile a verified local launch receipt.",
+    "terminal": "Translate or execute a canonical TerminalDescriptor JSON.",
+    "plan-prospective": "Generate prospective RML planning records from a frozen spec.",
+    "check-release": "Verify packaged release inputs, recipes, modules and manifests.",
+    "check-acceptance": "Check mechanical acceptance prerequisites for a workflow plan.",
+    "inspect-output": "Inspect one arm's retrieved artifacts against frozen expectations.",
+    "accept-terminal": "Verify and optionally execute a terminal descriptor against retrieved outputs.",
+    "prepare-workflow": "Prepare platform-neutral workflow staging from a frozen plan.",
+    "prepare-family-training": "Stage shared K1/GPTrans family training source and inputs.",
+    "accept-workflow": "Mechanically inspect, diagnose, stage or close a retrieved run (use via platforms/local/accept_run.py).",
+    "build-terminal": "Build a terminal package descriptor from retrieved observations or execution state.",
+    "prepare-release": "Prepare a release payload from a staged workflow directory.",
+    "check-preparation": "Verify a staged workflow preparation directory.",
+    "workflow-info": "Print resolved metadata for a frozen workflow spec.",
+    "check-workflow": "Check frozen spec and RML policy blockers before submission.",
+    "build-resume": "Build a single-arm resume payload from incomplete run output.",
+    "prepare-resume": "Stage continuation inputs from a paused retrieval directory.",
+    "source-dependencies": "Compute AST source dependency closure for a frozen spec.",
+}
 
 
 class _Parser(argparse.ArgumentParser):
@@ -59,63 +90,69 @@ def _bindings(values, local=False):
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = _Parser(description=__doc__)
-    commands = parser.add_subparsers(dest="command", required=True)
-    catalog=commands.add_parser("catalog")
-    catalog.add_argument("--compact",action="store_true",
+    parser = _Parser(
+        prog="platforms/local/run.py --",
+        description="Local MolGap experiment CLI (no submission or scientific authority). "
+                    "Run '<command> --help' for flags; internal plumbing commands are omitted below "
+                    "(see docs/operations/LIFECYCLE_MAP.md).",
+    )
+    commands = parser.add_subparsers(dest="command", required=True, metavar="<command>")
+    catalog = commands.add_parser("catalog", help="List families and addons (--compact; runnable=false does not forbid work)")
+    catalog.add_argument("--compact", action="store_true",
         help="One text line per family/addon: id, runnable_via_compiler, reason, purpose")
-    freeze=commands.add_parser("freeze-input")
-    freeze.add_argument("--experiment",required=True,type=_local)
-    freeze.add_argument("--repo-root",required=True,type=_local)
-    locate=commands.add_parser("locate-run")
-    locate.add_argument("--profile",required=True,type=_local)
-    locate.add_argument("--repo-root",required=True,type=_local)
-    locate.add_argument("--run-id",required=True)
-    locate.add_argument("--attempt-id",required=True)
-    draft=commands.add_parser("draft-role-audit")
-    for flag in ("--profile","--repo-root","--output-dir"):
-        draft.add_argument(flag,required=True,type=_local)
-    draft.add_argument("--run-id",required=True)
-    draft.add_argument("--attempt-id",required=True)
-    draft.add_argument("--retrieved-root",type=_local)
-    draft.add_argument("--continuation-receipt",type=_local)
-    draft.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
-    closure=commands.add_parser("draft-closure")
-    for flag in ("--profile","--repo-root"):
-        closure.add_argument(flag,required=True,type=_local)
-    closure.add_argument("--output-dir",type=_local,help="default: experiments/<experiment>/audit_closure")
-    closure.add_argument("--run-id",required=True)
-    closure.add_argument("--attempt-id",required=True)
-    closure.add_argument("--retrieved-root",type=_local)
-    closure.add_argument("--continuation-receipt",type=_local)
-    closure.add_argument("--resume-prepared",type=_local,help="Resolve the bound successor receipt")
-    closure.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
-    imported=commands.add_parser("import-closure", help="Import one closed experiment's evidence into the checked-out parent branch")
-    imported.add_argument("--repo-root",required=True,type=_local)
-    imported.add_argument("--experiment",required=True,help="directory name under experiments/")
-    imported.add_argument("--source-branch",required=True)
-    imported.add_argument("--apply",action="store_true",help="default: list the paths only")
-    diagnose=commands.add_parser("diagnose")
-    diagnose.add_argument("--control",type=_local)
-    diagnose.add_argument("--candidate",type=_local)
+    freeze = commands.add_parser("freeze-input", help="Freeze editable experiment.json, protocol.md and decision.md to HEAD")
+    freeze.add_argument("--experiment", required=True, type=_local, help="Path to editable experiment.json")
+    freeze.add_argument("--repo-root", required=True, type=_local)
+    locate = commands.add_parser("locate-run", help="Resolve a frozen local run's files and SHA-256 without network access")
+    locate.add_argument("--profile", required=True, type=_local)
+    locate.add_argument("--repo-root", required=True, type=_local)
+    locate.add_argument("--run-id", required=True)
+    locate.add_argument("--attempt-id", required=True)
+    draft = commands.add_parser("draft-role-audit", description="Draft observed protected-role audit records for a run.")
+    for flag in ("--profile", "--repo-root", "--output-dir"):
+        draft.add_argument(flag, required=True, type=_local)
+    draft.add_argument("--run-id", required=True)
+    draft.add_argument("--attempt-id", required=True)
+    draft.add_argument("--retrieved-root", type=_local)
+    draft.add_argument("--continuation-receipt", type=_local)
+    draft.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE", help=_ROLE_HELP)
+    closure = commands.add_parser("draft-closure", help="Draft closure_input.draft.json, facts and role audit under experiments/<exp>/")
+    for flag in ("--profile", "--repo-root"):
+        closure.add_argument(flag, required=True, type=_local)
+    closure.add_argument("--output-dir", type=_local, help="Must be under experiments/<experiment>/ (default: audit_closure)")
+    closure.add_argument("--run-id", required=True)
+    closure.add_argument("--attempt-id", required=True)
+    closure.add_argument("--retrieved-root", type=_local)
+    closure.add_argument("--continuation-receipt", type=_local)
+    closure.add_argument("--resume-prepared", type=_local, help="Resolve the bound successor receipt")
+    closure.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE", help=_ROLE_HELP)
+    imported = commands.add_parser("import-closure", help="Import one closed experiment's evidence into the checked-out parent branch")
+    imported.add_argument("--repo-root", required=True, type=_local)
+    imported.add_argument("--experiment", required=True, help="directory name under experiments/")
+    imported.add_argument("--source-branch", required=True)
+    imported.add_argument("--apply", action="store_true", help="default: list the paths only")
+    diagnose = commands.add_parser("diagnose", help="Compare control vs candidate predictions and curves (read-only)")
+    diagnose.add_argument("--control", type=_local)
+    diagnose.add_argument("--candidate", type=_local)
     diagnose.add_argument("--run-id")
     diagnose.add_argument("--attempt-id")
-    diagnose.add_argument("--profile",type=_local)
-    diagnose.add_argument("--repo-root",type=_local,default=Path.cwd())
-    diagnose.add_argument("--retrieved-root",type=_local)
-    diagnose.add_argument("--outputs",type=_local)
-    diagnose.add_argument("--output",type=_local)
-    diagnose.add_argument("--threshold-ev",type=float)
-    diagnose.add_argument("--noninferiority-margin-ev",type=float)
-    diagnose.add_argument("--bootstrap-samples",type=int)
-    diagnose.add_argument("--seed",type=int,default=42)
-    diagnose.add_argument("--verbose",action="store_true")
+    diagnose.add_argument("--profile", type=_local)
+    diagnose.add_argument("--repo-root", type=_local, default=Path.cwd())
+    diagnose.add_argument("--retrieved-root", type=_local)
+    diagnose.add_argument("--outputs", type=_local)
+    diagnose.add_argument("--output", type=_local)
+    diagnose.add_argument("--threshold-ev", type=float)
+    diagnose.add_argument("--noninferiority-margin-ev", type=float)
+    diagnose.add_argument("--bootstrap-samples", type=int)
+    diagnose.add_argument("--seed", type=int, default=42)
+    diagnose.add_argument("--verbose", action="store_true")
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
                  "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
                  "workflow-info", "check-workflow", "build-resume", "prepare-resume", "source-dependencies"):
-        command = commands.add_parser(name)
+        extra = {"help": _LOOP_HELP[name]} if name in _LOOP_HELP else {}
+        command = commands.add_parser(name, description=_LOOP_DESC[name], **extra)
         by_run = name in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume", "build-terminal"}
         if by_run:
             identity = command.add_mutually_exclusive_group(required=True)
@@ -159,7 +196,7 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--locations", type=_local)
             command.add_argument("--output", required=True, type=_local)
             command.add_argument("--retrieved-root", type=_local)
-            command.add_argument("--outcome")
+            command.add_argument("--outcome", choices=_OUTCOMES)
             command.add_argument("--decision-ref", type=_local)
         elif name in {"prepare-workflow", "prepare-family-training", "check-workflow"}:
             command.add_argument("--plan", required=True, type=_local)
@@ -173,9 +210,9 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--diagnose", action="store_true")
             command.add_argument("--stage-terminal", action="store_true")
             outcomes = command.add_mutually_exclusive_group()
-            outcomes.add_argument("--outcome")
+            outcomes.add_argument("--outcome", choices=_OUTCOMES)
             outcomes.add_argument("--arm-outcome", action="append", metavar="ARM=OUTCOME",
-                help="Per-arm terminal outcome; repeat for each arm")
+                help="Per-arm terminal outcome; repeat per arm. Valid OUTCOME: " + "|".join(_OUTCOMES))
             decisions = command.add_mutually_exclusive_group()
             decisions.add_argument("--decision-ref", type=_local)
             decisions.add_argument("--arm-decision-ref", action="append", metavar="ARM=PATH",
@@ -244,7 +281,7 @@ def _parser() -> argparse.ArgumentParser:
         elif name == "terminal":
             command.add_argument("--descriptor", required=True, type=_local)
             command.add_argument("--execute", action="store_true")
-    sandbox = commands.add_parser("sandbox")
+    sandbox = commands.add_parser("sandbox", description="Run synthetic CPU sandbox check on a frozen spec or family.")
     selected = sandbox.add_mutually_exclusive_group(required=True)
     selected.add_argument("--spec", type=_local)
     selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))

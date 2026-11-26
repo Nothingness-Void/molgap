@@ -11,8 +11,7 @@ edit them here and review the change like code.
 | `molgap-experiment-reuse` | Find the existing owner before changing infrastructure |
 | `molgap-obsidian-vault` | Maintain the Obsidian vault (see [VAULT](../docs/operations/VAULT.md)) |
 
-The agent tools read them from the user directory (`~/.agents/skills/`, linked
-from `~/.claude/skills/` and `~/.codex/skills/`). After this branch merges, the
-user-directory copies are to be replaced by links to this directory; until then
-they are separate copies, so edit here and copy out. Relative paths inside each
-`SKILL.md` (for example `references/...`) stay inside its own folder.
+The user skill directories (`~/.agents/skills/`, `~/.claude/skills/`, `~/.codex/skills/`,
+and `~/.gemini/config/skills/`) are linked directly to this folder via junctions, so edits
+here immediately apply to every agent tool. Relative paths inside each `SKILL.md`
+(for example `references/...`) stay inside its own folder.

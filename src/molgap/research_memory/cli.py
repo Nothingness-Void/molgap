@@ -14,10 +14,8 @@ from .compiler import compile_research_memory, frozen_differences, rebuild_resea
 from .ready import build_ready_package
 from .validate import validate_repository_records
 from .paths import repo_local_path
-from .portability import (
-    committed_head_differences,
-    missing_locally_claimed_artifacts,
-)
+from .portability import committed_head_differences, missing_locally_claimed_artifacts
+from .schemas import FAILURE_MODES, TRAJECTORY_OUTCOMES
 
 
 def _root(value: str | None) -> Path:
@@ -26,76 +24,80 @@ def _root(value: str | None) -> Path:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="python -m molgap.research_memory")
+    parser = argparse.ArgumentParser(
+        prog="platforms/local/run.py --module molgap.research_memory --",
+        description="MolGap Research Memory Layer CLI. Run '<command> --help' for flags; "
+                    "low-level commands are omitted below (see docs/operations/LIFECYCLE_MAP.md).",
+    )
     parser.add_argument("--repo-root", help="default: the git root of the current directory")
-    commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("validate")
-    commands.add_parser("rebuild")
-    commands.add_parser("status")
+    commands = parser.add_subparsers(dest="command", required=True, metavar="<command>")
+    commands.add_parser("validate", description="Validate all canonical RML records without rewriting derived indexes.")
+    commands.add_parser("rebuild", help="Rebuild derived RML after standalone canonical edits (not after normal closure)")
+    commands.add_parser("status", help="Summarize current RML record counts and index status")
     term_help = "whole word, case-insensitive, anywhere in the card"
-    cards = commands.add_parser("cards")
-    cards.add_argument("--outcome")
+    cards = commands.add_parser("cards", help="List trajectory summary cards (--outcome / --term / --compact)")
+    cards.add_argument("--outcome", choices=sorted(TRAJECTORY_OUTCOMES), help="Filter by exact trajectory outcome")
     cards.add_argument("--term", help=term_help)
     lookup_term_help = ("one or more whole words, case-insensitive; a card must contain every word "
                         "(e.g. --term ensemble seed)")
-    lookup = commands.add_parser("lookup")
+    lookup = commands.add_parser("lookup", help="Search prior trajectories by mechanism, family, failure mode or term (--compact recommended)")
     lookup.add_argument("--mechanism", nargs="+", metavar="WORD",
                         help="one or more case-insensitive substrings; each must occur in the card's "
                              "trajectory id, mechanism, family id or failure mode (e.g. --mechanism init noise)")
     lookup.add_argument("--term", nargs="+", metavar="WORD", help=lookup_term_help)
-    for flag in ("--failure-mode", "--family"):
-        lookup.add_argument(flag)
+    lookup.add_argument("--failure-mode", choices=sorted(FAILURE_MODES), help="Filter by exact failure mode")
+    lookup.add_argument("--family", help="case-insensitive substring of family_id")
     compact_help = "one line per card: id | outcome | family | mechanism slug | effect_meV | failure_mode"
     ref_help = "also read the cards only this git revision has committed (local wins); every card names its source"
     for command in (cards, lookup):
         command.add_argument("--compact", action="store_true", help=compact_help)
         command.add_argument("--ref", help=ref_help)
-    levers = commands.add_parser("levers", help="read-only table of tested levers for one family")
+    levers = commands.add_parser("levers", help="Read-only table of tested levers and noise for one family")
     levers.add_argument("--family", required=True,
                         help="case-insensitive family id substring, or a glob with '*' (e.g. 'pcqm-k1-*-100k')")
-    gaps = commands.add_parser("gaps")
+    gaps = commands.add_parser("gaps", help="List sparse families and cross-scale contradictions (--compact)")
     gaps.add_argument("--ref", help=ref_help)
     gaps.add_argument("--compact", action="store_true",
                       help="one line per item: sparse | family | counts, or contradiction | arm | a vs b")
-    doctor = commands.add_parser("doctor")
+    doctor = commands.add_parser("doctor", help="Check RML completeness or clean unclosed staging (--clean-staging)")
     doctor.add_argument("--strict", action="store_true")
     doctor.add_argument("--clean-staging", action="store_true", help="list terminal_staging of unclosed arms; --apply removes them")
     doctor.add_argument("--apply", action="store_true")
     doctor.add_argument("--run-id", help="with --clean-staging --apply: the one run to clean")
-    check = commands.add_parser("check")
+    check = commands.add_parser("check", help="Verify frozen RML records and derived indexes (--frozen)")
     check.add_argument("--frozen", action="store_true", required=True)
     check.add_argument("--portable", action="store_true")
-    ready = commands.add_parser("package-ready")
+    ready = commands.add_parser("package-ready", description="Build a READY_FOR_DESKTOP handoff package for a trajectory.")
     ready.add_argument("--trajectory", required=True)
-    commands.add_parser("backtest-screening")
-    planner = commands.add_parser("plan")
+    commands.add_parser("backtest-screening", description="Run screening backtest over recorded traces.")
+    planner = commands.add_parser("plan", description="Generate prospective RML records from a spec.")
     planner.add_argument("--spec", required=True)
     planner.add_argument("--output", required=True)
-    finalize_cmd = commands.add_parser("finalize")
+    finalize_cmd = commands.add_parser("finalize", description="Finalize one trajectory with a terminal record.")
     finalize_cmd.add_argument("--trajectory", required=True)
     finalize_cmd.add_argument("--terminal", required=True)
     finalize_cmd.add_argument("--trace")
-    terminal_cmd = commands.add_parser("terminal-pipeline")
+    terminal_cmd = commands.add_parser("terminal-pipeline", description="Close one terminal arm and update derived RML.")
     terminal_cmd.add_argument("--trajectory", required=True)
     terminal_cmd.add_argument("--terminal", required=True)
     terminal_cmd.add_argument("--trace")
     terminal_cmd.add_argument("--trace-source")
     terminal_cmd.add_argument("--arm")
-    terminal_rebuild = commands.add_parser("terminal-rebuild")
+    terminal_rebuild = commands.add_parser("terminal-rebuild", help="Recovery only: rebuild derived RML after a failed closure update")
     terminal_rebuild.add_argument("--trajectory", action="append", required=True)
-    recovery = commands.add_parser("recover-trace")
+    recovery = commands.add_parser("recover-trace", description="Recover a canonical trace manifest from raw source files.")
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
     recovery.add_argument("--output", required=True)
-    analyze = commands.add_parser("analyze")
+    analyze = commands.add_parser("analyze", help="Post-hoc analysis over saved predictions (--op / --predictions)")
     from .saved_analysis import OPS
     analyze.add_argument("--op", required=True, choices=OPS)
     analyze.add_argument("--predictions", nargs="+", required=True, help="PATH... or ARM=PATH...")
     analyze.add_argument("--pair", action="append", default=[], help="CAND=REF arm names (summary op)")
     analyze.add_argument("--role-id", required=True)
     analyze.add_argument("--out", required=True)
-    commands.add_parser("replay-pool")
-    policy = commands.add_parser("backtest-policy")
+    commands.add_parser("replay-pool", description="Inspect the replayable trajectory pool.")
+    policy = commands.add_parser("backtest-policy", description="Backtest an early-stop or screening policy.")
     policy.add_argument("--policy-id")
     policy.add_argument("--policy-version")
     return parser

@@ -1,634 +1,160 @@
 # Unified Local Experiment CLI
 
-Start new work with the [quickstart](EXPERIMENT_QUICKSTART.md), which owns the
-ordered end-to-end commands, failure recovery, freeze/commit order and Kaggle
-quota rules. This page owns command flags and behavior; it is an operation
-lookup, not a required reading or validation checklist.
+Start new work with [EXPERIMENT_QUICKSTART.md](EXPERIMENT_QUICKSTART.md) (end-to-end order) and
+[LIFECYCLE_MAP.md](LIFECYCLE_MAP.md) (stage map). This page owns local CLI contracts, exit semantics,
+and acceptance/role rules that `--help` alone does not express.
 
-`sandbox`, `source-dependencies` and optional `--auto-dependencies` packaging
-are documented in the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md).
-They provide local diagnostics/source preparation, not submission authority.
-
-Cross-scale K1/GPTrans `prepare-family-training` staging is described in
-[Shared Family Training Core](FAMILY_TRAINING_CORE.md). It prepares source and
-inputs, not submission/full admission/scientific acceptance. CPU acceptance is
-not native qualification.
-
-Run from the selected checkout's root with the primary checkout's `.venv`
-interpreter, not system Python. In a worktree, use the
-[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#storage-addons-and-tests)
-`platforms/local/run.py --profile $profilePath -- <command> ...` so the
-worktree's own source runs; `python -m molgap.experiment_cli` imports the primary
-checkout's source. `<command> --help` prints that command's flags as JSON.
+Run from the selected checkout with the primary `.venv` through `platforms/local/run.py` so worktrees execute their own source:
 
 ```powershell
 $python = 'D:/文档/molgap/.venv/Scripts/python.exe'
 $profilePath = 'D:/molgap-machine-profile.json'
-$repoRoot = (Get-Location).Path
 & $python platforms/local/run.py --profile $profilePath -- --help
-& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/gptrans_t_v1.json
-& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/k1_v1.json
-& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/edge_state_v1.json
+& $python platforms/local/run.py --profile $profilePath -- <command> --help
 ```
 
-The module is the unified local entry point, not a migration of every historical
-script. Historical replay uses frozen source packages; family/platform-specific
-owners remain separate. No package-level export or installation entry point is
-required for `python -m molgap.experiment_cli` in an installed checkout.
-For the registered prepare-to-accept lifecycle, start with the
-[modular workflow](EXPERIMENT_WORKFLOW.md), then use the short
-[addon guide](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) for owners. The CLI stages local
-identity/evidence and the frozen execution payload; Kaggle executes it only
-after the platform skill and existing adapter submit the kernel. This CLI does
-not submit. `run-diagnostic` is not frozen-checkpoint inference. Platform
-submission and retrieval stay in the applicable workload skill and adapter.
-Registered K1 and GPTrans preflight/training use accelerated defaults; add only
-scientific addons, not execution switches. See [K1](K1_EXECUTION.md) and
-[GPTrans](GPTRANS_EXECUTION.md) for identity and historical-replay boundaries.
-For producer output inspection and guarded terminal closure, see the
-[family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
-are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
-existing V5/RML authority and applying only to that output protocol.
+`<command> --help` is the authoritative source for flags and valid schema choices (emitted as canonical JSON).
+This CLI stages local identity, evidence, diagnosis and closure inputs; it never submits to a remote platform
+(`SUBMIT_UNIMPLEMENTED`). Platform submission, reconciliation and retrieval stay in the platform skills
+(`kaggle-molgap-workloads`, `ims-molgap-workloads`, `scnet-bw-dcu-molgap`) and adapters.
+For four-layer runtime details (`sandbox`, `source-dependencies`, `--auto-dependencies`), see
+[MODULAR_EXPERIMENT_RUNTIME.md](MODULAR_EXPERIMENT_RUNTIME.md); for shared K1/GPTrans staging, see
+[FAMILY_TRAINING_CORE.md](FAMILY_TRAINING_CORE.md) and [EXPERIMENT_WORKFLOW.md](EXPERIMENT_WORKFLOW.md);
+for training log cadences, see [TRAINING_LOGGING.md](TRAINING_LOGGING.md).
 
 ## Input and Output Contract
 
-Spec, terminal descriptor and launch-response JSON is UTF-8 canonical JSON:
-sorted keys, compact separators, ASCII escaping, finite numbers, no BOM or
-trailing newline. Family plans/expectations/output maps accept ordinary UTF-8
-JSON objects and retain their owning artifact byte hashes. Duplicate keys and
-unknown schema fields fail closed. The CLI delegates identity, hash and artifact
-validation to the existing owning modules; it does not reimplement them.
-Spec/descriptor parsers normalize JSON in their library APIs, so this CLI also
-requires their canonical serialization to equal the original input bytes.
-
-Every stdout response, including help and errors, is one canonical JSON object
-followed by a framing newline. Do not save that framing newline as input JSON.
-Library diagnostics go to stderr. Exit codes are 0 for a successful local
-operation, 1 for a returned failure/blocking diagnostic or rejected receipt,
-and 2 for argument, input, filesystem or raised core errors. A successful local
-receipt write does not mean a job was submitted: inspect `submission_state` and
-`submitter_status`. Terminal execution returns nonzero for incomplete pipelines.
-
-CLI filesystem arguments may be relative to the working directory or absolute.
-The existing launch local-path boundary rejects traversal, network paths and
-symlink/junction/reparse paths. Source allowlist entries must remain explicit
-repository-relative POSIX names; package core checks confinement and tracked
-source identity. Descriptor references remain confined to `--repo-root` by the
-terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
-import, training shortcut, platform submit command or authority override exists.
-
-## Editable inputs and frozen records
-
-The [quickstart](EXPERIMENT_QUICKSTART.md) is the default human-input path.
-`catalog` lists declared family/addon capabilities and their derived execution
-support (`addons`, `families`); an addon with empty `family_versions` or
-`execution_modes` cannot be compiled. `freeze-input --experiment $experiment
---repo-root $repoRoot` freezes the editable input locally and returns
-`INPUTS_FROZEN`. It is optional, because preparation performs the same freeze,
-and it starts the window in which no commit may land
-([freeze and commit order](EXPERIMENT_QUICKSTART.md#freeze-and-commit-order)).
-The scientific compiler currently supports
-shared K1/3 and GPTrans/2 parameter/addon deltas; unsupported recipe changes use
-their existing typed builders. Missing authority/reference/target/data identity
-remains a blocker.
-
-New source packages use the fixed tracked `runtime-v1` distribution and an
-external content cache. Specs, release identities and operation journals remain
-run-specific. V1 source packages and explicit legacy source inventories remain
-readable. Frozen generated metadata never substitutes for committed executable
-source. Data/weight payloads are not part of this source distribution.
+- **Canonical JSON inputs:** `ExperimentSpec`, `TerminalDescriptor`, and launch responses must be UTF-8 canonical JSON
+  (sorted keys, compact separators, ASCII escaping, finite numbers, no BOM or trailing newline). Duplicate keys and
+  unknown schema fields fail closed. Family plans/expectations/output maps accept ordinary UTF-8 JSON objects.
+- **Streams & exit codes:** every stdout response (including `--help` and errors) is one canonical JSON object plus a
+  framing newline (do not save the framing newline back as canonical JSON); diagnostics go to stderr.
+  Exit `0` = success (`COMPLETE` or `MECHANICALLY_VERIFIED`), `1` = returned failure, blocker, `STAGED_DRAFT`, or rejected
+  receipt, `2` = argument, input, filesystem, or raised core error.
+- **Path & safety boundaries:** local filesystem paths reject traversal, network paths, and symlink/junction/reparse
+  points; allowlist entries must be repository-relative POSIX paths; no argument abbreviation or implicit authority exists.
 
 ## Local lifecycle by run ID
 
-`locate-run --profile $profilePath --repo-root $repoRoot --run-id $runId
---attempt-id $attemptId` reads the frozen local run without contacting a platform
-(under 1 s) and prints each frozen file's path and SHA-256.
-The following commands can use these same four options instead of `--spec`:
+These commands resolve the frozen run, package, identity, receipt, and preparation directly from
+`--profile`, `--repo-root`, `--run-id`, and `--attempt-id` (pass `--resume-prepared` for a bound continuation; do not
+override resolved pins with hand-built paths):
 
-| Command | Additional inputs / behavior |
+| Command | Role |
 |---|---|
-| `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
-| `accept-workflow` | `--retrieved-root` or retained retrieval maps; optional `--outputs`/`--locations` overrides; mechanically inspect without a terminal package |
-| `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
-| `prepare-resume` | `--paused-root` from all-arm paused retrieval or `--resume-plan`, plus `--output` |
+| `locate-run` | Print frozen local file paths and SHA-256 without touching any remote platform (<1 s) |
+| `diagnose` | Read-only paired prediction/curve diagnosis (run mode or `--control`/`--candidate` directory mode) |
+| `draft-closure` | Write immutable `roles_<arm>.json`, `audit_map.json`, `measured_<run>.json`, `closure_facts_<arm>.json`, and `closure_input.draft.json` under `experiments/<experiment>/` |
+| `prepare-resume` | Stage `RESUME_INPUTS_PREPARED` continuation inputs from `--paused-root` or `--resume-plan` (optional `recovery_repair: {commit, files}` overlay) |
+| `inspect-output` | Inspect one arm's retrieved artifacts against frozen expectations |
+| `accept-workflow` | Mechanically inspect, diagnose, stage, or close a run (normal entry: `platforms/local/accept_run.py`) |
+| `build-resume` | Build a single-arm resume payload from incomplete output (accepts `--recovery-repair`) |
+| `build-terminal` | Build a terminal descriptor for incomplete/failed sessions (only `INCONCLUSIVE` or `STOP_FOR_COST` can close via `terminal --execute`) |
 
-Run lookup resolves the original package, identity, receipt and preparation;
-do not override them with explicit package/receipt arguments. Output paths and
-descriptors retain their existing local safety and evidence boundaries. Missing
-or uncertain journal/receipt identity requires platform reconciliation.
+### `platforms/local/accept_run.py` wrapper
 
-Successful resume staging reports `RESUME_INPUTS_PREPARED`. It retains the original
-source, configuration, prospective records and producer context; it does not
-register a new attempt or produce a fresh-release submission. The owning
-continuation adapter must bind the physical successor identity. The
-[Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation)
-requires explicit recovery authorization on first submission and derives the
-SHA and successor versions for owner-bound releases.
+`accept_run.py` adds `--repo-root` for its own checkout and invokes `accept-workflow`:
 
-The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
-can reuse the original journal when separately authorized to execute. Its flags
-are `--experiment` or `--prepared` (plus `--recover-prepared`), `--repo-root`,
-`--credentials`, `--execute`, `--verbose`, and, with `--prepared` only,
-`--output`, `--authority`, `--monitor-path`, `--recovery-authority`,
-`--recovery-authority-sha256`, `--source-version` and `--kernel-version`.
-`--execute` requires `--credentials`. Success statuses are
-`PREPARED_FOR_PLATFORM` (without `--execute`), `READY_FOR_PLATFORM_OPERATIONS`
-(`--prepared` without `--execute`) and `SUBMISSION_BOUND`; other statuses are in
-the [failure table](EXPERIMENT_QUICKSTART.md#failure-table). The
-family-output retrieval adapter accepts run identity plus independently pinned
-manifest/arm identity; `--execute` is explicit. Neither path infers scientific
-acceptance. Other platform and historical protocols keep their owning adapters.
-
-Preparation timing samples live outside immutable frozen inputs. The read-only
-`molgap.experiment_timings --run-directory $runDirectory` report combines observed
-local/journal timings; it does not invent upload, queue or native training speed.
+- **Defaults:** adds `--diagnose` unless `--strict` is set without new decisions; adds `--stage-terminal` unless explicit
+  reviewed `--locations` are supplied. With `--strict` and `--diagnose` together, bootstrap defaults to `2000` (seed `42`).
+- **`--closure-input FILE`:** supplies all per-arm decisions in one file
+  `{"arms": {ARM: {"outcome", "decision_ref", "facts_ref"?}}, "role_audit"?}` and expands to `--arm-outcome`,
+  `--arm-decision-ref`, `--arm-facts-ref`, and `--role-audit` (mutually exclusive with those individual flags).
+  `decision_ref` resolves from `--repo-root`; the closure file and `role_audit` resolve from cwd.
+- **Already finalized runs:** `accept_run.py --strict --execute --profile P --run-id R --attempt-id A` discovers canonical
+  tips and verified retrieval maps without hand-written locations; tips with bound comparisons stay read-only.
+- **Read-only strict recheck:** `--strict --locations ...` (no `--execute`, `--stage-terminal`, or outcome) checks
+  existing qualification tips without writing new records.
+- **Output semantics:** `executed=true` means closure was attempted; check `closure_complete`, per-arm `closure`,
+  `strict_validation`, and `replay_readiness` separately. Incomplete staging returns `STAGED_DRAFT` (exit `1`).
 
 ## Commands
 
-`diagnose --control <arm-output> --candidate <arm-output> [--output <directory>]`
-reuses the shared-session output inspector and typed recipe reader before
-analyzing retained predictions and curves. It needs no run-lookup arguments.
-Missing cost stays null; estimated cost is not a measured speed ratio.
-`--bootstrap-samples 0` disables CI/gate claims. Shift/oracle-blend results are
-post-hoc descriptions, not strict V5 acceptance, replay readiness or promotion.
+### Front-door semantics (beyond `--help`)
 
-Alternatively, `diagnose --run-id <id> --attempt-id <vN> --profile <profile>
---repo-root <checkout> [--retrieved-root <root>] [--output <report.json>]` resolves
-frozen launch contexts, expectations and target encoding before analysis. All
-declared same-run candidates are compared. Retained reference bundles provide
-only their verified available evidence; missing predictions/curves remain
-insufficient evidence. Run mode defaults to zero bootstrap samples and does not
-apply the directory mode's descriptive thresholds as frozen scientific gates.
+- **`catalog [--compact]`:** lists `FAMILIES` and `ADDONS` with `runnable_via_compiler` (`shared recipe owner` for
+  `neural_atom_k1/3` and `gptrans_t/2`) and `execution_support`. `runnable=false` does not forbid the work: use an
+  existing typed builder or add a self-contained addon module + catalog entry.
+- **`freeze-input`:** optional (preparation also freezes) and opens the no-commit window
+  ([freeze and commit order](EXPERIMENT_QUICKSTART.md#freeze-and-commit-order)).
+- **`check-workflow`:** read-only recipe, profiler, and RML-policy check before fresh preparation (exit `1` when blocked).
+- **`diagnose`:** directory mode (`--control` / `--candidate`) defaults to 10,000 bootstrap samples and descriptive
+  thresholds; run mode (`--run-id`) defaults to 0 bootstrap samples and applies the frozen comparison policy. Missing
+  cost stays `null`; shift/oracle-blend numbers are post-hoc descriptions, never promotion gates.
+- **`draft-closure`:** `--output-dir` must sit under `experiments/<experiment>/` (default `audit_closure`; root-level
+  paths fail with `FINALIZATION_FAILED` because `.gitattributes` preserves exact bytes under `experiments/`). Outputs are immutable;
+  rerunning with changed inputs requires a new `--output-dir`.
+- **`prepare-resume`:** retains original source, config, prospective records, and producer context without registering a
+  new attempt. Authorized infra-only `recovery_repair` overlays only reviewed transport/IO/runner paths, never editing
+  the frozen archive or training semantics.
+- **`import-closure`:** previews (or with `--apply`, checks out) one closed experiment's non-weight evidence paths from
+  its owner branch into a clean parent checkout and runs `terminal-rebuild` + `frozen_differences`.
 
-### Run-keyed acceptance
+### Strict qualification boundaries
 
-`accept-workflow` Run mode adds `--diagnose`, `--stage-terminal`, `--outcome`,
-`--decision-ref`, `--role-audit`, and `--output`. The thin
-`platforms/local/accept_run.py` (run directly with the interpreter; it adds
-`--repo-root` for its own checkout) selects diagnosis and staging automatically:
-without `--strict` it adds `--diagnose`; with `--strict` it diagnoses only when
-`--diagnose` is passed; without `--locations` it adds `--stage-terminal`.
-Exit code 0 means `COMPLETE` or `MECHANICALLY_VERIFIED`; every other status,
-including `STAGED_DRAFT` and `BLOCKED`, exits 1. The compact stdout carries
-`status`, `executed`, `closure_complete`, `blockers` (prefixed `<arm>: `),
-`replay_readiness`, `strict_mode`, `closure` and `strict_validation`.
-For different arm decisions, repeat `--arm-outcome ARM=OUTCOME` and
-`--arm-decision-ref ARM=PATH`, for example `--arm-outcome reference=CLOSED
---arm-outcome candidate=NEGATIVE_UNDER_CONTRACT --arm-decision-ref
-reference=experiments/question/reference_decision.md --arm-decision-ref
-candidate=experiments/question/candidate_decision.md`.
-Decision paths must resolve inside the selected repository. Duplicate arm bindings
-are rejected. Each per-arm option is mutually exclusive with its singular option;
-singular values still apply to all arms, and one per-arm option can be combined
-with a shared singular value for the other field.
-`platforms/local/accept_run.py --closure-input FILE` supplies all per-arm decisions
-from one human-authored file, `{"arms": {ARM: {"outcome": ..., "decision_ref":
-..., "facts_ref": PATH}}, "role_audit": PATH}` (`facts_ref`, `role_audit` optional), and
-expands to the options above; `facts_ref` becomes `--arm-facts-ref ARM=PATH`
-([closure facts](../../research_memory/README.md#query-analysis-and-corrections)). It cannot be combined with the individual outcome, decision, facts or role-audit
-options, and the acceptance owner still validates every value. The closure file and
-`role_audit` paths resolve from the current directory; each `decision_ref` resolves
-from the repository root.
-`draft-closure` (the same flags as `draft-role-audit`: `--profile`, `--repo-root`,
-`--run-id`, `--attempt-id`, `--output-dir`, optional `--retrieved-root`,
-`--resume-prepared` or `--continuation-receipt`, `--protected-role-use`) returns `DRAFT` and writes into
-the `--output-dir`, which must sit under `experiments/<experiment>/` (a root-level directory fails with `FINALIZATION_FAILED`): `roles_<arm>.json`, `audit_map.json`,
-`measured_<run>.json` (paired development MAE from saved predictions; `delta`
-is candidate minus reference in meV), `closure_facts_<arm>.json` (measured
-`effect_meV`/`ci_meV`, null `failure_mode`/`search_terms`) and
-`closure_input.draft.json` with empty `outcome` and `decision_ref`. Files are
-immutable; a rerun that would change them needs a new `--output-dir`. The
-[quickstart](EXPERIMENT_QUICKSTART.md#happy-path) lists the human fields.
-Explicit reviewed `--locations` skips default staging; an explicit
-`--stage-terminal` still requests the stager.
-With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or
-outcome, the entry checks existing canonical qualification tips without
-publishing new comparison/terminal records. This mode also skips default
-diagnosis; an explicitly supplied `--diagnose` still runs the saved-artifact
-analysis. The original mechanical reports are reused inside the invocation.
+- New same-run preparation requires `training_float32_target_sha256` in its target manifest (ordered training-label FP32
+  bytes). Older frozen runs lacking it stay mechanically inspectable, while strict qualification returns `BLOCKED`
+  unless `--strict-inputs` binds a reviewed `molgap-target-transform-asset-v1`.
+- Same-run comparison reads declared `purpose` and `changed_mechanism` from the pinned input (`initialization_comparison`
+  allows only initial-state differences; legacy `single_module_ablation` maps to mechanism comparison). Environment-only
+  drift allows explicit `INCONCLUSIVE` closure, never strict comparison or replay-pool eligibility.
+- Physical cost attribution uses either `--execution-root` + `--physical-observation PATH` (one job/version) or
+  `--physical-runs PATH` (multiple jobs/failed attempts, counted once each); the two are mutually exclusive.
+- Retained Spec/recipe readers validate retired metadata independently of the current Addon catalog without importing
+  retired model implementations.
 
-Already finalized runs need no hand-written locations or repeated outcome/role
-inputs: `accept_run.py --strict --execute --profile <profile> --run-id <run>
---attempt-id <attempt>` discovers their canonical tips and verified retrieval
-maps. For a bound continuation use `--resume-prepared`. Accepted
-artifact locators/hashes and observations must match the retrieved run. Tips with
-bound comparisons are read-only even with `--execute`, including blocked comparisons;
-mechanical-only tips reuse accepted facts for qualification. Explicit `--diagnose`
-remains optional; strict rechecks do not run it by default.
-
-Run-ID acceptance also accepts `--strict`. It inventories and rechecks retained
-native proof tensors on CPU, then translates the frozen same-run pair into the
-existing target-transform asset, reference bundle and comparison-readiness
-records. Environment-only drift permits explicit INCONCLUSIVE closure, never strict
-comparison or replay-pool eligibility. `closure_ready`, `native_qualification`,
-`comparison.environment_difference` and `replay` report separate evidence scopes.
-`--strict-inputs` optionally supplies per-arm `native_root` and
-`comparison_readiness_ref` locations. Missing proof files report their pinned
-hashes and unknown missing-byte sizes; they cannot establish qualification.
-For a new scratch/pretrained pair, declare `purpose: initialization_comparison`
-in the scientific input and give each arm its own frozen recipe, data declaration
-and initial-state reference. Exactly one reference and one candidate are supported.
-Only initial-state identity and its optional initial-development check may differ;
-model, loss, data, seed and downstream training contract remain identical. The
-compiler pins this declaration for strict acceptance, and verified same-run evidence
-binds the initialization intervention in replay. Historical evidence is unchanged;
-pretraining provenance and cost remain separate from the matched downstream budget.
-
-New same-run preparation requires `training_float32_target_sha256` in its
-target manifest. This is the ordered training-label FP32 byte identity; the
-development digest and complete dataset/shard digests cannot replace it.
-An already frozen run missing that field remains mechanically inspectable.
-Strict qualification returns `BLOCKED` before native reinspection or terminal
-staging, with the missing arm evidence. Do not edit its frozen manifest.
-For retained independent evidence, `--strict-inputs` accepts
-`{"<arm>": {"target_transform_asset": {"path": "<artifact locator>",
-"sha256": "<file SHA256>"}}}`. Supply the existing
-`molgap-target-transform-asset-v1`, including its canonical self-digest,
-actual training-label digest and frozen training membership/normalization.
-Both the supplied bytes and their binding enter the qualification; inherited
-warm-start mean/std remain the actual recipe values. This interface binds
-reviewed evidence; it does not prove how an arbitrary supplied digest was
-measured. Raw CSV labels alone do not prove executed shard bytes when the
-original graph acceptance allowed numeric tolerance.
-Same-run comparison reads its declared purpose and mechanism from the pinned
-human input inside the source package. Optimizer comparisons permit the declared
-learning-rate/weight-decay identity change; architecture/mechanism comparisons
-permit the architecture identity change. Unknown purposes and mixed groups fail
-closed; terminal identity differences never declare their own intervention.
-The frozen legacy name `single_module_ablation` resolves to mechanism comparison
-using its original `changed_mechanism`; its source declaration stays unchanged.
-Compiler and terminal comparison share the verified reference/composed default
-loss alias; original objective hashes remain frozen, and other losses stay distinct.
-Strict trace requirements follow the frozen evaluation weights: Live needs its
-Live development curve, EMA needs its EMA curve; unknown sources stay conservative.
-Historical `development_reports` and `initial_development_check` contracts retain
-their original reporting and predictor guard semantics. Additional EMA reporting
-does not change LIVE checkpoint selection; fresh warm starts verify the retained
-development predictor before their first update.
-Already qualified canonical records retain their original bound evidence.
-Historical reference runs use their retained strict comparison inputs, rather
-than the same-run translator; missing comparison evidence stays `BLOCKED`.
-An authorized infrastructure-only resume repair reuses `prepare-resume` with
-`recovery_repair: {commit, files}` in the existing resume plan. Each file entry
-contains its `original_sha256` from the frozen package and `repaired_sha256` from
-the named Git commit. `build-resume --recovery-repair <declaration.json>` accepts
-the same declaration when local owner verification needs that repair. Preparation
-stages a separate entrypoint-pinned overlay; it never edits the original archive,
-Spec, recipes or prospective records. Only a nonempty subset of the previously
-reviewed transport/IO/runner paths is supported; the runner may change its source
-verifier (including an absolute 1e-12 tolerance in the target-statistics check, which
-must not depend on CPU thread count) or the already accepted scratch-state isolation repair, not training.
-For the Tensor-to-JSON repair, include `experiment_resume.py` and the runner's
-attestation support; `common/io.py` needs no no-op overlay. Optional resumed
-allocation fields retain or lower the original ceiling. Physical publication uses
-the existing platform submitter's explicit continuation arguments described in
-[Kaggle submission](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation).
-
-For a successor, use `--resume-prepared` with `draft-closure` or terminal staging.
-The bound journal resolves the receipt and authority. Older custody accepts explicit pins.
-The entry derives each arm's original receipt, bundle/checkpoint, trace prefix,
-native proof directory and any pinned recovery repair; it builds and binds the
-existing continuation record without editing the prospective plan. The default
-continued proof directory is `<retrieved-root>/_resume_preflight/<arm>`;
-`--strict-inputs` can override `native_root`/`actual_resume_root` for older custody.
-Outcome, decision and observed role audit remain explicit scientific inputs.
-When diagnosis and strict same-run qualification are requested together, the
-default is 2,000 bootstrap samples with seed 42 so their identical numerical
-comparison can be reused. `--bootstrap-samples` still overrides this default;
-standalone diagnosis defaults remain unchanged. A strict read-only recheck does
-not automatically publish another diagnosis.
-Use reviewed `--locations` for read-only checks of already finalized history.
-For one physical job/version, `--execution-root` and an explicitly identified
-`--physical-observation PATH` bind its entry observation to the already resolved
-receipt and retained execution report, without hand-building allocation JSON.
-The observation's origin remains the caller's responsibility. `--physical-runs`
-accepts explicit hash-bound records for multiple jobs or failed attempts, counted
-once per physical job/version. The two options are alternatives; physical cost
-summary does not by itself make cumulative RML costs complete.
-
-`platforms/kaggle/retrieve_family_outputs.py` accepts `--strict --resume-prepared`.
-It retains a separate version-specific output
-mapping and selectively downloads only manifest/native-certificate dependencies.
-Download verifies exact-version bytes, not tensor semantics; strict acceptance
-performs native qualification. No all-output or all-checkpoint download occurs.
-Retained certificate/provenance metadata is checked against the output manifest
-before reuse. Complete retained dependencies cause zero downloads; the retrieval
-report distinguishes retained files from actual network transfers.
-
-For older session manifests that omitted the trace companion role, retrieval
-pins the companion's canonical bytes from the bound producer context and stage.
-It downloads the real exact-version file; it never writes a substitute or edits
-the frozen manifest. Execution ledgers use the same exact-version transport.
-Small metadata failures report path, phase, status and exception type without
-including SDK messages or signed URLs; they do not trigger automatic retries.
-For a separately pinned `execution_retention.json`, use the same retriever with
-`--execution-retention` and the existing manifest path, digest, exact run/arm
-and destination options. It retrieves the sealed root and arm ledgers and the
-bound execution report without replacing the arm output mapping. Obtaining the
-initial manifest pin and entry observation remains a separate platform step.
-Once the arm manifests sit under `<run>/operations/remote_manifest/`, one call with
-`--all-arms --run-id R --attempt-id A --profile P --repo-root .` (plus `--execute
---credentials C` to download) runs this retriever for every pinned arm manifest. It
-takes each manifest and its digest from the pin and writes to `retrieved/R/A/<arm>`;
-context and remote bytes are still checked per arm. The execution-retention bundle
-keeps its own `--execution-retention` call.
-A STOP_FOR_COST run has no `output_manifest.json`; `--all-arms --paused` fetches its declared paused files and records each
-digest and byte count at download (`observed_at_download`, integrity from receipt only), then checks the pause receipt's run
-context and checkpoint digest. It returns `PAUSED_RETRIEVED` and refuses `--strict` and `--resume-prepared`. It is unstrict
-and not an acceptance; the [quickstart](EXPERIMENT_QUICKSTART.md#paused-stop_for_cost-runs) owns the continuation steps.
-
-All-arm retrieval statuses: `READY_FOR_RETRIEVAL` (no `--execute`; prints `pin_command`), `OBSERVED` (`--status`, with
-`scheduler`), `WAIT_REMOTE_TERMINAL` (the version is still running), `RETRIEVED` (prints `execution_root`),
-`PAUSED_RETRIEVED`, `BLOCKED` (with `stage`) and `RECONCILIATION_REQUIRED`. `--credentials` is required with `--execute` or
-`--status` and rejected otherwise. Retrieved files land under `<artifact_root>/retrieved/<run>/<attempt>/version<N>/<arm>`.
-
-Retained Spec and recipe readers validate frozen declarations independently of
-the current Addon catalog. Package, receipt and artifact hash bindings still
-apply; reading retired metadata never imports its model implementation. New
-package preparation and model execution continue to require registered recipes.
-
-With reviewed `--locations`, or explicit decision/role inputs for staging,
-strict acceptance validates native/comparison evidence before invoking the
-original terminal finalizer. Without `--execute`, canonical replay remains
-`PENDING_FINALIZATION`; after execution the canonical replay pool is checked.
-Strict qualification does not change scientific decisions or establish
-`READY_FOR_DESKTOP`. For an existing mechanical finalization, qualification
-automatically binds the current receipt as an append-only revision and preserves
-its scientific decision, costs, roles and trace. An already qualified canonical
-tip is reused; repeating acceptance does not create another revision.
-Staging creates existing terminal-package metadata, not canonical finalization;
-explicit `--execute` delegates reviewed inputs to the existing terminal owner.
-Reviewed positive outcomes use the existing explicit `--outcome` and
-`--decision-ref` in a strict acceptance transaction, with the observed role audit.
-The strict owner must verify comparison/replay evidence before canonical closure;
-no extra hand-authored scientific-acceptance JSON is required. Scores never select
-the scientific outcome automatically. `READY_FOR_DESKTOP` retains its separate
-owning qualification and remains blocked by this staging shortcut.
-`executed=true` means that closure was attempted. `closure_complete` and the
-per-arm `closure` results distinguish successful closure from partial or failed
-transactions; strict replay status remains separate.
-Incomplete staging returns top-level `STAGED_DRAFT` and a nonzero CLI status.
 ### Role audits
 
-`--role-audit` accepts an observed audit with exact `context`, protected
-`role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown
-role use blocks closure rather than becoming an untouched claim. No script
-promotes a numerical diagnosis to positive scientific acceptance.
-`draft-role-audit --profile $profile --repo-root $repoRoot --run-id $run
---attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
-`roles_<arm>.json` per arm (`$dir` under `experiments/<experiment>/`) for a train/development
-family-session screen, and writes `audit_map.json` beside them (also printed) for `--role-audit` to take directly.
-For continued outputs, add the same `--continuation-receipt` used for retrieval
-so the draft binds the successor before its first terminal closure.
-Events are drafted from the frozen Spec data roles and each arm's digest-checked
-training contract; terminal inspection verifies the run itself. A missing or
-mismatched source is an error and no file is written until every arm validates. Protected-role states
-stay `unknown`, which blocks closure, unless you pass `--protected-role-use ROLE=STATE`
-(repeat per role) from observed facts, or the arm's output manifest lists
-`data_open_provenance.json`. New runs write that record: the shared worker logs each dataset
-file its Python process opens, and the draft sets all three protected roles to `untouched` only
-when the record's hash matches the manifest, every selected train/development shard appears in
-it, and no protected-role file does (a protected file leaves the states `unknown`). The record
-does not cover native code, child processes, network access or opens outside the dataset manifest's
-directory, and the draft says so. A protected file in the record keeps the states `unknown` and prints a
-stderr warning. A manifest with the `data_open` role is rejected by older strict readers, so retrieve
-new runs with this version's `retrieve_family_outputs.py`. A run whose frozen package predates the
-recorder has no record. If that package's `family_training_runner.py` and `family_training_data.py` are reviewed legacy blobs, the pinned
-dataset manifest (read under the profile's `data_root`) declares only train/development with all protected-read
-flags False, and `kernel-metadata.json` mounts exactly the run's source dataset (from the frozen plan, checked against the submission journal) and the fixed mirror with no competition
-source, the draft sets `untouched` with evidence status `structural_untouched`. That is structural, not observed:
-it says the protected roles were not among the run's declared mounted inputs, not that opens were watched. `draft-role-audit` reads
-the machine profile for `data_root`; local-training drafts pass none and stay `unknown`. A package that has the
-recorder but no record stays `unknown` (`recorder_expected_record_missing`). Otherwise pass `--protected-role-use`
-from observed facts.
+`--role-audit` accepts an observed per-arm audit JSON (exact `context`, `role_use`, `roles`) or an arm-to-path
+`audit_map.json`. Unknown protected-role states block closure rather than defaulting to `untouched`.
 
-`workflow-info --spec $spec` reports registered training/profiler capabilities.
-Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot
---plan $plan`; it reports independent recipe/profiler and RML-policy gaps without
-staging or publication. A blocked check exits 1. Do not use a fresh-declaration
-check to recreate already published prospective records. See the
-[prepared Kaggle adapter](KAGGLE_WORKFLOW_SUBMISSION.md) for platform operations;
-this local CLI still does not submit.
+`draft-role-audit` (also invoked by `draft-closure`) drafts `roles_<arm>.json` and `audit_map.json` from the frozen
+Spec and digest-checked training contracts:
 
-The following templates require caller-owned real inputs and fresh output paths.
-Replace the variables with independently verified identities and authorized
-local paths. They are not an instruction to run an experiment or access a role.
-For a registered training family, use `prepare-workflow` and `accept-workflow`
-below instead of composing a per-experiment launcher from these lower-level
-commands.
+1. **Observed `data_open_provenance.json`:** when listed in the arm's output manifest, hash-verified, containing every
+   selected train/dev shard and no protected-role file, all three protected roles (`official_validation`, `test_dev`,
+   `test_challenge`) are set to `untouched` (scoped to Python file opens inside the dataset manifest directory).
+2. **Reviewed legacy packages (pre-recorder):** if `family_training_runner.py` and `family_training_data.py` match
+   reviewed legacy blobs, the pinned dataset manifest under `data_root` has all protected-read flags false, and
+   `kernel-metadata.json` mounts only the source dataset + fixed mirror, states are set to `structural_untouched`.
+3. **Otherwise:** states stay `unknown` (`recorder_expected_record_missing` when a recorder package lacks its record, or
+   for local-training drafts without `data_root`). Supply `--protected-role-use ROLE=STATE` only from observed facts.
 
-```powershell
-$spec = 'D:\local-inputs\experiment_spec_v2.json'
-$repoRoot = (Get-Location).Path
-$package = 'D:\local-work\source-package'
-$packageIdentity = '<independently-pinned-package-sha256>'
-$shardRoot = 'D:\local-inputs\real-shard'
-$shardManifestSha = '<independently-pinned-manifest-sha256>'
+### Internal / plumbing commands
 
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
-.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root $repoRoot
-.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root $repoRoot --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
-.\.venv\Scripts\python.exe -m molgap.experiment_cli check-release --spec $spec --package $package --expected-package-identity $packageIdentity --recipe-file arm_id=experiments/question/training_contract.json --initial-state arm_id=D:\local-inputs\family_initial_state.pt --required-module molgap.family_trainer --pickle-input D:\local-inputs\train_shard.pt --entry-script D:\local-work\kernel\run.py --input-root D:\local-work\input --output-report D:\local-work\release.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
-.\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
-.\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
-.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root $repoRoot
-```
+These commands are hidden from top-level `--help` (called by workflow/platform scripts); run `<command> --help` for flags:
 
-## Registered workflow commands
+| Command | Scope and key limit |
+|---|---|
+| `validate-spec` | Structural `ExperimentSpec` validation and identity only (no source/data byte verification); examples live in `docs/operations/examples/` (`gptrans_t_v1.json`, `k1_v1.json`, `edge_state_v1.json`) |
+| `package` | Build commit-bound source package from explicit `--allowlist` or `--auto-dependencies` |
+| `source-dependencies` | Compute AST source dependency closure for a frozen spec |
+| `plan-prospective` | Publish canonical Spec v2 prospective trajectories (reconcile partial output before retry; see [EXPERIMENT_PROSPECTIVE_PLANNING.md](EXPERIMENT_PROSPECTIVE_PLANNING.md)) |
+| `check-preparation` | Read-only Spec v2 input/plan/prospective check (does not replace `check-release`) |
+| `prepare-workflow` | Stage `package/`, `source_dataset/`, `kernel/`, `release_report.json`, `workflow_report.json` into a fresh `--output` (`PREPARED_FOR_PLATFORM`) |
+| `prepare-family-training` | Cross-scale K1/GPTrans source/input staging (see [FAMILY_TRAINING_CORE.md](FAMILY_TRAINING_CORE.md)) |
+| `prepare-release` | Check, publish prospective records, and stage release inputs into a fresh `--output` |
+| `check-release` | Verify archive recipes, CPU init tensors, required modules, trusted pickle globals, and entrypoint/input layout (no `STACK_GLOBAL`, no host imports) |
+| `check-acceptance` | Verify mechanical acceptance prerequisites for a workflow plan |
+| `preflight` | Local shard-manifest loader check (`loader-only-v1`, or `gptrans-model-smoke-v1` CPU smoke; see [EXPERIMENT_PREFLIGHT.md](EXPERIMENT_PREFLIGHT.md)) |
+| `run-diagnostic` | `adapter_probe` or random-init `construct` check only (no forward pass, training, or checkpoint loading) |
+| `sandbox` | Synthetic CPU sandbox check on a frozen spec or family |
+| `workflow-info` | Report registered training/profiler capabilities for a spec |
+| `launch-receipt` | Build or locally reconcile an immutable launch receipt without contacting a platform |
+| `accept-terminal` | Verify and optionally execute a terminal descriptor against retrieved outputs |
+| `terminal` | Translate `TerminalDescriptor` read-only by default; `--execute` runs RML closure |
+| `draft-role-audit` | Standalone role-audit drafter (normally invoked through `draft-closure`) |
 
-The end-to-end workflow owns the preparation plan and concise recipe. Its
-canonical plan format and example are in
-[EXPERIMENT_WORKFLOW.md](EXPERIMENT_WORKFLOW.md). The command accepts a Spec v2
-and a plan with the exact top-level keys `format`, `spec_identity`,
-`source_files`, `arms`, `acceptance_plan`, and `kaggle`. Each arm has
-`arm_id`, `device`, `recipe`, and `initial_state`; Kaggle metadata has
-`account`, `kernel`, `title`, `datasets`, `source_dataset`, and `accelerator`.
-The registered family validator checks each pinned recipe; `check_release_inputs`
-checks packaged source, required modules, initialization and staged inputs
-before prospective publication. After publication, the platform preparation
-adapter freezes the launch config/entrypoint and binds the final release report.
-
-```powershell
-$workflowPlan = 'D:\local-inputs\workflow_plan.json'
-$freshOutput = 'D:\local-work\workflow-attempt-01'
-$outputs = 'D:\local-inputs\workflow_outputs.json'
-$locations = 'D:\local-inputs\workflow_locations.json'
-$receipt = 'D:\local-inputs\reconciled_launch_receipt.json'
-
-$prepareJson = & .\.venv\Scripts\python.exe -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root $repoRoot --plan $workflowPlan --output $freshOutput
-$prepared = $prepareJson | ConvertFrom-Json
-$packageIdentity = $prepared.package_identity
-.\.venv\Scripts\python.exe -m molgap.experiment_cli accept-workflow --spec $spec --repo-root $repoRoot --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --outputs $outputs --locations $locations
-.\.venv\Scripts\python.exe -m molgap.experiment_cli accept-workflow --spec $spec --repo-root $repoRoot --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --outputs $outputs --locations $locations --execute
-```
-
-`prepare-workflow` requires a fresh `--output` directory. It returns
-`PREPARED_FOR_PLATFORM` only after local package, family-recipe, acceptance,
-release and final workflow-binding gates pass and prospective records are
-published. The JSON response includes `package_identity`; use that value for
-the later acceptance command. It creates `package/`, `source_dataset/`,
-`kernel/`, `release_report.json`, and `workflow_report.json`; it does not
-contact Kaggle or submit. The final report binds the launch config, dataset
-mounts, T4/device shape, kernel metadata, prospective bytes and entrypoint hash.
-Pass this `release_report.json` to the platform adapter, which fails closed on
-a missing or stale report and rechecks it before POST. A partial prospective
-publication requires reconciliation before retry.
-
-`accept-workflow` requires `--package`, `--expected-package-identity`, a
-reconciled `--receipt`, `--outputs`, and `--locations`. `outputs.json` maps
-every Spec arm to exactly `output_dir` and `expected`; `expected` contains
-`epochs`, `optimizer_steps`, `sample_presentations`, `development_rows`,
-`source_idx_sha256`, `target_sha256`, and `precision`, matching the frozen
-family recipe. `locations.json` maps every arm to existing `trajectory_id`,
-`run_id`, `trajectory`, `terminal`, and `trace` locations. Without
-`--execute`, the command inspects all arms and returns a mechanical descriptor
-without terminal/RML writes. `--execute` delegates to the existing per-arm
-terminal pipeline; it does not set scientific acceptance or replay readiness.
-
-Use `accept-workflow` for completed outputs. A failed single-arm session can
-stage its existing terminal package without a final manifest or tensor download:
-
-```powershell
-& $python platforms/local/run.py --profile $profilePath -- build-terminal --repo-root . --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root $retrieved --execution-state "$retrieved/execution_report.json" --outcome INCONCLUSIVE --decision-ref $decision --output $descriptor
-& $python platforms/local/run.py --profile $profilePath -- terminal --repo-root . --spec $frozenSpec --descriptor $descriptor --execute
-```
-
-The first command resolves original receipt/prospective paths and reports the
-frozen Spec path. It needs retained execution/retention/allocation records plus
-the arm's training contract, partial canonical trace/context and data-open record.
-It reuses role auditing and terminal staging; only `INCONCLUSIVE` or `STOP_FOR_COST`
-can close. Final exposure stays unknown; the last retained trace point is a lower
-bound. Full allocated cost includes idle devices. No strict replay is claimed.
-The second command owns canonical closure and its one derived-index update;
-identical reentry returns `ALREADY_FINALIZED`.
-
-The existing `--spec` mode still only builds a descriptor for every incomplete
-arm, requiring package/receipt pins, `--locations`, `--output` and either
-`--execution-state` or explicit `--observations`. It does not generate packages.
-Observations contain `status`, `exit_reason` and optional progress/cost/artifacts;
-locations name existing trajectory/run/terminal paths and optional trace.
-Unknown observations stay missing; completed arms require ordinary acceptance.
-
-Example for existing terminal packages:
-
-```powershell
-$pairState = 'D:\local-work\attempt-01\pair_state.json'
-$incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
-.\.venv\Scripts\python.exe -m molgap.experiment_cli build-terminal --spec $spec --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --execution-state $pairState --locations $locations --output $incompleteDescriptor
-```
-
-- `validate-spec` returns the canonical declaration and its identity. This is
-  structural validation, not verification of declared source/data/state bytes.
-- `plan-prospective` is available only for Spec v2. It publishes one canonical
-  RML trajectory per arm from frozen per-arm plan inputs, leaving derived
-  index rebuilding to the existing RML CLI. A nonzero partial result can retain published trajectories; reconcile
-  them before retrying. It is not a submission or training authorization. See
-  the [planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
-- `package` calls `build_experiment_source_package` with exactly the supplied
-  allowlist. Repeat `--allowlist` or provide multiple names. No dependency
-  discovery or automatic file additions occur. The short list above illustrates
-  syntax only; it is not a complete runnable family source package.
-- `check-release` calls `experiment_preflight.check_release_inputs` on the frozen
-  package. Supply one `--recipe-file ARM=PACKAGED_PATH` per arm and one
-  `--initial-state ARM=LOCAL_PATH` for every pinned initialization. Recipe hashes
-  are checked against archive bytes, including the packager's LF normalization;
-  final shared-family releases with an entry script also require
-  `--dataset-manifest ARM=LOCAL_MANIFEST`. The manifest bytes must match the
-  frozen recipe. The package-only probe runs the packaged resolver against
-  flat and nested metadata mounts; it does not decode graph shards. The
-  accelerator submitter repeats these checks before POST.
-  initialization checks inspect CPU tensor values, without model construction.
-  Repeat `--required-module` for the loader/trainer imports. Optional trusted
-  training `--pickle-input` files are scanned for package GLOBAL dependencies
-  and symbols without unpickling. STACK_GLOBAL is explicitly unsupported.
-  The existing package-only bootstrap rejects imports from the host checkout.
-  Syntax, recipe, module and initialization failures are collected together;
-  nonpass returns exit 1. Invalid outer package/Spec identity returns exit 2.
-  `--entry-script` pins the actual kernel bootstrap, and `--input-root` verifies
-  its staged source payload/sidecars and initialization placement. Save the
-  report with `--output-report` and pass it as `--release-report` to the Kaggle
-  adapter, which repeats these checks before POST. This complements real-shard
-  and GPU qualification; it grants no training or submission authority. Dynamic
-  imports and unselected data/model paths remain outside this local scope.
-- `check-preparation --spec --repo-root --workflow` is a read-only Spec v2 input/plan check
-  (prospective semantics, selected source, upload SHA); it does not replace `check-release`.
-- `prepare-release --spec --repo-root --workflow --output` runs that check, publishes prospective
-  records and stages release inputs into a fresh `--output`; it never selects an account or POSTs.
-- `preflight` reads the fixed `shard_manifest.json` under `--shard-root` and
-  passes its path and both independent pins to `run_experiment_preflight`.
-  Missing manifests are passed as absent, producing core nonpass reports, never
-  synthetic PASS. Invalid packages/manifests may take precedence in reports.
-  Output must be new with an existing parent. Default `loader-only-v1` does not
-  construct a model. Explicit `--mode gptrans-model-smoke-v1` enables the core's
-  CPU forward/backward, one optimizer-step and checkpoint-roundtrip diagnostic;
-  it is not a training launch or qualification. Trusted real shard/pickle inputs
-  are required; process isolation is not a security sandbox.
-- `run-diagnostic` calls `run_experiment`. Only `adapter_probe` (default) and
-  `construct` are allowed. Neither runs forward, trains or loads state. Construct
-  requires random initialization. Device tokens must be unique and match the
-  arm count and declared device count. The example command assumes two arms;
-  use `--device cpu` for either one-arm structural example. Device visibility
-  tokens do not certify actual accelerator allocation.
-- `launch-receipt` builds and writes a local receipt in an existing dedicated
-  directory. Optional `--response PATH` invokes local reconciliation of a
-  caller-supplied canonical response. No platform is contacted. Observations
-  are not independently authenticated; changed observations require separate
-  snapshot directories under the existing immutable receipt contract.
-- `terminal` constructs `TerminalDescriptor` and calls read-only translation
-  by default. Only explicit `--execute` calls `execute_terminal_descriptor`,
-  including its existing RML closure side effects. This is not new RML, READY,
-  replay or scientific authority; all existing contract gates remain in force.
-  Validation/translation alone is not an acceptance dry run.
-
-## Registered Kaggle training
-
-Shared-family preparation validates and freezes the contract's optional `logging`
-metadata. The recipe builder pins epoch-only output by default; seconds/batch
-settings and fixed fields are owned by [standard training logs](TRAINING_LOGGING.md).
-The CLI/package/runtime reuse that owner; no experiment-local logging script is needed.
-
-Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the frozen source
-package, standard `run_experiment.py` bootstrap, all-arm preflight barrier and
-mechanical output acceptance. `platforms/kaggle/README.md` and the
-`kaggle-molgap-workloads` skill own publication, submission, authoritative run
-reconciliation and retrieval. Older experiment-specific launchers remain tied
-to their owning contracts; they are not the generic extension path.
-
-## Structural Examples and Limitations
-
-`examples/gptrans_t_v1.json` declares a GPTrans-T baseline arm.
-`examples/k1_v1.json` declares a neural-atom K1 candidate with `k1_pair_value/1`.
-`examples/edge_state_v1.json` declares a basic EdgeState GPS9 reference and a
-depth-6 candidate; see [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md).
-Both match the v1 registry and the field structure in `test_experiment_spec`.
-Every digest is an explicitly unauthenticated all-zero placeholder. These are
-structure examples, not executable data authorization, accepted evidence,
-READY evidence or replay-ready specs. The prospective fields are declarations,
-not canonical trajectory records. No experiment directory, trajectory or
-evidence package is created for either example.
-
-This CLI has no platform submit command (`SUBMIT_UNIMPLEMENTED`). K1 and EdgeState now have selected-topology-shard CPU loader-only preflight
-under the accepted fixed manifests; the result is explicitly partial, not a
-full-role or model check. Their model smoke remains unsupported. See
-[EXPERIMENT_PREFLIGHT.md](EXPERIMENT_PREFLIGHT.md) for the family-specific
-shard selection and required packaged modules. EdgeState's recipe is model-only; a platform-specific trainer
-addon must freeze and enforce its own executable training contract.
-No credentials, monitoring daemon, remote API client, GPU qualification,
-official role access or production promotion is provided. Local CLI success
-cannot release any of those operations.
+`molgap.experiment_timings --run-directory $runDirectory` reports observed local/journal preparation timings read-only.
+Kaggle submission/retrieval statuses (`PREPARED_FOR_PLATFORM`, `SUBMISSION_BOUND`, `READY_FOR_RETRIEVAL`,
+`WAIT_REMOTE_TERMINAL`, `RETRIEVED`, `PAUSED_RETRIEVED`, `BLOCKED`, `RECONCILIATION_REQUIRED`) are owned by
+[KAGGLE_WORKFLOW_SUBMISSION.md](KAGGLE_WORKFLOW_SUBMISSION.md) and `skills/kaggle-molgap-workloads/SKILL.md`.
 
 ## Local Verification
 
-Use the selected checkout and its project environment. The
-[verification conventions](INFRASTRUCTURE_VERIFICATION.md) own fixed workflow
-selection, test-growth limits and the distinction between fixtures, actual
-candidate packages and native qualification. Select affected scopes together:
+Follow [INFRASTRUCTURE_VERIFICATION.md](INFRASTRUCTURE_VERIFICATION.md) and run affected scopes together:
 
 ```powershell
-$profilePath = 'D:/molgap-machine-profile.json' # Use this host's profile.
+$profilePath = 'D:/molgap-machine-profile.json'
 .\.venv\Scripts\python.exe platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope prepare --scope accept -- -q
 ```
-
-Use direct pytest only for affected lower-level invariants outside those journeys.
-Successful local checks confer no training or submission authority.

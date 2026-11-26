@@ -9,23 +9,27 @@ from molgap.kaggle_submission import SourceVerificationError, submit_prepared_wo
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="Normal submit: platforms/local/run.py --profile $profile --script platforms/kaggle/submit_workflow.py "
+               "-- --experiment $experiment --repo-root . --credentials $credentials --execute",
+    )
     inputs=parser.add_mutually_exclusive_group(required=True)
-    inputs.add_argument("--prepared",type=Path)
-    inputs.add_argument("--experiment",type=Path)
+    inputs.add_argument("--prepared",type=Path,help="Existing prepared workflow or prepare-resume directory")
+    inputs.add_argument("--experiment",type=Path,help="Committed editable experiment.json to freeze, prepare and submit")
     parser.add_argument("--recover-prepared", action="store_true",
-                        help="Finish a failed published preparation from its frozen inputs")
-    parser.add_argument("--repo-root",type=Path,default=Path.cwd())
-    parser.add_argument("--credentials",type=Path)
-    parser.add_argument("--output",type=Path)
+                        help="Finish a failed published preparation from its frozen inputs (local only, omit --execute)")
+    parser.add_argument("--repo-root",type=Path,default=Path.cwd(),help="Owning checkout root (default: cwd)")
+    parser.add_argument("--credentials",type=Path,help="External Kaggle kaggle.json path (required with --execute)")
+    parser.add_argument("--output",type=Path,help="Operations/journal directory (only with legacy --prepared)")
     parser.add_argument("--authority",help="Authority path inside the immutable source package")
     parser.add_argument("--recovery-authority", type=Path,
                         help="Explicit retained authorization for this checkpoint continuation")
-    parser.add_argument("--recovery-authority-sha256")
+    parser.add_argument("--recovery-authority-sha256",help="Expected SHA-256 of --recovery-authority")
     parser.add_argument("--source-version", type=int, help="Expected source successor version")
     parser.add_argument("--kernel-version", type=int, help="Expected kernel successor version")
-    parser.add_argument("--monitor-path",action="append")
-    parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--monitor-path",action="append",help="Expected remote output path to monitor (repeatable)")
+    parser.add_argument("--execute", action="store_true", help="Publish source and submit kernel (omit for local check only)")
     parser.add_argument("--verbose", action="store_true", help="Print the full owner report")
     args = parser.parse_args(argv)
     stage="arguments"

@@ -128,8 +128,7 @@ as well. The bound journal supplies the receipt and recovery authority.
 
 The existing finalizer closes each arm and updates RML once. **Do not run another
 rebuild after successful closure.** If its derived-index update actually fails,
-resume it with `& $python -m molgap.research_memory --repo-root . terminal-rebuild
---trajectory <reported-trajectory>`; do not repeat training or submission.
+resume it with `& $python platforms/local/run.py --profile $profile --module molgap.research_memory -- --repo-root . terminal-rebuild --trajectory <reported-trajectory>`; do not repeat training or submission.
 Report per-arm strict qualification and closure, not merely executed=true.
 
 ### Pre-registered non-strict path
@@ -169,7 +168,7 @@ must be retrieved and accepted with `--strict`.
 New input authoring: “Supply one human input” in `docs/operations/EXPERIMENT_QUICKSTART.md`.
 Reference reviewed files by path (`preset_ref`, `recipe_ref`, `data_ref.spec_ref`
 may point into another experiment) instead of byte-copying them. Local addon
-checks: `python -m molgap.experiment_cli sandbox --spec $spec --arm $arm`; report a
+checks: `& $python platforms/local/run.py --profile $profile -- sandbox --spec $spec --arm $arm`; report a
 missing check as an infrastructure gap rather than writing a scratch sandbox.
 Account/legacy direct CLI: [account and CLI](references/account-and-cli.md).
 Acquisition: [acquisition](references/acquisition-acceptance.md).
