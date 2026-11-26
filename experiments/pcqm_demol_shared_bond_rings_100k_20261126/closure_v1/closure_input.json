@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "self_ring": {
+      "decision_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/closure_facts_self_ring.json",
+      "outcome": "CLOSED"
+    },
+    "shared_bond_ring": {
+      "decision_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/decision.md",
+      "facts_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/closure_facts_shared_bond_ring.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    }
+  },
+  "role_audit": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/audit_map.json"
+}

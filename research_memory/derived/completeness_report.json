@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 287,
+    "trajectories_total": 289,
     "with_complete_native_measurement": 39,
-    "with_cost_event": 276,
-    "with_incomplete_native_measurement": 237,
+    "with_cost_event": 278,
+    "with_incomplete_native_measurement": 239,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -175,11 +175,13 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 237,
+      "count": 239,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_mean",
         "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific",
+        "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring",
+        "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-gpspp_mpnn",
         "T-pcqm-gpspp-mpnn-100k-20261124-s42-pair_update_norm",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",

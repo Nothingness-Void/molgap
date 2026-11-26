@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "a5666da6d2f28c5e8feb47b6aaf87d4991282e1cd4062bc5b331eedc864d3e54",
+  "source_digest": "8c0ea4ef73b341227aa5087fc22f8db31af019229ee2ad7e256ece45a4e9e0ed",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -49,6 +49,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-demol-ring-identity-100k-20261125-s42-ring_specific"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-demol-shared-bond-rings-100k-20261126",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/self_ring/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-self_ring"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/closure_v1/decision.md",
+      "family_id": "pcqm-demol-shared-bond-rings-100k-20261126",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_demol_shared_bond_rings_100k_20261126/runs/pcqm-demol-shared-bond-rings-100k-20261126-s42/prospective/shared_bond_ring/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-demol-shared-bond-rings-100k-20261126-s42-shared_bond_ring"
     },
     {
       "completeness_status": "complete",
