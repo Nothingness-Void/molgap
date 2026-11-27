@@ -1,0 +1,171 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "demol500k-chain-20261121-j5-gptt-500k-s44-v1",
+      "category": "training",
+      "cost_event_id": "cost-demol500k-chain-20261121-j5-0",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "hardware": "NVIDIA A100 FP32",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 8.952166666666667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 8.952166666666667
+        }
+      },
+      "platform": "ims",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    }
+  ],
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j5",
+  "outcome": {
+    "artifact_status": "retrieved_hash_verified",
+    "budget_decision": "no_further_runs_from_this_arm",
+    "comparison_status": "same_platform_reference_for_j3_j4_paired_tail_500k_non_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "platform_reference_shift_plus_0.035_meV_accepted",
+    "transfer_status": "cross_platform_reference_accepted_G_107.940_kept"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-dev_500k-selection_used",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j5_gptt_500k_s44/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j5-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j5-gptrans_pun_s44"
+    }
+  ],
+  "run_id": "demol500k-chain-20261121",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "gpt-t",
+        "platform control",
+        "500k",
+        "init s44",
+        "ims a100",
+        "tail shift",
+        "cross platform",
+        "reference arm"
+      ],
+      "source": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j5.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": [
+      "Terminal evidence only."
+    ]
+  }
+}

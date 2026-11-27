@@ -13,7 +13,9 @@ import argparse
 import json
 from pathlib import Path
 
-from molgap.research_memory import finalize as F
+import importlib
+
+F = importlib.import_module("molgap.research_memory.finalize")  # the package re-exports a function named finalize
 from molgap.research_memory.schemas import (CLOSURE_FACTS_FORMAT, TRAJECTORY_OUTCOMES, validate_closure_facts,
                                             validate_cost_event, validate_role_event)
 

@@ -1780,6 +1780,27 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_platform_reference_for_j3_j4_paired_tail_500k_non_strict",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-demol-cin-500k-chain-20261128-j5",
+      "role_use": {
+        "dev_500k": "consumed",
+        "official_validation": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "DeMol-CIN 500K IMS serial chain item; offline dev and tail scoring only; official valid and test not read; non-strict.",
+      "source_envelope": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j5/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "cross_platform_reference_accepted_G_107.940_kept",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified",
         "durable_remote_and_local_verified"
       ],
