@@ -1964,6 +1964,27 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "tail_inside_seven_fp32_baselines_speed_vs_cross_job_baseline_no_paired_rows",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-fast-engine-500k-ims-20261125-fastpn-500k-20261125",
+      "role_use": {
+        "dev_500k": "consumed",
+        "official_validation": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "Fast engine (AMP FP16, non-deterministic kernels, fused AdamW, GPU-resident batches, compile enabled) on the 500K GPT-T BondLocal + PairNorm recipe, one item (s42), 60 passes, IMS A100 job 2161635. Dev rows 500000..549999 and tail_holdout_v1 scored offline once; official valid and test not read.",
+      "source_envelope": "experiments/pcqm_fast_engine_500k_ims_20261125/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_assessed",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata_verified"
       ],
       "comparison_status": "legacy_pair_endpoint_recomputed_strict_component_comparison_not_available",

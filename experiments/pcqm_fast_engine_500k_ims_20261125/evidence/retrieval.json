@@ -1,0 +1,51 @@
+{
+  "status": "RETRIEVED",
+  "observation": {
+    "run_id": "fastpn-500k-20261125",
+    "source": {
+      "archive_sha256": "e5ddf2ff1cb0d9846094023f1771c2a2284566626e0bbc45a5ad9e9c259eaaf8",
+      "commit": "1e7e1472d9bb7143ff246015ebe79df4b637b1aa"
+    },
+    "contract": {
+      "execution_policy": "fast_amp_nondeterministic",
+      "path": "experiments/pcqm_fast_engine_500k_ims_20261125/serial_spec.json",
+      "physical_batch_per_device": 128,
+      "precision": "amp-fp16",
+      "sha256": "8f9a7b2d7e93a05b270d2f4d17b377d6b0e6edb0d45e2b9050e0c92ed6e75962",
+      "tail_batch_policy": "drop_last",
+      "tf32": false
+    },
+    "output_root": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/fastpn-500k-20261125/output",
+    "required_outputs": {
+      "train": [
+        "training/serial_summary.json",
+        "training/fast-500k-s42/selected_model.pt",
+        "training/fast-500k-s42/train_log.jsonl",
+        "training/fast-500k-s42/completion_manifest.json",
+        "training/fast-500k-s42/run_provenance.json",
+        "training/fast-500k-s42/selected_eval.json"
+      ]
+    },
+    "submission": {
+      "format": "molgap-ims-v4-submission-v1",
+      "mode": "serial_chain",
+      "run_id": "fastpn-500k-20261125",
+      "status": "submitted",
+      "training_job": "2161635.ccpbs1"
+    },
+    "stages": {
+      "train": {
+        "outputs_sha256": {
+          "training/fast-500k-s42/completion_manifest.json": "b3f707a69f36fef38c3b51730a3d68a5544d6f8650ea1e6bb60db04725ae168c",
+          "training/fast-500k-s42/run_provenance.json": "f37326f5d5917e3ddeb9967b47587748cab83cb7502c21c0cd8524e9f2e7b675",
+          "training/fast-500k-s42/selected_eval.json": "a92eeb93c2430e8fd724f85c1b95074469f459885d01cd331265f3be6126cf6f",
+          "training/fast-500k-s42/selected_model.pt": "6dbdd7cebf5a2a0635a9aecc9a34a041b4806e68d0113997be0410d42dec0c72",
+          "training/fast-500k-s42/train_log.jsonl": "808997618422446d3cb9bc1bf34d36a21604dcd62de53458bdba3415689d4381",
+          "training/serial_summary.json": "9070394819f745651e7a650b31d2c3b56ff0a23e72b827179d697b2304c47bf3"
+        },
+        "stage": "train",
+        "status": "complete"
+      }
+    }
+  }
+}

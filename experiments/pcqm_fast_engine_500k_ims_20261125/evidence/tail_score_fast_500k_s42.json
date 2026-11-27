@@ -1,0 +1,45 @@
+{
+  "format": "molgap-tail-holdout-eval-v1",
+  "role": "tail_holdout_v1",
+  "rows": [
+    3250000,
+    3378606
+  ],
+  "tail_source_idx_sha256": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+  "dev_range": [
+    500000,
+    550000
+  ],
+  "dev_source_idx_sha256": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+  "protected_roles_read": {
+    "official_validation": false,
+    "test_dev": false,
+    "test_challenge": false
+  },
+  "results": {
+    "fast_500k_s42": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "6dbdd7cebf5a2a0635a9aecc9a34a041b4806e68d0113997be0410d42dec0c72",
+      "tail_holdout_v1": {
+        "mae_ev": 0.10752197355031967,
+        "rows": 128606
+      },
+      "development": {
+        "mae_ev": 0.10197238624095917,
+        "rows": 50000
+      }
+    }
+  },
+  "script_sha256": "874c25eef7a86599a20b0c508a2119ebae4b38701a0210ba82f0e2b69750f123",
+  "environment": {
+    "torch": "2.7.1+cu128",
+    "torch_geometric": "2.6.1",
+    "rdkit": "2025.03.5",
+    "numpy": "1.26.4",
+    "python": "3.10.6",
+    "platform": "Windows-10-10.0.26320-SP0",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060"
+  },
+  "per_row_predictions_saved": false
+}

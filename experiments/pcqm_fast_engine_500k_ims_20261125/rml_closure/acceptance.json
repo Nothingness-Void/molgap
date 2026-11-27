@@ -1,0 +1,158 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [
+    {
+      "action_id": "A002",
+      "attempt_id": "fastpn-500k-20261125-v1",
+      "category": "training",
+      "cost_event_id": "cost-fastpn-500k-20261125-0",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-80GB AMP FP16",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.3651666666666666
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.3651666666666666
+        }
+      },
+      "platform": "ims",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    }
+  ],
+  "evidence_id": "pcqm-fast-engine-500k-ims-20261125-fastpn-500k-20261125",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "engine_not_adopted_by_this_job",
+    "comparison_status": "tail_inside_seven_fp32_baselines_speed_vs_cross_job_baseline_no_paired_rows",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_DETECTABLE_ACCURACY_CHANGE_SPEED_2_42X_SINGLE_RUN",
+    "transfer_status": "not_assessed"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    }
+  ],
+  "run_id": "fastpn-500k-20261125",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "fast engine",
+        "amp fp16",
+        "non-deterministic kernels",
+        "fused adamw",
+        "gpu resident batches",
+        "torch compile",
+        "500k",
+        "pass time speedup"
+      ],
+      "source": null
+    },
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "Explicit user authority to use the fast engine for a larger or longer run, or for a second condition that separates AMP from non-deterministic kernels."
+    ]
+  }
+}
