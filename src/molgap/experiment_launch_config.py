@@ -335,12 +335,13 @@ def validate_launch_config(
     if launch_path.parent.resolve() != root.resolve():
         raise ValueError("Launch configuration must live at the staged input root")
 
+    target_binding = None
     if "target_identity" in config:
         from .experiment_family_workflow import TargetIdentityBinding
         binding = config["target_identity"]
         if type(binding) is not dict or set(binding) != {"plan_path", "plan_sha256"}:
             raise ValueError("Expected explicit producer target identity binding")
-        TargetIdentityBinding.from_acceptance_plan(spec, root / "acceptance",
+        target_binding = TargetIdentityBinding.from_acceptance_plan(spec, root / "acceptance",
             binding["plan_path"], plan_sha256=binding["plan_sha256"])
 
     # Job paths are checked against the release's maps when available and
@@ -400,7 +401,8 @@ def validate_launch_config(
                 package_identity, arm["training"]["recipe"]["sha256"],
                 declaration["platform"]["name"], config["account"], config["run_reference"], None)
             validate_resume_bundle(root / pointer["manifest"], spec, arm_id=arm_id, context=context,
-                                   trajectory=root / "prospective" / arm_id / "trajectory.json")
+                                   trajectory=root / "prospective" / arm_id / "trajectory.json",
+                                   target_identity=target_binding)
     result = {
         "format": LAUNCH_FORMAT,
         "launch_sha256": _file_sha(launch_path),

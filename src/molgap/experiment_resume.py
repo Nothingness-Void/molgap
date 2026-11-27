@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import errno
+from inspect import signature
 import json
 import os
 import re
@@ -712,7 +713,7 @@ def _same_context(expected: dict, observed: dict) -> None:
 
 def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = None,
                            context: Any | None = None, trajectory: Any | None = None,
-                           expected_manifest_sha256: str | None = None) -> dict:
+                           expected_manifest_sha256: str | None = None, target_identity=None) -> dict:
     """Validate transport and dispatch the family-specific resume gate."""
     root, manifest_path, manifest, manifest_sha256 = _bundle_root(
         path, expected_manifest_sha256=expected_manifest_sha256)
@@ -795,10 +796,12 @@ def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = 
     hook = getattr(owner, "validate_screen_resume", None)
     if not callable(hook):
         raise ValueError(f"Family owner {adapter.module} has no validate_screen_resume hook")
+    target_options = ({"target_identity": target_identity}
+                      if target_identity is not None and "target_identity" in signature(hook).parameters else {})
     owner_report = hook(spec=spec, arm_id=arm_name, manifest=manifest,
                         bundle_root=root, artifacts=checked["artifacts"],
                         sidecars=checked["sidecars"], trajectory=checked["trajectory"],
-                        context=context_value)
+                        context=context_value, **target_options)
     if type(owner_report) is not dict:
         raise ValueError("Family resume validator must return a mapping")
     return {"status": "RESUME_VERIFIED", "manifest": manifest,
@@ -810,10 +813,11 @@ def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = 
 def restore_resume_bundle(path: Path | str, output: Path | str, spec=None, *,
                           arm_id: str | None = None, context: Any | None = None,
                           trajectory: Any | None = None,
-                          expected_manifest_sha256: str | None = None) -> dict:
+                          expected_manifest_sha256: str | None = None, target_identity=None) -> dict:
     """Restore a verified bundle into a fresh output namespace atomically."""
     checked = validate_resume_bundle(path, spec, arm_id=arm_id, context=context,
-                                     trajectory=trajectory, expected_manifest_sha256=expected_manifest_sha256)
+                                     trajectory=trajectory, expected_manifest_sha256=expected_manifest_sha256,
+                                     target_identity=target_identity)
     return _restore_verified_bundle(checked, output,
                                     expected_manifest_sha256=checked["manifest_sha256"])
 

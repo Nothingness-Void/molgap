@@ -3,6 +3,7 @@ import json
 import errno
 import os
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import torch
@@ -92,6 +93,65 @@ def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_p
     assert len(corrupted) == 1
     assert not any(path.is_file() for path in failed_output.rglob("*"))
     assert {path.name: path.read_bytes() for path in source.iterdir()} == before
+
+
+def test_shared_resume_requires_explicit_float32_target_binding(bundle_case, tmp_path, monkeypatch):
+    from molgap import experiment_execution, family_training_runner, family_training_session
+    from molgap.experiment_family_workflow import TargetIdentityBinding, tensor_digest
+    from molgap.family_training_recipe import aux_ema_names
+    from molgap.research_memory import trace
+
+    source, _, context, trajectory, arm = bundle_case
+    context = {**context, "run_reference": "local/resume"}
+    spec = SimpleNamespace(identity=context["spec_identity"], to_dict=lambda: {"arms": [arm],
+        "prospective": {"arms": [{"arm_id": arm["arm_id"], "trajectory_id": trajectory["trajectory_id"]}]}})
+    monkeypatch.setattr(experiment_execution, "training_adapter",
+                        lambda _: SimpleNamespace(module=family_training_runner.__name__))
+    label, _, _, _, model_file, pred_file, metric = aux_ema_names(.9999)
+    target = torch.tensor([0.1], dtype=torch.float32)
+    indices = torch.tensor([0])
+    expected = {"development_rows": 1, "source_idx_sha256": tensor_digest(indices, role="source_idx"),
+                "target_sha256": transport.hashlib.sha256(target.numpy().astype("<f4").tobytes()).hexdigest()}
+    recipe = SimpleNamespace(dataset=SimpleNamespace(development=True), auxiliary_ema_decays=(.9999,),
+                             optimizer_steps=4, selection="best-development-ema", identity="recipe")
+    monkeypatch.setattr(family_training_runner, "read_recipe",
+                        lambda _: ({"acceptance_requirements": expected}, recipe))
+    monkeypatch.setattr(family_training_runner, "validate_screen_recipe", lambda *_: None)
+    monkeypatch.setattr(family_training_session, "validate_session_resume",
+                        lambda *_: SimpleNamespace(status="paused", pass_index=1,
+                                                   optimizer_step=2, sample_presentations=4))
+    monkeypatch.setattr(trace, "validate_canonical_trace", lambda value: value)
+    checkpoint_path = source / "last_checkpoint.pt"
+    checkpoint = torch.load(checkpoint_path, weights_only=True)
+    checkpoint["context"] = context
+    checkpoint["cursor"]["auxiliary_selections"] = {label: {"selected_step": 2, "best_development_mae_eV": 0.}}
+    torch.save(checkpoint, checkpoint_path)
+    torch.save({"context": context, "model": checkpoint["model"], "weights": "ema-" + label,
+                "selection": recipe.selection, "optimizer_step": 2, "development_mae_eV": 0.}, source / model_file)
+    torch.save({"context": context, "source_idx": indices, "target_eV": target,
+                "prediction_eV": target}, source / pred_file)
+    trace_path = source / "canonical_trace.json"
+    curve = json.loads(trace_path.read_bytes())
+    curve["trajectory_id"] = trajectory["trajectory_id"]
+    curve["observations"][0][metric] = 0.
+    trace_path.write_text(json.dumps(curve), encoding="utf-8")
+    bundle = tmp_path / "float32-bundle"
+    transport.create_resume_bundle(source, context, trajectory, bundle)
+
+    manifest_path = tmp_path / "targets.json"
+    manifest_path.write_text(json.dumps({"development_target_sha256": expected["target_sha256"],
+        "target_encoding": "little-endian-float32-contiguous-raw-bytes"}), encoding="utf-8")
+    plan_path = tmp_path / "plan.json"
+    plan_path.write_text(json.dumps({"format": "molgap-family-same-run-acceptance-plan-v1",
+        "spec_identity": spec.identity, "arms": [{"arm_id": arm["arm_id"], "expected": expected,
+        "contract": {"sha256": context["training_recipe_sha256"]}, "target_manifest": {
+            "path": manifest_path.name, "sha256": trace.file_digest(manifest_path)}}]}), encoding="utf-8")
+    binding = TargetIdentityBinding(tmp_path, plan_path.name, trace.file_digest(plan_path))
+    with pytest.raises(ValueError, match="Development target identity mismatch"):
+        transport.validate_resume_bundle(bundle, spec, target_identity=None)
+    assert transport.validate_resume_bundle(bundle, spec, target_identity=binding)["status"] == "RESUME_VERIFIED"
+    assert transport.restore_resume_bundle(bundle, tmp_path / "restored", spec,
+                                           target_identity=binding)["status"] == "RESTORED"
 
 
 def test_bundle_binds_captured_allocation_sidecar_during_atomic_refresh(bundle_case, tmp_path, monkeypatch):

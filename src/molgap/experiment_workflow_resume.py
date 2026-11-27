@@ -12,7 +12,7 @@ from pathlib import Path
 import shutil
 from tempfile import TemporaryDirectory
 
-from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json
+from .experiment_family_workflow import RunContext, TargetIdentityBinding, _artifact_path, _check_context, _json
 from .experiment_launch import _safe_local
 from .experiment_launch_config import validate_launch_config, RECOVERY_REPAIR_PATHS, validate_recovery_repair
 from .experiment_package import _PackageVerification, verify_experiment_source_package, read_packaged_text
@@ -275,6 +275,11 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
                            package_dir=package, staged_root=staged)
     launch_raw = Path(inputs["launch_config"]).read_bytes()
     launch = json.loads(launch_raw)
+    target_identity = None
+    if "target_identity" in launch:
+        target = launch["target_identity"]
+        target_identity = TargetIdentityBinding.from_acceptance_plan(spec, staged / "acceptance",
+            target["plan_path"], plan_sha256=target["plan_sha256"])
     contexts, trajectories = {}, {}
     for arm in spec.to_dict()["arms"]:
         from importlib import import_module
@@ -302,7 +307,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
                 or json.loads(raw)["decision"]["outcome"] != "ACTIVE"):
             raise ValueError("Recovery requires the exact original ACTIVE canonical prospective trajectory")
         contexts[arm_id], trajectories[arm_id] = producer, raw
-    return manifest, release, launch, contexts, trajectories
+    return manifest, release, launch, contexts, trajectories, target_identity
 
 
 def _unchanged_prospectives(spec, repo_root, trajectories):
@@ -319,7 +324,7 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
     with _original(spec, repo_root, prepared, package_dir,
                    expected_package_identity, receipt_path, _verification=verification,
                    recovery_repair=recovery_repair) as original:
-        manifest, _, _, contexts, trajectories = original
+        manifest, _, _, contexts, trajectories, target_identity = original
         if arm_id not in contexts:
             raise ValueError("Unknown recovery arm")
         output = Path(output).absolute()
@@ -328,7 +333,8 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
             raise ValueError("Resume export requires a fresh destination")
         bundle = create_resume_bundle(Path(source_output), contexts[arm_id], trajectories[arm_id], output)
         checked = validate_resume_bundle(output, spec, arm_id=arm_id,
-                                        context=contexts[arm_id], trajectory=trajectories[arm_id])
+                                        context=contexts[arm_id], trajectory=trajectories[arm_id],
+                                        target_identity=target_identity)
         _unchanged_prospectives(spec, repo_root, trajectories)
         return {"status": checked["status"], "spec_identity": spec.identity,
                 "package_identity": manifest["package_identity"], "arm_id": arm_id,
@@ -359,7 +365,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                    recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original, (
         TemporaryDirectory(prefix=".resume-inputs-", dir=output.parent) if paused_root is not None else nullcontext()
     ) as scratch:
-        manifest, release, launch, contexts, trajectories = original
+        manifest, release, launch, contexts, trajectories, target_identity = original
         if paused_root is not None:
             exports = {}
             for arm, context in contexts.items():
@@ -374,7 +380,8 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         checked = {}
         for arm_id, path in plan["arms"].items():
             checked[arm_id] = validate_resume_bundle(_path(Path(repo_root), path), spec,
-                arm_id=arm_id, context=contexts[arm_id], trajectory=trajectories[arm_id])
+                arm_id=arm_id, context=contexts[arm_id], trajectory=trajectories[arm_id],
+                target_identity=target_identity)
         backend = _platform_adapter(spec.to_dict()["platform"]["name"])
         frozen_inputs = _json(Path(prepared) / "release_report.json")["inputs"]
         metadata = _json(Path(release["inputs"]["kernel_metadata"]))
