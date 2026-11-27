@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 879,
+  "ambiguous_historical_role_record_count": 884,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -4055,6 +4055,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+      "role_identity": null,
+      "role_name": "dev_500k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-input-pipeline-local-20261013",
       "role_identity": null,
       "role_name": "development",
@@ -6155,7 +6190,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 699,
+  "explicit_role_event_count": 705,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -11199,6 +11234,52 @@
         "semantics": "explicit",
         "trajectory_id": "TB-matched-500k-v4-three-arm"
       }
+    ],
+    "pcqm4mv2-ogb-official-train:c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565:dev_500k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+      }
     ]
   },
   "protected_roles_reported_untouched": {
@@ -11338,6 +11419,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-grit-spse-500k-20261118-closure",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
@@ -11530,6 +11612,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-grit-spse-500k-20261118-closure",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",

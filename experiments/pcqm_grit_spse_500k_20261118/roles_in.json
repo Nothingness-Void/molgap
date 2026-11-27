@@ -1,0 +1,17 @@
+{
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "tail_holdout_v1": "consumed",
+    "dev_500k": "consumed"
+  },
+  "events": [
+    {"role_name": "tail_holdout_v1", "access_kind": "prediction_input", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89"},
+    {"role_name": "tail_holdout_v1", "access_kind": "labels_read", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89"},
+    {"role_name": "tail_holdout_v1", "access_kind": "metric_computed", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89"},
+    {"role_name": "dev_500k", "access_kind": "prediction_input", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565"},
+    {"role_name": "dev_500k", "access_kind": "labels_read", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565"},
+    {"role_name": "dev_500k", "access_kind": "metric_computed", "selection_used": false, "dataset_identity": "pcqm4mv2-ogb-official-train", "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565"}
+  ]
+}

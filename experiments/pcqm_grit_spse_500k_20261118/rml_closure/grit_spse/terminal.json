@@ -1,0 +1,240 @@
+{
+  "acceptance_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_grit_spse_500k_20261118/decision.md": "f6155081a36b4b8a36d9ffddeb4a38e6d445b9e0322eb744c47925fcf446baf2",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/completion_manifest.json": "78a2a69a87f3cdba69a767d18ac39f3dac1ffb9a90dbabcd8d3c4539b34877fb",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/run_provenance.json": "26162e88990687341d4d7a8d4d833df34febe7211a73dd747687357051d55d5c",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/run_spec_retrieved_r2.json": "16d5cc1ae19831bac0215b3f948a2d6584c9731b9b6da118260fd50499dee430",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/submission.json": "084e732e387e61bcc3d24c43e71b87eed6e8287f2b64df1e3fdc9ccba75dcae7",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/tail_grit-spse.json": "e7c35b177e849f1e76797ec59854c327ba4a952279c193befb1f6ab00dcfa509",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/train_log.jsonl": "a547c5d980ff7959c5f69359a025f27470ab729584f7f41c7c1e5db0bcfaae41",
+    "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json": "f75be9e580edfa707fcf393f2b908b507bd470c546931e3fe29423d599d09143"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-grit-spse-500k-20261118-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-0",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "hardware": "NVIDIA A100 FP32",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 4.6722222222222225
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 4.6722222222222225
+        }
+      },
+      "platform": "ims",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_grit_spse_500k_20261118/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "grit",
+        "grit_spse",
+        "spse",
+        "random walk pe",
+        "500k",
+        "tail holdout"
+      ],
+      "source": "experiments/pcqm_grit_spse_500k_20261118/evidence/tail_grit-spse.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Explicit user authority for a new GRIT-SPSE question with a changed mechanism."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "78a2a69a87f3cdba69a767d18ac39f3dac1ffb9a90dbabcd8d3c4539b34877fb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "26162e88990687341d4d7a8d4d833df34febe7211a73dd747687357051d55d5c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/run_spec_retrieved_r2.json",
+        "name": "run_spec_retrieved_r2.json",
+        "sha256": "16d5cc1ae19831bac0215b3f948a2d6584c9731b9b6da118260fd50499dee430"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/submission.json",
+        "name": "submission.json",
+        "sha256": "084e732e387e61bcc3d24c43e71b87eed6e8287f2b64df1e3fdc9ccba75dcae7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/tail_grit-spse.json",
+        "name": "tail_grit-spse.json",
+        "sha256": "e7c35b177e849f1e76797ec59854c327ba4a952279c193befb1f6ab00dcfa509"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "a547c5d980ff7959c5f69359a025f27470ab729584f7f41c7c1e5db0bcfaae41"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/decision.md",
+        "name": "decision.md",
+        "sha256": "f6155081a36b4b8a36d9ffddeb4a38e6d445b9e0322eb744c47925fcf446baf2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "f75be9e580edfa707fcf393f2b908b507bd470c546931e3fe29423d599d09143"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_grit_spse_500k_20261118/decision.md",
+        "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-grit-spse-500k-20261118-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-11-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Legacy retrieval closure; metadata only."
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "route_closed_no_retry",
+      "comparison_status": "cross_job_frozen_reference_single_seed",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT_TAIL_ABOVE_GATE",
+      "transfer_status": "not_assessed_no_100k_companion"
+    },
+    "role_use": {
+      "dev_500k": "consumed",
+      "official_validation": "untouched",
+      "tail_holdout_v1": "consumed",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "GRIT-SPSE, one 60-pass BS128 FP32 500K run (seed 42, IMS A100, r2), scored once offline on tail_holdout_v1 with the final EMA checkpoint. Cross-job, cross-runtime comparison against the frozen GPT-T reference tail 107.273 meV; no same-job arm.",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-28T03:05:31+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "role_event_id": "role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+    }
+  ],
+  "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+  "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+}

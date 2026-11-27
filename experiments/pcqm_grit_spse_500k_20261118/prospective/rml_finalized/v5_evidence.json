@@ -1,0 +1,87 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "78a2a69a87f3cdba69a767d18ac39f3dac1ffb9a90dbabcd8d3c4539b34877fb"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/run_provenance.json",
+      "name": "run_provenance.json",
+      "sha256": "26162e88990687341d4d7a8d4d833df34febe7211a73dd747687357051d55d5c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/run_spec_retrieved_r2.json",
+      "name": "run_spec_retrieved_r2.json",
+      "sha256": "16d5cc1ae19831bac0215b3f948a2d6584c9731b9b6da118260fd50499dee430"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/submission.json",
+      "name": "submission.json",
+      "sha256": "084e732e387e61bcc3d24c43e71b87eed6e8287f2b64df1e3fdc9ccba75dcae7"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/tail_grit-spse.json",
+      "name": "tail_grit-spse.json",
+      "sha256": "e7c35b177e849f1e76797ec59854c327ba4a952279c193befb1f6ab00dcfa509"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/evidence/train_log.jsonl",
+      "name": "train_log.jsonl",
+      "sha256": "a547c5d980ff7959c5f69359a025f27470ab729584f7f41c7c1e5db0bcfaae41"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/decision.md",
+      "name": "decision.md",
+      "sha256": "f6155081a36b4b8a36d9ffddeb4a38e6d445b9e0322eb744c47925fcf446baf2"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "f75be9e580edfa707fcf393f2b908b507bd470c546931e3fe29423d599d09143"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_grit_spse_500k_20261118/decision.md",
+      "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-grit-spse-500k-20261118-closure",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-grit-spse-500k-20261118-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Legacy retrieval closure; metadata only."
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "route_closed_no_retry",
+    "comparison_status": "cross_job_frozen_reference_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT_TAIL_ABOVE_GATE",
+    "transfer_status": "not_assessed_no_100k_companion"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "GRIT-SPSE, one 60-pass BS128 FP32 500K run (seed 42, IMS A100, r2), scored once offline on tail_holdout_v1 with the final EMA checkpoint. Cross-job, cross-runtime comparison against the frozen GPT-T reference tail 107.273 meV; no same-job arm.",
+  "track": "B"
+}

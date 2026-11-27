@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-grit-spse-500k-20261118-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-0",
+  "evidence_ref": "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json",
+  "hardware": "NVIDIA A100 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 4.6722222222222225
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 4.6722222222222225
+    }
+  },
+  "platform": "ims",
+  "run_id": "pcqm-grit-spse-500k-20261118-s42:grit_spse:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+}

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "a7caab1bf4d8d468b01c22922487abd6e757e593863d8da31a33ecfe933ab9b3",
+  "source_digest": "21e6fc4cf790cc4061acb546eb080cc9dbfb770b1fae2f8c26f51c86d8e253c0",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -420,15 +420,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_grit_spse_500k_20261118/protocol.md",
+      "decision_ref": "experiments/pcqm_grit_spse_500k_20261118/decision.md",
       "family_id": "pcqm-grit-spse-500k-20261118",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_grit_spse_500k_20261118/prospective/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_grit_spse_500k_20261118/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-grit-spse-500k-20261118-closure"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
     },

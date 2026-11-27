@@ -1,0 +1,39 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-b46e2be04fc0ff2cfd87ff3979aa9e24c98ad2444b28d92cc207fbaf66c93f7a",
+  "finalized_at": "2026-11-28T03:05:31+09:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_grit_spse_500k_20261118/decision.md": "f6155081a36b4b8a36d9ffddeb4a38e6d445b9e0322eb744c47925fcf446baf2",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/completion_manifest.json": "78a2a69a87f3cdba69a767d18ac39f3dac1ffb9a90dbabcd8d3c4539b34877fb",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/run_provenance.json": "26162e88990687341d4d7a8d4d833df34febe7211a73dd747687357051d55d5c",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/run_spec_retrieved_r2.json": "16d5cc1ae19831bac0215b3f948a2d6584c9731b9b6da118260fd50499dee430",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/submission.json": "084e732e387e61bcc3d24c43e71b87eed6e8287f2b64df1e3fdc9ccba75dcae7",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/tail_grit-spse.json": "e7c35b177e849f1e76797ec59854c327ba4a952279c193befb1f6ab00dcfa509",
+    "experiments/pcqm_grit_spse_500k_20261118/evidence/train_log.jsonl": "a547c5d980ff7959c5f69359a025f27470ab729584f7f41c7c1e5db0bcfaae41",
+    "experiments/pcqm_grit_spse_500k_20261118/rml_closure/grit_spse/acceptance.json": "f75be9e580edfa707fcf393f2b908b507bd470c546931e3fe29423d599d09143"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_grit_spse_500k_20261118/prospective/trajectory.json",
+  "prospective_sha256": "754dd8bcea514911f8ded3f1d2d99578ef2c7cf3bc5ebc8e80f468ecc3f518c6",
+  "published_hashes": {
+    "costs/cost-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-0.json": "092d5aba4d0973c5a13136b8c498f22918f0ef1ee3f7001b3498b809b301c843",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-labels_read.json": "398a380283ae1db4f796fe88efb58f52582bc33f94e99774374f76955b810262",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-metric_computed.json": "fa86e94cde0cd31a3c03d0547a278553c66ff11c549b21a62c12741333f411b1",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-dev_500k-prediction_input.json": "e0e90f0e3f6c2d88072f71eec0d06cd9c38a3e08e2687073733517f4e43d0d8b",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-labels_read.json": "9ed29445cebb53ab0721bfc6792842775700004467d1b13be703685f7a871a83",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-metric_computed.json": "a1bc6c5a65301981486e7588eea1f93f0942b250754d4b821a234dc9f10252a4",
+    "roles/role-pcqm-grit-spse-500k-20261118-s42-grit_spse-downstream-tail_holdout_v1-prediction_input.json": "c81f74df4d28295a79aecfa463c411a492c960b97d6c03812901359be6e776e7",
+    "terminal_input.json": "7908d3c7898094e895a9e5ac8ac9ad29031536a352cd3a9ab0063122ebd777dc",
+    "trajectory.json": "140b0a701d4170f3fd78dfd9111376732a7e432984567c52f06db1370871b079",
+    "v5_evidence.json": "70da92001d1405b33c581768a069d817624772d650531b62ba292d690535fb0a"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_grit_spse_500k_20261118/prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "b46e2be04fc0ff2cfd87ff3979aa9e24c98ad2444b28d92cc207fbaf66c93f7a",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-grit-spse-500k-20261118-s42-grit_spse"
+}
