@@ -17,7 +17,6 @@ from molgap.research_memory.discovery import DiscoveredRecords
 from molgap.research_memory.portability import (
     committed_head_differences,
     missing_locally_claimed_artifacts,
-    uncommitted_closure_paths,
 )
 from molgap.research_memory.ready import build_ready_package
 from molgap.research_memory.schemas import validate_id, validate_trajectory
@@ -309,20 +308,6 @@ def test_portability_check_detects_uncommitted_pointer_closure(tmp_path):
     assert missing_locally_claimed_artifacts(tmp_path, records) == [
         f"{evidence}: locally_retained.pt"
     ]
-    assert uncommitted_closure_paths(tmp_path, records) == [
-        "experiments/trace_migration.json",
-        "source_trace.json",
-        "v5_evidence.json",
-    ]
-
-    git(
-        "add",
-        "experiments/trace_migration.json",
-        "source_trace.json",
-        "v5_evidence.json",
-    )
-    git("commit", "-qm", "close evidence paths")
-    assert uncommitted_closure_paths(tmp_path, records) == []
     (tmp_path / "locally_retained.pt").write_bytes(b"artifact")
     assert missing_locally_claimed_artifacts(tmp_path, records) == []
 

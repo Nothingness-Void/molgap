@@ -25,7 +25,7 @@ import pytest
 
 from molgap.constants import REPO_ROOT
 from molgap.evidence_pointers import load_json_object
-from molgap.research_memory.finalize import verified_receipt
+from molgap.research_memory.finalize import legacy_terminal, verified_receipt
 from molgap.research_memory.compiler import compile_research_memory
 from molgap.research_memory.backtest import build_screening_backtest
 from molgap.research_memory.schemas import validate_trace_manifest
@@ -1979,3 +1979,36 @@ def test_unreadable_unrelated_record_does_not_block_closing_a_new_arm(tmp_path):
     # An unrelated historical trajectory that no longer parses must not stop this closure.
     bystander["traj_path"].write_bytes(b"{not json")
     assert finalize(tmp_path, new["traj_path"], new["terminal_path"])["status"] != "ALREADY_FINALIZED"
+
+
+def test_legacy_terminal_package_closes_through_terminal_pipeline(tmp_path):
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(tmp_path, "exp_legacy", "TB-legacy", "run-legacy-1", "ev-legacy-1", include_trace_artifact=False)
+    exp = arm["exp_dir"]
+    (exp / "retrieved").mkdir()
+    (exp / "retrieved" / "summary.json").write_text('{"mae": 0.1}\n')
+    protected = {"official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"}
+    (exp / "decision_in.json").write_text(json.dumps({
+        "evidence_id": "ev-legacy-1", "scope": "500k", "finalized_at": "2026-11-28T09:00:00+09:00",
+        "v5_outcome": {k: "x" for k in ("execution_status", "artifact_status", "comparison_status", "scientific_status",
+                                         "transfer_status", "budget_decision", "full_handoff_status")},
+        "outcome": "INCONCLUSIVE", "decision_ref": "experiments/exp_legacy/decision.md", "next_allowed_actions": [],
+        "reopen_conditions": ["new authority"], "facts": {"effect_meV": -1.0, "ci_meV": [-2.0, 0.5], "failure_mode": None,
+                                                           "search_terms": ["legacy"], "source": "experiments/exp_legacy/retrieved/summary.json"}}))
+    (exp / "roles_in.json").write_text(json.dumps({"role_use": protected, "events": []}))
+    args = dict(root=tmp_path, trajectory=arm["traj_path"], action_id="act-1", run_id="run-legacy-1",
+                decision_file=exp / "decision_in.json", evidence_dirs=["experiments/exp_legacy/retrieved"],
+                roles_file=exp / "roles_in.json", out="experiments/exp_legacy/legacy_out")
+    for bad, message in ((dict(action_id="act-9"), "not frozen"), (dict(evidence_dirs=["experiments/exp_legacy/none"]), "need evidence")):
+        with pytest.raises(ValueError, match=message):
+            legacy_terminal(**{**args, **bad})
+    (exp / "roles_in.json").write_text(json.dumps({"role_use": {"test_dev": "untouched"}, "events": []}))
+    with pytest.raises(ValueError, match="protected role"):
+        legacy_terminal(**args)
+    (exp / "roles_in.json").write_text(json.dumps({"role_use": protected, "events": []}))
+    made = legacy_terminal(**args)
+    with pytest.raises(ValueError, match="new directory"):  # a closed package is never overwritten
+        legacy_terminal(**args)
+    result = close_terminal_arm(repo_root=tmp_path, trajectory=arm["traj_path"], terminal=tmp_path / made["terminal"])
+    assert result["pipeline_status"] == "COMPLETE"
+    assert verified_receipt(exp / "rml_finalized")["trace_status"] == "unavailable"

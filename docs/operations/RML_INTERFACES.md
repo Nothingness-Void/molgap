@@ -66,7 +66,7 @@ Refuses missing `--role-id` or protected roles (`official_validation`, `test_dev
 | `rebuild` | Write (~30 s) | Atomically regenerates `research_memory/derived/`. Run once after standalone canonical edits/imports, **never** after normal closure (closure already rebuilds). |
 | `terminal-rebuild` | Recovery write | Pass finalized `trajectory.json` or `rml_finalized/` path (not a bare ID). Re-verifies finalization receipt and refreshes derived outputs after a failed closure index update. |
 | `replay-pool`, `backtest-screening`, `backtest-policy` | Read-only (~20 s) | Run `validate` internally first, so they need primary checkout artifacts. `replay-pool` stdout is very large (~73k lines); `backtest-policy` prints `policy_activated: false`. |
-| `plan`, `finalize`, `terminal-pipeline`, `recover-trace`, `package-ready` | Low-level writes | Called by [LIFECYCLE.md](../../research_memory/LIFECYCLE.md) / `platforms/local/accept_run.py` ([CLI reference](EXPERIMENT_CLI.md)). Use `--help` for flags. |
+| `plan`, `finalize`, `terminal-pipeline`, `legacy-terminal`, `recover-trace`, `package-ready` | Low-level writes | Called by [LIFECYCLE.md](../../research_memory/LIFECYCLE.md) / `platforms/local/accept_run.py` ([CLI reference](EXPERIMENT_CLI.md)). Use `--help` for flags. |
 
 ## Data contracts
 

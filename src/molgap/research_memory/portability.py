@@ -108,24 +108,6 @@ def _git_head_paths(root: Path) -> set[str]:
     }
 
 
-def uncommitted_closure_paths(
-    repo_root: str | Path, records: dict[str, list[tuple[Path, dict[str, Any]]]]
-) -> list[str]:
-    """Return canonical RML inputs and local pointers absent from Git HEAD.
-
-    Trace migration sidecars are included because replay consumes them by
-    convention rather than through a field in the original trace manifest.
-    """
-    root = Path(repo_root).resolve()
-    required = _evidence_closure_paths(root, records)
-    head_paths = _git_head_paths(root)
-    return sorted(
-        _relative(root, path)
-        for path in required
-        if _relative(root, path) not in head_paths
-    )
-
-
 def _evidence_closure_paths(
     root: Path, records: dict[str, list[tuple[Path, dict[str, Any]]]]
 ) -> set[Path]:

@@ -199,7 +199,7 @@ For an already completed remote run, use the existing acceptance adapter,
 hash-bound decision artifacts required by those commands (including the
 selected checkpoint, aligned predictions, trace, manifests, source identity
 and acceptance metadata). Do not download every epoch checkpoint/prediction or
-write a one-off terminal adapter when these entry points already cover the run.
+write a one-off terminal adapter; with no `input_binding.json` use `legacy-terminal`.
 Reconcile the frozen contract against observed source, optimizer, schedule and
 role identity before assigning strict comparison status. A contract mismatch
 remains visible as a terminal anomaly; a valid trace alone does not grant strict

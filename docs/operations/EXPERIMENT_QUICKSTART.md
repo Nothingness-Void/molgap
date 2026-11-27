@@ -132,7 +132,7 @@ allocation_wall_limit_seconds / 3600)` before publication and the POST.
   The [verification conventions](INFRASTRUCTURE_VERIFICATION.md) own the boundaries.
 - Local single-GPU exercise: `prepare-family-training`, then `platforms/local/train.py --prepared P --repo-root . --data-root <data-root> --output O`.
   Close it with `--accept-only --closure-input FILE --execute` (one arm, `INFRASTRUCTURE_ONLY`).
-  Run-keyed `accept_run.py` and `draft-closure` need `input_binding.json`, absent here.
+  Without `input_binding.json`, close with `rml legacy-terminal`, then `rml terminal-pipeline --terminal <out>/terminal.json`.
 
 ## Supply one human input
 
