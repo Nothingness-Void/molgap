@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-06e7e6fb2ab449fd8f3bfab0",
+  "evidence_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/prospective_j1/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "pcqm-demol-cin-100k-ims-20261120-s43",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin"
+}

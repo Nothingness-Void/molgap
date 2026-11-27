@@ -1,0 +1,30 @@
+{
+  "acceptance_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j2_gptt_100k_s43_cancelled/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/SUBMIT_STATUS_20261120.md": "d617d9d9cf7a11ad27e28e4faa997e21f8d3085f13f9a734a61e99b1479f2721",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/ims_submission_old_j1_j2.md": "f7ac6ca6a3ec172ebd0fe86a5a21684705538f234573ace21851e7aaa2baec69",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j2_gptt_100k_s43_cancelled/acceptance.json": "88141bfd161e9abd17c78124081f89075065625434f1db297428441ed66615e0"
+  },
+  "finalized_at": "2026-11-28T03:39:47+09:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "48d233fc8a355a04e03d463e1e0006f2b77410bc5f0e037ba9167b9641d73e5c"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "09741ba0ba6b11098f8448aa72f22031633e175047f61990ddcd637f9579b6e1"
+      }
+    ],
+    "roles": []
+  },
+  "run_id": "pcqm-gptrans-pun-100k-ims-20261120-s43",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm"
+}

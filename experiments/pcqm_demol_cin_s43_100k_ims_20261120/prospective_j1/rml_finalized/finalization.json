@@ -1,0 +1,29 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-06e7e6fb2ab449fd8f3bfab0d08394b207fdb69bbaa06ba1b5044e3ef6f11ac6",
+  "finalized_at": "2026-11-28T03:36:12+09:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/SUBMIT_STATUS_20261120.md": "d617d9d9cf7a11ad27e28e4faa997e21f8d3085f13f9a734a61e99b1479f2721",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/ims_submission_old_j1_j2.md": "f7ac6ca6a3ec172ebd0fe86a5a21684705538f234573ace21851e7aaa2baec69",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j1_demol_100k_s43_cancelled/acceptance.json": "dcad90f110596a6e46739814d94e2db19d41cf9e6e5e44643b26a91dd4e9580a"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/prospective_j1/trajectory.json",
+  "prospective_sha256": "5b2751e2e8e8826fdfde8ffe0812f24f9e58be646c56405ac80910bae15f6cf9",
+  "published_hashes": {
+    "costs/measurement_missing.json": "3ff167ff629007556e5a329a3e37348f9cd55a15935f91e25a9897d16e9dcbac",
+    "terminal_input.json": "208c8a0b103767226950340af073a262c83e706be63364be5a9cf12013eeef50",
+    "trajectory.json": "ca93ef4a20781d8a56d7ad244c598074ebeb9bab8056a4a365fccd14f14199d3",
+    "v5_evidence.json": "fc30f8527eb1710dd2e08050c80ae058d1ba15fa53273c417e053e46043c1b61"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/prospective_j1/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "06e7e6fb2ab449fd8f3bfab0d08394b207fdb69bbaa06ba1b5044e3ef6f11ac6",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin"
+}

@@ -1,0 +1,122 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-demol-cin-100k-ims-20261120-s43-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-planned",
+        "cost-finalize-06e7e6fb2ab449fd8f3bfab0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-demol-cin-100k-ims-20261120-s43"
+      ],
+      "source_commit": "da83c254b79a34d798c7c8d20dec495365d36153",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol-cin",
+        "ims",
+        "cancelled",
+        "no train",
+        "superseded",
+        "serial chain"
+      ],
+      "source": null
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Terminal evidence only. The result of this recipe lives in the chain trajectory."
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_100K_IMS",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
+    "chosen_action": "RUN_100K_IMS",
+    "policy_id": "pcqm-demol-cin-ims-replication-20261120",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/rml_decision_snapshots/82c9b91c72fd3dc599b9d708fff4ca9e7ef8fa72aaac30856ea773e7ab789dba.json",
+    "snapshot_sha256": "82c9b91c72fd3dc599b9d708fff4ca9e7ef8fa72aaac30856ea773e7ab789dba",
+    "state_timestamp": "2026-11-20T23:00:00+09:00"
+  },
+  "family_id": "pcqm-demol-cin-ims-replication-20261120",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Selection bias from best-pass choice on dev",
+      "Platform effect (IMS A100 torch 2.7.1 vs Kaggle T4 torch 2.11)",
+      "Seed noise about 1-2 meV at 100K"
+    ],
+    "changed_mechanism": "demol-cin-sparse-cellular-complex-0-1-2-cell-virtual-hub",
+    "cheapest_falsifier": "Delta43 > -1.5 meV: close the DeMol 100K lead (J1 vs J2 rule in protocol.md).",
+    "decision_changed_if_negative": "Close the DeMol 100K lead under contract; no scale-up from 100K evidence.",
+    "decision_changed_if_positive": "Replicated only if Delta43 <= -3.0 and CI upper < 0; nomination only, non-strict, nothing adopted.",
+    "expected_native_cost_ref": "cost-T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-planned",
+    "historical_unknowns": [
+      "Kaggle strict pairing blocked by runtime-certificate scope mismatch; cause unproven"
+    ],
+    "hypothesis_id": "H-T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin",
+    "observed_deficiency": "One seed, dev-selected (best of 60 passes on the same dev rows): -4.80 meV at 100K may be noise plus selection.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-triplet-norm-100k-20261104",
+      "pcqm-gptrans-norm-ema-100k-20261104"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the DeMol-CIN 100K dev gain over matched GPT-T replicate at seed 43 on IMS A100 (Delta43 <= -3.0 meV, paired CI upper < 0)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "pcqm-demol-cin-500k-chain-20261128-old-j1"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/prospective_j1/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/protocol.md",
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/j1_demol_cin/training_contract.json",
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/j1_demol_cin/run_spec.json",
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/j1_demol_cin/recipe.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_demol_cin_s43_100k_ims_20261120/role_plan.json"
+    ],
+    "source_commit": "da83c254b79a34d798c7c8d20dec495365d36153",
+    "source_config_identity": "11a10b8a770a2e091a727dfa4f260bd6c6a662df97f6d964ea4f9d3561c63777"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin"
+}
