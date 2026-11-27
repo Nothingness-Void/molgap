@@ -3324,7 +3324,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 16
+          "unknown_records": 17
         },
         "device_hours": {
           "estimated": {
@@ -3336,7 +3336,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 16
+          "unknown_records": 17
         },
         "queue_hours": {
           "estimated": {
@@ -3348,7 +3348,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 16
+          "unknown_records": 17
         },
         "wall_hours": {
           "estimated": {
@@ -3360,7 +3360,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 16
+          "unknown_records": 17
         }
       },
       "unknown-before-authorized-device-query": {
@@ -3414,10 +3414,10 @@
         }
       }
     },
-    "unknown_events": 437
+    "unknown_events": 438
   },
   "evidence": {
-    "validated": 195,
+    "validated": 196,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -3449,25 +3449,25 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 19,
+      "count": 18,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 902,
+    "coarse_historical": 906,
     "explicit_events": 724,
     "repeatedly_selected": 28
   },
-  "source_digest": "4ad0ca309fd9907bc8f0743cdc961a1e8c42d7aa2ec38aac36c4220f9a203f7d",
+  "source_digest": "281d401bd1ec63fa162140ed5fa1e8f7303513c08bdbbb365e64a19fe48fa28c",
   "trajectories": {
     "count": 214,
     "outcomes": {
-      "ACTIVE": 8,
+      "ACTIVE": 7,
       "CLOSED": 39,
       "INCONCLUSIVE": 25,
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 63,
-      "NO_TRAIN": 58,
+      "NO_TRAIN": 59,
       "POSITIVE_UNDER_CONTRACT": 11
     }
   },

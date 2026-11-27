@@ -1,0 +1,35 @@
+{
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j2",
+  "scope": "Stand-alone IMS job cancelled by the user before training; replaced by the serial chain item. No training, no scoring.",
+  "legacy_contract": "pcqm-demol-cin-500k-chain-v1",
+  "finalized_at": "2026-11-28T03:39:47+09:00",
+  "v5_outcome": {
+    "execution_status": "not_run_cancelled_before_training",
+    "artifact_status": "no_artifacts",
+    "comparison_status": "not_applicable",
+    "scientific_status": "NO_TRAIN_superseded_by_serial_chain_item",
+    "transfer_status": "not_applicable",
+    "budget_decision": "cost_measurement_missing_not_zero",
+    "full_handoff_status": "not_applicable"
+  },
+  "outcome": "NO_TRAIN",
+  "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "Terminal evidence only. The result of this recipe lives in the chain trajectory."
+  ],
+  "facts": {
+    "effect_meV": null,
+    "ci_meV": null,
+    "failure_mode": null,
+    "search_terms": [
+      "demol-cin",
+      "ims",
+      "cancelled",
+      "no train",
+      "superseded",
+      "serial chain"
+    ],
+    "source": null
+  }
+}
