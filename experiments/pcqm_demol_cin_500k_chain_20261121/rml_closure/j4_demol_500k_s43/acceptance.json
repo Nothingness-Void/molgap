@@ -1,0 +1,174 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "demol500k-chain-20261121-j4-demol-500k-s43-v1",
+      "category": "training",
+      "cost_event_id": "cost-demol500k-chain-20261121-j4-0",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "hardware": "NVIDIA A100 FP32",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 12.501999999999999
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 12.501999999999999
+        }
+      },
+      "platform": "ims",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    }
+  ],
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j4",
+  "outcome": {
+    "artifact_status": "retrieved_hash_verified",
+    "budget_decision": "no_full_scale_nomination",
+    "comparison_status": "paired_tail_rows_vs_j5_same_platform_non_strict",
+    "execution_status": "complete",
+    "full_handoff_status": "not_nominated",
+    "scientific_status": "INCONCLUSIVE_BELOW_GATE_SHARED_MIGRATION_VERDICT_WITH_J3",
+    "transfer_status": "inconclusive_delta_in_band_minus_3.0_to_minus_1.5"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-dev_500k-selection_used",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j4_demol_500k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j4-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-500k-chain-20261121-j4-demol_cin_s43"
+    }
+  ],
+  "run_id": "demol500k-chain-20261121",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": [
+        -2.7463952667699854,
+        -1.7796130961940475
+      ],
+      "effect_meV": -2.2630984773198795,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol-cin",
+        "cellular complex",
+        "500k",
+        "tail holdout",
+        "ims a100",
+        "below gate",
+        "seed 43",
+        "migration rule"
+      ],
+      "source": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/closure_analysis_20261128.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Any new DeMol-CIN run (including follow-up on the post-pass-40 overfitting) is a new question: query RML first, write a prospective trajectory, and pass the Opus pre-submit review. A full-scale DeMol run also needs explicit user authority."
+    ]
+  }
+}

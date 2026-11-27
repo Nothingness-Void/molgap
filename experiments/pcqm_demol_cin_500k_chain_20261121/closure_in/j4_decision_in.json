@@ -1,0 +1,40 @@
+{
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j4",
+  "scope": "DeMol-CIN 500K IMS serial chain item; offline dev and tail scoring only; official valid and test not read; non-strict.",
+  "legacy_contract": "pcqm-demol-cin-500k-chain-v1",
+  "finalized_at": "2026-11-28T03:31:59+09:00",
+  "v5_outcome": {
+    "execution_status": "complete",
+    "artifact_status": "retrieved_hash_verified",
+    "comparison_status": "paired_tail_rows_vs_j5_same_platform_non_strict",
+    "scientific_status": "INCONCLUSIVE_BELOW_GATE_SHARED_MIGRATION_VERDICT_WITH_J3",
+    "transfer_status": "inconclusive_delta_in_band_minus_3.0_to_minus_1.5",
+    "budget_decision": "no_full_scale_nomination",
+    "full_handoff_status": "not_nominated"
+  },
+  "outcome": "INCONCLUSIVE",
+  "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "Any new DeMol-CIN run (including follow-up on the post-pass-40 overfitting) is a new question: query RML first, write a prospective trajectory, and pass the Opus pre-submit review. A full-scale DeMol run also needs explicit user authority."
+  ],
+  "facts": {
+    "effect_meV": -2.2630984773198795,
+    "ci_meV": [
+      -2.7463952667699854,
+      -1.7796130961940475
+    ],
+    "failure_mode": "below_gate",
+    "search_terms": [
+      "demol-cin",
+      "cellular complex",
+      "500k",
+      "tail holdout",
+      "ims a100",
+      "below gate",
+      "seed 43",
+      "migration rule"
+    ],
+    "source": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/closure_analysis_20261128.json"
+  }
+}
