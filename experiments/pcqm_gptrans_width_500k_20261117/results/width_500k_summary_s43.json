@@ -1,0 +1,95 @@
+{
+  "format": "molgap-width500k-summary-v1",
+  "card": "s43",
+  "order": [
+    "R-s43",
+    "L20-s43",
+    "W320-s43",
+    "F3-s43"
+  ],
+  "tasks": {
+    "R-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "start_utc": "2026-11-16T19:15:40Z",
+          "estimate_s": 5340,
+          "estimate_basis": "prior",
+          "wall_left_s": 36000,
+          "end_utc": "2026-11-16T20:27:34Z",
+          "exit_code": 0,
+          "passes_this_attempt": 60,
+          "passes_done": 60,
+          "samples_per_s": 6991.5
+        }
+      ],
+      "reason": "training_complete.json written"
+    },
+    "L20-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "start_utc": "2026-11-16T20:27:34Z",
+          "estimate_s": 7348,
+          "estimate_basis": "measured: median of 60 R passes",
+          "wall_left_s": 31686,
+          "end_utc": "2026-11-16T22:23:35Z",
+          "exit_code": 0,
+          "passes_this_attempt": 60,
+          "passes_done": 60,
+          "samples_per_s": 4352.6
+        }
+      ],
+      "reason": "training_complete.json written"
+    },
+    "W320-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "start_utc": "2026-11-16T22:23:35Z",
+          "estimate_s": 6429,
+          "estimate_basis": "measured: median of 60 R passes",
+          "wall_left_s": 24725,
+          "end_utc": "2026-11-16T23:48:17Z",
+          "exit_code": 0,
+          "passes_this_attempt": 60,
+          "passes_done": 60,
+          "samples_per_s": 6005.6
+        }
+      ],
+      "reason": "training_complete.json written"
+    },
+    "F3-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "start_utc": "2026-11-16T23:48:17Z",
+          "estimate_s": 6888,
+          "estimate_basis": "measured: median of 60 R passes",
+          "wall_left_s": 19643,
+          "end_utc": "2026-11-17T01:05:48Z",
+          "exit_code": 0,
+          "passes_this_attempt": 60,
+          "passes_done": 60,
+          "samples_per_s": 6596.1
+        }
+      ],
+      "reason": "training_complete.json written"
+    }
+  },
+  "wall_s": 36000.0,
+  "last_driver_start_utc": "2026-11-16T19:15:40Z",
+  "prior_hours": {
+    "R": 1.4,
+    "L20": 2.3,
+    "W320": 2.0,
+    "F3": 2.15
+  },
+  "tasks_note": "status of a task is COMPLETE only when training_complete.json exists after the child ended",
+  "speed": {
+    "r_pass_sec": 71.5,
+    "basis": "measured: median of 60 R passes",
+    "r_samples_per_s": 6993.0
+  },
+  "last_driver_end_utc": "2026-11-17T01:05:48Z"
+}

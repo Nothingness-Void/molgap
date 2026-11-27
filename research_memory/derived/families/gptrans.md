@@ -1,19 +1,20 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 105, 25 are CLOSED reference arms):
+Last closed (of 106, 25 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
 Open (ACTIVE) 10: T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm, T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3, T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-pair_update_norm, +7 more
 Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / Explicit user authority for P2 or P6, for a 100K companion pair, or for a tail, official-valid or te
 src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_dft_distance_aux.py, gptrans_dft_input_p1.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, +5 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_dft_input_p1_20261123, +40 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_dft_input_p1_20261123, +41 more
 
-## Closed (105)
+## Closed (106)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
+TB-pcqm-gptrans-width-500k-20261117 | INCONCLUSIVE | pcqm-gptrans-width-500k-20261117 | gpt-t-bondlocal-pairnorm-width-256 | null | discriminator_missing
 TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null (see experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md) | -
 TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance | NO_TRAIN | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
 TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2 | CLOSED | pcqm-gptrans-resistance-100k-s42-20261020 | only-a-zero-initialized-four-channel | null | -
@@ -166,6 +167,7 @@ Separately authorized independent full-scale validation plan with frozen full re
 A different weight-decay value, a second init, or a new frozen protocol; this endpoint is scored once.
 New explicit authorization; no automatic successor
 New explicitly authorized decision-relevant question
+A new question with its own frozen decision, e.g. a width or FFN test at a scale where a depth calibration shows signal.
 a distinct hypothesis that preserves both validated propagation paths
 
 ## src
@@ -288,6 +290,7 @@ src/molgap/pcqm_k1_gptrans_fusion.py
 - experiments/pcqm_gptrans_triplet_norm_100k_20261104: scripts -
   - trace experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/rml_finalized/trace.json
+- experiments/pcqm_gptrans_width_500k_20261117: scripts login_check.py, make_inits.py, width_verdict.py
 - experiments/pcqm_k1_gptrans_full_fusion: scripts accept_gptrans_full.py, run_fusion_study.py, run_gptrans_full.py
 - experiments/pcqm_k1_gptrans_pairnorm_fusion_500k: scripts analyze.py, close.py, prepare.py
 - experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108: scripts run.py

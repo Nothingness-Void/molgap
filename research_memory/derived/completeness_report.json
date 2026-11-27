@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 296,
+    "trajectories_total": 297,
     "with_complete_native_measurement": 39,
-    "with_cost_event": 285,
-    "with_incomplete_native_measurement": 246,
+    "with_cost_event": 286,
+    "with_incomplete_native_measurement": 247,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 127,
+      "count": 128,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-dft-distance-aux-20261121",
@@ -126,6 +126,7 @@
         "TB-pcqm-gptrans-full-wd-c4",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-gptrans-width-500k-20261117",
         "TB-pcqm-h1-heldout-budget",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
@@ -176,7 +177,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 246,
+      "count": 247,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-demol-droppath-100k-20261125-s42-droppath010",
@@ -404,6 +405,7 @@
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+        "TB-pcqm-gptrans-width-500k-20261117",
         "TB-pcqm-h1-heldout-budget-94k",
         "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
         "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",

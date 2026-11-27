@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-gptrans-width-500k-20261117",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-gptrans-width-500k-20261117"
+  },
+  "action_rule": {
+    "action": "RUN_FULL_IMS",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "d9c7fd51633d15ded54b46019063af8d9f05f3fadd8d808d19d900a987ce871c"
+}

@@ -1,0 +1,28 @@
+{
+  "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+  "scope": "GPT-T BondLocal+PairNorm 500K capacity question: reference R, depth calibration L20, width W320 and FFN F3, two init seeds each, 60 passes, each endpoint scored once on tail_holdout_v1; official valid, test and sealed 20K not read.",
+  "legacy_contract": "pcqm-gptrans-width-500k-20261117-v1",
+  "finalized_at": "2026-11-28T03:00:00+09:00",
+  "v5_outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_scale_up_no_adoption",
+    "comparison_status": "tail_holdout_v1_cross_arm_descriptive_no_paired_file",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE_L20_NO_SIGNAL_W320_F3_NOT_NOMINATED",
+    "transfer_status": "not_assessed_500k_may_not_carry_capacity_signal"
+  },
+  "outcome": "INCONCLUSIVE",
+  "decision_ref": "experiments/pcqm_gptrans_width_500k_20261117/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "A new question with its own frozen decision, e.g. a width or FFN test at a scale where a depth calibration shows signal."
+  ],
+  "facts": {
+    "effect_meV": null,
+    "ci_meV": null,
+    "failure_mode": "discriminator_missing",
+    "search_terms": ["gptrans width", "ffn width", "capacity", "500k", "l20 calibration", "no signal", "tail holdout", "not nominated"],
+    "source": "experiments/pcqm_gptrans_width_500k_20261117/results/verdict.json"
+  }
+}

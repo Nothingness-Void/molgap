@@ -4359,6 +4359,26 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "tail_holdout_v1_cross_arm_descriptive_no_paired_file",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_use": {
+        "official_validation": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "GPT-T BondLocal+PairNorm 500K capacity question: reference R, depth calibration L20, width W320 and FFN F3, two init seeds each, 60 passes, each endpoint scored once on tail_holdout_v1; official valid, test and sealed 20K not read.",
+      "source_envelope": "experiments/pcqm_gptrans_width_500k_20261117/prospective/width_500k/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_assessed_500k_may_not_carry_capacity_signal",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "locally_retained_hash_verified",
         "machine_local_verified"
       ],

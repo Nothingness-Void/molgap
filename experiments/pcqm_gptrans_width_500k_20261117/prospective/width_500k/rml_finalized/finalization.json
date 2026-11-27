@@ -1,0 +1,43 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-10d440b779ad6723d6adb4430f8c86426abb52cbda95a954e69a03b1cfd55969",
+  "finalized_at": "2026-11-28T03:00:00+09:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_width_500k_20261117/decision.md": "d9caeb592b87d73382f3695eaecacfcb39d4dcbdd7270ad7c95beaf3883e24ee",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/log_excerpt_s42.txt": "84d58bac4953d7f4fcd7f553a3b4de44d9882780ad614a572ee30c03a918d6bb",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/log_excerpt_s43.txt": "af1894db25061ff7aa34c26e9ced7f92ef2ec179c414ea6e3773c53a784486d8",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/retrieval_manifest.json": "483f34c1d7e4a070f60435a6449498e65cdd5e5a2251e3c4c5d85fa50caeeea5",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/start_checks_note.md": "580f04e55cad3e458309a83014af8cef5608924014f4f6283022249bc9f7d985",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_F342.json": "48e06129cee27f1d55db670e0ba1fa35b64926f3ae9e782103bbd28a5a098dec",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_F343.json": "92f736ddf958a4f9d3f2292c418f645c7011e3239b27cc961b5c43e9813d7f21",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_L2042.json": "1941c9598cce15786ab6446c8f3630a47ad444186ad7c75e13e0e0e0ba47bee3",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_L2043.json": "42842933a3af9eb5d6f02c1d78eb2727ba2ff7999dd99b51a7d6e585cd8a6a1a",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_R42.json": "c108e3bd56d4742aad989f4cc455cd48908d3b3ae8c060dd60c3893ab23384d2",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_R43.json": "5efdf196e12abac22c4b5b6cb9cbab2d432bb911233d12a70b2dc0dc0ea1d67d",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_W32042.json": "369a54c5a7385abaa7f2baaf62422c5b78af7f30f124e1f172249b979c514077",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/tail_W32043.json": "596a369e8a94131cefd01370165d676dd5f901fa60e019ff03a3a2e01d397809",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/verdict.json": "ae73cbfa302fbadf4efdfc04e1b2f4f7f1ea29cf89cda20427548fe0702166dd",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/width_500k_summary_s42.json": "94bf0741851098813958bffef48a5d448ce74632fe3053611cb946bfb04963f1",
+    "experiments/pcqm_gptrans_width_500k_20261117/results/width_500k_summary_s43.json": "c1d275b07df43da68f9916678c8b8e132b9376d93568201ae0f573761349a34d",
+    "experiments/pcqm_gptrans_width_500k_20261117/rml_closure/A008/acceptance.json": "87d2c0ca36bd8ceb6899fd21c5262f75872ad2180487386ddcb2f37c25d705b3"
+  },
+  "outcome": "INCONCLUSIVE",
+  "prospective_ref": "experiments/pcqm_gptrans_width_500k_20261117/prospective/width_500k/trajectory.json",
+  "prospective_sha256": "b09f27c64450b4671a2d611d3b35d796137df58570f4563a6c8bca11f84f043d",
+  "published_hashes": {
+    "costs/measurement_missing.json": "413ca0ee766278b065fca4ec6be7ff04c48cd2a2de3b3b91bb245468c5d11068",
+    "roles/role-pcqm-gptrans-width-500k-20261117-F3-s43-tail_holdout_v1-metric_computed.json": "5bacb6e980825188885ce54800a8d9fa60c129e77db64d66d66ddd74645febf0",
+    "terminal_input.json": "ea402948d5a5bf49a408dac2e5109149f019c8ffc039d73ed439b8a992297d54",
+    "trajectory.json": "b664b7312d33bd366908fe5d642c78898aed0ed93f3a941e51528f81207bfd12",
+    "v5_evidence.json": "62f492720239bc01ddc19e333407285b4fd2b1e8385da1447fbae3248f617fa1"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_width_500k_20261117/prospective/width_500k/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "10d440b779ad6723d6adb4430f8c86426abb52cbda95a954e69a03b1cfd55969",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
+}

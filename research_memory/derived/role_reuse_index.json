@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 1203,
+  "ambiguous_historical_role_record_count": 1207,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -5931,6 +5931,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-h1-heldout-budget-100k-20261122",
       "role_identity": null,
       "role_name": "alignment_100k",
@@ -8423,7 +8451,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 1172,
+  "explicit_role_event_count": 1173,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -16808,6 +16836,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-width-500k-20261117-F3-s43-tail_holdout_v1-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
       }
     ],
     "pcqm4mv2-ogb-official-train:fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb:alignment_500k": [
@@ -17085,6 +17120,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-gptrans-width-500k-20261117-closure",
       "pcqm-h1-heldout-budget-100k-20261122",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
@@ -17358,6 +17394,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-gptrans-width-500k-20261117-closure",
       "pcqm-h1-heldout-budget-100k-20261122",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
@@ -30468,6 +30505,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-full-wd-c4"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-width-500k-20261117-F3-s43-tail_holdout_v1-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
       }
     ],
     "pcqm4mv2-ogb-official-train:fda4bdc512ba78a641299fe0805b4b426ca4acb23c1bdd573791d0d66a685ccb:dev_replay_128": [

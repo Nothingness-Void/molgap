@@ -1,0 +1,97 @@
+{
+  "format": "molgap-gptrans-width-500k-verdict-v1",
+  "role": "tail_holdout_v1",
+  "rows": 128606,
+  "inputs": {
+    "R42": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\R42_tail_holdout_v1.pt",
+      "sha256": "12a73dffaa7a839414e02114885263d78dd6c2ebbf7a036ef70bf01eabe1e58f"
+    },
+    "R43": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\R43_tail_holdout_v1.pt",
+      "sha256": "11b57f0b35a8b104c70383b6001877cb696e1d8cd82930d419534a27c886dc0f"
+    },
+    "L2042": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\L2042_tail_holdout_v1.pt",
+      "sha256": "3bde5403188524f35b968612ac2aa42704ab764f3d706f2f145b41cc9f400c7a"
+    },
+    "L2043": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\L2043_tail_holdout_v1.pt",
+      "sha256": "e2190964f151f17fb6853ef6b5361dca889ce80a7194700905a5ebbb1847430d"
+    },
+    "W32042": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\W32042_tail_holdout_v1.pt",
+      "sha256": "8460c4d1e24c8ad127e57ba90c962b5a06a5a3d8d400c733fde8d0395237820e"
+    },
+    "W32043": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\W32043_tail_holdout_v1.pt",
+      "sha256": "012c3c938373bb00bd46eeb0ca86e3d47fd5eb23b8dfb8b9830595ee367136cb"
+    },
+    "F342": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\F342_tail_holdout_v1.pt",
+      "sha256": "af18b29ae31d0ab8bfaa80ee99e1c4c359cce4da67d3d504566dafc20a7da4cf"
+    },
+    "F343": {
+      "path": "D:\\molgap-artifacts\\tail_eval_width_500k_20261117\\preds\\F343_tail_holdout_v1.pt",
+      "sha256": "dc4d4eacf68c7f755d2aeee6fd579b051fafe90bd818b5f6ce186dc4d22fac5c"
+    }
+  },
+  "script_sha256": "44665e440a2d875c9d73eb3ad3701799df5b6c979a3de66ca263175e00ced042",
+  "bootstrap": {
+    "n": 2000,
+    "seed": 42,
+    "paired": true,
+    "upper_percentile": 99.0,
+    "rows_only_not_training_noise": true
+  },
+  "mae_mev": {
+    "R42": 110.91324613289653,
+    "R43": 110.92428620006427,
+    "L2042": 111.06427105686878,
+    "L2043": 111.65233403145353,
+    "W32042": 113.01050645587489,
+    "W32043": 113.60062813260345,
+    "F342": 110.78786366046454,
+    "F343": 110.32445931545679
+  },
+  "R_seed_difference_mev": 0.011040067167741086,
+  "R_vs_earlier_500K_B1024_mev": {
+    "42": -0.758753867103465,
+    "43": -0.03371379993572532
+  },
+  "context_init_sd_500K_B128_mev": 0.47,
+  "calibration": {
+    "gain_mev": -0.4395363776807528,
+    "gain_by_seed_mev": {
+      "42": -0.1510249239722441,
+      "43": -0.7280478313892615
+    },
+    "paired_mev": 0.43953637768076087,
+    "upper_99_one_sided_mev": 0.8295036517203567,
+    "outcome": "NO_SIGNAL"
+  },
+  "W320": {
+    "gain_mev": -2.3868011277587655,
+    "gain_by_seed_mev": {
+      "42": -2.0972603229783573,
+      "43": -2.6763419325391737
+    },
+    "paired_mev": 2.3868011277587677,
+    "upper_99_one_sided_mev": 2.7875523831848668,
+    "outcome": "NOT_NOMINATED",
+    "calibration": "NO_SIGNAL",
+    "reading": "500K cannot see capacity effects: this zero result must not close the route"
+  },
+  "F3": {
+    "gain_mev": 0.36260467851973743,
+    "gain_by_seed_mev": {
+      "42": 0.12538247243199407,
+      "43": 0.5998268846074808
+    },
+    "paired_mev": -0.36260467851973766,
+    "upper_99_one_sided_mev": 0.021911667859430252,
+    "outcome": "NOT_NOMINATED",
+    "calibration": "NO_SIGNAL",
+    "reading": "500K cannot see capacity effects: this zero result must not close the route"
+  }
+}
