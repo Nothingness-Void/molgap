@@ -1074,7 +1074,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 9
+          "unknown_records": 10
         },
         "device_hours": {
           "estimated": {
@@ -1082,8 +1082,8 @@
             "known_total": 28.7
           },
           "measured": {
-            "known_records": 2,
-            "known_total": 11.086694444444445
+            "known_records": 3,
+            "known_total": 14.210333333333335
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -1098,7 +1098,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 9
+          "unknown_records": 10
         },
         "wall_hours": {
           "estimated": {
@@ -1106,8 +1106,8 @@
             "known_total": 28.7
           },
           "measured": {
-            "known_records": 2,
-            "known_total": 11.086694444444445
+            "known_records": 3,
+            "known_total": 14.210333333333335
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -3414,10 +3414,10 @@
         }
       }
     },
-    "unknown_events": 433
+    "unknown_events": 434
   },
   "evidence": {
-    "validated": 191,
+    "validated": 192,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -3444,31 +3444,31 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 58,
+      "count": 57,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 23,
+      "count": 22,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 883,
-    "explicit_events": 703,
+    "coarse_historical": 888,
+    "explicit_events": 710,
     "repeatedly_selected": 28
   },
-  "source_digest": "87ba816b2e4e14e281fe6e4c1b68f3d4d575f7a8fe52cbcadbe3cd89870a8de2",
+  "source_digest": "3fd0d32f508ee8987a4a32f602dfb1faa5be5be5e84475baf46f2877fccf08fd",
   "trajectories": {
     "count": 214,
     "outcomes": {
-      "ACTIVE": 12,
+      "ACTIVE": 11,
       "CLOSED": 39,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 63,
       "NO_TRAIN": 57,
-      "POSITIVE_UNDER_CONTRACT": 10
+      "POSITIVE_UNDER_CONTRACT": 11
     }
   },
   "transfer": {

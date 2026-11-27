@@ -1,0 +1,454 @@
+{
+  "acceptance_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/closure_analysis_20261128.json": "31825ee52686896b6f7f7ffe772ed53c0d538499357df144d5560e6fef6c0058",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ensemble_declaration.md": "e2712aa6e1ab2259cb125c330795c84f42d86a0dff2cab284663ae9def7bb06c",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ensemble_j3_j5_result.json": "d3369ad10bd033227523fad97608b960b52b5f6b6cf260f05a2f3bafdcfa4d1c",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/f0/f0_demol_cin.json": "66602ad2f2d7aabe07d67dca315db77b619466af4c301c0da5af3a92a62a1426",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/f0/f0_pair_update_norm.json": "65a3c0ec704fcce58e7e0d34e6980e8fa8d18e49bb96e47abb704294636d5737",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ims_submission_chain.md": "7e92410c8a636689e97457ff5b87f3bb18bf88ddfe8b83e11ade53eebaeacb37",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/completion_manifest.json": "ef3c6fa2d24c84ed27a71cf0b00b4a2ea18e44a6398263bdf019e1bd9b8e9aa0",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/run_provenance.json": "20ba31346520590e76dd8bbcb7d66d050390d3df3a30c677a93046e70747c107",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/selected_eval.json": "36cb5c793542c0a778717f890ebce740c55d65502ab5119b6aadcb28a5588277",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/train_log.jsonl": "8f8b5dd55fa8aab545cc59ec92c5cbca8a64cbce6229dd0db9731d78fd9a3e59",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/completion_manifest.json": "de25183f8a91358668563e5cdb1081260d3ecf30110ae7db8e3601bd64159931",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/run_provenance.json": "26d05948703b8f2fd34d723722a5b9d5cb2cf83eb95e692fa4a3df2cb3618c87",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/selected_eval.json": "435efc953f247c360235442d9574131e77c4885989449d8db8db873c9d45a72a",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/train_log.jsonl": "bcb0ca71700d92c6e9cd523d3f64f9b7404bee30ceda48d432b1ff377b6c89b1",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/completion_manifest.json": "91d6b89d7d417592af7f135f57996d542825527f4776dd01717e728719948fca",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/run_provenance.json": "8f1116c7fb256857668b7bdd01b1cf63486c793f55fa9a7203eb34353860a9c9",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/selected_eval.json": "8a7a9b9f280fa8eea6da209861c81b93a29dccd9a2a7ef291630c42047d550b3",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/train_log.jsonl": "cdbddcc952c6881ee8c707d658c96bb18b78fa96000d60a51cf93be52c0c1a5f",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/completion_manifest.json": "e0bba026328318c16f48504576f218274a9169f8884a7da564a9298b4c5f7362",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/run_provenance.json": "b1bc59f40b0d47f5a690091008199fe6ab1db3dd6160380331a133bdb7ca69a4",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/selected_eval.json": "5a9eac370e83ef60094d6fff3ef610cc8230be3fa69b07cc6be122ea5dd4babc",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/train_log.jsonl": "2a45255b1fa0b6e366fa1602df50843fe8472c42a49715d08096a90107e26710",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/completion_manifest.json": "63b10cb8ee5e11c7c2faecedd924dc34f9b139a458b515dc6a3878cd30341f44",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/run_provenance.json": "3ce83985a403a15a4128f0a6f48b34956492503c273b74e2e7ef5d64a1a08cca",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/selected_eval.json": "558a051f0608e4fca49a447e17e5d75ecea9289d47faec2486b9b7f2479da8b8",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/train_log.jsonl": "a4a2441923e6859e2f2a6d74514fa6f83395a9be6054bff2891093c65709d6d8",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j1.json": "1ad9d2a3ed63f0babaa85b31e0108dc030cc49bb4daf72239964faa857516acd",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j2.json": "0edef20d023b80009e1dfc649be044140c17aa32b0665b44f51edd07f7bf7f56",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j3.json": "4d70404c83ee664c7004d7089056217dab8184d483f1f01b34f5c55ec049629f",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j4.json": "d8ab00fcbcf8af5989488c396ee17420438b5fdf5753564cbd7ea5473be99ba7",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j5.json": "a23fbf3105a3a84f02152b21a49d91a7eea24348cbc7f07cc6eea6b86b8bf750",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/kaggle_cohort_tail_s43_s46.json": "c0dd329285e1ed8eb3ff06d9d373361cbecf4aefa4236bd5e1f7bbbb9fbee2cc",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/serial/retrieval_legacy.json": "a552f01a43ae4a72c398be063926e54fe18408b9a826606b4b0776f9bfe1dccc",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/serial/serial_summary.json": "1ee94cf66b90b27b9e1409fac3c7cf9b9b3ae7b0857afaeddb5e34399a080a99",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json": "62e4d7d3b0a351dedafad15906131af2cabfdebd81d4b262ff1c08696814d4e1"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "demol500k-chain-20261121-j1-v1",
+      "category": "training",
+      "cost_event_id": "cost-demol500k-chain-20261121-j1-0",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "hardware": "NVIDIA A100 FP32",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.123638888888889
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.123638888888889
+        }
+      },
+      "platform": "ims",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": [
+        -5.527102298498154,
+        -3.307784989178181
+      ],
+      "effect_meV": -4.452649557590485,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol-cin",
+        "cellular complex",
+        "100k replication",
+        "seed 43",
+        "ims a100",
+        "dev bootstrap",
+        "rule a",
+        "hetero ensemble"
+      ],
+      "source": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/closure_analysis_20261128.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Any new DeMol-CIN run (including follow-up on the post-pass-40 overfitting) is a new question: query RML first, write a prospective trajectory, and pass the Opus pre-submit review. A full-scale DeMol run also needs explicit user authority."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/closure_analysis_20261128.json",
+        "name": "closure_analysis_20261128.json",
+        "sha256": "31825ee52686896b6f7f7ffe772ed53c0d538499357df144d5560e6fef6c0058"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ensemble_declaration.md",
+        "name": "ensemble_declaration.md",
+        "sha256": "e2712aa6e1ab2259cb125c330795c84f42d86a0dff2cab284663ae9def7bb06c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ensemble_j3_j5_result.json",
+        "name": "ensemble_j3_j5_result.json",
+        "sha256": "d3369ad10bd033227523fad97608b960b52b5f6b6cf260f05a2f3bafdcfa4d1c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/f0/f0_demol_cin.json",
+        "name": "f0_demol_cin.json",
+        "sha256": "66602ad2f2d7aabe07d67dca315db77b619466af4c301c0da5af3a92a62a1426"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/f0/f0_pair_update_norm.json",
+        "name": "f0_pair_update_norm.json",
+        "sha256": "65a3c0ec704fcce58e7e0d34e6980e8fa8d18e49bb96e47abb704294636d5737"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/ims_submission_chain.md",
+        "name": "ims_submission_chain.md",
+        "sha256": "7e92410c8a636689e97457ff5b87f3bb18bf88ddfe8b83e11ade53eebaeacb37"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "ef3c6fa2d24c84ed27a71cf0b00b4a2ea18e44a6398263bdf019e1bd9b8e9aa0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "20ba31346520590e76dd8bbcb7d66d050390d3df3a30c677a93046e70747c107"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "36cb5c793542c0a778717f890ebce740c55d65502ab5119b6aadcb28a5588277"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j1-demol-100k-s43/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "8f8b5dd55fa8aab545cc59ec92c5cbca8a64cbce6229dd0db9731d78fd9a3e59"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "de25183f8a91358668563e5cdb1081260d3ecf30110ae7db8e3601bd64159931"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "26d05948703b8f2fd34d723722a5b9d5cb2cf83eb95e692fa4a3df2cb3618c87"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "435efc953f247c360235442d9574131e77c4885989449d8db8db873c9d45a72a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j2-gptt-100k-s43/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "bcb0ca71700d92c6e9cd523d3f64f9b7404bee30ceda48d432b1ff377b6c89b1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "91d6b89d7d417592af7f135f57996d542825527f4776dd01717e728719948fca"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "8f1116c7fb256857668b7bdd01b1cf63486c793f55fa9a7203eb34353860a9c9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "8a7a9b9f280fa8eea6da209861c81b93a29dccd9a2a7ef291630c42047d550b3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j3-demol-500k-s42/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "cdbddcc952c6881ee8c707d658c96bb18b78fa96000d60a51cf93be52c0c1a5f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "e0bba026328318c16f48504576f218274a9169f8884a7da564a9298b4c5f7362"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "b1bc59f40b0d47f5a690091008199fe6ab1db3dd6160380331a133bdb7ca69a4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "5a9eac370e83ef60094d6fff3ef610cc8230be3fa69b07cc6be122ea5dd4babc"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j4-demol-500k-s43/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "2a45255b1fa0b6e366fa1602df50843fe8472c42a49715d08096a90107e26710"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "63b10cb8ee5e11c7c2faecedd924dc34f9b139a458b515dc6a3878cd30341f44"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "3ce83985a403a15a4128f0a6f48b34956492503c273b74e2e7ef5d64a1a08cca"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "558a051f0608e4fca49a447e17e5d75ecea9289d47faec2486b9b7f2479da8b8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/items/j5-gptt-500k-s44/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "a4a2441923e6859e2f2a6d74514fa6f83395a9be6054bff2891093c65709d6d8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j1.json",
+        "name": "j1.json",
+        "sha256": "1ad9d2a3ed63f0babaa85b31e0108dc030cc49bb4daf72239964faa857516acd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j2.json",
+        "name": "j2.json",
+        "sha256": "0edef20d023b80009e1dfc649be044140c17aa32b0665b44f51edd07f7bf7f56"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j3.json",
+        "name": "j3.json",
+        "sha256": "4d70404c83ee664c7004d7089056217dab8184d483f1f01b34f5c55ec049629f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j4.json",
+        "name": "j4.json",
+        "sha256": "d8ab00fcbcf8af5989488c396ee17420438b5fdf5753564cbd7ea5473be99ba7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j5.json",
+        "name": "j5.json",
+        "sha256": "a23fbf3105a3a84f02152b21a49d91a7eea24348cbc7f07cc6eea6b86b8bf750"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/kaggle_cohort_tail_s43_s46.json",
+        "name": "kaggle_cohort_tail_s43_s46.json",
+        "sha256": "c0dd329285e1ed8eb3ff06d9d373361cbecf4aefa4236bd5e1f7bbbb9fbee2cc"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/serial/retrieval_legacy.json",
+        "name": "retrieval_legacy.json",
+        "sha256": "a552f01a43ae4a72c398be063926e54fe18408b9a826606b4b0776f9bfe1dccc"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/serial/serial_summary.json",
+        "name": "serial_summary.json",
+        "sha256": "1ee94cf66b90b27b9e1409fac3c7cf9b9b3ae7b0857afaeddb5e34399a080a99"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+        "name": "decision.md",
+        "sha256": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "62e4d7d3b0a351dedafad15906131af2cabfdebd81d4b262ff1c08696814d4e1"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+        "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-demol-cin-500k-chain-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-11-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Legacy retrieval closure; metadata only."
+    },
+    "outcome": {
+      "artifact_status": "retrieved_hash_verified",
+      "budget_decision": "no_full_scale_nomination",
+      "comparison_status": "paired_dev_rows_non_strict_same_job_reference_j2",
+      "execution_status": "complete",
+      "full_handoff_status": "not_nominated",
+      "scientific_status": "POSITIVE_UNDER_CONTRACT_100K_DEV_REPLICATION_RULE_A_ONLY",
+      "transfer_status": "not_assessed_here_see_j3_j4_inconclusive"
+    },
+    "role_use": {
+      "dev_100k": "consumed",
+      "official_validation": "untouched",
+      "tail_holdout_v1": "consumed",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "DeMol-CIN 500K IMS serial chain item; offline dev and tail scoring only; official valid and test not read; non-strict.",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-28T03:23:15+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-dev_100k-prediction_input",
+      "role_name": "dev_100k",
+      "row_manifest_hash": "6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-dev_100k-labels_read",
+      "role_name": "dev_100k",
+      "row_manifest_hash": "6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-dev_100k-metric_computed",
+      "role_name": "dev_100k",
+      "row_manifest_hash": "6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-dev_100k-selection_used",
+      "role_name": "dev_100k",
+      "row_manifest_hash": "6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/j1_demol_100k_s43/acceptance.json",
+      "role_event_id": "role-demol500k-chain-20261121-j1-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "demol500k-chain-20261121",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+    }
+  ],
+  "run_id": "demol500k-chain-20261121",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin-chain-20261121"
+}
