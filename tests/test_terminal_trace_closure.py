@@ -1983,7 +1983,7 @@ def test_unreadable_unrelated_record_does_not_block_closing_a_new_arm(tmp_path):
 
 def test_legacy_terminal_package_closes_through_terminal_pipeline(tmp_path):
     setup_mock_repo(tmp_path)
-    arm = create_candidate_arm(tmp_path, "exp_legacy", "TB-legacy", "run-legacy-1", "ev-legacy-1", include_trace_artifact=False)
+    arm = create_candidate_arm(tmp_path, "exp_legacy", "TB-legacy", "run-legacy:1", "ev-legacy-1", include_trace_artifact=False)
     exp = arm["exp_dir"]
     (exp / "retrieved").mkdir()
     (exp / "retrieved" / "summary.json").write_text('{"mae": 0.1}\n')
@@ -1996,7 +1996,7 @@ def test_legacy_terminal_package_closes_through_terminal_pipeline(tmp_path):
         "reopen_conditions": ["new authority"], "facts": {"effect_meV": -1.0, "ci_meV": [-2.0, 0.5], "failure_mode": None,
                                                            "search_terms": ["legacy"], "source": "experiments/exp_legacy/retrieved/summary.json"}}))
     (exp / "roles_in.json").write_text(json.dumps({"role_use": protected, "events": []}))
-    args = dict(root=tmp_path, trajectory=arm["traj_path"], action_id="act-1", run_id="run-legacy-1",
+    args = dict(root=tmp_path, trajectory=arm["traj_path"], action_id="act-1", run_id="run-legacy:1",
                 decision_file=exp / "decision_in.json", evidence_dirs=["experiments/exp_legacy/retrieved"],
                 roles_file=exp / "roles_in.json", out="experiments/exp_legacy/legacy_out")
     for bad, message in ((dict(action_id="act-9"), "not frozen"), (dict(evidence_dirs=["experiments/exp_legacy/none"]), "need evidence")):

@@ -644,9 +644,9 @@ def legacy_terminal(root: str | Path, trajectory: str, action_id: str, run_id: s
         raise ValueError("need evidence files and existing decision_ref/facts.source; --out must be a new directory outside research_memory")
     acceptance_ref = pointer(out_dir / "acceptance.json")
     ident = {"trajectory_id": traj["trajectory_id"], "action_id": action_id, "run_id": run_id, "evidence_ref": acceptance_ref}
-    roles = [{**e, "schema": "molgap-role-event-v1", "role_event_id": f"role-{run_id}-{e['role_name']}-{e['access_kind']}", **ident}
+    roles = [{**e, "schema": "molgap-role-event-v1", "role_event_id": f"role-{run_id.replace(':', '-')}-{e['role_name']}-{e['access_kind']}", **ident}
              for e in declared.get("events", [])]
-    costs = [{**c, "schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{run_id}-{i}", **ident}
+    costs = [{**c, "schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{run_id.replace(':', '-')}-{i}", **ident}
              for i, c in enumerate(load_json_object(Path(costs_file)).get("events", []) if costs_file else [])]
     for event in roles + costs:
         (validate_role_event if "role_event_id" in event else validate_cost_event)(event)
