@@ -136,10 +136,123 @@ def collect(path: Path, credentials: list[tuple[str, Path]], kernels: list[str])
                            "partial": any(r.get("error") for r in rows) or any(j["status"] == "UNKNOWN" for j in jobs)})
 
 
-def _parse_arm_curves(lines: list[str]) -> tuple[str, list[dict], list[str]]:
+def _load_bound_job_meta(runs_dir: Path, run_label: str, kernel_ref: str, attempt_id: str = "v1") -> dict:
+    empty = {"declared_arms": [], "device_count": None, "accelerator": None, "kernel_id": None}
+    run_dir = runs_dir / run_label
+    if not run_dir.is_dir():
+        return empty
+
+    candidates: list[Path] = []
+    preferred = run_dir / attempt_id
+    if (preferred / "operations" / "submission_state.json").is_file():
+        candidates.append(preferred)
+    others = sorted(
+        (p.parents[1] for p in run_dir.glob("*/operations/submission_state.json") if p.parents[1] != preferred),
+        key=lambda d: (d / "operations" / "submission_state.json").stat().st_mtime,
+        reverse=True,
+    )
+    candidates.extend(others)
+
+    matched: Path | None = None
+    state_data: dict | None = None
+    for cand in candidates:
+        try:
+            raw = json.loads((cand / "operations" / "submission_state.json").read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, TypeError, ValueError):
+            continue
+        if not isinstance(raw, dict):
+            continue
+        bound_ref = (raw.get("binding") or {}).get("kernel") or (raw.get("kernel_response") or {}).get("kernel")
+        if bound_ref == kernel_ref:
+            matched = cand
+            state_data = raw
+            break
+    if matched is None:
+        return empty
+
+    kernel_id = None
+    accelerator = None
+    device_count = None
+    declared_arms: list[dict] = []
+
+    if isinstance(state_data, dict):
+        kresp = state_data.get("kernel_response") or {}
+        if isinstance(kresp, dict):
+            if kresp.get("kernel_id") is not None:
+                kernel_id = kresp.get("kernel_id")
+            if isinstance(kresp.get("accelerator"), str) and kresp.get("accelerator"):
+                accelerator = kresp["accelerator"]
+
+    launch_path = matched / "prepared" / "source_dataset" / "experiment_launch.json"
+    try:
+        launch = json.loads(launch_path.read_text(encoding="utf-8"))
+        if isinstance(launch, dict):
+            if isinstance(launch.get("accelerator"), str) and launch.get("accelerator"):
+                accelerator = launch["accelerator"]
+            if launch.get("device_count") is not None:
+                device_count = int(launch["device_count"])
+            jobs = launch.get("jobs")
+            if isinstance(jobs, list):
+                for j in jobs:
+                    if isinstance(j, dict) and j.get("arm_id"):
+                        dev = int(j["device"]) if j.get("device") is not None else None
+                        declared_arms.append({"arm_id": str(j["arm_id"]), "device": dev})
+    except (OSError, json.JSONDecodeError, TypeError, KeyError, ValueError):
+        pass
+
+    if not declared_arms:
+        receipt_path = matched / "operations" / "launch_receipt.json"
+        try:
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            if isinstance(receipt, dict):
+                binding_arms = (receipt.get("binding") or {}).get("arms")
+                if isinstance(binding_arms, list):
+                    for item in binding_arms:
+                        if isinstance(item, dict) and item.get("arm_id"):
+                            declared_arms.append({"arm_id": str(item["arm_id"]), "device": None})
+                if not declared_arms:
+                    phys = (receipt.get("physical_runs") or {}).get("value")
+                    if isinstance(phys, list) and phys and isinstance(phys[0], dict):
+                        for aid in phys[0].get("arm_ids") or ():
+                            if aid:
+                                declared_arms.append({"arm_id": str(aid), "device": None})
+        except (OSError, json.JSONDecodeError, TypeError, KeyError, ValueError):
+            pass
+
+    return {
+        "declared_arms": declared_arms,
+        "device_count": device_count,
+        "accelerator": accelerator,
+        "kernel_id": kernel_id,
+    }
+
+
+def _parse_arm_curves(lines: list[str], declared_arms: list[dict] | None = None) -> tuple[str, list[dict], list[str]]:
     phase = "init"
     arms: dict[str, dict] = {}
     errors: list[str] = []
+    resolved_arms: set[str] = set()
+    for ln in lines:
+        if ln.startswith("INPUT_RESOLVED "):
+            parts = ln.split()
+            if len(parts) >= 2:
+                resolved_arms.add(parts[1])
+
+    for item in declared_arms or ():
+        if not isinstance(item, dict) or not item.get("arm_id"):
+            continue
+        aid = str(item["arm_id"])
+        if aid not in arms:
+            arms[aid] = {
+                "arm_id": aid,
+                "device": item.get("device"),
+                "declared": True,
+                "input_resolved": aid in resolved_arms,
+                "log_seen": False,
+                "points_by_pass": {},
+                "latest": {},
+            }
+
     for ln in lines:
         if ln.startswith("PAIR_PHASE_"):
             phase = ln.strip()
@@ -149,8 +262,17 @@ def _parse_arm_curves(lines: list[str]) -> tuple[str, list[dict], list[str]]:
             except Exception:
                 continue
             arm_id = str(rec.get("arm_id") or "arm")
-            entry = arms.setdefault(arm_id, {"arm_id": arm_id, "points_by_pass": {}, "latest": rec})
+            entry = arms.setdefault(arm_id, {
+                "arm_id": arm_id,
+                "device": None,
+                "declared": False,
+                "input_resolved": arm_id in resolved_arms,
+                "log_seen": False,
+                "points_by_pass": {},
+                "latest": rec,
+            })
             entry["latest"] = rec
+            entry["log_seen"] = True
             p_num = int(rec.get("completed_passes") or 0)
             entry["points_by_pass"][p_num] = {
                 "pass": p_num,
@@ -166,9 +288,40 @@ def _parse_arm_curves(lines: list[str]) -> tuple[str, list[dict], list[str]]:
         elif any(tok in ln for tok in ("Error:", "Exception:", "Traceback (most recent call last)")):
             errors.append(ln.strip())
 
+    for aid in sorted(resolved_arms):
+        if aid not in arms:
+            arms[aid] = {
+                "arm_id": aid,
+                "device": None,
+                "declared": False,
+                "input_resolved": True,
+                "log_seen": False,
+                "points_by_pass": {},
+                "latest": {},
+            }
+
     arm_list: list[dict] = []
-    ref_map: dict[int, float] = {}
-    for idx, entry in enumerate(arms.values()):
+    ref_map: dict[int, float] | None = None
+    for entry in arms.values():
+        if not entry["log_seen"]:
+            arm_list.append({
+                "arm_id": entry["arm_id"],
+                "device": entry["device"],
+                "declared": entry["declared"],
+                "input_resolved": entry["input_resolved"],
+                "log_seen": False,
+                "latest": {},
+                "completed_passes": 0,
+                "planned_passes": None,
+                "best_dev_mae_eV": None,
+                "best_dev_pass": None,
+                "best_train_mae_eV": None,
+                "best_train_pass": None,
+                "same_pass_delta_meV": None,
+                "curve": [],
+            })
+            continue
+
         pts = [entry["points_by_pass"][k] for k in sorted(entry["points_by_pass"])]
         best_dev, best_dev_p = None, None
         best_trn, best_trn_p = None, None
@@ -182,15 +335,20 @@ def _parse_arm_curves(lines: list[str]) -> tuple[str, list[dict], list[str]]:
         lt = entry["latest"]
         if lt.get("best_development_mae_eV") is not None:
             best_dev = float(lt["best_development_mae_eV"])
-        if idx == 0:
+        is_ref = ref_map is None
+        if is_ref:
             ref_map = {pt["pass"]: float(pt["dev_mae_eV"]) for pt in pts if isinstance(pt.get("dev_mae_eV"), (int, float))}
         cur_p = int(lt.get("completed_passes") or 0)
         cur_dev = lt.get("development_mae_eV")
         same_pass_delta = None
-        if idx > 0 and cur_p in ref_map and isinstance(cur_dev, (int, float)):
+        if not is_ref and ref_map is not None and cur_p in ref_map and isinstance(cur_dev, (int, float)):
             same_pass_delta = round((float(cur_dev) - ref_map[cur_p]) * 1000.0, 2)
         arm_list.append({
             "arm_id": entry["arm_id"],
+            "device": entry["device"],
+            "declared": entry["declared"],
+            "input_resolved": entry["input_resolved"],
+            "log_seen": True,
             "latest": lt,
             "completed_passes": cur_p,
             "planned_passes": int(round(float(lt.get("planned_passes") or 0))) or None,
@@ -214,8 +372,10 @@ def fetch_live_snapshot(
     read_timeout: float = 2.5,
 ) -> dict:
     from check_quota import DEFAULT_ACCOUNTS, fetch_account_quota, _resolve_targets
-    from check_logs import ARTIFACTS_RUNS_DIR, _discover_recent_bound, _query_scheduler, _resolve_target, inspect_kernel
+    import check_logs
+    from check_logs import _discover_recent_bound, _query_scheduler, _resolve_target, inspect_kernel
 
+    runs_dir = check_logs.ARTIFACTS_RUNS_DIR
     t0 = time.monotonic()
     cred_targets = _resolve_targets(cred_overrides, key_dir) if cred_overrides else [(lbl, key_dir / rel) for lbl, rel in DEFAULT_ACCOUNTS]
 
@@ -233,8 +393,8 @@ def fetch_live_snapshot(
     accounts_rows = [r for r, _ in quota_res]
     accounts_map = {u: (p, json.loads(p.read_text(encoding="utf-8"))) for _, pair in quota_res if pair for u, p in [pair]}
 
-    raw_targets = ([_resolve_target(t, attempt_id, ARTIFACTS_RUNS_DIR) for t in explicit_targets]
-                   if explicit_targets else _discover_recent_bound(ARTIFACTS_RUNS_DIR, scan_limit))
+    raw_targets = ([_resolve_target(t, attempt_id, runs_dir) for t in explicit_targets]
+                   if explicit_targets else _discover_recent_bound(runs_dir, scan_limit))
 
     def _qsched(item: tuple[str, str]) -> tuple[str, str, str, str]:
         ref, label = item
@@ -246,6 +406,11 @@ def fetch_live_snapshot(
 
     with ThreadPoolExecutor(max_workers=max(1, min(6, len(raw_targets) or 1))) as pool:
         statuses = list(pool.map(_qsched, raw_targets))
+
+    meta_by_ref = {
+        (ref, label): _load_bound_job_meta(runs_dir, label, ref, attempt_id)
+        for ref, label, _, _ in statuses
+    }
 
     inspect_list = []
     seen_refs: set[str] = set()
@@ -262,8 +427,9 @@ def fetch_live_snapshot(
 
     def _inspect(item: tuple[str, str, str, str]) -> dict:
         ref, label, st, msg = item
+        meta = meta_by_ref.get((ref, label), {"declared_arms": [], "device_count": None, "accelerator": None, "kernel_id": None})
         rec = inspect_kernel(ref, label, accounts_map, read_timeout=read_timeout, sched=st, fail_msg=msg)
-        phase, arms, errors = _parse_arm_curves(rec.get("lines") or [])
+        phase, arms, errors = _parse_arm_curves(rec.get("lines") or [], declared_arms=meta["declared_arms"])
         return {
             "run": rec["run"],
             "kernel": rec["kernel"],
@@ -274,6 +440,11 @@ def fetch_live_snapshot(
             "stream": rec.get("stream") or "none",
             "line_count": rec.get("line_count") or 0,
             "phase": phase,
+            "declared_arms": meta["declared_arms"],
+            "arm_count": len(arms) or len(meta["declared_arms"]),
+            "device_count": meta["device_count"],
+            "accelerator": meta["accelerator"],
+            "kernel_id": meta["kernel_id"],
             "arms": arms,
             "error_lines": errors,
             "tail_lines": (rec.get("lines") or [])[-40:],
@@ -283,6 +454,24 @@ def fetch_live_snapshot(
     if inspect_list:
         with ThreadPoolExecutor(max_workers=max(1, min(6, len(inspect_list)))) as pool:
             kernels_out = list(pool.map(_inspect, inspect_list))
+
+    observed_arms_map = {k["kernel"]: k["arms"] for k in kernels_out}
+    discovered_out = []
+    for r, l, st, msg in statuses:
+        meta = meta_by_ref.get((r, l), {"declared_arms": [], "device_count": None, "accelerator": None, "kernel_id": None})
+        arm_cnt = len(observed_arms_map.get(r, [])) or len(meta["declared_arms"])
+        discovered_out.append({
+            "kernel": r,
+            "run": l,
+            "account": r.split("/", 1)[0],
+            "scheduler": st,
+            "failure_message": msg,
+            "declared_arms": meta["declared_arms"],
+            "arm_count": arm_cnt,
+            "device_count": meta["device_count"],
+            "accelerator": meta["accelerator"],
+            "kernel_id": meta["kernel_id"],
+        })
 
     ok_accounts = [r for r in accounts_rows if "error" not in r]
     latency_ms = int(round((time.monotonic() - t0) * 1000))
@@ -302,11 +491,13 @@ def fetch_live_snapshot(
             "discovered_kernels": len(statuses),
             "running_kernels": sum(1 for s in statuses if s[2] == "RUNNING"),
             "queued_kernels": sum(1 for s in statuses if s[2] == "QUEUED"),
+            "running_arms": sum(d["arm_count"] for d in discovered_out if d["scheduler"] == "RUNNING" and d["arm_count"] > 0),
+            "queued_arms": sum(d["arm_count"] for d in discovered_out if d["scheduler"] == "QUEUED" and d["arm_count"] > 0),
             "complete_kernels": sum(1 for s in statuses if s[2] == "COMPLETE"),
             "error_kernels": sum(1 for s in statuses if s[2] == "ERROR"),
         },
         "accounts": accounts_rows,
-        "discovered": [{"kernel": r, "run": l, "account": r.split("/", 1)[0], "scheduler": st, "failure_message": msg} for r, l, st, msg in statuses],
+        "discovered": discovered_out,
         "kernels": kernels_out,
     }
 
@@ -535,6 +726,18 @@ function schedPill(st) {
   if (st === 'ERROR' || st === 'CANCELLED') return 'bad';
   return '';
 }
+function fmtAccel(accel, devCount) {
+  const n = Number(devCount);
+  const cnt = Number.isFinite(n) && n > 0 ? n : 0;
+  const s = String(accel || '');
+  const short = s.includes('T4') ? 'T4' : (s.includes('P100') ? 'P100' : s);
+  if (short && cnt > 1) return `${short}×${cnt}`;
+  if (short) return short;
+  return cnt > 1 ? `${cnt} GPU` : '';
+}
+function fmtArmList(arms) {
+  return (arms || []).map(a => (a && a.device != null ? `GPU ${a.device}: ${a.arm_id}` : String(a?.arm_id || ''))).filter(Boolean).join(' · ');
+}
 
 function buildChartHtml(arm, idx) {
   const pts = (arm.curve || []).filter(p => typeof p.train_mae_eV === 'number' || typeof p.dev_mae_eV === 'number');
@@ -647,23 +850,43 @@ function renderKernelCards(d) {
     const chosenId = selectedArmByKernel[k.kernel];
     const cur = arms.find(a => a.arm_id === chosenId) || arms[0];
     const curId = cur ? cur.arm_id : null;
+    const armCount = k.arm_count || arms.length || (k.declared_arms || []).length;
+    const accelTag = fmtAccel(k.accelerator, k.device_count);
+    const armRoleTag = armCount === 2 ? '双 Arm' : (armCount === 1 ? '单 Arm' : (armCount > 0 ? `${armCount} Arms` : ''));
+    const topoPill = armRoleTag ? `<span class="pill ${armCount >= 2 ? 'ok' : ''}">${esc(armRoleTag)}${accelTag ? ` · ${esc(accelTag)}` : ''}</span>` : '';
+    const armMapStr = fmtArmList(arms.length ? arms : (k.declared_arms || []));
 
     const armChips = arms.map((a, idx) => {
       const lt = a.latest || {};
       const st = lt.status || k.scheduler;
-      const cls = st === 'COMPLETE' ? 'COMPLETE' : (st === 'RUNNING' ? 'RUNNING' : (k.scheduler === 'ERROR' ? 'ERROR' : ''));
+      const isPendingLog = a.log_seen === false;
+      const cls = isPendingLog ? (k.scheduler === 'ERROR' ? 'ERROR' : '') : (st === 'COMPLETE' ? 'COMPLETE' : (st === 'RUNNING' ? 'RUNNING' : (k.scheduler === 'ERROR' ? 'ERROR' : '')));
       const sel = a.arm_id === curId ? ' selected' : '';
-      const passStr = `P${a.completed_passes ?? '-'}/${a.planned_passes ?? '?'}`;
+      const gpuBadge = a.device != null ? `<span class="pill info" style="padding:1px 6px;font-size:10.5px">GPU ${esc(a.device)}</span> ` : '';
+      const rightStr = isPendingLog ? (a.input_resolved ? '已加载输入' : '等待日志') : `P${a.completed_passes ?? '-'}/${a.planned_passes ?? '?'}`;
       const bestStr = a.best_dev_mae_eV != null ? `Best ${(a.best_dev_mae_eV*1000).toFixed(2)} meV` : 'MAE -';
       const deltaStr = a.same_pass_delta_meV != null ? ` · Δ ${a.same_pass_delta_meV >= 0 ? '+' : ''}${a.same_pass_delta_meV}` : (idx === 0 && arms.length > 1 ? ' · Baseline' : '');
+      const subLine = isPendingLog ? '待首轮 Pass 日志' : `${bestStr}${deltaStr}`;
       return `<div class="step ${cls}${sel}" role="button" tabindex="0" data-kernel="${esc(k.kernel)}" data-arm="${esc(a.arm_id)}">
-        <div style="font-weight:700;display:flex;justify-content:space-between;gap:6px"><span class="mono">${esc(a.arm_id)}</span><span class="mono" style="font-size:11px">${passStr}</span></div>
-        <div style="color:var(--muted);margin-top:4px">${bestStr}${deltaStr}</div>
+        <div style="font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px"><span>${gpuBadge}<span class="mono">${esc(a.arm_id)}</span></span><span class="mono" style="font-size:11px">${esc(rightStr)}</span></div>
+        <div style="color:var(--muted);margin-top:4px">${esc(subLine)}</div>
       </div>`;
     }).join('');
 
     let spotHtml = '';
-    if (cur) {
+    if (cur && cur.log_seen === false) {
+      spotHtml = `<div class="spot" style="grid-template-columns:1fr"><div style="color:var(--muted);font-size:13px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;color:var(--text)">
+          <span>聚焦 Arm：<b class="mono">${esc(cur.arm_id)}</b>${cur.device != null ? ` <span class="pill info">GPU ${esc(cur.device)}</span>` : ''}</span>
+          ${arms.length > 1 ? `<span style="font-size:12px;color:var(--muted)">共 ${arms.length} 个 Arm · 点击上方卡片切换</span>` : ''}
+        </div>
+        暂未收到训练指标，正在等待首轮 Pass 结束（流模式：${esc(k.stream)}，共 ${k.line_count} 行）${k.failure_message ? ` · 失败原因：<span style="color:var(--bad)">${esc(k.failure_message)}</span>` : ''}。
+        ${k.tail_lines && k.tail_lines.length ? `<details><summary>查看最近 ${k.tail_lines.length} 行日志输出${k.error_lines && k.error_lines.length ? ` (含 ${k.error_lines.length} 条异常)` : ''}</summary>
+          ${k.error_lines && k.error_lines.length ? `<pre style="margin-top:8px;color:var(--bad);max-height:130px">${esc(k.error_lines.join('\n'))}</pre>` : ''}
+          <pre style="margin-top:8px">${esc(k.tail_lines.join('\n'))}</pre>
+        </details>` : ''}
+      </div></div>`;
+    } else if (cur) {
       const lt = cur.latest || {};
       const pct = cur.planned_passes ? Math.min(100, (cur.completed_passes / cur.planned_passes) * 100) : 0;
       const cid = chartIdx++;
@@ -671,7 +894,7 @@ function renderKernelCards(d) {
         <div class="spot">
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px">
-              <span>聚焦 Arm：<b class="mono">${esc(cur.arm_id)}</b></span>
+              <span>聚焦 Arm：<b class="mono">${esc(cur.arm_id)}</b>${cur.device != null ? ` <span class="pill info">GPU ${esc(cur.device)}</span>` : ''}${arms.length > 1 ? ` <span style="font-size:11.5px;color:var(--muted)">(共 ${arms.length} 个 Arm)</span>` : ''}</span>
               <span class="mono"><b>Pass ${cur.completed_passes}/${cur.planned_passes ?? '?'}</b> (${pct.toFixed(1)}%)</span>
             </div>
             ${cur.planned_passes ? `<div class="bar"><div class="bar-ok" style="width:${pct.toFixed(1)}%"></div></div>` : ''}
@@ -699,8 +922,8 @@ function renderKernelCards(d) {
     return `<div class="run-card">
       <div class="run-head">
         <div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b class="mono" style="font-size:16px">${esc(k.run)}</b> <span class="pill info">${esc(k.account)}</span></div>
-          <div class="run-meta"><a class="klink mono" href="${esc(k.kaggle_url)}" target="_blank" rel="noopener">${esc(k.kernel)} ↗</a> · 阶段 <span class="mono">${esc(k.phase)}</span></div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b class="mono" style="font-size:16px">${esc(k.run)}</b> <span class="pill info">${esc(k.account)}</span> ${topoPill}</div>
+          <div class="run-meta"><a class="klink mono" href="${esc(k.kaggle_url)}" target="_blank" rel="noopener">${esc(k.kernel)} ↗</a>${k.kernel_id != null ? ` · <span class="mono">#${esc(k.kernel_id)}</span>` : ''} · 阶段 <span class="mono">${esc(k.phase)}</span>${armMapStr ? ` · <span class="mono">${esc(armMapStr)}</span>` : ''}</div>
         </div>
         <div><span class="pill ${schedPill(k.scheduler)}">${k.scheduler==='RUNNING'?'<span class="pulse"></span>':''}${esc(k.scheduler)}</span></div>
       </div>
@@ -733,11 +956,19 @@ function renderAllTable(d) {
 
   const query = $('kernelSearch').value;
   const shown = rows.filter(r => (selectedFilter === 'ALL' || r.scheduler === selectedFilter)
-    && dashboardMatches(query, r.run, r.kernel, r.account));
+    && dashboardMatches(query, r.run, r.kernel, r.account, r.kernel_id, ...(r.declared_arms || []).map(a => a.arm_id)));
   $('kernelMatches').textContent = `${shown.length} / ${rows.length} 项`;
-  $('allTbl').innerHTML = `<thead><tr><th>Logical Run ID</th><th>账号</th><th>状态</th><th>Kaggle Kernel</th><th>备注</th></tr></thead><tbody>` +
-    (shown.length ? shown.map(r => `<tr><td class="mono"><b>${esc(r.run)}</b></td><td class="mono">${esc(r.account)}</td><td><span class="pill ${schedPill(r.scheduler)}">${esc(r.scheduler)}</span></td><td><a class="klink mono" href="https://www.kaggle.com/code/${esc(r.kernel)}" target="_blank" rel="noopener">${esc(r.kernel)} ↗</a></td><td style="color:var(--muted);font-size:12px">${esc(r.failure_message || '-')}</td></tr>`).join('')
-      : `<tr><td colspan="5" style="color:var(--muted)">暂无匹配的绑定任务</td></tr>`) + `</tbody>`;
+  $('allTbl').innerHTML = `<thead><tr><th>Logical Run ID</th><th>账号</th><th>状态</th><th>Arms</th><th>Kaggle Kernel</th><th>备注</th></tr></thead><tbody>` +
+    (shown.length ? shown.map(r => {
+      const cnt = r.arm_count || (r.declared_arms || []).length;
+      const roleTag = cnt === 2 ? '双 Arm' : (cnt === 1 ? '单 Arm' : (cnt > 0 ? `${cnt} Arms` : ''));
+      const armsText = fmtArmList(r.declared_arms || []);
+      const armsCell = (roleTag ? `<span class="pill ${cnt>=2?'ok':''}">${esc(roleTag)}</span> ` : '') +
+        `<span class="mono" style="font-size:12px">${esc(armsText || '-')}</span>`;
+      const idTag = r.kernel_id != null ? ` <span class="mono" style="color:var(--muted);font-size:11.5px">#${esc(r.kernel_id)}</span>` : '';
+      return `<tr><td class="mono"><b>${esc(r.run)}</b></td><td class="mono">${esc(r.account)}</td><td><span class="pill ${schedPill(r.scheduler)}">${esc(r.scheduler)}</span></td><td>${armsCell}</td><td><a class="klink mono" href="https://www.kaggle.com/code/${esc(r.kernel)}" target="_blank" rel="noopener">${esc(r.kernel)} ↗</a>${idTag}</td><td style="color:var(--muted);font-size:12px">${esc(r.failure_message || '-')}</td></tr>`;
+    }).join('')
+      : `<tr><td colspan="6" style="color:var(--muted)">暂无匹配的绑定任务</td></tr>`) + `</tbody>`;
 }
 
 function render(d) {
@@ -764,8 +995,10 @@ function render(d) {
   const hero = $('heroBar');
   hero.style.display = 'flex';
   hero.className = 'hero' + (s.total_remaining_hours < 15 ? ' tight' : '');
+  const runArmStr = s.running_arms ? ` (${s.running_arms} Arms)` : '';
+  const qArmStr = s.queued_arms ? ` (${s.queued_arms} Arms)` : '';
   hero.innerHTML = `<div><b>多账号 GPU 配额总览：</b>可用 <b>${s.total_remaining_hours ?? '-'} h</b> / ${s.total_allowed_hours ?? '-'} h（已用 ${s.total_used_hours ?? '-'} h，预留 ${s.total_reserved_hours ?? '-'} h）</div>
-                    <div class="pill ${hasActive ? 'info' : 'ok'}">运行 ${s.running_kernels ?? 0} · 排队 ${s.queued_kernels ?? 0} · 完成 ${s.complete_kernels ?? 0} · 异常 ${s.error_kernels ?? 0}</div>`;
+                    <div class="pill ${hasActive ? 'info' : 'ok'}">运行 ${s.running_kernels ?? 0}${runArmStr} · 排队 ${s.queued_kernels ?? 0}${qArmStr} · 完成 ${s.complete_kernels ?? 0} · 异常 ${s.error_kernels ?? 0}</div>`;
 
   $('quotaGrid').innerHTML = (d.accounts || []).map(a => {
     if (a.error) {
