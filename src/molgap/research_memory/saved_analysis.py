@@ -87,31 +87,6 @@ def _floor(errors):
             "all_wrong_rows": int(wrong.sum()), "oracle_mae_meV": float(np.abs(e).min(0).mean() * _MEV)}
 
 
-def discover_predictions(repo_root):
-    """{row_set_sha16: [{trajectory_id, path, sha256}]} from RML-bound, hash-verified, unprotected predictions."""
-    import torch
-
-    root, pools, seen = Path(repo_root).resolve(), {}, set()
-    for row in json.loads((root / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))["trajectories"]:
-        record = json.loads((root / row["record_path"]).read_text(encoding="utf-8"))
-        for ref in (record.get("result") or {}).get("evidence_refs") or []:
-            path = root / ref
-            if path.suffix != ".json" or not path.is_file():
-                continue
-            evidence = json.loads(path.read_text(encoding="utf-8"))
-            if any((evidence.get("role_use") or {}).get(r) not in (None, "untouched") for r in PROTECTED_ROLES):
-                continue
-            for item in evidence.get("artifacts") or []:
-                loc = Path(item["locator"].replace("external:///", ""))
-                if item.get("name") != "predictions" or loc in seen or not loc.is_file() or file_digest(loc) != item.get("sha256"):
-                    continue
-                seen.add(loc)
-                ids = torch.load(loc, map_location="cpu", weights_only=True)["source_idx"].reshape(-1).numpy()
-                key = hashlib.sha256(np.sort(ids).astype("<i8").tobytes()).hexdigest()[:16]
-                pools.setdefault(key, []).append({"trajectory_id": row["trajectory_id"], "path": str(loc), "sha256": item["sha256"]})
-    return pools
-
-
 def run(op, paths, *, role_id, n_bootstrap=2000, seed=42, pairs=None):
     if not role_id or "_".join(str(role_id).lower().replace("-", " ").split()) in PROTECTED_ROLES:
         raise ValueError("Refusing protected or missing role: pass an unprotected --role-id")

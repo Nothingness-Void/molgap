@@ -80,5 +80,5 @@ rebuilds), `cli prepare-resume` and the paused-run path (see the
 [quickstart](EXPERIMENT_QUICKSTART.md#paused-stop_for_cost-runs)), and the SCNet
 route ([skill](../../skills/scnet-bw-dcu-molgap/SKILL.md)).
 
-Other `rml` commands (rare or called by the commands above): `validate`, `status`, `package-ready`, `backtest-screening`, `plan`, `finalize`, `terminal-pipeline`, `recover-trace`, `replay-pool`, `backtest-policy`.
+Other `rml` commands (rare or called by the commands above): `validate`, `status`, `package-ready`, `backtest-screening`, `plan`, `finalize`, `terminal-pipeline`, `legacy-terminal` (no `input_binding.json`: reviewed decision file to `terminal.json`), `recover-trace`, `replay-pool`, `backtest-policy`.
 Other `cli` commands (called by the workflow scripts; see the [CLI reference](EXPERIMENT_CLI.md)): `locate-run`, `draft-role-audit`, `diagnose`, `validate-spec`, `package`, `preflight`, `run-diagnostic`, `launch-receipt`, `terminal`, `plan-prospective`, `check-release`, `check-acceptance`, `inspect-output`, `accept-terminal`, `prepare-workflow`, `prepare-family-training`, `accept-workflow`, `build-terminal`, `prepare-release`, `check-preparation`, `workflow-info`, `build-resume`, `source-dependencies`, `sandbox`.

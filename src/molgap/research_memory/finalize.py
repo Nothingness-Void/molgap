@@ -612,3 +612,61 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         if staging.exists():
             shutil.rmtree(staging)
     return {**receipt, "status": "FINALIZED"}
+
+
+def legacy_terminal(root: str | Path, trajectory: str, action_id: str, run_id: str, decision_file: str,
+                    evidence_dirs: list[str], roles_file: str, out: str, costs_file: str | None = None) -> dict[str, str]:
+    """Write acceptance.json + terminal.json for a legacy-retrieved run from reviewed declarations; never infers role use."""
+    from .schemas import CLOSURE_FACTS_FORMAT, TRAJECTORY_OUTCOMES, validate_closure_facts
+    root = Path(root).resolve()
+    traj = load_json_object(repo_local_path(root, trajectory))
+    if not any(a["action_id"] == action_id and run_id in a["run_ids"] for a in traj["actions"]):
+        raise ValueError("action_id/run_id is not frozen in the trajectory")
+    dec, declared = load_json_object(Path(decision_file)), load_json_object(Path(roles_file))
+    absent = [k for k in ("evidence_id", "scope", "v5_outcome", "finalized_at", "outcome", "facts", "next_allowed_actions",
+              "reopen_conditions", "decision_ref") if k not in dec]
+    if absent or not {"effect_meV", "ci_meV", "failure_mode", "search_terms", "source"} <= set(dec["facts"]):
+        raise ValueError(f"decision file is missing fields: {absent or 'facts'}")
+    if dec["outcome"] not in TRAJECTORY_OUTCOMES - {"ACTIVE"}:
+        raise ValueError(f"unsupported terminal outcome: {dec['outcome']}")
+    facts = validate_closure_facts({**dec["facts"], "format": CLOSURE_FACTS_FORMAT})
+    effect, ci = facts["effect_meV"], facts["ci_meV"]
+    if (effect is None) != (ci is None) or ci and not ci[0] <= effect <= ci[1]:
+        raise ValueError("effect_meV must lie inside ci_meV (both set or both null)")
+    role_use = declared.get("role_use", {})
+    if missing := {"official_validation", "test_dev", "test_challenge"} - set(role_use):
+        raise ValueError(f"roles declaration must state every protected role: {sorted(missing)}")
+    files = [p for d in evidence_dirs for p in sorted(repo_local_path(root, d).rglob("*")) if p.is_file()]
+    if not files:
+        raise ValueError("no evidence files found")
+    pointer = lambda p: Path(p).relative_to(root).as_posix()
+    out_dir = repo_local_path(root, out)
+    acceptance_ref = pointer(out_dir / "acceptance.json")
+    ident = {"trajectory_id": traj["trajectory_id"], "action_id": action_id, "run_id": run_id, "evidence_ref": acceptance_ref}
+    roles = [{**e, "schema": "molgap-role-event-v1", "role_event_id": f"role-{run_id}-{e['role_name']}-{e['access_kind']}", **ident}
+             for e in declared.get("events", [])]
+    costs = [{**c, "schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{run_id}-{i}", **ident}
+             for i, c in enumerate(load_json_object(Path(costs_file)).get("events", []) if costs_file else [])]
+    for event in roles + costs:
+        (validate_role_event if "role_event_id" in event else validate_cost_event)(event)
+    validate_observed_role_truth([role_use], roles)
+    decision = {k: dec[k] for k in ("decision_ref", "outcome", "next_allowed_actions", "reopen_conditions")} | {"facts": facts}
+    acceptance = {"evidence_id": dec["evidence_id"], "run_id": run_id, "outcome": dec["v5_outcome"], "role_use": role_use,
+                  "roles": roles, "costs": costs, "comparison_class": "CONTEXT_ONLY", "trajectory_decision": decision}
+    atomic_write(out_dir / "acceptance.json", json_bytes(acceptance))
+    hashes = {pointer(p): file_digest(p) for p in [*files, *(repo_local_path(root, x) for x in (dec["decision_ref"], facts["source"]) if x),
+                                                     out_dir / "acceptance.json"]}
+    terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": traj["trajectory_id"], "run_id": run_id,
+                "action_id": action_id, "finalized_at": dec["finalized_at"], "acceptance_ref": acceptance_ref,
+                "artifact_hashes": hashes, "decision": decision, "costs": costs, "roles": roles,
+                "evidence": {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
+                             "evidence_id": dec["evidence_id"], "track": traj["track"], "scope": dec["scope"],
+                             "legacy_contract": dec.get("legacy_contract", dec["scope"]), "outcome": dec["v5_outcome"],
+                             "role_use": role_use, "authority": {"pointers": [dec["decision_ref"], acceptance_ref]},
+                             "artifacts": [{"name": Path(k).name, "locator": k, "sha256": v,
+                                            "availability": "locally_retained_hash_verified"} for k, v in hashes.items()],
+                             "migration": {"migrated_at": dec["finalized_at"][:10], "training_executed": False,
+                                           "inference_executed": False, "scientific_reinterpretation": False,
+                                           "verification_scope": "Legacy retrieval closure; metadata only."}}}
+    atomic_write(out_dir / "terminal.json", json_bytes(terminal))
+    return {"acceptance": acceptance_ref, "terminal": pointer(out_dir / "terminal.json")}

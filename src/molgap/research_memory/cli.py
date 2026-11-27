@@ -10,7 +10,7 @@ import subprocess, sys
 from molgap.constants import REPO_ROOT
 
 from .backtest import build_screening_backtest
-from .compiler import compile_research_memory, frozen_differences, rebuild_research_memory
+from .compiler import frozen_differences, rebuild_research_memory
 from .ready import build_ready_package
 from .validate import validate_repository_records
 from .paths import repo_local_path
@@ -83,6 +83,11 @@ def build_parser() -> argparse.ArgumentParser:
     terminal_cmd.add_argument("--trace")
     terminal_cmd.add_argument("--trace-source")
     terminal_cmd.add_argument("--arm")
+    legacy = commands.add_parser("legacy-terminal", description="Build acceptance.json + terminal.json for a legacy run (no input_binding.json), then run terminal-pipeline. Decision file keys: evidence_id, scope, finalized_at, v5_outcome (7 fields), outcome, decision_ref, next_allowed_actions, reopen_conditions, facts{effect_meV, ci_meV, failure_mode, search_terms, source}. Roles file: {role_use: {official_validation, test_dev, test_challenge, ...}, events: [{role_name, access_kind, selection_used, dataset_identity, row_manifest_hash}]}. Costs file: {events: [{attempt_id, platform, hardware, category, measurement}]}.")
+    for flag in ("trajectory", "action-id", "run-id", "decision-file", "roles-file", "out"):
+        legacy.add_argument("--" + flag, required=True)
+    legacy.add_argument("--evidence", action="append", required=True, help="DIR of retained evidence files; repeat")
+    legacy.add_argument("--costs-file", help="JSON {events: [...]}; absent -> measurement_missing at finalize")
     terminal_rebuild = commands.add_parser("terminal-rebuild", help="Recovery only: rebuild derived RML after a failed closure update")
     terminal_rebuild.add_argument("--trajectory", action="append", required=True)
     recovery = commands.add_parser("recover-trace", description="Recover a canonical trace manifest from raw source files.")
@@ -108,6 +113,11 @@ def main(argv: list[str] | None = None) -> None:
     getattr(sys.stdout, "reconfigure", lambda **_: None)(encoding="utf-8")
     root = _root(args.repo_root)
 
+    if args.command == "legacy-terminal":
+        from .finalize import legacy_terminal
+        print(json.dumps(legacy_terminal(root, args.trajectory, args.action_id, args.run_id, args.decision_file,
+                                         args.evidence, args.roles_file, args.out, args.costs_file), indent=2))
+        return
     if args.command == "terminal-rebuild":
         from .pipeline import recover_terminal_derived
         results = recover_terminal_derived(root, args.trajectory)
@@ -170,24 +180,11 @@ def main(argv: list[str] | None = None) -> None:
                 missing_artifacts = missing_locally_claimed_artifacts(root, records)
             except ValueError as exc:
                 raise SystemExit(str(exc)) from exc
-            failures = []
-            if missing_artifacts:
-                failures.append(
-                    "V5 evidence claims missing local artifacts:\n  "
-                    + "\n  ".join(missing_artifacts)
-                )
-            missing_from_head = head_differences["missing_from_head"]
-            if missing_from_head:
-                failures.append(
-                    "RML portable inputs are absent from Git HEAD:\n  "
-                    + "\n  ".join(missing_from_head)
-                )
-            changed_from_head = head_differences["changed_from_head"]
-            if changed_from_head:
-                failures.append(
-                    "RML portable inputs, runtime, or derived outputs differ from Git HEAD:\n  "
-                    + "\n  ".join(changed_from_head)
-                )
+            failures = [f"{title}:\n  " + "\n  ".join(items) for title, items in (
+                ("V5 evidence claims missing local artifacts", missing_artifacts),
+                ("RML portable inputs are absent from Git HEAD", head_differences["missing_from_head"]),
+                ("RML portable inputs, runtime, or derived outputs differ from Git HEAD", head_differences["changed_from_head"]),
+            ) if items]
             if failures:
                 raise SystemExit("\n".join(failures))
             print(

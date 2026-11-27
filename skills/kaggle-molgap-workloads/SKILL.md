@@ -81,7 +81,7 @@ training. `RETRIEVED` supplies `$result.execution_root`; retained files are reus
 Default remote layout is experiment/<arm>; override --remote-root only for a
 known historical layout. For a bound continuation add --resume-prepared $resume
 to retrieval and acceptance. The saved owner selects its exact receipt and
-authority. Legacy unbound preparations use the explicit flags in the CLI docs.
+authority. A legacy run without `input_binding.json` closes with `rml legacy-terminal`, then `rml terminal-pipeline`.
 
 ## Resume an authorized paused run
 
