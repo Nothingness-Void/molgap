@@ -1,0 +1,65 @@
+{
+  "acceptance_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/rml_closure/acceptance.json",
+  "action_id": "A002",
+  "artifact_hashes": {
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/decision.md": "22a7ce6ff92f8290b7f9ed20aaf028468e86055d21c4e931165f29e49cf0e6a4",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/retrieval.json": "1801e5a82a73ef22678feb34fcd32f977f0ed4585efe3997709dee29dbd237c8",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/completion_manifest.json": "e6567f266525e93300bba801fdede26b775eef948452d61e9f767d5cb296820a",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/run_provenance.json": "6331420eefb0d2d54f67542f4d400d8a85bcce111335c77827a91199dfc635f5",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/selected_eval.json": "59491c26c70b1c26e04d459eb250db7d6849a42e5389ec1d94e7a013aeb5d945",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/serial_summary.json": "f85f843934e8b887c8a79136d026b6998bf8e47b63b9579bad85198f5ae0b8ee",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/tail_score_fast_200ep_s42.json": "e59b7b1ab9005bb4cf2c33cb13d54b09682a1c1c9f34499ea906a205be7e3f89",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/train_log.jsonl": "afa75d359b3d6f953fdab1e848b88c7a75143a56cd37e049264294f3f4a6ca8a",
+    "experiments/pcqm_fast_engine_200ep_ims_20261126/rml_closure/acceptance.json": "7274563e13858ab6e22e873abf5697009fd72bcb8191b8fcab4b971aa15cbe83"
+  },
+  "finalized_at": "2026-11-28T03:04:15+09:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-fastpn-200ep-20261126-0.json",
+        "sha256": "b4f5b803e9f9ba848a44fbe7b57283f8e7315e6711b28a1a36fc787bdb598070"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "3748aa3026131b862d24ad2b0c1a0104ce7b0a9e4b3e165b26061a0ceccaf89a"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "2997fce93d81a7a3b3718a3156d18d7cf5ed693b8638385dbc31e316b64b05c0"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-dev_500k-prediction_input.json",
+        "sha256": "57f85692f09074b7194123ad1bfd1632842f6c862bbacd2ca1334ef676996df7"
+      },
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-dev_500k-labels_read.json",
+        "sha256": "333bf2cdd4ec8ee189d2b7c673dde7af065fc3adabe04d0b23053fa99cbcc9ec"
+      },
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-dev_500k-metric_computed.json",
+        "sha256": "2b1f98695163ff17c6f7a439aab5f592ab26ecee5cf97920f7f3459f35b690c9"
+      },
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-tail_holdout_v1-prediction_input.json",
+        "sha256": "1b8fbe1ddfdb1d1b64b0a9cd26d67216124a1ed5bcd76dcc062955ff45c0abfe"
+      },
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-tail_holdout_v1-labels_read.json",
+        "sha256": "e89c4514ded26c2475e2870b06225b318e8c24fab114c3e0b290e3bf40425c3e"
+      },
+      {
+        "ref": "roles/role-fastpn-200ep-20261126-tail_holdout_v1-metric_computed.json",
+        "sha256": "959c2aeb4d4133c8f5317cafeb7ae94c49170b9b276ccd11e4c07a07cb4a8995"
+      }
+    ]
+  },
+  "run_id": "fastpn-200ep-20261126",
+  "trajectory_id": "T-pcqm-fast-engine-200ep-ims-20261126"
+}

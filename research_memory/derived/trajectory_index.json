@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "83305fa98c7dbdc37e3e53a2714363efb1f9ad592226f5c5a3c004eafa38303e",
+  "source_digest": "5595e61724b476b655a0bb53fc9b7a6f41875a79e1730d2c717b337fbfc8cad5",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,22 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/decision.md",
+      "family_id": "pcqm-fast-engine-200ep-ims-20261126",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_fast_engine_200ep_ims_20261126/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-fast-engine-200ep-ims-20261126"
     },
     {
       "completeness_status": "complete",

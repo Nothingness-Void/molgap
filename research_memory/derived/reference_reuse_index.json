@@ -1966,6 +1966,27 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "tail_vs_60_pass_cross_job_no_paired_rows_dev_and_tail_disagree_in_direction",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126",
+      "role_use": {
+        "dev_500k": "consumed",
+        "official_validation": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "Fast engine, 500K rows, BS128, seed 42, 200-pass cosine (781,200 steps) on the GPT-T BondLocal + PairNorm recipe, one item, IMS A100 job 2176763. Dev rows 500000..549999 and tail_holdout_v1 scored offline once; official valid and test not read. Applies only to this recipe: no extension to the full 3.37M set and none to 20 layers (jobs 2187198/2187199 answer that).",
+      "source_envelope": "experiments/pcqm_fast_engine_200ep_ims_20261126/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_assessed_scope_500k_bs128_seed42_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "tail_inside_seven_fp32_baselines_speed_vs_cross_job_baseline_no_paired_rows",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

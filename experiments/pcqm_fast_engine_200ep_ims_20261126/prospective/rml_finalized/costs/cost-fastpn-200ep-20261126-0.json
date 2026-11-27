@@ -1,0 +1,30 @@
+{
+  "action_id": "A002",
+  "attempt_id": "fastpn-200ep-20261126-v1",
+  "category": "training",
+  "cost_event_id": "cost-fastpn-200ep-20261126-0",
+  "evidence_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/rml_closure/acceptance.json",
+  "hardware": "NVIDIA A100-SXM4-80GB AMP FP16",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 10.615083333333333
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 10.615083333333333
+    }
+  },
+  "platform": "ims",
+  "run_id": "fastpn-200ep-20261126",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-fast-engine-200ep-ims-20261126"
+}

@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 202
+- Validated V5 evidence: 203
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - CLOSED: 39
 - INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 11
-- NEGATIVE_UNDER_CONTRACT: 69
+- NEGATIVE_UNDER_CONTRACT: 70
 - NO_TRAIN: 60
 - POSITIVE_UNDER_CONTRACT: 10
 
@@ -19,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 826
-- Coarse historical role records: 982
+- Explicit role events: 832
+- Coarse historical role records: 987
 - Repeatedly selected role identities: 50
 
 ## Cost
@@ -120,10 +120,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA A100 AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=56.000000 (1 estimated record), measurement_missing=0, not_applicable=0
-- NVIDIA A100 AMP FP16 device_hours: measured=unknown (0 measured records), estimated=3.500000 (1 estimated record), measurement_missing=0, not_applicable=0
-- NVIDIA A100 AMP FP16 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- NVIDIA A100 AMP FP16 wall_hours: measured=unknown (0 measured records), estimated=3.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA A100 AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=236.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100 AMP FP16 device_hours: measured=unknown (0 measured records), estimated=15.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100 AMP FP16 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA A100 AMP FP16 wall_hours: measured=unknown (0 measured records), estimated=15.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - NVIDIA A100 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - NVIDIA A100 FP32 device_hours: measured=20.898444 (1 measured record), estimated=11.600000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA A100 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -132,10 +132,10 @@
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
 - NVIDIA A100-SXM4-40GB wall_hours: measured=0.079196 (5 measured records), estimated=0.666667 (2 estimated records), measurement_missing=2, not_applicable=0
-- NVIDIA A100-SXM4-80GB AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- NVIDIA A100-SXM4-80GB AMP FP16 device_hours: measured=3.365167 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- NVIDIA A100-SXM4-80GB AMP FP16 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- NVIDIA A100-SXM4-80GB AMP FP16 wall_hours: measured=3.365167 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100-SXM4-80GB AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA A100-SXM4-80GB AMP FP16 device_hours: measured=13.980250 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100-SXM4-80GB AMP FP16 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA A100-SXM4-80GB AMP FP16 wall_hours: measured=13.980250 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - NVIDIA GeForce RTX 5060 cpu_hours: measured=0.145885 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
 - NVIDIA GeForce RTX 5060 device_hours: measured=0.126423 (7 measured records), estimated=1.161111 (3 estimated records), measurement_missing=5, not_applicable=0
 - NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=11
@@ -324,10 +324,10 @@
 - local CPU device_hours: not applicable (1 records); measurement_missing=0
 - local CPU queue_hours: not applicable (1 records); measurement_missing=0
 - local CPU wall_hours: measured=unknown (0 measured records), estimated=0.300000 (1 estimated record), measurement_missing=0, not_applicable=0
-- local RTX 5060 AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- local RTX 5060 AMP FP16 device_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
-- local RTX 5060 AMP FP16 queue_hours: not applicable (1 records); measurement_missing=0
-- local RTX 5060 AMP FP16 wall_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- local RTX 5060 AMP FP16 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- local RTX 5060 AMP FP16 device_hours: measured=unknown (0 measured records), estimated=1.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- local RTX 5060 AMP FP16 queue_hours: not applicable (2 records); measurement_missing=0
+- local RTX 5060 AMP FP16 wall_hours: measured=unknown (0 measured records), estimated=1.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - local Windows CPU, four intra-op threads cpu_hours: measured=unknown (0 measured records), estimated=1.333333 (1 estimated record), measurement_missing=0, not_applicable=0
 - local Windows CPU, four intra-op threads device_hours: not applicable (1 records); measurement_missing=0
 - local Windows CPU, four intra-op threads queue_hours: not applicable (1 records); measurement_missing=0
@@ -344,8 +344,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 457
-- Cost-event coverage: 209/220 trajectories; incomplete native measurement=172
+- Measurement-missing cost events: 460
+- Cost-event coverage: 210/221 trajectories; incomplete native measurement=173
 
 ## Screening Backtest
 - Status: available
@@ -353,9 +353,9 @@
 - Excluded traces: 41
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 115
+- [INFO] trace_unavailable_for_backtest: 116
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 172
+- [WARN] incomplete_native_cost_measurement: 173
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 53
 - [WARN] trajectory_without_v5_evidence: 18

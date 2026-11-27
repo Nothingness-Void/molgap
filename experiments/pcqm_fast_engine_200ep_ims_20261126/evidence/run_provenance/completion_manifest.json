@@ -1,0 +1,15 @@
+{
+  "format": "molgap-ims-fast-recipe-run-v1",
+  "status": "COMPLETE",
+  "arm": "degree_bond_local_pair_update_norm_ema999",
+  "source_commit": "1006873691ae8120fea0ead03f3a6bf3db42bc6e",
+  "recipe_sha256": "c26ca850dbc85d373beb7bc0642a239b791d03f47a1154a9f6862c70db624e51",
+  "execution_policy": "fast_amp_nondeterministic",
+  "optimizer_steps": 781200,
+  "completed_passes": 200,
+  "scaler_skips": 356,
+  "nonfinite_steps": 0,
+  "selection": "final-ema",
+  "selected_model_sha256": "b76c5457c1f946b23d9524f021666e18e2e50e81e6ba8bdce34063ba0e64d9ab",
+  "last_checkpoint_sha256": "fdc6c97061972bf1fdc0a78b696d6e3cb6f5f0342456405795a1ab8c627e5521"
+}

@@ -1,0 +1,28 @@
+{
+  "evidence_id": "pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126",
+  "scope": "Fast engine, 500K rows, BS128, seed 42, 200-pass cosine (781,200 steps) on the GPT-T BondLocal + PairNorm recipe, one item, IMS A100 job 2176763. Dev rows 500000..549999 and tail_holdout_v1 scored offline once; official valid and test not read. Applies only to this recipe: no extension to the full 3.37M set and none to 20 layers (jobs 2187198/2187199 answer that).",
+  "legacy_contract": "pcqm-fast-engine-200ep-ims-20261126-v1",
+  "finalized_at": "2026-11-28T03:04:15+09:00",
+  "v5_outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_longer_training_at_500k_bs128_seed42",
+    "comparison_status": "tail_vs_60_pass_cross_job_no_paired_rows_dev_and_tail_disagree_in_direction",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_NO_DETECTABLE_CHANGE_TAIL_ABOVE_GATE_106_02",
+    "transfer_status": "not_assessed_scope_500k_bs128_seed42_only"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "decision_ref": "experiments/pcqm_fast_engine_200ep_ims_20261126/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "Explicit user authority for a different recipe, scale or depth, or for a paired re-score with saved per-row predictions."
+  ],
+  "facts": {
+    "effect_meV": null,
+    "ci_meV": null,
+    "failure_mode": null,
+    "search_terms": ["fast engine", "200 pass", "cosine refill", "500k", "longer training", "tail holdout", "amp fp16", "gptrans pairnorm"],
+    "source": null
+  }
+}

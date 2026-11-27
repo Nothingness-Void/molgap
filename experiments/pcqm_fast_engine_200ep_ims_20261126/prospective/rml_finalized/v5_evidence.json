@@ -1,0 +1,93 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/retrieval.json",
+      "name": "retrieval.json",
+      "sha256": "1801e5a82a73ef22678feb34fcd32f977f0ed4585efe3997709dee29dbd237c8"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "e6567f266525e93300bba801fdede26b775eef948452d61e9f767d5cb296820a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/run_provenance.json",
+      "name": "run_provenance.json",
+      "sha256": "6331420eefb0d2d54f67542f4d400d8a85bcce111335c77827a91199dfc635f5"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/run_provenance/selected_eval.json",
+      "name": "selected_eval.json",
+      "sha256": "59491c26c70b1c26e04d459eb250db7d6849a42e5389ec1d94e7a013aeb5d945"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/serial_summary.json",
+      "name": "serial_summary.json",
+      "sha256": "f85f843934e8b887c8a79136d026b6998bf8e47b63b9579bad85198f5ae0b8ee"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/tail_score_fast_200ep_s42.json",
+      "name": "tail_score_fast_200ep_s42.json",
+      "sha256": "e59b7b1ab9005bb4cf2c33cb13d54b09682a1c1c9f34499ea906a205be7e3f89"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/evidence/train_log.jsonl",
+      "name": "train_log.jsonl",
+      "sha256": "afa75d359b3d6f953fdab1e848b88c7a75143a56cd37e049264294f3f4a6ca8a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/decision.md",
+      "name": "decision.md",
+      "sha256": "22a7ce6ff92f8290b7f9ed20aaf028468e86055d21c4e931165f29e49cf0e6a4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_fast_engine_200ep_ims_20261126/rml_closure/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "7274563e13858ab6e22e873abf5697009fd72bcb8191b8fcab4b971aa15cbe83"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_fast_engine_200ep_ims_20261126/decision.md",
+      "experiments/pcqm_fast_engine_200ep_ims_20261126/rml_closure/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-fast-engine-200ep-ims-20261126-fastpn-200ep-20261126",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-fast-engine-200ep-ims-20261126-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Legacy retrieval closure; metadata only."
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_longer_training_at_500k_bs128_seed42",
+    "comparison_status": "tail_vs_60_pass_cross_job_no_paired_rows_dev_and_tail_disagree_in_direction",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_NO_DETECTABLE_CHANGE_TAIL_ABOVE_GATE_106_02",
+    "transfer_status": "not_assessed_scope_500k_bs128_seed42_only"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "Fast engine, 500K rows, BS128, seed 42, 200-pass cosine (781,200 steps) on the GPT-T BondLocal + PairNorm recipe, one item, IMS A100 job 2176763. Dev rows 500000..549999 and tail_holdout_v1 scored offline once; official valid and test not read. Applies only to this recipe: no extension to the full 3.37M set and none to 20 layers (jobs 2187198/2187199 answer that).",
+  "track": "B"
+}

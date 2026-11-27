@@ -1,0 +1,33 @@
+{
+  "format": "molgap-ims-family-serial-summary-v1",
+  "order": [
+    "fast-500k-s42-e200"
+  ],
+  "driver_starts": [
+    "2026-11-25T16:55:14Z"
+  ],
+  "items": {
+    "fast-500k-s42-e200": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-26T03:32:08Z",
+          "exit_code": 0,
+          "wall_s": 38214.3,
+          "peak_rss_bytes": 2977763328,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/fastpn-200ep-20261126/output/training/fast-500k-s42-e200",
+      "reason": "completion_manifest.json written",
+      "peak_rss_bytes": 2977763328,
+      "dev_mae_eV": 0.10038780727386475
+    }
+  },
+  "wall_s": 53880.0,
+  "reserve_s": 1800.0,
+  "spec_sha256": "be38d65f4b7fd429ffb83b5845c3678a8334208ddd62c87bd46f03e48f2a583c",
+  "source_commit": "1006873691ae8120fea0ead03f3a6bf3db42bc6e",
+  "memory_limit_bytes": 30000000000,
+  "last_driver_end_utc": "2026-11-26T03:32:08Z"
+}
