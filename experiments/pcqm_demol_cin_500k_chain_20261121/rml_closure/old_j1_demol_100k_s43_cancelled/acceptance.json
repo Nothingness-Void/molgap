@@ -1,0 +1,45 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [],
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
+  "outcome": {
+    "artifact_status": "no_artifacts",
+    "budget_decision": "cost_measurement_missing_not_zero",
+    "comparison_status": "not_applicable",
+    "execution_status": "not_run_cancelled_before_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN_superseded_by_serial_chain_item",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "pcqm-demol-cin-100k-ims-20261120-s43",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol-cin",
+        "ims",
+        "cancelled",
+        "no train",
+        "superseded",
+        "serial chain"
+      ],
+      "source": null
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Terminal evidence only. The result of this recipe lives in the chain trajectory."
+    ]
+  }
+}

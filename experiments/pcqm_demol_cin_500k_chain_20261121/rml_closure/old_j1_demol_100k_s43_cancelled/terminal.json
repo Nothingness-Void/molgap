@@ -1,0 +1,101 @@
+{
+  "acceptance_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j1_demol_100k_s43_cancelled/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/SUBMIT_STATUS_20261120.md": "d617d9d9cf7a11ad27e28e4faa997e21f8d3085f13f9a734a61e99b1479f2721",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/ims_submission_old_j1_j2.md": "f7ac6ca6a3ec172ebd0fe86a5a21684705538f234573ace21851e7aaa2baec69",
+    "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j1_demol_100k_s43_cancelled/acceptance.json": "dcad90f110596a6e46739814d94e2db19d41cf9e6e5e44643b26a91dd4e9580a"
+  },
+  "costs": [],
+  "decision": {
+    "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "demol-cin",
+        "ims",
+        "cancelled",
+        "no train",
+        "superseded",
+        "serial chain"
+      ],
+      "source": null
+    },
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Terminal evidence only. The result of this recipe lives in the chain trajectory."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/ims_submission_old_j1_j2.md",
+        "name": "ims_submission_old_j1_j2.md",
+        "sha256": "f7ac6ca6a3ec172ebd0fe86a5a21684705538f234573ace21851e7aaa2baec69"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence_cancelled/SUBMIT_STATUS_20261120.md",
+        "name": "SUBMIT_STATUS_20261120.md",
+        "sha256": "d617d9d9cf7a11ad27e28e4faa997e21f8d3085f13f9a734a61e99b1479f2721"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+        "name": "decision.md",
+        "sha256": "0fecd70ad7cfdae28e6a59868be1b734ee98cf4619188bac31a929171d21933e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j1_demol_100k_s43_cancelled/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "dcad90f110596a6e46739814d94e2db19d41cf9e6e5e44643b26a91dd4e9580a"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+        "experiments/pcqm_demol_cin_500k_chain_20261121/rml_closure/old_j1_demol_100k_s43_cancelled/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-demol-cin-500k-chain-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-11-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Legacy retrieval closure; metadata only."
+    },
+    "outcome": {
+      "artifact_status": "no_artifacts",
+      "budget_decision": "cost_measurement_missing_not_zero",
+      "comparison_status": "not_applicable",
+      "execution_status": "not_run_cancelled_before_training",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN_superseded_by_serial_chain_item",
+      "transfer_status": "not_applicable"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "tail_holdout_v1": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "Stand-alone IMS job cancelled by the user before training; replaced by the serial chain item. No training, no scoring.",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-28T03:36:12+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [],
+  "run_id": "pcqm-demol-cin-100k-ims-20261120-s43",
+  "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-demol_cin"
+}

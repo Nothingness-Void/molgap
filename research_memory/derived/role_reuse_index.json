@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 898,
+  "ambiguous_historical_role_record_count": 902,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2677,6 +2677,34 @@
     },
     {
       "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j5",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-old-j1",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6296,6 +6324,7 @@
     "internal_development",
     "official_train_prefix_0_100000",
     "official_validation",
+    "tail_holdout_v1",
     "train",
     "train_prefix"
   ],
@@ -11608,6 +11637,7 @@
       "pcqm-demol-cin-500k-chain-20261128-j3",
       "pcqm-demol-cin-500k-chain-20261128-j4",
       "pcqm-demol-cin-500k-chain-20261128-j5",
+      "pcqm-demol-cin-500k-chain-20261128-old-j1",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",
@@ -11803,6 +11833,7 @@
       "pcqm-demol-cin-500k-chain-20261128-j3",
       "pcqm-demol-cin-500k-chain-20261128-j4",
       "pcqm-demol-cin-500k-chain-20261128-j5",
+      "pcqm-demol-cin-500k-chain-20261128-old-j1",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",
