@@ -1,0 +1,135 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [
+    {
+      "action_id": "A003",
+      "attempt_id": "gptdftp1-chain-20261123-v1",
+      "category": "training",
+      "cost_event_id": "cost-gptdftp1-chain-20261123-0",
+      "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+      "hardware": "NVIDIA A100 FP32",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 48.94822222222222
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 48.94822222222222
+        }
+      },
+      "platform": "ims",
+      "run_id": "gptdftp1-chain-20261123",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+    }
+  ],
+  "evidence_id": "pcqm-gptrans-dft-input-p1-20261128",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_tail_no_adoption",
+    "comparison_status": "paired_dev_rows_3d_supervised_separate_contract",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "POSITIVE_BELOW_GATE_GATE_II_NOT_MET",
+    "transfer_status": "not_assessed_no_100k_companion"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A003",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+      "role_event_id": "role-gptdftp1-chain-20261123-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "gptdftp1-chain-20261123",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A003",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+      "role_event_id": "role-gptdftp1-chain-20261123-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "gptdftp1-chain-20261123",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A003",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+      "role_event_id": "role-gptdftp1-chain-20261123-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "gptdftp1-chain-20261123",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A003",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+      "role_event_id": "role-gptdftp1-chain-20261123-dev_500k-selection_used",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "gptdftp1-chain-20261123",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+    }
+  ],
+  "run_id": "gptdftp1-chain-20261123",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/decision.md",
+    "facts": {
+      "ci_meV": [
+        -1.7256879293484928,
+        -0.7039394056436272
+      ],
+      "effect_meV": -1.2257680730381944,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "dft distance input",
+        "3d supervised",
+        "modality dropout",
+        "zeros ablation",
+        "gptrans pair state",
+        "500k",
+        "pure 2d inference",
+        "gate ii"
+      ],
+      "source": "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/dev_analysis_s43.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": [
+      "Explicit user authority for P2 or P6, for a 100K companion pair, or for a tail, official-valid or test read."
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-73e929eb6e0477e58d20f309f09da12894a8f7bc659b37f502959fc99d262bbe",
+  "finalized_at": "2026-11-28T12:00:00+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/decision.md": "b1824a0942d21538cb791ee13222e1535ff0bdc8587737001f2972e9e5022ffa",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/dev_analysis_s42.json": "b9947c486d4a3c134f1fee7d4d8517382b7e1b9a1234967167701ed31d2514ba",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/dev_analysis_s43.json": "6499c1603f104986b57de92bee9fe08082e41791b3a2181bedb2bbd9aef189cb",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/retrieval_final_complete.json": "544249c488e9028043a1047100267b2dc1de3e42e0ce7492f87d91b6ed48c25e",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/retrieval_legacy_pair42.json": "897fbcff79f426b62c3c0323e15cee17858f01f274b149a829e6ac5f21182714",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/ctl-500k-s42.completion_manifest.json": "f7fac03c27234ef7f2d576d5c3c90bd0d471be7b22538f6c3c8f80d5c7547db8",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/ctl-500k-s42.run_provenance.json": "9ab8064b843a0d0b5ece5c711e4c32e9507f72b16787739ee58df7f24dcb749f",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/ctl-500k-s43.completion_manifest.json": "70847bf7a12d20b543034c8f6812146673f4b1e130e3d18592551b38e632dfe6",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/ctl-500k-s43.run_provenance.json": "fd7c56adf8910b76a08ffbe30326ae95a9906c4bfd05e44a7a500d980184f0ae",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/p1-500k-s42.completion_manifest.json": "9a02f2a95395284ef0937cda18a79460faa5eeb7adc4244638921afdf5ddce36",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/p1-500k-s42.run_provenance.json": "f2583ff81433adc74920c49753b4d085360c183aa70bf5b578a47147560eb5bd",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/zer-500k-s42.completion_manifest.json": "944a45e76c2744e3ba7e24b145253436cd7dba073ae711102b3e32234cfcd83d",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/run_provenance/zer-500k-s42.run_provenance.json": "516bccc7371026e001595658971c6a91e5b9ddf01de4d11124547f92321fb063",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/serial_summary_after_pair42_retrieval.json": "26a23966ca0786ef4201d85afa22bbebc5897d48a23d5d5b9327ad23eef949b4",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/serial_summary_final.json": "c860653c33a9d5c3694f5019db591435c5cb17bf83eeb390aa72335fbad4f248",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/source_binding.json": "96b90102ab086a476d11f428fc99804e1a0e593f9d715497eb745f5fd423c58a",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/ctl-500k-s42.jsonl": "80c8a6235f6139c0eb2662065c4ce6f78f52f9a86eb9d422ba2f942d79ab5582",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/ctl-500k-s43.jsonl": "316d52d3181010bf2f582e3aa4a16302547719bc798c2de4b0ba2d1ab171445c",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/p1-500k-s42.jsonl": "0231fe33e5707a0863416528ab4de38d67cc80f140e135ae441fa358003b0d27",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/p1-500k-s43.jsonl": "ada44506d64af1a81c9b0f3197c84f228e8b39618f499b87ae7d15717385ab9f",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/zer-500k-s42.jsonl": "30db1f7dca78067def21805074b5c044176f87276ed3eb68effb9b4067308da7",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/evidence/train_logs/zer-500k-s43.jsonl": "b7068dba75f8ba9e73b1e12fbe31d14a2772379684c3a1bf20a53eaf460a01af",
+    "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json": "4a80273f7bad851a3103642a307ac1efd420d1b72ae906ea964668846d930f40"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "prospective_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/prospective/trajectory.json",
+  "prospective_sha256": "516135495b0b69f65a1d491c8e4766da1a97803642ae65a1b89122a0577ccfcd",
+  "published_hashes": {
+    "costs/cost-gptdftp1-chain-20261123-0.json": "7d708d42db7287a1f8c40ed912b36751b26bbc99ff04015172274a798fbc4cf4",
+    "roles/role-gptdftp1-chain-20261123-dev_500k-labels_read.json": "8567bacf4c3adde6e979b5b58647e886cec4001f2ba5257dd79953ff338cc646",
+    "roles/role-gptdftp1-chain-20261123-dev_500k-metric_computed.json": "4371d9ae74058f44aa015bc1af9e848721cd26cdee6aeb3d76163442c25c1f9e",
+    "roles/role-gptdftp1-chain-20261123-dev_500k-prediction_input.json": "d2f2525c768427d4517cf30f1991b9af991ff2b807499bf062f00d4bc7ef8695",
+    "roles/role-gptdftp1-chain-20261123-dev_500k-selection_used.json": "c6ba7507b5797819165262e367b45581efbf49d28a6e1e06b50754a13241fbdc",
+    "terminal_input.json": "79236f09339809100164cd51a12b3f2a7313f1dcefa6d1746bded825d146b78c",
+    "trajectory.json": "af838da788255bf89bfd022300623d5092ec9a95206028ad1865af2b387351de",
+    "v5_evidence.json": "5204206dc62e35139ba80bbd443fe025d8554b6f74f7d14fa50aaefe423744f6"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_dft_input_p1_20261123/prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "73e929eb6e0477e58d20f309f09da12894a8f7bc659b37f502959fc99d262bbe",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+}

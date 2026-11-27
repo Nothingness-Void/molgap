@@ -1,0 +1,119 @@
+{
+  "format": "molgap-gptdft-input-p1-dev-v1",
+  "dev_rows": [
+    500000,
+    550000
+  ],
+  "dev_sidecar": {
+    "manifest_sha256": "744efb8ec2b87947f68ed53e1702a9d765f042fd69626cefeea3a7a1ebbabcc9",
+    "topology_match": 1.0
+  },
+  "protected_roles_read": {
+    "tail_holdout_v1": false,
+    "official_validation": false,
+    "test": false
+  },
+  "items": {
+    "ctl-500k-s42": {
+      "checkpoint_sha256": "35b4a1c7cb4322a9cd06111247ee3fc189ef6c09655d476cbef10e9ad5313292",
+      "mae_eV": {
+        "2d": 0.10071261565578468
+      },
+      "step_time": {
+        "median_s_per_step": 0.11955965181771633,
+        "passes_logged": 60,
+        "intervals_dropped_as_restart": 0,
+        "wall_s_sum_of_intervals": 27531.0
+      },
+      "wall_s_all_attempts": 28093.6
+    },
+    "p1-500k-s42": {
+      "checkpoint_sha256": "1a4ee0c38f1a1892211549826cbf9e13f8fba50009f1a95ee6f83ed48c59d068",
+      "mae_eV": {
+        "2d": 0.09968047829715938,
+        "3d": 0.07481567228067494,
+        "2d3d": 0.07400580744890882
+      },
+      "step_time": {
+        "median_s_per_step": 0.12339989759344598,
+        "passes_logged": 60,
+        "intervals_dropped_as_restart": 0,
+        "wall_s_sum_of_intervals": 28599.0
+      },
+      "wall_s_all_attempts": 29222.8
+    },
+    "zer-500k-s42": {
+      "checkpoint_sha256": "7dd7d024a2b4857e54ba0792a6c6704325b7191bad02e69bc8c726c72af88da8",
+      "mae_eV": {
+        "2d": 0.10245618461243397,
+        "3d": 0.10551501038816996,
+        "2d3d": 0.10245286512751291
+      },
+      "step_time": {
+        "median_s_per_step": 0.1259600614439324,
+        "passes_logged": 60,
+        "intervals_dropped_as_restart": 0,
+        "wall_s_sum_of_intervals": 29178.0
+      },
+      "wall_s_all_attempts": 29764.1
+    },
+    "ctl-500k-s43": {
+      "checkpoint_sha256": "cc49f8280f1766cf35d008f9f7cbd6f22d7b0ab73a500915995a84b97ba9037a",
+      "mae_eV": {
+        "2d": 0.10059309424054967
+      },
+      "step_time": {
+        "median_s_per_step": 0.12391193036354327,
+        "passes_logged": 60,
+        "intervals_dropped_as_restart": 0,
+        "wall_s_sum_of_intervals": 28339.0
+      },
+      "wall_s_all_attempts": 28927.2
+    }
+  },
+  "pairs": {
+    "s42": {
+      "p1_3d_minus_p1_2d": {
+        "delta_mev": -24.864806016484476,
+        "ci95_mev": [
+          -25.617930226611197,
+          -24.137848313107437
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 50000
+      },
+      "p1_2d3d_minus_p1_2d": {
+        "delta_mev": -25.674670848250585,
+        "ci95_mev": [
+          -26.38364377682331,
+          -24.95926772625364
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 50000
+      },
+      "p1_2d_minus_control_2d": {
+        "delta_mev": -1.0321373586252758,
+        "ci95_mev": [
+          -1.5929275095874926,
+          -0.4641574864391024
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 50000
+      },
+      "p1_2d_minus_zeros_2d": {
+        "delta_mev": -2.7757063152745394,
+        "ci95_mev": [
+          -3.3284449088848005,
+          -2.228626982944947
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 50000
+      }
+    }
+  },
+  "gates": {}
+}

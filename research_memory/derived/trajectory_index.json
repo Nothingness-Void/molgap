@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "fb72381e436d7c8286e8ea1805f93579de442aa2524416a31e5fddc65d534313",
+  "source_digest": "273610fd1593d7ebfae1a163302c9e6a0400d36964e703e7781fcb4d3130e7dd",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -68,15 +68,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/decision.md",
       "family_id": "pcqm-gptrans-dft-input-p1-20261123",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_dft_input_p1_20261123/prospective/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_dft_input_p1_20261123/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-dft-input-p1-20261128"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
     },

@@ -1,0 +1,30 @@
+{
+  "action_id": "A003",
+  "attempt_id": "gptdftp1-chain-20261123-v1",
+  "category": "training",
+  "cost_event_id": "cost-gptdftp1-chain-20261123-0",
+  "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/rml_closure/acceptance.json",
+  "hardware": "NVIDIA A100 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 48.94822222222222
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 48.94822222222222
+    }
+  },
+  "platform": "ims",
+  "run_id": "gptdftp1-chain-20261123",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+}

@@ -1,0 +1,68 @@
+{
+  "status": "RETRIEVED",
+  "observation": {
+    "run_id": "gptdftp1-chain-20261123",
+    "source": {
+      "archive_sha256": "4d4688cde634e0aa00a70c01e6083bcea2a56c49eb37893b1e508f605ea3f7cb",
+      "commit": "cc822c1d0cf3a82377698852a181669634fae213"
+    },
+    "contract": {
+      "path": "experiments/pcqm_gptrans_dft_input_p1_20261123/serial_spec.json",
+      "physical_batch_per_device": 128,
+      "precision": "fp32",
+      "sha256": "50c254287e4f9289bbdd1b94a4ca7040f73f052a302474abba26ee8a3018b09a",
+      "tail_batch_policy": "drop_last",
+      "tf32": false
+    },
+    "output_root": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output",
+    "required_outputs": {
+      "train": [
+        "training/serial_summary.json",
+        "training/ctl-500k-s42/selected_model.pt",
+        "training/ctl-500k-s42/train_log.jsonl",
+        "training/p1-500k-s42/selected_model.pt",
+        "training/p1-500k-s42/train_log.jsonl",
+        "training/zer-500k-s42/selected_model.pt",
+        "training/zer-500k-s42/train_log.jsonl",
+        "training/ctl-500k-s43/selected_model.pt",
+        "training/ctl-500k-s43/train_log.jsonl",
+        "training/p1-500k-s43/selected_model.pt",
+        "training/p1-500k-s43/train_log.jsonl",
+        "training/zer-500k-s43/selected_model.pt",
+        "training/zer-500k-s43/train_log.jsonl"
+      ]
+    },
+    "submission": {
+      "format": "molgap-ims-v4-submission-v1",
+      "mode": "serial_chain",
+      "resume_jobs": [
+        "2161254.ccpbs1",
+        "2187128.ccpbs1"
+      ],
+      "run_id": "gptdftp1-chain-20261123",
+      "status": "submitted",
+      "training_job": "2146337.ccpbs1"
+    },
+    "stages": {
+      "train": {
+        "outputs_sha256": {
+          "training/ctl-500k-s42/selected_model.pt": "35b4a1c7cb4322a9cd06111247ee3fc189ef6c09655d476cbef10e9ad5313292",
+          "training/ctl-500k-s42/train_log.jsonl": "80c8a6235f6139c0eb2662065c4ce6f78f52f9a86eb9d422ba2f942d79ab5582",
+          "training/ctl-500k-s43/selected_model.pt": "cc49f8280f1766cf35d008f9f7cbd6f22d7b0ab73a500915995a84b97ba9037a",
+          "training/ctl-500k-s43/train_log.jsonl": "316d52d3181010bf2f582e3aa4a16302547719bc798c2de4b0ba2d1ab171445c",
+          "training/p1-500k-s42/selected_model.pt": "1a4ee0c38f1a1892211549826cbf9e13f8fba50009f1a95ee6f83ed48c59d068",
+          "training/p1-500k-s42/train_log.jsonl": "0231fe33e5707a0863416528ab4de38d67cc80f140e135ae441fa358003b0d27",
+          "training/p1-500k-s43/selected_model.pt": "bce79c77c17be77866dcaabc95c099a0da3b5c004c12b21bf424e6f20d80cb96",
+          "training/p1-500k-s43/train_log.jsonl": "ada44506d64af1a81c9b0f3197c84f228e8b39618f499b87ae7d15717385ab9f",
+          "training/serial_summary.json": "c860653c33a9d5c3694f5019db591435c5cb17bf83eeb390aa72335fbad4f248",
+          "training/zer-500k-s42/selected_model.pt": "7dd7d024a2b4857e54ba0792a6c6704325b7191bad02e69bc8c726c72af88da8",
+          "training/zer-500k-s42/train_log.jsonl": "30db1f7dca78067def21805074b5c044176f87276ed3eb68effb9b4067308da7",
+          "training/zer-500k-s43/selected_model.pt": "7607f0c98c3e5d83df1b05f77ea769fd194a91613cae1343e6544b1db6b24dbd",
+          "training/zer-500k-s43/train_log.jsonl": "b7068dba75f8ba9e73b1e12fbe31d14a2772379684c3a1bf20a53eaf460a01af"
+        },
+        "stage": "train",
+        "status": "complete"
+      }
+    }
+  }
+}
