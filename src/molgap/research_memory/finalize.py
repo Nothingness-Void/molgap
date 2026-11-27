@@ -636,11 +636,12 @@ def legacy_terminal(root: str | Path, trajectory: str, action_id: str, run_id: s
     role_use = declared.get("role_use", {})
     if missing := {"official_validation", "test_dev", "test_challenge"} - set(role_use):
         raise ValueError(f"roles declaration must state every protected role: {sorted(missing)}")
-    files = [p for d in evidence_dirs for p in sorted(repo_local_path(root, d).rglob("*")) if p.is_file()]
-    if not files:
-        raise ValueError("no evidence files found")
+    files = [p for d in evidence_dirs for p in sorted(repo_local_path(root, d).rglob("*")) if p.is_file() and p.resolve().is_relative_to(root)]
     pointer = lambda p: Path(p).relative_to(root).as_posix()
     out_dir = repo_local_path(root, out)
+    refs = [repo_local_path(root, x) for x in (dec["decision_ref"], facts["source"]) if x]
+    if not files or not all(r.is_file() for r in refs) or Path(pointer(out_dir)).parts[0] == "research_memory"             or any((out_dir / n).exists() for n in ("acceptance.json", "terminal.json")):
+        raise ValueError("need evidence files and existing decision_ref/facts.source; --out must be a new directory outside research_memory")
     acceptance_ref = pointer(out_dir / "acceptance.json")
     ident = {"trajectory_id": traj["trajectory_id"], "action_id": action_id, "run_id": run_id, "evidence_ref": acceptance_ref}
     roles = [{**e, "schema": "molgap-role-event-v1", "role_event_id": f"role-{run_id}-{e['role_name']}-{e['access_kind']}", **ident}
@@ -654,8 +655,7 @@ def legacy_terminal(root: str | Path, trajectory: str, action_id: str, run_id: s
     acceptance = {"evidence_id": dec["evidence_id"], "run_id": run_id, "outcome": dec["v5_outcome"], "role_use": role_use,
                   "roles": roles, "costs": costs, "comparison_class": "CONTEXT_ONLY", "trajectory_decision": decision}
     atomic_write(out_dir / "acceptance.json", json_bytes(acceptance))
-    hashes = {pointer(p): file_digest(p) for p in [*files, *(repo_local_path(root, x) for x in (dec["decision_ref"], facts["source"]) if x),
-                                                     out_dir / "acceptance.json"]}
+    hashes = {pointer(p): file_digest(p) for p in [*files, *refs, out_dir / "acceptance.json"]}
     terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": traj["trajectory_id"], "run_id": run_id,
                 "action_id": action_id, "finalized_at": dec["finalized_at"], "acceptance_ref": acceptance_ref,
                 "artifact_hashes": hashes, "decision": decision, "costs": costs, "roles": roles,

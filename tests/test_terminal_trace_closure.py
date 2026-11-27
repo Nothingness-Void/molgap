@@ -1999,7 +1999,7 @@ def test_legacy_terminal_package_closes_through_terminal_pipeline(tmp_path):
     args = dict(root=tmp_path, trajectory=arm["traj_path"], action_id="act-1", run_id="run-legacy-1",
                 decision_file=exp / "decision_in.json", evidence_dirs=["experiments/exp_legacy/retrieved"],
                 roles_file=exp / "roles_in.json", out="experiments/exp_legacy/legacy_out")
-    for bad, message in ((dict(action_id="act-9"), "not frozen"), (dict(evidence_dirs=["experiments/exp_legacy/none"]), "no evidence")):
+    for bad, message in ((dict(action_id="act-9"), "not frozen"), (dict(evidence_dirs=["experiments/exp_legacy/none"]), "need evidence")):
         with pytest.raises(ValueError, match=message):
             legacy_terminal(**{**args, **bad})
     (exp / "roles_in.json").write_text(json.dumps({"role_use": {"test_dev": "untouched"}, "events": []}))
@@ -2007,6 +2007,8 @@ def test_legacy_terminal_package_closes_through_terminal_pipeline(tmp_path):
         legacy_terminal(**args)
     (exp / "roles_in.json").write_text(json.dumps({"role_use": protected, "events": []}))
     made = legacy_terminal(**args)
+    with pytest.raises(ValueError, match="new directory"):  # a closed package is never overwritten
+        legacy_terminal(**args)
     result = close_terminal_arm(repo_root=tmp_path, trajectory=arm["traj_path"], terminal=tmp_path / made["terminal"])
     assert result["pipeline_status"] == "COMPLETE"
     assert verified_receipt(exp / "rml_finalized")["trace_status"] == "unavailable"
