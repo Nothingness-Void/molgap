@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 873,
+  "ambiguous_historical_role_record_count": 877,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -4013,6 +4013,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-input-pipeline-local-20261013",
       "role_identity": null,
       "role_name": "development",
@@ -6113,7 +6141,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 689,
+  "explicit_role_event_count": 690,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -11087,6 +11115,15 @@
         "semantics": "explicit",
         "trajectory_id": "TB-matched-500k-v4-three-arm"
       }
+    ],
+    "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-width-500k-20261117-F3-s43-tail_holdout_v1-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
+      }
     ]
   },
   "protected_roles_reported_untouched": {
@@ -11224,6 +11261,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-gptrans-width-500k-20261117-closure",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
@@ -11414,6 +11452,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-gptrans-width-500k-20261117-closure",
       "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",

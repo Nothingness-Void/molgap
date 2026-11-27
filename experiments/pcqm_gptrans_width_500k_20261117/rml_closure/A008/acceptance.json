@@ -1,0 +1,61 @@
+{
+  "comparison_class": "CONTEXT_ONLY",
+  "costs": [],
+  "evidence_id": "pcqm-gptrans-width-500k-20261117-closure",
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_scale_up_no_adoption",
+    "comparison_status": "tail_holdout_v1_cross_arm_descriptive_no_paired_file",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE_L20_NO_SIGNAL_W320_F3_NOT_NOMINATED",
+    "transfer_status": "not_assessed_500k_may_not_carry_capacity_signal"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A008",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_gptrans_width_500k_20261117/rml_closure/A008/acceptance.json",
+      "role_event_id": "role-pcqm-gptrans-width-500k-20261117-F3-s43-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "pcqm-gptrans-width-500k-20261117:F3-s43",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-gptrans-width-500k-20261117"
+    }
+  ],
+  "run_id": "pcqm-gptrans-width-500k-20261117:F3-s43",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_width_500k_20261117/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": "discriminator_missing",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "gptrans width",
+        "ffn width",
+        "capacity",
+        "500k",
+        "l20 calibration",
+        "no signal",
+        "tail holdout",
+        "not nominated"
+      ],
+      "source": "experiments/pcqm_gptrans_width_500k_20261117/results/verdict.json"
+    },
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "A new question with its own frozen decision, e.g. a width or FFN test at a scale where a depth calibration shows signal."
+    ]
+  }
+}

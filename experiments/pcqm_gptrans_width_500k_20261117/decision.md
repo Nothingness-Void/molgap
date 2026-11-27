@@ -32,3 +32,10 @@ Tail was used here to choose between arms (nominate or not). That use is optimis
 
 ## Follow-up
 No full-scale run follows from this result. Any later width or FFN test needs its own question and decision.
+
+## RML closure
+Terminal word: `INCONCLUSIVE`, failure_mode `discriminator_missing`. The L20 calibration reads NO_SIGNAL, so the protocol forbids reading W320 or F3 as closing the width/FFN route; it is also not a positive. It is therefore not NEGATIVE. effect_meV and ci_meV are null: no paired same-job reference file with `pairs[]` exists, and the numbers above are cross-arm tail MAE values that stay in this prose.
+
+Roles. official_validation, test_dev and test_challenge are `untouched` on structural evidence: the scoring files record `protected_roles_read` false for all three. `tail_holdout_v1` is `consumed` with a `metric_computed` event (each of 8 endpoints scored once; the event hash is the `tail_source_idx_sha256` in `results/tail_*.json`). No development role was used (see `role_plan.json`). Costs are not recorded (measurement_missing).
+
+Closure route. `legacy-terminal` plus `terminal-pipeline`, once per action A001..A008 of the trajectory, with this one decision. Evidence is `results/`. Checkpoints and prediction files stay outside the repo; their paths and sha256 are in `results/verdict.json` and `results/retrieval_manifest.json`. Git: the frozen trajectory holds `source_commit` "x" for every action.

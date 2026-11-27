@@ -3324,7 +3324,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 16
         },
         "device_hours": {
           "estimated": {
@@ -3336,7 +3336,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 16
         },
         "queue_hours": {
           "estimated": {
@@ -3348,7 +3348,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 16
         },
         "wall_hours": {
           "estimated": {
@@ -3360,7 +3360,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 16
         }
       },
       "unknown-before-authorized-device-query": {
@@ -3414,10 +3414,10 @@
         }
       }
     },
-    "unknown_events": 432
+    "unknown_events": 433
   },
   "evidence": {
-    "validated": 189,
+    "validated": 190,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -3444,27 +3444,27 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 54,
+      "count": 53,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 19,
+      "count": 18,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 873,
-    "explicit_events": 689,
+    "coarse_historical": 877,
+    "explicit_events": 690,
     "repeatedly_selected": 26
   },
-  "source_digest": "c2be92a254dfe3d074dcbd3a6144d470c9c305477bccbcb55fb7e48cb1549499",
+  "source_digest": "613bacd1ddba8583ac2fe1e2644099e093ccf6ee87a7b26949c9c1806ce2f9bc",
   "trajectories": {
     "count": 208,
     "outcomes": {
-      "ACTIVE": 8,
+      "ACTIVE": 7,
       "CLOSED": 37,
-      "INCONCLUSIVE": 23,
+      "INCONCLUSIVE": 24,
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 63,
       "NO_TRAIN": 57,
