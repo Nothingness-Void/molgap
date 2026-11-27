@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 295,
+      "trajectories_total": 296,
       "with_complete_native_measurement": 39,
-      "with_cost_event": 284,
-      "with_incomplete_native_measurement": 245,
+      "with_cost_event": 285,
+      "with_incomplete_native_measurement": 246,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1324,7 +1324,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         },
         "device_hours": {
           "estimated": {
@@ -1332,11 +1332,11 @@
             "known_total": 11.6
           },
           "measured": {
-            "known_records": 1,
-            "known_total": 20.898444444444443
+            "known_records": 2,
+            "known_total": 69.84666666666666
           },
           "not_applicable_records": 0,
-          "unknown_records": 0
+          "unknown_records": 1
         },
         "queue_hours": {
           "estimated": {
@@ -1348,7 +1348,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 2
+          "unknown_records": 4
         },
         "wall_hours": {
           "estimated": {
@@ -1356,11 +1356,11 @@
             "known_total": 11.6
           },
           "measured": {
-            "known_records": 1,
-            "known_total": 20.898444444444443
+            "known_records": 2,
+            "known_total": 69.84666666666666
           },
           "not_applicable_records": 0,
-          "unknown_records": 0
+          "unknown_records": 1
         }
       },
       "NVIDIA A100-SXM4-40GB": {
@@ -4016,8 +4016,8 @@
       "local CPU": {
         "cpu_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 0.3
+            "known_records": 2,
+            "known_total": 0.4
           },
           "measured": {
             "known_records": 0,
@@ -4035,7 +4035,57 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 1,
+          "not_applicable_records": 2,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 2,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 2,
+            "known_total": 0.4
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "local RTX 5060 FP32": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 1.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
           "unknown_records": 0
         },
         "queue_hours": {
@@ -4053,7 +4103,7 @@
         "wall_hours": {
           "estimated": {
             "known_records": 1,
-            "known_total": 0.3
+            "known_total": 1.0
           },
           "measured": {
             "known_records": 0,
@@ -4264,17 +4314,17 @@
         }
       }
     },
-    "unknown_events": 659
+    "unknown_events": 662
   },
   "evidence": {
-    "validated": 271,
+    "validated": 272,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 126,
+      "count": 127,
       "severity": "INFO"
     },
     {
@@ -4284,7 +4334,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 245,
+      "count": 246,
       "severity": "WARN"
     },
     {
@@ -4304,13 +4354,13 @@
     }
   ],
   "roles": {
-    "coarse_historical": 1198,
-    "explicit_events": 1168,
+    "coarse_historical": 1203,
+    "explicit_events": 1172,
     "repeatedly_selected": 51
   },
-  "source_digest": "39b172d140bc6257d4d6bfebde1489db0b51d4b0739b1a167d85bc668f2174e3",
+  "source_digest": "9daef1edb54662d38dd96469e9619c32a6084336d88011dcec8e78f7d272e816",
   "trajectories": {
-    "count": 295,
+    "count": 296,
     "outcomes": {
       "ACTIVE": 13,
       "CLOSED": 68,
@@ -4318,7 +4368,7 @@
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 84,
       "NO_TRAIN": 62,
-      "POSITIVE_BELOW_GATE": 12,
+      "POSITIVE_BELOW_GATE": 13,
       "POSITIVE_UNDER_CONTRACT": 12,
       "STOP_FOR_COST": 8
     }

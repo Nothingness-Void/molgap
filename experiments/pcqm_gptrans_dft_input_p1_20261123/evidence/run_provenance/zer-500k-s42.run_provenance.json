@@ -1,0 +1,21 @@
+{
+  "source_commit": "cc822c1d0cf3a82377698852a181669634fae213",
+  "recipe_sha256": "38e7a72342ca952a3b63937c112d20c34ad7668239985708f28cbcf46155a5af",
+  "recipe_identity": "49aa21a4386224f4303fda3b1750371eab1aa10dba861350c812d29a080b532d",
+  "manifest_sha256": "6a53bb27f04d62eaea5bfd7da57dfa0b6a35f40d1c1648a68e92f0d5b68e3ef0",
+  "train_rows": 500000,
+  "train_row_range": [
+    0,
+    500000
+  ],
+  "tail_holdout_v1_read": false,
+  "official_valid_read": false,
+  "test_read": false,
+  "initial_state_sha256": "2415cdbfea332db158086b2ee457ce95bcb90a2e3f87c04564146ba12a2c3573",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.7.1+cu126",
+  "runtime_fingerprint": "3ccf8710545635c3510a2ceadb5810ac762f16c1adc7f12ce2f6d2680e983eb2",
+  "batch_size": 128,
+  "precision": "fp32",
+  "preflight_receipt": "waived"
+}

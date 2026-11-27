@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "dft-dev-sidecar-local-v1",
+  "category": "cache_build",
+  "cost_event_id": "cost-T-pcqm-gptrans-dft-input-p1-20261123-dev-sidecar-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/protocol.md",
+  "hardware": "local CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 0.1
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.1
+    }
+  },
+  "platform": "local",
+  "run_id": "dft-dev-sidecar-local-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+}

@@ -1,16 +1,16 @@
 # gptrans (GPT-T, GPTrans, GPT-T pair transformer)
 
 ## Quick answer
-Last closed (of 104, 25 are CLOSED reference arms):
+Last closed (of 105, 25 are CLOSED reference arms):
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
 Open (ACTIVE) 10: T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-pair_update_norm, T-pcqm-gptrans-real-tri-late3-100k-20261118-s42-real_tri_late3, T-pcqm-gptrans-real-tri-vread-100k-20261118-s42-pair_update_norm, +7 more
-Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / a separate training prospective and explicit launch authorization
-src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, gptrans_screen_workflow.py, gptrans_variants.py, +3 more
-Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_feature_denoising_100k, +39 more
+Reopen: Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is aut / New user authority for another distance-head arm or for coordinates beyond row 499,999. / Explicit user authority for P2 or P6, for a 100K companion pair, or for a tail, official-valid or te
+src (src/molgap/): gptrans.py, gptrans_adapter.py, gptrans_bond_local.py, gptrans_bond_pair_norm.py, gptrans_dft_distance_aux.py, gptrans_dft_input_p1.py, gptrans_execution_backend.py, gptrans_execution_hotpath.py, gptrans_execution_tuning.py, gptrans_memory.py, +5 more
+Experiments: pcqm_gptrans_100k_transfer_control, pcqm_gptrans_500k_frozen_readout, pcqm_gptrans_bondlocal_pairnorm_100k, pcqm_gptrans_bondlocal_pairnorm_lr_500k, pcqm_gptrans_centered_logits_100k, pcqm_gptrans_centered_logits_100k_kaggle1_pair, pcqm_gptrans_chemical_aux, pcqm_gptrans_conditional_flow_history, pcqm_gptrans_dft_distance_aux_20261121, pcqm_gptrans_dft_input_p1_20261123, +40 more
 
-## Closed (104)
+## Closed (105)
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback | NEGATIVE_UNDER_CONTRACT | gptrans-conditional-relation-flow | - | null (see experiments/pcqm_gptrans_conditional_flow_history/sources/joint_decision.md) | -
 TC-gptrans-flow-ablation-100k-s42 | NEGATIVE_UNDER_CONTRACT | gptrans-propagation-flow | independently-remove-direct-pair-to-node | null (see experiments/pcqm_gptrans_flow_ablation_100k/decision.md) | -
@@ -111,6 +111,7 @@ T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema | CLOSED | pcqm-g
 T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-norm-ema-100k-20261104 | normalization-affine-decay-and-same-trajectory-ema-timescale | +1.77 | -
 T-pcqm-gptrans-hl-gauss-100k-20261118-s42-pair_update_norm | CLOSED | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | null | -
 T-pcqm-gptrans-hl-gauss-100k-20261118-s42-hl_gauss_512 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-hl-gauss-100k-20261118 | hl-gauss-512-bin-distributional-readout-cdf-median-decode | +10.71 | below_gate
+T-pcqm-gptrans-dft-input-p1-20261123 | POSITIVE_BELOW_GATE | pcqm-gptrans-dft-input-p1-20261123 | train-time-dft-distance-rbf-input-to-initial-pair-state-with-modality-dropout-noise-and-denoising-pure-2d-inference | -1.23 | below_gate
 T-pcqm-gptrans-dft-distance-aux-20261121 | INCONCLUSIVE | pcqm-gptrans-dft-distance-aux-20261121 | train-only-pair-state-head-regressing-dft-heavy-atom-distances-pure-2d-inference | -0.14 | -
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm | POSITIVE_UNDER_CONTRACT | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | -3.14 | boundary_pass
 T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local | CLOSED | pcqm-gptrans-bondlocal-pairnorm-100k | pair-update-channel-normalization | null | -
@@ -144,6 +145,7 @@ gptrans-clean-chemical-descriptor-aux | gptrans-chemical-descriptor-aux-100k-s42
 ## Reopen conditions
 Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is authorized to manufacture a receipt.
 New user authority for another distance-head arm or for coordinates beyond row 499,999.
+Explicit user authority for P2 or P6, for a 100K companion pair, or for a tail, official-valid or test read.
 a separate training prospective and explicit launch authorization
 explicit_prospective_input_policy_and_complete_CPU_cache_acceptance
 Separately frozen native training/platform performance contract
@@ -171,6 +173,8 @@ src/molgap/gptrans.py
 src/molgap/gptrans_adapter.py
 src/molgap/gptrans_bond_local.py
 src/molgap/gptrans_bond_pair_norm.py
+src/molgap/gptrans_dft_distance_aux.py
+src/molgap/gptrans_dft_input_p1.py
 src/molgap/gptrans_execution_backend.py
 src/molgap/gptrans_execution_hotpath.py
 src/molgap/gptrans_execution_tuning.py
@@ -199,6 +203,7 @@ src/molgap/pcqm_k1_gptrans_fusion.py
   - trace experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/trace.json
 - experiments/pcqm_gptrans_conditional_flow_history: scripts -
 - experiments/pcqm_gptrans_dft_distance_aux_20261121: scripts build_closure.py, retrieve_legacy_outputs.py, score_dev_and_distance.py
+- experiments/pcqm_gptrans_dft_input_p1_20261123: scripts build_recipes.py, score_p1.py, step_time_probe.py, unit_checks.py
 - experiments/pcqm_gptrans_feature_denoising_100k: scripts -
   - trace experiments/pcqm_gptrans_feature_denoising_100k/full_atom/rml_finalized/trace.json
   - trace experiments/pcqm_gptrans_feature_denoising_100k/full_atom_bond/rml_finalized/trace.json

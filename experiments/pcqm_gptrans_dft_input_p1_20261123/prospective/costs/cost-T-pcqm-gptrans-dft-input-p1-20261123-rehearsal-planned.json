@@ -1,0 +1,30 @@
+{
+  "action_id": "A002",
+  "attempt_id": "p1-local-rehearsal-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-dft-input-p1-20261123-rehearsal-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/protocol.md",
+  "hardware": "local RTX 5060 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 1.0
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 1.0
+    }
+  },
+  "platform": "local",
+  "run_id": "p1-local-rehearsal-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
+}

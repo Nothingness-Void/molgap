@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 226,
-  "event_count": 709,
+  "estimated_event_count": 228,
+  "event_count": 713,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 659,
-  "not_applicable_event_count": 136,
+  "measurement_missing_event_count": 662,
+  "not_applicable_event_count": 138,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -1126,8 +1126,8 @@
       },
       "local CPU:cpu_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3
+          "known_records": 2,
+          "known_total": 0.4
         },
         "measured": {
           "known_records": 0,
@@ -1145,7 +1145,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "local CPU:queue_hours": {
@@ -1157,13 +1157,13 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "local CPU:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3
+          "known_records": 2,
+          "known_total": 0.4
         },
         "measured": {
           "known_records": 0,
@@ -3688,7 +3688,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "NVIDIA A100 FP32:device_hours": {
         "estimated": {
@@ -3696,11 +3696,11 @@
           "known_total": 11.6
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 20.898444444444443
+          "known_records": 2,
+          "known_total": 69.84666666666666
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "NVIDIA A100 FP32:queue_hours": {
         "estimated": {
@@ -3712,7 +3712,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "NVIDIA A100 FP32:wall_hours": {
         "estimated": {
@@ -3720,11 +3720,11 @@
           "known_total": 11.6
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 20.898444444444443
+          "known_records": 2,
+          "known_total": 69.84666666666666
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "NVIDIA GeForce RTX 5060:cpu_hours": {
         "estimated": {
@@ -5597,6 +5597,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      },
+      "local RTX 5060 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "local RTX 5060 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local RTX 5060 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local RTX 5060 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     }
   },
@@ -6912,7 +6960,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "device_hours": {
         "estimated": {
@@ -6920,11 +6968,11 @@
           "known_total": 11.6
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 20.898444444444443
+          "known_records": 2,
+          "known_total": 69.84666666666666
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       },
       "queue_hours": {
         "estimated": {
@@ -6936,7 +6984,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "wall_hours": {
         "estimated": {
@@ -6944,11 +6992,11 @@
           "known_total": 11.6
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 20.898444444444443
+          "known_records": 2,
+          "known_total": 69.84666666666666
         },
         "not_applicable_records": 0,
-        "unknown_records": 0
+        "unknown_records": 1
       }
     },
     "NVIDIA A100-SXM4-40GB": {
@@ -9604,8 +9652,8 @@
     "local CPU": {
       "cpu_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3
+          "known_records": 2,
+          "known_total": 0.4
         },
         "measured": {
           "known_records": 0,
@@ -9623,7 +9671,57 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 2,
+          "known_total": 0.4
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "local RTX 5060 FP32": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -9641,7 +9739,7 @@
       "wall_hours": {
         "estimated": {
           "known_records": 1,
-          "known_total": 0.3
+          "known_total": 1.0
         },
         "measured": {
           "known_records": 0,
@@ -11412,6 +11510,152 @@
         "estimated": {
           "known_records": 1,
           "known_total": 0.3
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-gptrans-dft-input-p1-20261123": {
+      "NVIDIA A100 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 48.94822222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 48.94822222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "local CPU:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.1
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local CPU:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local CPU:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.1
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local RTX 5060 FP32:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "local RTX 5060 FP32:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "local RTX 5060 FP32:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "local RTX 5060 FP32:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.0
         },
         "measured": {
           "known_records": 0,

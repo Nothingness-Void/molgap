@@ -1,0 +1,12 @@
+{
+  "development": "500K development rows 500000..549999. Not used in the job (final-ema, no in-job development). Used offline only: 2D labels and DFT coordinates as a scoring input for the 3D-mode score of gate (i); never for training or selection",
+  "auxiliary_labels": "DFT heavy-atom coordinates for train rows 0..499999 (C1 v3 sidecar, training input and denoising target) and for development rows 500000..549999 (local dev sidecar, scoring input only, never uploaded)",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "held_out": "tail_holdout_v1 untouched by training; SDF rows at or above 3250000 are never parsed",
+  "roles": [
+    {"role": "train", "rows": "0..499999"},
+    {"role": "development", "rows": "500000..549999"}
+  ]
+}

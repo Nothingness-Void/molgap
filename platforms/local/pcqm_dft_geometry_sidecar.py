@@ -217,7 +217,7 @@ def main(argv=None):
     ap.add_argument("--start", type=int, default=0)
     ap.add_argument("--stop", type=int, required=True)
     ap.add_argument("--output-dir", required=True)
-    ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--workers", type=int, default=8, help="1 = in-process, no spawn pool")
     ap.add_argument("--provenance-note", default="")
     a = ap.parse_args(argv)
     if a.start % SHARD_ROWS or a.stop % SHARD_ROWS or not 0 <= a.start < a.stop <= MAX_ROWS:
@@ -239,7 +239,8 @@ def main(argv=None):
     topo, shards, cc_lengths = [], [], []
     records = iter_records(a.archive, a.start, a.stop)
     pending = collections.deque()
-    pool = mp.get_context("spawn").Pool(min(a.workers, 8))
+    # workers <= 1 runs in this process: a spawn pool can freeze a Windows desktop.
+    pool = mp.get_context("spawn").Pool(min(a.workers, 8)) if a.workers > 1 else None
 
     def note(name, idx):
         counts[name] += 1
@@ -264,7 +265,11 @@ def main(argv=None):
                         break
                 if len(texts) != CHUNK:
                     raise SystemExit("SDF ended early")
-                pending.append(pool.apply_async(align_chunk, (row_tasks(data, slices, c0, c0 + CHUNK, texts),)))
+                chunk = row_tasks(data, slices, c0, c0 + CHUNK, texts)
+                if pool is None:
+                    res += align_chunk(chunk)
+                    continue
+                pending.append(pool.apply_async(align_chunk, (chunk,)))
                 while len(pending) > 2 * a.workers:
                     res += pending.popleft().get()
             while pending:
@@ -288,7 +293,8 @@ def main(argv=None):
                            "bytes": (out / name).stat().st_size})
             print(f"shard {k:04d} done {time.time() - t1:.0f}s", flush=True)
     finally:
-        pool.terminate()
+        if pool is not None:
+            pool.terminate()
     rows = a.stop - a.start
     invalid = sum(counts[n] for n in CLASS_NAMES[2:])
     oor = counts["bonded_distance_out_of_range"]

@@ -1,0 +1,91 @@
+{
+  "format": "molgap-gptdft-input-p1-dev-v1",
+  "dev_rows": [
+    500000,
+    500512
+  ],
+  "dev_sidecar": {
+    "manifest_sha256": "744efb8ec2b87947f68ed53e1702a9d765f042fd69626cefeea3a7a1ebbabcc9",
+    "topology_match": 1.0
+  },
+  "protected_roles_read": {
+    "tail_holdout_v1": false,
+    "official_validation": false,
+    "test": false
+  },
+  "items": {
+    "ctl-500k-s42": {
+      "checkpoint_sha256": "e75103e79a9c6e080415463fa32c9beee385c82f848d20231fba354a4ac8d0b0",
+      "mae_eV": {
+        "2d": 0.48634467679671584
+      },
+      "step_time": "evidence missing: no train_log.jsonl",
+      "wall_s_all_attempts": "evidence missing: no serial_summary.json"
+    },
+    "p1-500k-s42": {
+      "checkpoint_sha256": "95a11b7a738cfc4a0fb152822855590f8b7e6dc0aa1d46f6825ae3b29a75410b",
+      "mae_eV": {
+        "2d": 0.5632427549235879,
+        "3d": 0.5284021893954627,
+        "2d3d": 0.5631494922694299
+      },
+      "step_time": "evidence missing: no train_log.jsonl",
+      "wall_s_all_attempts": "evidence missing: no serial_summary.json"
+    },
+    "zer-500k-s42": {
+      "checkpoint_sha256": "391a542f60959652fd76e5821765a021bcfd658ab5d7e650d44bd08e852f23d8",
+      "mae_eV": {
+        "2d": 0.48634467679671584,
+        "3d": 0.48972620111520326,
+        "2d3d": 0.48634467679671584
+      },
+      "step_time": "evidence missing: no train_log.jsonl",
+      "wall_s_all_attempts": "evidence missing: no serial_summary.json"
+    }
+  },
+  "pairs": {
+    "s42": {
+      "p1_3d_minus_p1_2d": {
+        "delta_mev": -34.84056552812513,
+        "ci95_mev": [
+          -41.93323456698355,
+          -27.276694484775927
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 512
+      },
+      "p1_2d3d_minus_p1_2d": {
+        "delta_mev": -0.09326265415797279,
+        "ci95_mev": [
+          -0.11163812938029631,
+          -0.07356895798055724
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 512
+      },
+      "p1_2d_minus_control_2d": {
+        "delta_mev": 76.89807812687198,
+        "ci95_mev": [
+          54.374963963790314,
+          99.74847434122475
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 512
+      },
+      "p1_2d_minus_zeros_2d": {
+        "delta_mev": 76.89807812687198,
+        "ci95_mev": [
+          54.374963963790314,
+          99.74847434122475
+        ],
+        "draws": 2000,
+        "seed": 20261123,
+        "rows": 512
+      }
+    }
+  },
+  "gates": {}
+}

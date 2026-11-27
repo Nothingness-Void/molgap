@@ -1,0 +1,120 @@
+{
+  "format": "molgap-ims-family-serial-summary-v1",
+  "order": [
+    "ctl-500k-s42",
+    "p1-500k-s42",
+    "zer-500k-s42",
+    "ctl-500k-s43",
+    "p1-500k-s43",
+    "zer-500k-s43"
+  ],
+  "driver_starts": [
+    "2026-11-23T22:55:48Z",
+    "2026-11-24T16:31:59Z",
+    "2026-11-26T17:08:36Z"
+  ],
+  "items": {
+    "ctl-500k-s42": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-24T06:44:02Z",
+          "exit_code": 0,
+          "wall_s": 28093.6,
+          "peak_rss_bytes": 4945952768,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/ctl-500k-s42",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 4945952768,
+      "dev_mae_eV": null
+    },
+    "p1-500k-s42": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-24T14:51:04Z",
+          "exit_code": 0,
+          "wall_s": 29222.8,
+          "peak_rss_bytes": 5031763968,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/p1-500k-s42",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 5031763968,
+      "dev_mae_eV": null
+    },
+    "zer-500k-s42": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-25T00:48:03Z",
+          "exit_code": 0,
+          "wall_s": 29764.1,
+          "peak_rss_bytes": 5031608320,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/zer-500k-s42",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 5031608320,
+      "dev_mae_eV": null
+    },
+    "ctl-500k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-25T08:50:11Z",
+          "exit_code": 0,
+          "wall_s": 28927.2,
+          "peak_rss_bytes": 4939751424,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/ctl-500k-s43",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 4939751424,
+      "dev_mae_eV": null
+    },
+    "p1-500k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-27T01:46:05Z",
+          "exit_code": 0,
+          "wall_s": 31049.0,
+          "peak_rss_bytes": 5034328064,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/p1-500k-s43",
+      "reason": "completion_manifest.json written",
+      "peak_rss_bytes": 5034328064,
+      "dev_mae_eV": null
+    },
+    "zer-500k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-27T09:52:02Z",
+          "exit_code": 0,
+          "wall_s": 29156.9,
+          "peak_rss_bytes": 5029756928,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/gptdftp1-chain-20261123/output/training/zer-500k-s43",
+      "reason": "completion_manifest.json written",
+      "peak_rss_bytes": 5029756928,
+      "dev_mae_eV": null
+    }
+  },
+  "wall_s": 86280.0,
+  "reserve_s": 1800.0,
+  "spec_sha256": "50c254287e4f9289bbdd1b94a4ca7040f73f052a302474abba26ee8a3018b09a",
+  "source_commit": "cc822c1d0cf3a82377698852a181669634fae213",
+  "memory_limit_bytes": 30000000000,
+  "last_driver_end_utc": "2026-11-27T09:52:02Z"
+}

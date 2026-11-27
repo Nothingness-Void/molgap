@@ -1,0 +1,89 @@
+{
+ "date": "2026-11-23",
+ "results": [
+  {
+   "check": "no modified tracked files under the experiment directory",
+   "passed": true,
+   "modified": []
+  },
+  {
+   "check": "code root built from git archive HEAD of --repo",
+   "passed": true,
+   "head": "bef83a8cd1eb1cba216cbbbba1ec65d7dd89210f"
+  },
+  {
+   "check": "run spec validates against the repo's dataset and runtime registries",
+   "passed": true,
+   "run_id": "gptdftp1-chain-20261123",
+   "items": [
+    "ctl-500k-s42",
+    "p1-500k-s42",
+    "zer-500k-s42",
+    "ctl-500k-s43",
+    "p1-500k-s43",
+    "zer-500k-s43"
+   ]
+  },
+  {
+   "check": "serial spec passes the driver's own validation (wall from the run spec)",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "check": "start-of-job check on the REAL unshrunk spec (repo code root, --fixed-root); only not-rehearsable items may report problems",
+   "passed": true,
+   "problems": [],
+   "unexplained": []
+  },
+  {
+   "check": "every rehearsable item took 20 real steps (real recipe bytes + --max-steps)",
+   "passed": true,
+   "exit": 2,
+   "states": {
+    "ctl-500k-s42": "PAUSED",
+    "p1-500k-s42": "PAUSED",
+    "zer-500k-s42": "PAUSED",
+    "ctl-500k-s43": "PAUSED",
+    "p1-500k-s43": "PAUSED",
+    "zer-500k-s43": "PAUSED"
+   },
+   "steps": {
+    "ctl-500k-s42": 20,
+    "p1-500k-s42": 20,
+    "zer-500k-s42": 20,
+    "ctl-500k-s43": 20,
+    "p1-500k-s43": 20,
+    "zer-500k-s43": 20
+   },
+   "peak_handles": 1795,
+   "peak_ws_gib": 2.48
+  },
+  {
+   "check": "kill while an item is RUNNING with a checkpoint on disk",
+   "passed": true,
+   "victim": "ctl-500k-s42",
+   "done_before_kill": []
+  },
+  {
+   "check": "rerun resumes the killed item from its checkpoint; finished items are not redone",
+   "passed": true,
+   "resumed": [
+    "resumed at step 128"
+   ]
+  },
+  {
+   "check": "shrunk chain ends with every item COMPLETE or gate-skipped (real gate thresholds)",
+   "passed": true,
+   "exit": 0,
+   "states": {
+    "ctl-500k-s42": "COMPLETE",
+    "p1-500k-s42": "COMPLETE",
+    "zer-500k-s42": "COMPLETE",
+    "ctl-500k-s43": "COMPLETE",
+    "p1-500k-s43": "COMPLETE",
+    "zer-500k-s43": "COMPLETE"
+   },
+   "force_gates": false
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "39b172d140bc6257d4d6bfebde1489db0b51d4b0739b1a167d85bc668f2174e3",
+  "source_digest": "9daef1edb54662d38dd96469e9619c32a6084336d88011dcec8e78f7d272e816",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -257,6 +257,22 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-dft-distance-aux-20261121"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_dft_input_p1_20261123/decision.md",
+      "family_id": "pcqm-gptrans-dft-input-p1-20261123",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_dft_input_p1_20261123/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-dft-input-p1-20261128"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-dft-input-p1-20261123"
     },
     {
       "completeness_status": "complete",
