@@ -1,0 +1,40 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-3a8928297084e44fbbbf5cce61d2170c4c38f517e7c62cc1a5cf9bbb68f1bfb4",
+  "finalized_at": "2026-11-28T02:55:35+09:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md": "05e6e738fba2c4d34732f5afd4cdc60d2eb84c5236b2022c4576cc63cf8b65e0",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/retrieval.json": "9ac3dda911b75f17801ffd8fddfc70d70f8f3714384d179449541b803a386add",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/completion_manifest.json": "b3f707a69f36fef38c3b51730a3d68a5544d6f8650ea1e6bb60db04725ae168c",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/run_provenance.json": "f37326f5d5917e3ddeb9967b47587748cab83cb7502c21c0cd8524e9f2e7b675",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/selected_eval.json": "a92eeb93c2430e8fd724f85c1b95074469f459885d01cd331265f3be6126cf6f",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/serial_summary.json": "9070394819f745651e7a650b31d2c3b56ff0a23e72b827179d697b2304c47bf3",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/tail_score_fast_500k_s42.json": "ccdfeea78302874c23fa18cd143633788f6e9d47ef968434c880a8b6ce457d56",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/train_log.jsonl": "808997618422446d3cb9bc1bf34d36a21604dcd62de53458bdba3415689d4381",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json": "2f73d742209629791b11c1098177c1b61920a1d22ed32f8a4d06e6fcc32f9d04"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "prospective_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/prospective/trajectory.json",
+  "prospective_sha256": "c390ac97db14d2db932ba420b55967eeef58074c01de52654240fd2a83a683a1",
+  "published_hashes": {
+    "costs/cost-fastpn-500k-20261125-0.json": "9ff25da75f743b629a6637ed8c9328c875785cd8aa575da3673c6840650226a0",
+    "roles/role-fastpn-500k-20261125-dev_500k-labels_read.json": "5f19510f0c80338fd652ea08048af181c0324cede72ef08292dbec6999bd8655",
+    "roles/role-fastpn-500k-20261125-dev_500k-metric_computed.json": "4decfb6962bfb7b6b6a535542c9ea06861d1306cfabc9eadefb4827ac271d474",
+    "roles/role-fastpn-500k-20261125-dev_500k-prediction_input.json": "e821d30349086c37bb0f95721b883fc15a4805b9ff2f3991805556c76d3fed22",
+    "roles/role-fastpn-500k-20261125-tail_holdout_v1-labels_read.json": "eeed7e4407e0f4489e085e1907342b2d09e99b68b6fe92172cdb289ed2300cf3",
+    "roles/role-fastpn-500k-20261125-tail_holdout_v1-metric_computed.json": "e8276e9b9fc5bc3c00a1b71bc0c9759edd7fc85bb45d14e77a12e4d2d74a4417",
+    "roles/role-fastpn-500k-20261125-tail_holdout_v1-prediction_input.json": "6cbe3cb135864b365fc57f0a754bdfa8042bc566dcde42eba2ec5d9102f6250f",
+    "terminal_input.json": "9d10126b1f6543395d5ed1251da3584990ffb24a4f8ea9392353175a93059d9a",
+    "trajectory.json": "9d37176d0f8e2a50330420b576244e1b7de427ec268a3e65be89c86a1abc73b8",
+    "v5_evidence.json": "111f970cb4a6668b85b8028f09a5835c3981f20e423c519b6906c54e077477ea"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_fast_engine_500k_ims_20261125/prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "3a8928297084e44fbbbf5cce61d2170c4c38f517e7c62cc1a5cf9bbb68f1bfb4",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+}

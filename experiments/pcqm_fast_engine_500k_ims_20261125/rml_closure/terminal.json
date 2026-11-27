@@ -1,0 +1,249 @@
+{
+  "acceptance_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+  "action_id": "A002",
+  "artifact_hashes": {
+    "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md": "05e6e738fba2c4d34732f5afd4cdc60d2eb84c5236b2022c4576cc63cf8b65e0",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/retrieval.json": "9ac3dda911b75f17801ffd8fddfc70d70f8f3714384d179449541b803a386add",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/completion_manifest.json": "b3f707a69f36fef38c3b51730a3d68a5544d6f8650ea1e6bb60db04725ae168c",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/run_provenance.json": "f37326f5d5917e3ddeb9967b47587748cab83cb7502c21c0cd8524e9f2e7b675",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/selected_eval.json": "a92eeb93c2430e8fd724f85c1b95074469f459885d01cd331265f3be6126cf6f",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/serial_summary.json": "9070394819f745651e7a650b31d2c3b56ff0a23e72b827179d697b2304c47bf3",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/tail_score_fast_500k_s42.json": "ccdfeea78302874c23fa18cd143633788f6e9d47ef968434c880a8b6ce457d56",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/train_log.jsonl": "808997618422446d3cb9bc1bf34d36a21604dcd62de53458bdba3415689d4381",
+    "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json": "2f73d742209629791b11c1098177c1b61920a1d22ed32f8a4d06e6fcc32f9d04"
+  },
+  "costs": [
+    {
+      "action_id": "A002",
+      "attempt_id": "fastpn-500k-20261125-v1",
+      "category": "training",
+      "cost_event_id": "cost-fastpn-500k-20261125-0",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-80GB AMP FP16",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.3651666666666666
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.3651666666666666
+        }
+      },
+      "platform": "ims",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "fast engine",
+        "amp fp16",
+        "non-deterministic kernels",
+        "fused adamw",
+        "gpu resident batches",
+        "torch compile",
+        "500k",
+        "pass time speedup"
+      ],
+      "source": null
+    },
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "Explicit user authority to use the fast engine for a larger or longer run, or for a second condition that separates AMP from non-deterministic kernels."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/retrieval.json",
+        "name": "retrieval.json",
+        "sha256": "9ac3dda911b75f17801ffd8fddfc70d70f8f3714384d179449541b803a386add"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "b3f707a69f36fef38c3b51730a3d68a5544d6f8650ea1e6bb60db04725ae168c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/run_provenance.json",
+        "name": "run_provenance.json",
+        "sha256": "f37326f5d5917e3ddeb9967b47587748cab83cb7502c21c0cd8524e9f2e7b675"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/run_provenance/selected_eval.json",
+        "name": "selected_eval.json",
+        "sha256": "a92eeb93c2430e8fd724f85c1b95074469f459885d01cd331265f3be6126cf6f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/serial_summary.json",
+        "name": "serial_summary.json",
+        "sha256": "9070394819f745651e7a650b31d2c3b56ff0a23e72b827179d697b2304c47bf3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/tail_score_fast_500k_s42.json",
+        "name": "tail_score_fast_500k_s42.json",
+        "sha256": "ccdfeea78302874c23fa18cd143633788f6e9d47ef968434c880a8b6ce457d56"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/evidence/train_log.jsonl",
+        "name": "train_log.jsonl",
+        "sha256": "808997618422446d3cb9bc1bf34d36a21604dcd62de53458bdba3415689d4381"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md",
+        "name": "decision.md",
+        "sha256": "05e6e738fba2c4d34732f5afd4cdc60d2eb84c5236b2022c4576cc63cf8b65e0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "2f73d742209629791b11c1098177c1b61920a1d22ed32f8a4d06e6fcc32f9d04"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_fast_engine_500k_ims_20261125/decision.md",
+        "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-fast-engine-500k-ims-20261125-fastpn-500k-20261125",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-fast-engine-500k-ims-20261125-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-11-28",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Legacy retrieval closure; metadata only."
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "engine_not_adopted_by_this_job",
+      "comparison_status": "tail_inside_seven_fp32_baselines_speed_vs_cross_job_baseline_no_paired_rows",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_DETECTABLE_ACCURACY_CHANGE_SPEED_2_42X_SINGLE_RUN",
+      "transfer_status": "not_assessed"
+    },
+    "role_use": {
+      "dev_500k": "consumed",
+      "official_validation": "untouched",
+      "tail_holdout_v1": "consumed",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "Fast engine (AMP FP16, non-deterministic kernels, fused AdamW, GPU-resident batches, compile enabled) on the 500K GPT-T BondLocal + PairNorm recipe, one item (s42), 60 passes, IMS A100 job 2161635. Dev rows 500000..549999 and tail_holdout_v1 scored offline once; official valid and test not read.",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-28T02:55:35+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-prediction_input",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-labels_read",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-dev_500k-metric_computed",
+      "role_name": "dev_500k",
+      "row_manifest_hash": "c4658eaee738ddbdf25e62363e06fb1ad616f3cb98e05f8b3f557c3af124a565",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-prediction_input",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-labels_read",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A002",
+      "dataset_identity": "pcqm4mv2-ogb-official-train",
+      "evidence_ref": "experiments/pcqm_fast_engine_500k_ims_20261125/rml_closure/acceptance.json",
+      "role_event_id": "role-fastpn-500k-20261125-tail_holdout_v1-metric_computed",
+      "role_name": "tail_holdout_v1",
+      "row_manifest_hash": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+      "run_id": "fastpn-500k-20261125",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+    }
+  ],
+  "run_id": "fastpn-500k-20261125",
+  "trajectory_id": "T-pcqm-fast-engine-500k-ims-20261125"
+}
