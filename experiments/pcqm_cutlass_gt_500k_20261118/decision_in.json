@@ -1,0 +1,28 @@
+{
+  "evidence_id": "pcqm-cutlass-gt-500k-20261118-closure",
+  "scope": "CutlassGT-2026, one 60-pass BS128 FP32 500K run (seed 42, IMS A100, r2), scored once offline on tail_holdout_v1 with the final EMA checkpoint. Cross-job, cross-runtime comparison against the frozen GPT-T reference tail 107.273 meV; no same-job arm.",
+  "legacy_contract": "pcqm-cutlass-gt-500k-20261118-v1",
+  "finalized_at": "2026-11-28T02:56:31+09:00",
+  "v5_outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "route_closed_no_retry",
+    "comparison_status": "cross_job_frozen_reference_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT_TAIL_ABOVE_GATE",
+    "transfer_status": "not_assessed_no_100k_companion"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "decision_ref": "experiments/pcqm_cutlass_gt_500k_20261118/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "Explicit user authority for a new CutlassGT-2026 question with a changed mechanism."
+  ],
+  "facts": {
+    "effect_meV": null,
+    "ci_meV": null,
+    "failure_mode": null,
+    "search_terms": ["cutlass gt", "cutlass_gt", "wire rope", "flashbias", "resformer", "swiglu", "500k", "tail holdout"],
+    "source": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/tail_cutlass-gt.json"
+  }
+}

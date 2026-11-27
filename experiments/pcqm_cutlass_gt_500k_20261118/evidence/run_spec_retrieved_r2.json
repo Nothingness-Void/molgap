@@ -1,0 +1,90 @@
+{
+  "contract": {
+    "path": "experiments/pcqm_cutlass_gt_500k_20261118/training_contract.json",
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "sha256": "4c4426a6ca6057b20eadc732cbda174ef257daa10aa0c8c77670ec2e3307fc14",
+    "tail_batch_policy": "drop_last",
+    "tf32": false
+  },
+  "dataset_id": "ogb-train-500k-scnet-v1",
+  "format": "molgap-ims-v4-run-v1",
+  "model_id": "cutlass_gt",
+  "resources": {
+    "ncpus": 8,
+    "ngpus": 1,
+    "ompthreads": 4,
+    "preflight_walltime": "00:45:00",
+    "queue": "H",
+    "train_walltime": "08:00:00"
+  },
+  "run_id": "pcqm-cutlass-gt-500k-20261118-r2-s42",
+  "runtime_id": "ims-a100-torch271-v1",
+  "sealed_roles": {
+    "official_validation_read": false,
+    "test_challenge_read": false,
+    "test_dev_read": false
+  },
+  "source": {
+    "archive_sha256": "84fe3f9f2894e2d7fc938686958f73fa13062baf88a71b55c6faefb256d4b167",
+    "commit": "ed6005c2fb931d68265e0b8e26144ffaccd70dc3"
+  },
+  "stages": {
+    "preflight": {
+      "args": [
+        "--device",
+        "0",
+        "--recipe",
+        "{code_root}/experiments/pcqm_cutlass_gt_500k_20261118/recipe.json",
+        "--input-root",
+        "{dataset_root}",
+        "--source-commit",
+        "{source_commit}",
+        "--cpus",
+        "8",
+        "--accelerator",
+        "A100",
+        "--ogb-zip",
+        "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip",
+        "--output",
+        "{preflight_output}",
+        "--phase",
+        "preflight"
+      ],
+      "entrypoint": "platforms/ims/run_family_training.py",
+      "required_outputs": [
+        "preflight/preflight.json"
+      ]
+    },
+    "train": {
+      "args": [
+        "--device",
+        "0",
+        "--recipe",
+        "{code_root}/experiments/pcqm_cutlass_gt_500k_20261118/recipe.json",
+        "--input-root",
+        "{dataset_root}",
+        "--source-commit",
+        "{source_commit}",
+        "--cpus",
+        "8",
+        "--accelerator",
+        "A100",
+        "--ogb-zip",
+        "/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full/inputs/ogb-1.3.6.zip",
+        "--output",
+        "{training_output}",
+        "--phase",
+        "train",
+        "--preflight",
+        "{preflight_output}/preflight.json",
+        "--wall-s",
+        "27000"
+      ],
+      "entrypoint": "platforms/ims/run_family_training.py",
+      "required_outputs": [
+        "training/completion_manifest.json"
+      ]
+    }
+  }
+}

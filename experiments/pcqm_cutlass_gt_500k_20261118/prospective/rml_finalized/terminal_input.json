@@ -1,0 +1,64 @@
+{
+  "acceptance_ref": "experiments/pcqm_cutlass_gt_500k_20261118/rml_closure/cutlass_gt/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_cutlass_gt_500k_20261118/decision.md": "a065924ff4d11ac941ecab6d4a7c9c1338bae37c327abe3c0727a474278eb276",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/completion_manifest.json": "ba83c17f0f9f073e7444d77a40683ad6ea0af69f6dc5e625142c8f30cdc569b3",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/run_provenance.json": "2e7f2d024fe8adc7436a14ff5bbc1689d28dcc251d76dc2af5d255d98b27d7f8",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/run_spec_retrieved_r2.json": "3f332f83fcf23d0a57f6060efa88fe5331c926d7fd364cddab3259c45b99a61e",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/submission.json": "704027497d00f34b5f0b889c889f3e3798000b03c9f3add3f87664082f6a6b66",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/tail_cutlass-gt.json": "8a69159911e12666af1c34ab3ebd55e1a81c7797c90f3dfa040465bf09c3a0a1",
+    "experiments/pcqm_cutlass_gt_500k_20261118/evidence/train_log.jsonl": "df39156a3f78e224d4f33ce87d208989dbbe699521879197ee08b33bddcf358c",
+    "experiments/pcqm_cutlass_gt_500k_20261118/rml_closure/cutlass_gt/acceptance.json": "68e6f73b80ed50faa5101518ccb37f6bd6e926e075c5f20beb79e936ca1df928"
+  },
+  "finalized_at": "2026-11-28T02:56:31+09:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-0.json",
+        "sha256": "388e4cdfafba65aa71742d2ab799939bab4dc032aa909109a77d5f1e7ae92121"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "58254965db4146eac9d9118c29ad58ce0fffd92120f044e77e80273d73fc7bd2"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "fb65591609da38f4607fda716a55369b74ee55e8a6d792dd28a7392cc71c0ba9"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-tail_holdout_v1-prediction_input.json",
+        "sha256": "b42ab925c23c1dea2af44ce7dbce65e84722bad160bd00d803a6f465e5e0cd67"
+      },
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-tail_holdout_v1-labels_read.json",
+        "sha256": "eafee74e932d69b81f9142691645b247ab82f63679c7b663727485eee708487c"
+      },
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-tail_holdout_v1-metric_computed.json",
+        "sha256": "9670db199f5cd00125afb5e0a65dd78b1baa4ef23277bce2ad17cb8983e14af6"
+      },
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-dev_500k-prediction_input.json",
+        "sha256": "745f379992af212c18ba1d703483e2e36ee9d80dc550b57646c1e04ab1a25d6d"
+      },
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-dev_500k-labels_read.json",
+        "sha256": "d3d069f11253eb86b6b741e08c15266e0e9c53dbc0af3c629a2082dd11a7edb9"
+      },
+      {
+        "ref": "roles/role-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt-downstream-dev_500k-metric_computed.json",
+        "sha256": "0d2a28a7c3ada564b4749351b1a6d3efbd9edff751a0950630afb62eaffd8ff8"
+      }
+    ]
+  },
+  "run_id": "pcqm-cutlass-gt-500k-20261118-s42:cutlass_gt:downstream",
+  "trajectory_id": "T-pcqm-cutlass-gt-500k-20261118-s42-cutlass_gt"
+}

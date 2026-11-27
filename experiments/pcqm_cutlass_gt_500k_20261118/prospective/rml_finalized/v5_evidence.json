@@ -1,0 +1,87 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "ba83c17f0f9f073e7444d77a40683ad6ea0af69f6dc5e625142c8f30cdc569b3"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/run_provenance.json",
+      "name": "run_provenance.json",
+      "sha256": "2e7f2d024fe8adc7436a14ff5bbc1689d28dcc251d76dc2af5d255d98b27d7f8"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/run_spec_retrieved_r2.json",
+      "name": "run_spec_retrieved_r2.json",
+      "sha256": "3f332f83fcf23d0a57f6060efa88fe5331c926d7fd364cddab3259c45b99a61e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/submission.json",
+      "name": "submission.json",
+      "sha256": "704027497d00f34b5f0b889c889f3e3798000b03c9f3add3f87664082f6a6b66"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/tail_cutlass-gt.json",
+      "name": "tail_cutlass-gt.json",
+      "sha256": "8a69159911e12666af1c34ab3ebd55e1a81c7797c90f3dfa040465bf09c3a0a1"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/evidence/train_log.jsonl",
+      "name": "train_log.jsonl",
+      "sha256": "df39156a3f78e224d4f33ce87d208989dbbe699521879197ee08b33bddcf358c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/decision.md",
+      "name": "decision.md",
+      "sha256": "a065924ff4d11ac941ecab6d4a7c9c1338bae37c327abe3c0727a474278eb276"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_cutlass_gt_500k_20261118/rml_closure/cutlass_gt/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "68e6f73b80ed50faa5101518ccb37f6bd6e926e075c5f20beb79e936ca1df928"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_cutlass_gt_500k_20261118/decision.md",
+      "experiments/pcqm_cutlass_gt_500k_20261118/rml_closure/cutlass_gt/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-cutlass-gt-500k-20261118-closure",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-cutlass-gt-500k-20261118-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-11-28",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Legacy retrieval closure; metadata only."
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "route_closed_no_retry",
+    "comparison_status": "cross_job_frozen_reference_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT_TAIL_ABOVE_GATE",
+    "transfer_status": "not_assessed_no_100k_companion"
+  },
+  "role_use": {
+    "dev_500k": "consumed",
+    "official_validation": "untouched",
+    "tail_holdout_v1": "consumed",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "CutlassGT-2026, one 60-pass BS128 FP32 500K run (seed 42, IMS A100, r2), scored once offline on tail_holdout_v1 with the final EMA checkpoint. Cross-job, cross-runtime comparison against the frozen GPT-T reference tail 107.273 meV; no same-job arm.",
+  "track": "B"
+}

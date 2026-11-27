@@ -1797,6 +1797,27 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "cross_job_frozen_reference_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-cutlass-gt-500k-20261118-closure",
+      "role_use": {
+        "dev_500k": "consumed",
+        "official_validation": "untouched",
+        "tail_holdout_v1": "consumed",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "CutlassGT-2026, one 60-pass BS128 FP32 500K run (seed 42, IMS A100, r2), scored once offline on tail_holdout_v1 with the final EMA checkpoint. Cross-job, cross-runtime comparison against the frozen GPT-T reference tail 107.273 meV; no same-job arm.",
+      "source_envelope": "experiments/pcqm_cutlass_gt_500k_20261118/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_assessed_no_100k_companion",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified",
         "durable_remote_and_local_verified"
       ],
