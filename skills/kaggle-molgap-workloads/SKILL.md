@@ -14,6 +14,16 @@ access or promotion. Pass credential files by path; never print their contents.
 Routine operation needs this page and the run's supplied records, not a full
 repository/document audit. Read more only for a missing input or actual failure.
 
+## Check live quota, status & training logs first (read-only)
+
+Do **not** hand-run `kaggle.exe kernels list/status/output` loops or scratch scripts. Use the local read-only monitors (`--help` owns flags; not pre-submit prerequisites):
+
+```powershell
+& $python platforms/kaggle/check_quota.py --json    # account GPU quotas & reset times
+& $python platforms/kaggle/check_logs.py --json     # live SSE logs & training progress
+& $python platforms/kaggle/dashboard.py live --open # local UI (or platforms/kaggle/open_kaggle_dashboard.bat)
+```
+
 ## Quota and fixed data
 
 The fixed PCQM 100K and 500K datasets are byte-identical on every Kaggle account,
@@ -22,8 +32,6 @@ Their per-account slugs and hashes are in `platforms/_records/kaggle/pcqm_fixed_
 Standard fixed 100K and 500K recipes derive the read-only mount from the manifest
 and authority account when the platform block is omitted. The run's source
 dataset is the small source package that the submitter publishes.
-To choose an account (read-only, prints no key): `& $python platforms/kaggle/check_quota.py`.
-The submitter checks quota itself, so this is not a pre-submit step.
 
 ## Submit or reconcile the original request
 

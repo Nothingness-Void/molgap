@@ -1128,19 +1128,24 @@ class LiveState:
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("mode", choices=("web", "collect", "live"))
+    p = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="Examples: 'dashboard.py live --open' (local UI), 'dashboard.py collect status.json --full-snapshot', "
+               "'dashboard.py web status.json'. Set MOLGAP_ARTIFACT_ROOT to auto-discover kernels from bound run journals. Read-only.",
+    )
+    p.add_argument("mode", choices=("web", "collect", "live"),
+                   help="web: serve saved snapshot (no API calls); collect: write snapshot JSON once; live: local interactive 127.0.0.1 dashboard")
     p.add_argument("snapshot", nargs="?", type=Path, help="Snapshot JSON path (required for web/collect)")
-    p.add_argument("--credentials", type=Path, action="append", default=[])
-    p.add_argument("--kernel", action="append", default=[])
-    p.add_argument("--port", type=int, default=8766)
+    p.add_argument("--credentials", type=Path, action="append", default=[], help="Path to Kaggle credentials JSON (repeatable)")
+    p.add_argument("--kernel", action="append", default=[], help="Explicit <owner>/<slug> kernel to monitor (repeatable)")
+    p.add_argument("--port", type=int, default=8766, help="Local HTTP port for web/live mode (default: 8766)")
     p.add_argument("--open", action="store_true", help="Open local dashboard in browser (live mode)")
-    p.add_argument("--key-dir", type=Path)
-    p.add_argument("--scan-limit", type=int, default=12)
-    p.add_argument("--attempt-id", default="v1")
-    p.add_argument("--read-timeout", type=float, default=2.5)
-    p.add_argument("--min-interval", type=float, default=20.0)
-    p.add_argument("--full-snapshot", action="store_true", help="Use live dashboard data in collect/web mode")
+    p.add_argument("--key-dir", type=Path, help="Directory containing Kaggle key subfolders")
+    p.add_argument("--scan-limit", type=int, default=12, help="Max recent bound runs to discover (default: 12)")
+    p.add_argument("--attempt-id", default="v1", help="Attempt subdirectory when discovering bound runs (default: v1)")
+    p.add_argument("--read-timeout", type=float, default=2.5, help="SSE log tail timeout seconds (default: 2.5)")
+    p.add_argument("--min-interval", type=float, default=20.0, help="Minimum cooldown seconds between live API refreshes (default: 20.0)")
+    p.add_argument("--full-snapshot", action="store_true", help="Include full dashboard quota/progress/log payload in collect/web mode")
     args = p.parse_args(argv)
 
     if args.mode in {"web", "collect"} and args.snapshot is None:

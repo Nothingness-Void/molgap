@@ -122,10 +122,13 @@ def _resolve_targets(cred_args: list[str] | None, key_dir: Path) -> list[tuple[s
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="With no flags, scans all configured accounts in --key-dir. Read-only; never prints keys or submits work; failed queries do not mean zero quota.",
+    )
     parser.add_argument("--key-dir", type=Path, default=DEFAULT_KEY_DIR, help="Directory containing Kaggle key subfolders")
-    parser.add_argument("--credentials", action="append", help="Optional label=path/to/kaggle.json override")
-    parser.add_argument("--json", action="store_true", help="Output machine-readable JSON")
+    parser.add_argument("--credentials", action="append", help="Optional label=path/to/kaggle.json override (repeatable)")
+    parser.add_argument("--json", action="store_true", help="Output machine-readable JSON (recommended for agents)")
     args = parser.parse_args(argv)
 
     targets = _resolve_targets(args.credentials, args.key_dir)

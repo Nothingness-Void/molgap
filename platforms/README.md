@@ -21,10 +21,10 @@ and [desktop handoff](../docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md).
 | Platform | Path | Role |
 |---|---|---|
 | Local | `local/` | Selected-checkout entry; no environment installation or platform submission |
-| Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |
+| Kaggle | `kaggle/` | Read-only monitors (`check_quota.py`, `check_logs.py`, `dashboard.py`, `open_kaggle_dashboard.bat`), workflow submit/retrieve, account lifecycle |
 | SCNet | `scnet/` | Slurm job files, DCU environment checks, storage migration |
 | Colab | `colab/` | Drive-backed resumable notebooks for graph construction, GPU training, and fusion |
-| IMS | `ims/` | Shared-cluster CPU/NVIDIA A100 queue adapters, bounded arrays, and staged handoffs |
+| IMS | `ims/` | Read-only monitor (`check_queue.py`, `open_ims_dashboard.bat`), shared-cluster CPU/NVIDIA A100 queue adapters, bounded arrays, staged handoffs |
 | — | `_records/` | Retrieved outputs, staging payloads, acceptance records |
 
 The complete 2026-08-25 IMS experiment-record snapshot and its remote/local

@@ -9,6 +9,16 @@ Read `platforms/REMOTE_HANDOFF.md` in the owning checkout before **any** IMS
 command, including read-only discovery. It owns the authorized path and
 scheduler boundary. Keep credentials outside Git and logs.
 
+## Check live queue, quota & training progress first (read-only)
+
+Do **not** hand-run ad-hoc SSH `jobinfo` / `showlim` / `tail` commands to inspect IMS status. Use the local read-only monitor (`--help` owns flags; strictly under `/lustre/home/users/sm2/chou`):
+
+```powershell
+& $python -S platforms/ims/check_queue.py --json  # agents; omit --json for table, or run platforms/ims/open_ims_dashboard.bat for UI
+```
+
+Use `D:/文档/molgap/.venv/Scripts/python.exe` as `$python`.
+
 ## Submit a committed V4 fixed-PCQM run
 
 Commit the experiment run spec and clean source first. Use the existing V4 spec
@@ -64,12 +74,7 @@ in an agent report is a defect: fold it into the infrastructure.
 
 ## Reconcile an existing attempt
 
-Identify the owner, run and attempt before connecting. In the authorized remote
-session, inspect the live account:
-
-```bash
-jobinfo -c
-```
+Identify the owner, run and attempt before connecting. Start with the local read-only monitor (`& $python -S platforms/ims/check_queue.py --json`); only run raw `jobinfo -c` when already inside an interactive remote session.
 
 With the original --spec or --payload, add --status to see the bound
 submission journal, prior job IDs and worker stages. The live scheduler is

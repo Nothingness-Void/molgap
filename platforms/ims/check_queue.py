@@ -2330,14 +2330,19 @@ def serve_web(state: MonitorState, *, port: int, open_browser: bool, explicit_po
 def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--host", default=DEFAULT_HOST)
-    parser.add_argument("--ssh-port", type=int, default=DEFAULT_SSH_PORT)
-    parser.add_argument("--user", default=DEFAULT_USER)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="Examples: 'check_queue.py --json' (agent snapshot), 'check_queue.py' (table), "
+               "'check_queue.py --web --open' (local UI). Read-only under --remote-root; never submits or modifies jobs.",
+    )
+    parser.add_argument("--host", default=DEFAULT_HOST, help=f"IMS SSH host (default: {DEFAULT_HOST})")
+    parser.add_argument("--ssh-port", type=int, default=DEFAULT_SSH_PORT, help=f"IMS SSH port (default: {DEFAULT_SSH_PORT})")
+    parser.add_argument("--user", default=DEFAULT_USER, help=f"IMS SSH user (default: {DEFAULT_USER})")
     parser.add_argument("--key", type=Path, help="Path to IMS SSH private key")
     parser.add_argument("--config", type=Path, default=os.environ.get("IMS_DASHBOARD_PROFILE"),
                         help="Load a personal IMS profile (see dashboard/profile.example.json)")
-    parser.add_argument("--remote-root", default=REMOTE_BOUNDARY)
+    parser.add_argument("--remote-root", default=REMOTE_BOUNDARY,
+                        help=f"Authorized read-only IMS root (default: {REMOTE_BOUNDARY})")
     parser.add_argument("--min-interval", type=float, default=DEFAULT_MIN_INTERVAL,
                         help="Minimum cooldown seconds between live SSH queries in web/watch mode")
     parser.add_argument("--json", action="store_true", help="Print structured snapshot JSON")

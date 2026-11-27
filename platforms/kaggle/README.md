@@ -1,5 +1,13 @@
 # Kaggle Adapter
 
+## Quick Read-Only Monitors (use first)
+
+Do not hand-poll `kaggle.exe` or write scratch status scripts; run `--help` on the built-in read-only monitors ([details](#live-progress-and-log-inspection)):
+
+- **Account GPU quota:** `.venv\Scripts\python.exe platforms/kaggle/check_quota.py --json`
+- **Live SSE logs & training progress:** `.venv\Scripts\python.exe platforms/kaggle/check_logs.py --json`
+- **Local live dashboard UI:** `.venv\Scripts\python.exe platforms/kaggle/dashboard.py live --open` (or [open_kaggle_dashboard.bat](open_kaggle_dashboard.bat))
+
 For registered multi-arm training, start with the
 [modular workflow](../../docs/operations/EXPERIMENT_WORKFLOW.md). Its local
 `prepare-workflow` command builds the source dataset, frozen launch metadata,

@@ -9,6 +9,7 @@ Start from your task row; read only what the task requires (never load the full 
 
 | Role | First read |
 |---|---|
+| Monitor IMS / Kaggle queue, quota, or live logs | Run read-only local tools first (run `--help` for flags; never hand-run ad-hoc SSH `jobinfo`/`showlim` or `kaggle.exe` loops): `platforms/ims/check_queue.py`, `platforms/kaggle/check_quota.py`, `platforms/kaggle/check_logs.py`, `platforms/kaggle/dashboard.py` |
 | Find code owner, verifier, dashboard, or SCNet/IMS/Kaggle script | [ARCHITECTURE.md](ARCHITECTURE.md) before grepping code |
 | Propose / submit a new experiment | [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md), [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md), then platform skill in `skills/` |
 | Retrieve, accept, close a run | platform skill in `skills/`, [LIFECYCLE_MAP.md](docs/operations/LIFECYCLE_MAP.md), then [RML interfaces](docs/operations/RML_INTERFACES.md) |

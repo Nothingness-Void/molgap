@@ -87,7 +87,15 @@ packages, services, queues, or host configuration. Sustained work must go
 through the scheduler, not the login node. Recursive deletion requires
 explicit user approval and resolved-path proof.
 
-### Scheduler
+### Scheduler & Local Read-Only Monitor
+
+Prefer the local read-only IMS tool instead of ad-hoc SSH `jobinfo` / `showlim` / `tail` queries (run `--help` for live flags; stays strictly under `/lustre/home/users/sm2/chou`):
+
+```powershell
+.\.venv\Scripts\python.exe -S platforms/ims/check_queue.py --json   # agents; omit --json for table, --web --open / open_ims_dashboard.bat for UI
+```
+
+Raw scheduler commands (for interactive remote work, submission, or explicit cancellation only):
 
 ```bash
 jobinfo -c
@@ -212,13 +220,17 @@ Run smoke, bounded trainability, then formal training.
 ## Kaggle
 
 Read the `kaggle-molgap-workloads` skill before acting. The account credential
-file remains outside Git. The project CLI is:
+file remains outside Git.
+
+Prefer the local read-only Kaggle monitors instead of ad-hoc `kaggle.exe` status/quota/output loops (run `--help` on each for live flags):
 
 ```powershell
-.\.venv\Scripts\kaggle.exe
+.\.venv\Scripts\python.exe platforms/kaggle/check_quota.py --json    # account GPU quotas & reset times
+.\.venv\Scripts\python.exe platforms/kaggle/check_logs.py --json     # live SSE logs & training progress
+.\.venv\Scripts\python.exe platforms/kaggle/dashboard.py live --open # local live UI (or open_kaggle_dashboard.bat)
 ```
 
-Inventory before creating or pushing:
+Direct legacy CLI (fallback only; normal runs use `submit_workflow.py` and `retrieve_family_outputs.py`):
 
 ```powershell
 .\.venv\Scripts\kaggle.exe kernels list --mine

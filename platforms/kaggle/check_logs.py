@@ -257,7 +257,10 @@ def _format_summary(records: list[dict]) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog="With no targets, auto-discovers active bound runs and parses live SSE TRAIN_LOG progress (passes, MAE, ETA, deltas). Read-only.",
+    )
     parser.add_argument("targets", nargs="*", help="Kernel ref (<owner>/<slug>), logical_run_id, or submission_state.json")
     parser.add_argument("--run-id", action="append", default=[], help="Logical run ID under D:/molgap-artifacts/runs")
     parser.add_argument("--attempt-id", default="v1", help="Attempt subdirectory (default: v1)")
@@ -267,7 +270,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--read-timeout", type=float, default=2.5, help="SSE tail timeout seconds (default: 2.5)")
     parser.add_argument("--key-dir", type=Path, default=DEFAULT_KEY_DIR, help="Directory holding Kaggle keys")
     parser.add_argument("--credentials", action="append", help="Optional path/to/kaggle.json override(s)")
-    parser.add_argument("--json", action="store_true", help="Output structured JSON")
+    parser.add_argument("--json", action="store_true", help="Output structured JSON (recommended for agents)")
     args = parser.parse_args(argv)
 
     accounts = _load_accounts(args.key_dir, args.credentials)
