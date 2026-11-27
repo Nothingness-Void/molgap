@@ -1,0 +1,231 @@
+{
+  "inputs_sha256": {
+    "j1_dev": "e24f46afeafc745506aabcee47d42b9539b7fd87dd548f1e5d869cfe8e942317",
+    "j2_dev": "0d4622a89c47b19ece0ae140f15b6f5141cb019e35c2910edb2153ff5c94d5ce",
+    "f0_demol_dev": "5480ec2a01a7a6186277d4d58be86b185b47188fddd0d60cb8f8122b3edf15ab",
+    "f0_pun_dev": "583fb5d5ff20d959f6668a63e09bd6c691afc3458c3cf0c5a13b08fda715a469",
+    "j3_tail": "8006a8faf25e38a112772564ef93b8995865074f32ac6dd1358ae6fd6917641a",
+    "j4_tail": "e5abd5e677e143c19e9f3341cf0d4b76ca13db93f015868ec90c7f80b9721eae",
+    "j5_tail": "fc10430da9243760b4fe60d0fa590613b7a59439f472f5a70d70ecd4e1dba811",
+    "kaggle_gptt_init_s43_tail": "52ccb62ee9fdaba8e6d30161905058f2c883cab78ae15d942edf3134a8ea93f4",
+    "kaggle_gptt_init_s44_tail": "ecae82457656bc2eb8f6b17ae0e2ebdf841f82465522fd94fb6bdabcb5e7f2c3",
+    "kaggle_gptt_init_s45_tail": "ee6f5822a3a80b44e9727f95a22f4c3eedcb1acf40631efd394ae6f40cf4d071",
+    "kaggle_gptt_init_s46_tail": "8b500106e52fee08cd7b386c0d60850c14e88ced53ded6058b5b42924ab53d49"
+  },
+  "rule_a": {
+    "delta_meV": -4.452649557590485,
+    "ci95_meV": [
+      -5.527102298498154,
+      -3.307784989178181
+    ],
+    "draws": 2000,
+    "seed": 42,
+    "mae_j1_meV": 134.7324086421728,
+    "mae_j2_meV": 139.1850581997633,
+    "rule": "J1 - J2 dev paired row bootstrap; replicated needs delta <= -3.0 and CI upper < 0"
+  },
+  "rule_b_p100": {
+    "single_mae_meV": {
+      "G42": 139.4401924985647,
+      "G43": 139.1850581997633,
+      "D42": 134.6352232712507,
+      "D43": 134.7324086421728
+    },
+    "same_pairs_meV": {
+      "G42+G43": 132.60379513561728,
+      "D42+D43": 129.9058481746912
+    },
+    "cross_pairs_meV": {
+      "G42+D42": 128.4000282198191,
+      "G42+D43": 128.565248529315,
+      "G43+D42": 128.01828174054623,
+      "G43+D43": 128.20677714884283
+    },
+    "same_mean_meV": 131.25482165515422,
+    "cross_mean_meV": 128.2975839096308,
+    "P_meV": 2.957237745523429,
+    "thresholds": "P >= 3.0 worth a 500K test; 1.0 <= P < 3.0 inconclusive; P < 1.0 close the hetero line",
+    "note": "Mixed platforms inside a pair (Kaggle s42 + IMS s43), as the frozen rule allows. Dev rows are the rows used for checkpoint selection, so P is optimistic."
+  },
+  "tail_mae_meV": {
+    "j3": 105.0714510683509,
+    "j4": 105.04447781332206,
+    "j5": 107.30757629064195
+  },
+  "tail_j3_minus_j5": {
+    "delta_meV": -2.2361252222910526,
+    "ci95_meV": [
+      -2.7017659911009586,
+      -1.7723061837003484
+    ],
+    "draws": 2000,
+    "seed": 42
+  },
+  "tail_j4_minus_j5": {
+    "delta_meV": -2.2630984773198795,
+    "ci95_meV": [
+      -2.7463952667699854,
+      -1.7796130961940475
+    ],
+    "draws": 2000,
+    "seed": 42
+  },
+  "tail_j3_minus_j4_descriptive": {
+    "delta_meV": 0.026973255028827078,
+    "ci95_meV": [
+      -0.34237406425918554,
+      0.3846917179003159
+    ],
+    "draws": 2000,
+    "seed": 42
+  },
+  "rule_b_p500": {
+    "gptt_members": "Kaggle cohort init_s43..s46 tail predictions (tail_holdout_predictions/gptrans_500k_init_s4x)",
+    "gptt_single_mae_meV": {
+      "s43": 108.35716496318977,
+      "s44": 107.27309196005119,
+      "s45": 108.09141061671137,
+      "s46": 108.03715459871609
+    },
+    "gptt_same_pairs_meV": {
+      "s43+s44": 104.10843604144314,
+      "s43+s45": 104.78732925021195,
+      "s43+s46": 104.76182464119094,
+      "s44+s45": 103.94814633399709,
+      "s44+s46": 103.95408854992257,
+      "s45+s46": 104.56666022577608
+    },
+    "gptt_same_mean_meV": 104.35441417375698,
+    "demol_same_pair_j3_j4_meV": 101.95828069350716,
+    "Same_meV": 101.95828069350716,
+    "Same_is": "demol_same_pair",
+    "hetero_pairs_meV": {
+      "j3+s43": 101.98007812174164,
+      "j3+s44": 101.33996705425832,
+      "j3+s45": 101.8369111566431,
+      "j3+s46": 101.82354143429174,
+      "j4+s43": 102.0613612290139,
+      "j4+s44": 101.33461552269841,
+      "j4+s45": 101.83598693959786,
+      "j4+s46": 101.91634219207191
+    },
+    "Hetero_meV": 101.7661004562896,
+    "P500_meV": 0.19218023721755628,
+    "thresholds": "as rule (b): P >= 3.0 worth a full-scale test; 1.0 <= P < 3.0 inconclusive; P < 1.0 close",
+    "note": "J5 (IMS replay of s44) is not a cohort member in this rule. Tail rows, one read per checkpoint, no selection."
+  },
+  "transfer": {
+    "G_meV": 107.94,
+    "mean_j3_j4_meV": 105.05796444083649,
+    "delta_meV": -2.882035559163512,
+    "band": "(-3.0, -1.5] -> INCONCLUSIVE"
+  },
+  "j5_shift_meV": 0.03457629064195089,
+  "cost_wall_s": {
+    "j1-demol-100k-s43": 11245.1,
+    "j2-gptt-100k-s43": 7684.3,
+    "j3-demol-500k-s42": 47451.5,
+    "j5-gptt-500k-s44": 32227.8,
+    "j4-demol-500k-s43": 45007.2
+  },
+  "cost_ratio": {
+    "j3_over_j5": 1.472377884931643,
+    "j4_over_j5": 1.3965334276618322,
+    "mean_demol_over_j5": 1.4344556562967377,
+    "note": "A100 wall per item summed over attempts; J5 had two attempts (pause then resume)."
+  },
+  "cost_train_log_elapsed_s": {
+    "j1-demol-100k-s43": 11226.0,
+    "j2-gptt-100k-s43": 7663.0,
+    "j3-demol-500k-s42": 47432.0,
+    "j5-gptt-500k-s44": 31985.0,
+    "j4-demol-500k-s43": 44984.0
+  },
+  "cost_ratio_train_log": {
+    "j3_over_j5": 1.482945130529936,
+    "j4_over_j5": 1.406409254337971,
+    "mean_demol_over_j5": 1.4446771924339534,
+    "note": "Frozen rule source (train_log.jsonl). J5 elapsed restarts at epoch 33 after the pause."
+  },
+  "giveback_descriptive": {
+    "j1-demol-100k-s43": {
+      "selected_step": 24211,
+      "selected_dev_meV": 134.73239541053772,
+      "final_epoch": 60,
+      "final_step": 46860,
+      "final_dev_meV": 138.644278049469,
+      "giveback_meV": 3.9118826389312744
+    },
+    "j2-gptt-100k-s43": {
+      "selected_step": 39831,
+      "selected_dev_meV": 139.18505609035492,
+      "final_epoch": 60,
+      "final_step": 46860,
+      "final_dev_meV": 139.37996327877045,
+      "giveback_meV": 0.19490718841552734
+    },
+    "j3-demol-500k-s42": {
+      "selected_step": 156240,
+      "selected_dev_meV": 98.46004098653793,
+      "final_epoch": 60,
+      "final_step": 234360,
+      "final_dev_meV": 101.08239948749542,
+      "giveback_meV": 2.622358500957489
+    },
+    "j5-gptt-500k-s44": {
+      "selected_step": 203112,
+      "selected_dev_meV": 100.37636756896973,
+      "final_epoch": 60,
+      "final_step": 234360,
+      "final_dev_meV": 100.7126197218895,
+      "giveback_meV": 0.3362521529197693
+    },
+    "j4-demol-500k-s43": {
+      "selected_step": 156240,
+      "selected_dev_meV": 99.65535253286362,
+      "final_epoch": 60,
+      "final_step": 234360,
+      "final_dev_meV": 101.5152558684349,
+      "giveback_meV": 1.859903335571289
+    }
+  },
+  "pairs": [
+    {
+      "candidate": "j1-demol-100k-s43",
+      "reference": "j2-gptt-100k-s43",
+      "role": "dev_100k",
+      "delta": -4.452649557590485,
+      "ci95": [
+        -5.527102298498154,
+        -3.307784989178181
+      ],
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    {
+      "candidate": "j3-demol-500k-s42",
+      "reference": "j5-gptt-500k-s44",
+      "role": "tail_holdout_v1",
+      "delta": -2.2361252222910526,
+      "ci95": [
+        -2.7017659911009586,
+        -1.7723061837003484
+      ],
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    {
+      "candidate": "j4-demol-500k-s43",
+      "reference": "j5-gptt-500k-s44",
+      "role": "tail_holdout_v1",
+      "delta": -2.2630984773198795,
+      "ci95": [
+        -2.7463952667699854,
+        -1.7796130961940475
+      ],
+      "n_bootstrap": 2000,
+      "seed": 42
+    }
+  ],
+  "script": "closure_analysis_20261128.py (one-off, old-style; user 11-28 authorisation)"
+}

@@ -1,0 +1,31 @@
+{
+ "rows": 128606,
+ "mae_meV": {
+  "j3": 105.071,
+  "j5": 107.308,
+  "ensemble_j3_j5": 101.434
+ },
+ "ens_minus_j3": {
+  "delta_meV": -3.637,
+  "ci95_meV": [
+   -3.894,
+   -3.372
+  ]
+ },
+ "ens_minus_j5": {
+  "delta_meV": -5.873,
+  "ci95_meV": [
+   -6.133,
+   -5.614
+  ]
+ },
+ "ens_minus_best_member": {
+  "delta_meV": -3.637,
+  "ci95_meV": [
+   -3.894,
+   -3.372
+  ]
+ },
+ "error_correlation": 0.8436,
+ "rule_outcome": "KEEP"
+}

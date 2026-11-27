@@ -1,0 +1,109 @@
+{
+  "format": "molgap-ims-family-serial-summary-v1",
+  "order": [
+    "j1-demol-100k-s43",
+    "j2-gptt-100k-s43",
+    "j3-demol-500k-s42",
+    "j5-gptt-500k-s44",
+    "j4-demol-500k-s43"
+  ],
+  "driver_starts": [
+    "2026-11-21T12:54:54Z",
+    "2026-11-24T16:35:06Z"
+  ],
+  "items": {
+    "j1-demol-100k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-21T16:02:19Z",
+          "exit_code": 0,
+          "wall_s": 11245.1,
+          "peak_rss_bytes": 2127843328,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/demol500k-chain-20261121/output/training/j1-demol-100k-s43",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 2127843328,
+      "dev_mae_eV": 0.13473239541053772
+    },
+    "j2-gptt-100k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-21T18:10:23Z",
+          "exit_code": 0,
+          "wall_s": 7684.3,
+          "peak_rss_bytes": 2518220800,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/demol500k-chain-20261121/output/training/j2-gptt-100k-s43",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 2518220800,
+      "dev_mae_eV": 0.13918505609035492
+    },
+    "j3-demol-500k-s42": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-22T07:21:14Z",
+          "exit_code": 0,
+          "wall_s": 47451.5,
+          "peak_rss_bytes": 4263706624,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/demol500k-chain-20261121/output/training/j3-demol-500k-s42",
+      "reason": "completion_manifest.json exists",
+      "peak_rss_bytes": 4263706624,
+      "dev_mae_eV": 0.09846004098653793
+    },
+    "j5-gptt-500k-s44": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-22T12:22:55Z",
+          "exit_code": 2,
+          "wall_s": 18100.1,
+          "peak_rss_bytes": 4930215936,
+          "failed": false
+        },
+        {
+          "end_utc": "2026-11-24T20:30:34Z",
+          "exit_code": 0,
+          "wall_s": 14127.7,
+          "peak_rss_bytes": 5005701120,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/demol500k-chain-20261121/output/training/j5-gptt-500k-s44",
+      "reason": "completion_manifest.json written",
+      "peak_rss_bytes": 5005701120,
+      "dev_mae_eV": 0.10037636756896973
+    },
+    "j4-demol-500k-s43": {
+      "status": "COMPLETE",
+      "attempts": [
+        {
+          "end_utc": "2026-11-25T09:00:41Z",
+          "exit_code": 0,
+          "wall_s": 45007.2,
+          "peak_rss_bytes": 4309983232,
+          "failed": false
+        }
+      ],
+      "output": "/lustre/home/users/sm2/chou/molgap-v4-submit/runs/demol500k-chain-20261121/output/training/j4-demol-500k-s43",
+      "reason": "completion_manifest.json written",
+      "peak_rss_bytes": 4309983232,
+      "dev_mae_eV": 0.09965535253286362
+    }
+  },
+  "wall_s": 86280.0,
+  "reserve_s": 1800.0,
+  "spec_sha256": "ff7758606684da78067f920f0b5d6a7462b4e319fa9bcc2b72fda5a237a81636",
+  "source_commit": "7e404a7fae5b1c021deccadfea69991a082098b9",
+  "memory_limit_bytes": 30000000000,
+  "last_driver_end_utc": "2026-11-25T09:00:41Z"
+}

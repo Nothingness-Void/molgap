@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 873,
+  "ambiguous_historical_role_record_count": 878,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -2502,6 +2502,41 @@
     },
     {
       "evidence_id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
+      "role_identity": null,
+      "role_name": "dev_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
+      "role_identity": null,
+      "role_name": "tail_holdout_v1",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6113,7 +6148,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 689,
+  "explicit_role_event_count": 696,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -11087,6 +11122,59 @@
         "semantics": "explicit",
         "trajectory_id": "TB-matched-500k-v4-three-arm"
       }
+    ],
+    "pcqm4mv2-ogb-official-train:6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191:dev_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89:tail_holdout_v1": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-demol500k-chain-20261121-tail_holdout_v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-demol500k-chain-20261121-tail_holdout_v1-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-demol500k-chain-20261121-tail_holdout_v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      }
     ]
   },
   "protected_roles_reported_untouched": {
@@ -11177,6 +11265,7 @@
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "pcqm-demol-cin-500k-chain-20261128-j2",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",
@@ -11367,6 +11456,7 @@
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "pcqm-demol-cin-500k-chain-20261128-j2",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
       "pcqm-geometry-component-attribution-no-train-20260928",
@@ -14770,6 +14860,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930"
+      }
+    ],
+    "pcqm4mv2-ogb-official-train:6f35739b8eb4602eae9695d64f99ae540ce797ababf83e083af552352ddb6191:dev_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-demol500k-chain-20261121-dev_100k-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
       }
     ]
   },

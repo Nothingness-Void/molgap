@@ -1,0 +1,62 @@
+{
+  "format": "molgap-tail-holdout-eval-v1",
+  "role": "tail_holdout_v1",
+  "rows": [
+    3250000,
+    3378606
+  ],
+  "tail_source_idx_sha256": "f111ebbbc96f602c3733208f964fa1806fe59f1a2905ae7026b2feded346fe89",
+  "dev_range": null,
+  "dev_source_idx_sha256": null,
+  "protected_roles_read": {
+    "official_validation": false,
+    "test_dev": false,
+    "test_challenge": false
+  },
+  "results": {
+    "gptrans_500k_init_s43": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "13369b0ac07b71177f8d4a7a4c29f98c4ad9b892ac65fbb6e93b97a1a24a06ba",
+      "tail_holdout_v1": {
+        "mae_ev": 0.10835716128349304,
+        "rows": 128606
+      }
+    },
+    "gptrans_500k_init_s44": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb",
+      "tail_holdout_v1": {
+        "mae_ev": 0.10727308690547943,
+        "rows": 128606
+      }
+    },
+    "gptrans_500k_init_s45": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "c89f31dd82eac514c0c35c831b112f168735e86b886b1e38a25faf337048e5fe",
+      "tail_holdout_v1": {
+        "mae_ev": 0.10809140652418137,
+        "rows": 128606
+      }
+    },
+    "gptrans_500k_init_s46": {
+      "train_rows": 500000,
+      "checkpoint_sha256": "81c6fc2274c11da625434c46648e734faa6e1d1916e0766acd1bccbb093b30cc",
+      "tail_holdout_v1": {
+        "mae_ev": 0.10803715884685516,
+        "rows": 128606
+      }
+    }
+  },
+  "script_sha256": "f8a5dcf92ddf502d1dfba0c3314a4673bb01eacf8fd111a620cf597379c28d2f",
+  "environment": {
+    "torch": "2.7.1+cu128",
+    "torch_geometric": "2.6.1",
+    "rdkit": "2025.03.5",
+    "numpy": "1.26.4",
+    "python": "3.10.6",
+    "platform": "Windows-10-10.0.26320-SP0",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060"
+  },
+  "per_row_predictions_saved": true
+}

@@ -1,0 +1,37 @@
+{
+  "evidence_id": "pcqm-demol-cin-500k-chain-20261128-j2",
+  "scope": "DeMol-CIN 500K IMS serial chain item; offline dev and tail scoring only; official valid and test not read; non-strict.",
+  "legacy_contract": "pcqm-demol-cin-500k-chain-v1",
+  "finalized_at": "2026-11-28T03:08:43+09:00",
+  "v5_outcome": {
+    "execution_status": "complete",
+    "artifact_status": "retrieved_hash_verified",
+    "comparison_status": "same_job_reference_for_j1_paired_dev_100k_non_strict",
+    "scientific_status": "reference_arm_no_candidate_conclusion",
+    "transfer_status": "not_assessed_reference_arm",
+    "budget_decision": "no_further_runs_from_this_arm",
+    "full_handoff_status": "not_applicable"
+  },
+  "outcome": "CLOSED",
+  "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
+  "next_allowed_actions": [],
+  "reopen_conditions": [
+    "Terminal evidence only."
+  ],
+  "facts": {
+    "effect_meV": null,
+    "ci_meV": null,
+    "failure_mode": null,
+    "search_terms": [
+      "gpt-t",
+      "pair update norm",
+      "100k",
+      "seed 43",
+      "ims a100",
+      "reference arm",
+      "demol replication",
+      "dev rows"
+    ],
+    "source": "experiments/pcqm_demol_cin_500k_chain_20261121/evidence/score/j2.json"
+  }
+}

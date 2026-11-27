@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "da11c2db366a5138962ef59050dac5d50e91e0d43056af64b11488874f1f13b0",
+  "source_digest": "bc4531be1302ab22478398253bc7e3ac03238f8a0eef66eca7c52ac8c473ec59",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -106,17 +106,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/protocol.md",
+      "decision_ref": "experiments/pcqm_demol_cin_500k_chain_20261121/decision.md",
       "family_id": "pcqm-demol-cin-ims-replication-20261120",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j2_chain/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_demol_cin_500k_chain_20261121/prospective_j2_chain/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-demol-cin-500k-chain-20261128-j2"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-demol-cin-ims-replication-20261120-s43-pair_update_norm-chain-20261121"
     },
