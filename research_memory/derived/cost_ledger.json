@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 148,
-  "event_count": 474,
+  "event_count": 475,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 434,
+  "measurement_missing_event_count": 435,
   "not_applicable_event_count": 103,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -2968,7 +2968,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 11
       },
       "NVIDIA A100 FP32:device_hours": {
         "estimated": {
@@ -2976,8 +2976,8 @@
           "known_total": 28.7
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 14.210333333333335
+          "known_records": 4,
+          "known_total": 27.391305555555554
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -2992,7 +2992,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 11
       },
       "NVIDIA A100 FP32:wall_hours": {
         "estimated": {
@@ -3000,8 +3000,8 @@
           "known_total": 28.7
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 14.210333333333335
+          "known_records": 4,
+          "known_total": 27.391305555555554
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -5654,7 +5654,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 11
       },
       "device_hours": {
         "estimated": {
@@ -5662,8 +5662,8 @@
           "known_total": 28.7
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 14.210333333333335
+          "known_records": 4,
+          "known_total": 27.391305555555554
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -5678,7 +5678,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 11
       },
       "wall_hours": {
         "estimated": {
@@ -5686,8 +5686,8 @@
           "known_total": 28.7
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 14.210333333333335
+          "known_records": 4,
+          "known_total": 27.391305555555554
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -8104,7 +8104,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA A100 FP32:device_hours": {
         "estimated": {
@@ -8112,8 +8112,8 @@
           "known_total": 9.0
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 13.180972222222222
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -8128,7 +8128,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA A100 FP32:wall_hours": {
         "estimated": {
@@ -8136,8 +8136,8 @@
           "known_total": 9.0
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 13.180972222222222
         },
         "not_applicable_records": 0,
         "unknown_records": 0

@@ -1,13 +1,13 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 192
+- Validated V5 evidence: 193
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 11
+- ACTIVE: 10
 - CLOSED: 39
-- INCONCLUSIVE: 23
+- INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
 - NEGATIVE_UNDER_CONTRACT: 63
 - NO_TRAIN: 57
@@ -19,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 710
-- Coarse historical role records: 888
+- Explicit role events: 717
+- Coarse historical role records: 893
 - Repeatedly selected role identities: 28
 
 ## Cost
@@ -108,10 +108,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA A100 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
-- NVIDIA A100 FP32 device_hours: measured=14.210333 (3 measured records), estimated=28.700000 (7 estimated records), measurement_missing=0, not_applicable=0
-- NVIDIA A100 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=10, not_applicable=0
-- NVIDIA A100 FP32 wall_hours: measured=14.210333 (3 measured records), estimated=28.700000 (7 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=11, not_applicable=0
+- NVIDIA A100 FP32 device_hours: measured=27.391306 (4 measured records), estimated=28.700000 (7 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA A100 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=11, not_applicable=0
+- NVIDIA A100 FP32 wall_hours: measured=27.391306 (4 measured records), estimated=28.700000 (7 estimated records), measurement_missing=0, not_applicable=0
 - NVIDIA A100-SXM4-40GB cpu_hours: measured=0.064568 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
@@ -296,7 +296,7 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 434
+- Measurement-missing cost events: 435
 - Cost-event coverage: 203/214 trajectories; incomplete native measurement=171
 
 ## Screening Backtest
@@ -309,5 +309,5 @@
 - [WARN] historical_partial_record: 20
 - [WARN] incomplete_native_cost_measurement: 171
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 57
-- [WARN] trajectory_without_v5_evidence: 22
+- [WARN] missing_explicit_role_identity: 56
+- [WARN] trajectory_without_v5_evidence: 21
